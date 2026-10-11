@@ -1,0 +1,21 @@
+{
+  "name": "AulaQR V2.1 | Vista previa",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "forwardPorts": [
+    8000
+  ],
+  "portsAttributes": {
+    "8000": {
+      "label": "AulaQR V2.1 - Vista previa",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "postStartCommand": "(python3 -m http.server 8000 --bind 0.0.0.0 > /tmp/aulaqr-preview.log 2>&1 &) || true",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "files.autoSave": "off"
+      }
+    }
+  }
+}
