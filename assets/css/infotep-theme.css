@@ -13,3 +13,11 @@
 .strength-details{padding-left:22px;margin:14px 0}
 .strength-details li{margin:7px 0}
 .strength-disclaimer{font-size:.86rem;color:#345665;margin-bottom:0}
+
+/* Laboratorio QR2: criterios personalizados */
+.criteria-box{margin:16px 0;border:1px solid #bfd8c8;background:#f7fbf8;border-radius:14px;padding:17px}
+.criteria-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 18px}
+.criteria-grid label{display:flex;align-items:center;gap:9px;margin:6px 0;font-weight:500}
+.criteria-grid input{width:18px;height:18px;flex:none}
+.criteria-summary{border-radius:10px;background:#e4f3e9;border-left:4px solid var(--green);padding:12px 14px;font-weight:700;margin:14px 0}
+@media(max-width:580px){.criteria-grid{grid-template-columns:1fr}}
