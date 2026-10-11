@@ -1,0 +1,1 @@
+const f=document.getElementById('reflection'),s=document.getElementById('status');f.value=AulaQRStorage.read('qr1')||'';document.getElementById('save').onclick=()=>{const ok=AulaQRStorage.write('qr1',f.value);s.textContent=ok?'Reflexión guardada en este dispositivo.':'No fue posible guardar: comprueba permisos de almacenamiento.'};
