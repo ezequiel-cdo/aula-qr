@@ -21,3 +21,17 @@
 .criteria-grid input{width:18px;height:18px;flex:none}
 .criteria-summary{border-radius:10px;background:#e4f3e9;border-left:4px solid var(--green);padding:12px 14px;font-weight:700;margin:14px 0}
 @media(max-width:580px){.criteria-grid{grid-template-columns:1fr}}
+
+/* QR2 V2.2: layout compacto y resultados legibles */
+.lab-config{margin-top:16px}
+.lab-config>label{margin-top:8px}
+.lab-config #minimum{max-width:220px}
+.criteria-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 12px}
+.criteria-grid label{font-size:.89rem;line-height:1.3;min-height:33px}
+.adaptive-comment{background:#fff;border-left:4px solid var(--green);padding:13px;border-radius:7px;line-height:1.55}
+.strength-head strong{color:var(--ink)}
+.strength-panel .criteria-summary{margin:12px 0}
+.strength-details li.rule-pass::marker{color:#14764b}
+.strength-details li.rule-fail::marker{color:#b23a38}
+@media(max-width:690px){.criteria-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:350px){.criteria-grid{grid-template-columns:1fr}}
