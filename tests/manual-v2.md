@@ -9,6 +9,8 @@
 - [ ] QR3 impide enviar respuestas incompletas.
 - [ ] QR3 no presenta las respuestas correctas antes de finalizar.
 - [ ] QR3 muestra cuatro explicaciones solamente después de finalizar y conserva el resultado.
+- [ ] Al recargar QR3 después de finalizar, se restauran respuestas, puntuación y explicaciones, y se bloquea el reenvío accidental.
+- [ ] Si localStorage está deshabilitado, QR3 comunica el error sin afirmar que el resultado se guardó.
 - [ ] QR4 conserva reflexión y autoevaluación tras recargar.
 - [ ] Carga visual correcta en navegador móvil y sin zoom horizontal.
 - [ ] Se comunica que no hay envío de evidencias al facilitador.
