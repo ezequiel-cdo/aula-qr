@@ -27,3 +27,11 @@ Resultado: PENDIENTE DE EJECUCIÓN. Las comprobaciones estáticas no sustituyen 
 - [ ] Pulsar «Borrar ejemplo» oculta el análisis y vacía el campo.
 - [ ] El campo no utiliza contraseñas reales y el texto analizado no se guarda en localStorage.
 - [ ] La puntuación indica claramente que es una heurística didáctica, no una garantía de seguridad.
+
+## Parámetros configurables de QR2
+- [ ] Con Equipo2026! y longitud mínima 15, debe fallar longitud y el filtro de patrones.
+- [ ] Cambiar mínimo a 10 cumple longitud del ejemplo sin alterar la valoración heurística de dureza.
+- [ ] Desmarcar símbolos y números reduce el total de criterios sin alterar la contraseña ni la valoración heurística.
+- [ ] Un ejemplo sin mayúsculas falla solo las reglas aplicables seleccionadas.
+- [ ] Desmarcar todos los criterios muestra un estado informativo sin división entre cero.
+- [ ] El ejemplo no se transmite ni se almacena; la barra de heurística no equivale a seguridad garantizada.
