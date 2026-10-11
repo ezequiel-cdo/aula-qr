@@ -6,39 +6,54 @@ if(previous){ d.value=previous.decision||''; r.value=previous.reason||''; }
 // Una estimación didáctica: NO calcula la probabilidad de ruptura ni la entropía real.
 function analyzeFictional(s){
   const len=[...s].length,low=s.toLocaleLowerCase('es');
-  const patterns=/1234|2345|qwer|asdf|password|contrasena|contraseña|admin|infotep|equipo|2026|welcome|p@ssw0rd|abcd/i;
-  const repeated=/(.)\1{2,}/u.test(s);
-  const predictable=patterns.test(low)||repeated;
-  const groups=[/[a-záéíóúñ]/i.test(s),/[A-ZÁÉÍÓÚÑ]/.test(s),/\d/.test(s),/[^\p{L}\p{N}\s]/u.test(s)].filter(Boolean).length;
-  // Puntuación heurística, para comparar ejemplos en el aula únicamente.
-  let score=Math.min(70,len*4)+Math.min(15,Math.max(0,groups-1)*5);
+  const pattern=/1234|2345|qwer|asdf|password|contrasena|contraseña|admin|infotep|equipo|2026|welcome|p@ssw0rd|abcd/i;
+  const predictable=pattern.test(low)||/(.)\1{2,}/u.test(s);
+  const categories=[/[a-záéíóúñ]/.test(s),/[A-ZÁÉÍÓÚÑ]/.test(s),/\d/.test(s),/[^\p{L}\p{N}\s]/u.test(s)].filter(Boolean).length;
+  let score=Math.min(70,len*4)+Math.min(15,Math.max(0,categories-1)*5);
   if(len>=15)score+=15;
   if(predictable)score-=30;
   if(len<8)score=Math.min(score,25);
   score=Math.max(0,Math.min(100,Math.round(score)));
-  const label=score<35?'Débil (ejemplo)':score<65?'Mejorable (ejemplo)':'Más resistente (ejemplo)';
-  const observations=[
-    len<15?'Longitud: '+len+' caracteres. Para contraseñas como factor único, toma 15 o más como referencia.':'Longitud: '+len+' caracteres; una longitud mayor ayuda frente a intentos de adivinación.',
-    predictable?'Se detectaron patrones previsibles, como fechas, palabras comunes o repeticiones.':'No se detectaron algunos patrones comunes de este laboratorio; eso no asegura que sea impredecible.',
-    groups>1?'Contiene varios tipos de caracteres; la diversidad no reemplaza longitud, unicidad ni aleatoriedad.':'Considera cómo se eligió el ejemplo: la imprevisibilidad importa más que imponer símbolos.',
-    'No puede analizarse desde aquí si la clave se reutiliza o ha sido filtrada.'
-  ];
-  return {score,label,observations};
+  return {score,label:score<35?'Débil (ejemplo)':score<65?'Mejorable (ejemplo)':'Más resistente (ejemplo)',predictable,len};
 }
+const criteria=[
+  ['ruleLength','Longitud mínima',v=>[...v].length>=Number($('minimum').value)],
+  ['ruleLower','Contiene minúsculas',v=>/[a-záéíóúñ]/.test(v)],
+  ['ruleUpper','Contiene mayúsculas',v=>/[A-ZÁÉÍÓÚÑ]/.test(v)],
+  ['ruleDigit','Contiene números',v=>/\d/.test(v)],
+  ['ruleSymbol','Contiene símbolos',v=>/[^\p{L}\p{N}\s]/u.test(v)],
+  ['rulePattern','Evita patrones previsibles detectables',v=>!(/1234|2345|qwer|asdf|password|contrasena|contraseña|admin|infotep|equipo|2026|welcome|p@ssw0rd|abcd/i.test(v)||/(.)\1{2,}/u.test(v))]
+];
 function renderAnalysis(){
-  const text=$('probe').value,panel=$('strengthPanel');
-  if(!text){panel.hidden=true;$('strengthFill').style.width='0%';$('strengthTrack').setAttribute('aria-valuenow','0');$('analysis').replaceChildren();return}
-  const result=analyzeFictional(text);
+  const value=$('probe').value,panel=$('strengthPanel'),summary=$('criteriaSummary');
+  const min=$('minimum');min.value=String(Math.max(8,Math.min(40,Math.trunc(Number(min.value)||15))));
+  if(!value){
+    panel.hidden=true;
+    $('strengthFill').style.width='0%';
+    $('strengthTrack').setAttribute('aria-valuenow','0');
+    $('analysis').replaceChildren();
+    summary.textContent='Introduce un ejemplo ficticio para comprobar los criterios seleccionados.';
+    return;
+  }
+  const result=analyzeFictional(value),selected=criteria.filter(([id])=>$(id).checked);
+  const checked=selected.map(([,label,predicate])=>({label,passed:predicate(value)}));
+  const passed=checked.filter(x=>x.passed).length;
+  summary.textContent=selected.length?'Cumple '+passed+' de '+selected.length+' criterios elegidos.':'No has seleccionado criterios; marca los que quieras comprobar.';
   panel.hidden=false;
   $('strengthLabel').textContent=result.label;
-  $('strengthScore').textContent=result.score+'/100 · indicador didáctico';
+  $('strengthScore').textContent=result.score+'/100 · heurística didáctica';
   $('strengthFill').style.width=result.score+'%';
   $('strengthFill').dataset.level=result.score<35?'low':result.score<65?'medium':'high';
   $('strengthTrack').setAttribute('aria-valuenow',String(result.score));
-  $('analysis').replaceChildren(...result.observations.map(note=>{const li=document.createElement('li');li.textContent=note;return li}));
+  const notes=checked.map(x=>(x.passed?'Cumple: ':'No cumple: ')+x.label);
+  notes.push(result.predictable?'Aviso: se reconoció algún patrón habitual, palabra frecuente o secuencia.':'No se detectaron los patrones contemplados, pero pueden existir otros.');
+  notes.push('La puntuación de resistencia es orientativa e independiente de los requisitos seleccionados.');
+  notes.push('No es posible saber aquí si el ejemplo se reutiliza, está filtrado o fue generado aleatoriamente.');
+  $('analysis').replaceChildren(...notes.map(note=>{const li=document.createElement('li');li.textContent=note;return li}));
 }
 $('probe').addEventListener('input',renderAnalysis);
 $('probe').addEventListener('change',renderAnalysis);
+$('criteria').addEventListener('change',renderAnalysis);
 $('tryExample').addEventListener('click',()=>{$('probe').value='Equipo2026!';renderAnalysis();});
 $('clearProbe').addEventListener('click',()=>{$('probe').value='';renderAnalysis();$('probe').focus()});
 
