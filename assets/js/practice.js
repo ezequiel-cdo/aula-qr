@@ -25,31 +25,52 @@ const criteria=[
   ['rulePattern','Evita patrones previsibles detectables',v=>!(/1234|2345|qwer|asdf|password|contrasena|contraseña|admin|infotep|equipo|2026|welcome|p@ssw0rd|abcd/i.test(v)||/(.)\1{2,}/u.test(v))]
 ];
 function renderAnalysis(){
-  const value=$('probe').value,panel=$('strengthPanel'),summary=$('criteriaSummary');
-  const min=$('minimum');min.value=String(Math.max(8,Math.min(40,Math.trunc(Number(min.value)||15))));
+  const value=$('probe').value, panel=$('strengthPanel'), summary=$('criteriaSummary');
+  const min=$('minimum');
+  const chosenMin=Math.max(8,Math.min(40,Math.trunc(Number(min.value)||15)));
+  min.value=String(chosenMin);
   if(!value){
     panel.hidden=true;
+    $('emptyHint').hidden=false;
     $('strengthFill').style.width='0%';
     $('strengthTrack').setAttribute('aria-valuenow','0');
     $('analysis').replaceChildren();
-    summary.textContent='Introduce un ejemplo ficticio para comprobar los criterios seleccionados.';
+    summary.textContent='';
+    $('adaptiveComment').textContent='';
     return;
   }
-  const result=analyzeFictional(value),selected=criteria.filter(([id])=>$(id).checked);
-  const checked=selected.map(([,label,predicate])=>({label,passed:predicate(value)}));
-  const passed=checked.filter(x=>x.passed).length;
-  summary.textContent=selected.length?'Cumple '+passed+' de '+selected.length+' criterios elegidos.':'No has seleccionado criterios; marca los que quieras comprobar.';
   panel.hidden=false;
-  $('strengthLabel').textContent=result.label;
-  $('strengthScore').textContent=result.score+'/100 · heurística didáctica';
+  $('emptyHint').hidden=true;
+  const result=analyzeFictional(value);
+  const checked=criteria.filter(([id])=>$(id).checked).map(([,label,predicate])=>({label,passed:predicate(value)}));
+  const passed=checked.filter(x=>x.passed),failed=checked.filter(x=>!x.passed);
+  const count=checked.length;
+  summary.textContent=count?'Cumple '+passed.length+' de '+count+' criterios seleccionados.':'Ningún criterio seleccionado: configura tu política para comparar.';
+  $('strengthLabel').textContent='Robustez orientativa: '+(result.score<35?'Baja':result.score<65?'Media':'Alta');
+  $('strengthScore').textContent=result.score+'/100 · estimación didáctica';
   $('strengthFill').style.width=result.score+'%';
   $('strengthFill').dataset.level=result.score<35?'low':result.score<65?'medium':'high';
   $('strengthTrack').setAttribute('aria-valuenow',String(result.score));
-  const notes=checked.map(x=>(x.passed?'Cumple: ':'No cumple: ')+x.label);
-  notes.push(result.predictable?'Aviso: se reconoció algún patrón habitual, palabra frecuente o secuencia.':'No se detectaron los patrones contemplados, pero pueden existir otros.');
-  notes.push('La puntuación de resistencia es orientativa e independiente de los requisitos seleccionados.');
-  notes.push('No es posible saber aquí si el ejemplo se reutiliza, está filtrado o fue generado aleatoriamente.');
-  $('analysis').replaceChildren(...notes.map(note=>{const li=document.createElement('li');li.textContent=note;return li}));
+  let comment='';
+  if(!count){
+    comment='No hay requisitos seleccionados. La barra solo presenta una estimación heurística independiente.';
+  }else if(failed.length){
+    comment='Cumple '+passed.length+' de '+count+' criterios elegidos. ';
+    comment+='Debes revisar: '+failed.map(x=>x.label.toLowerCase()).join(', ')+'. ';
+    if(passed.length)comment+='Cumple: '+passed.map(x=>x.label.toLowerCase()).join(', ')+'. ';
+  }else{
+    comment='Cumple los '+count+' criterios seleccionados. ';
+    comment+='Esto solo indica conformidad con esta política de práctica, no seguridad garantizada. ';
+  }
+  if(result.predictable)comment+='Se observan patrones previsibles: conviene evitarlos incluso si otras reglas se cumplen. ';
+  comment+='La robustez estimada es '+(result.score<35?'baja':result.score<65?'media':'alta')+'; no se puede verificar aquí si la clave ha sido filtrada o reutilizada.';
+  $('adaptiveComment').textContent=comment;
+  $('analysis').replaceChildren(...checked.map(x=>{
+    const li=document.createElement('li');
+    li.textContent=(x.passed?'Cumple: ':'No cumple: ')+x.label+(x.label==='Longitud mínima'?' ('+result.len+' de '+chosenMin+' caracteres)':'');
+    li.className=x.passed?'rule-pass':'rule-fail';
+    return li;
+  }));
 }
 $('probe').addEventListener('input',renderAnalysis);
 $('probe').addEventListener('change',renderAnalysis);
