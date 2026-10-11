@@ -35,3 +35,11 @@ Resultado: PENDIENTE DE EJECUCIÓN. Las comprobaciones estáticas no sustituyen 
 - [ ] Un ejemplo sin mayúsculas falla solo las reglas aplicables seleccionadas.
 - [ ] Desmarcar todos los criterios muestra un estado informativo sin división entre cero.
 - [ ] El ejemplo no se transmite ni se almacena; la barra de heurística no equivale a seguridad garantizada.
+
+## QR2: diseño compacto y retroalimentación adaptable
+- [ ] La longitud mínima aparece por encima de los criterios; los criterios ocupan columnas; la contraseña está debajo.
+- [ ] Al introducir una contraseña ficticia aparecen barra de color, robustez textual y puntuación heurística.
+- [ ] Modificar casillas actualiza el total, los criterios cumplidos/fallidos y el comentario adaptativo.
+- [ ] Cambiar longitud mínima modifica su validación, pero no altera artificialmente la puntuación heurística.
+- [ ] Con todos los requisitos desmarcados se muestra una explicación útil.
+- [ ] Borrar el ejemplo oculta el resultado y muestra el texto de orientación.
