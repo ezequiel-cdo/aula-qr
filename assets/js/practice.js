@@ -38,6 +38,8 @@ function renderAnalysis(){
   $('analysis').replaceChildren(...result.observations.map(note=>{const li=document.createElement('li');li.textContent=note;return li}));
 }
 $('probe').addEventListener('input',renderAnalysis);
+$('probe').addEventListener('change',renderAnalysis);
+$('tryExample').addEventListener('click',()=>{$('probe').value='Equipo2026!';renderAnalysis();});
 $('clearProbe').addEventListener('click',()=>{$('probe').value='';renderAnalysis();$('probe').focus()});
 
 const words=['bosque','nube','cobre','rio','lago','mapa','tigre','puente','mango','faro','luna','campo','arena','taller','costa','valle'];
