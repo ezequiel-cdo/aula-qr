@@ -19,3 +19,11 @@
 - [ ] Cada código QR se escanea desde papel y abre la URL correcta.
 
 Resultado: PENDIENTE DE EJECUCIÓN. Las comprobaciones estáticas no sustituyen pruebas manuales.
+
+## Regresión QR2 — Analizador visual
+- [ ] Al abrir QR2 sin texto, el panel de dureza permanece oculto.
+- [ ] Pulsar «Probar con Equipo2026!» rellena el campo y muestra puntuación /100, barra coloreada y cuatro observaciones.
+- [ ] Escribir o pegar otro ejemplo ficticio recalcula inmediatamente la puntuación y los consejos.
+- [ ] Pulsar «Borrar ejemplo» oculta el análisis y vacía el campo.
+- [ ] El campo no utiliza contraseñas reales y el texto analizado no se guarda en localStorage.
+- [ ] La puntuación indica claramente que es una heurística didáctica, no una garantía de seguridad.
