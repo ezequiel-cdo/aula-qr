@@ -1,0 +1,19 @@
+# Plan de aceptación AulaQR + INFOTEP V2
+
+- [ ] Portada muestra identidad visual, cuatro momentos y navegación coherente.
+- [ ] Logotipo carga y su uso institucional está autorizado.
+- [ ] QR1 muestra seis conceptos y guarda/refresca reflexión.
+- [ ] QR2 analiza solo un ejemplo ficticio y no guarda la cadena introducida.
+- [ ] QR2 genera ejemplos con crypto.getRandomValues; se advierte que las frases del pequeño diccionario no son claves seguras reales.
+- [ ] QR2 da retroalimentación inmediata y conserva una decisión justificada.
+- [ ] QR3 impide enviar respuestas incompletas.
+- [ ] QR3 no presenta las respuestas correctas antes de finalizar.
+- [ ] QR3 muestra cuatro explicaciones solamente después de finalizar y conserva el resultado.
+- [ ] QR4 conserva reflexión y autoevaluación tras recargar.
+- [ ] Carga visual correcta en navegador móvil y sin zoom horizontal.
+- [ ] Se comunica que no hay envío de evidencias al facilitador.
+- [ ] Se prueba la disponibilidad sin red y se documentan las limitaciones del logo remoto.
+- [ ] Se verifica el estado de GitHub Pages tras la fusión aprobada.
+- [ ] Cada código QR se escanea desde papel y abre la URL correcta.
+
+Resultado: PENDIENTE DE EJECUCIÓN. Las comprobaciones estáticas no sustituyen pruebas manuales.
