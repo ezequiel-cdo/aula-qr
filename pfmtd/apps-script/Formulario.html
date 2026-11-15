@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>body{font-family:system-ui,sans-serif;background:#f1f5fc;color:#132847;max-width:680px;margin:auto;padding:1.1rem}
+main{background:#fff;padding:clamp(1rem,4vw,2rem);border-radius:16px;border:1px solid #d5e1f2}
+h1{font-size:clamp(1.7rem,5vw,2.5rem)}p{line-height:1.55}label{display:block;font-weight:650;margin-top:1rem}
+textarea,input{display:block;width:100%;box-sizing:border-box;border:1px solid #8296b1;border-radius:9px;padding:1rem;font:inherit;margin-top:.4rem}
+button{background:#0d4da3;color:#fff;border:0;border-radius:9px;font:inherit;font-weight:700;padding:1rem;cursor:pointer;margin-top:1.2rem}
+button:disabled{opacity:.55;cursor:wait}button:focus-visible{outline:4px solid #efae00}#resultado{padding:1rem;border-radius:8px;margin-top:1rem}small{color:#526582}
+.hidden{position:absolute;left:-10000px}</style></head>
+<body><main><small>AulaQR · PFMTTD · Inicio de curso</small>
+<h1>Construyamos nuestros acuerdos</h1>
+<p>¿Qué norma de convivencia nos permitirá aprender juntos con respeto, escucha, participación y protección de datos?</p>
+<form id="form">
+<label for="seudonimo">Identificador de práctica (opcional)</label>
+<input id="seudonimo" maxlength="60" autocomplete="off" placeholder="Ej.: Grupo 2 / MiP01">
+<label for="propuesta">Mi propuesta de acuerdo</label>
+<textarea id="propuesta" minlength="8" maxlength="300" rows="5" required placeholder="Propongo que..."></textarea>
+<div class="hidden" aria-hidden="true"><label for="control">No completar</label><input id="control" tabindex="-1" autocomplete="off"></div>
+<button id="enviar" type="submit">Enviar propuesta</button>
+</form><div id="resultado" role="status" aria-live="polite"></div>
+<p><small>La propuesta se enviará a una hoja de cálculo privada del facilitador. No incluyas datos personales sensibles ni información de empresas reales. Solo se confirma como recibida cuando aparece un comprobante del servidor.</small></p>
+</main>
+<script>
+(function(){
+  const form=document.getElementById('form'),btn=document.getElementById('enviar'),estado=document.getElementById('resultado');
+  let pendiente=null;
+  function nuevoId(){let x=new Uint8Array(16);crypto.getRandomValues(x);return Array.from(x,n=>n.toString(16).padStart(2,'0')).join('')}
+  form.addEventListener('input',()=>{if(!btn.disabled)pendiente=null});
+  form.addEventListener('submit',function(e){
+    e.preventDefault();if(!form.reportValidity()||btn.disabled)return;
+    if(!pendiente)pendiente=nuevoId();
+    btn.disabled=true;estado.textContent='Enviando. Espera la confirmación del servidor...';
+    google.script.run.withSuccessHandler(function(r){
+      btn.disabled=false;
+      if(r&&r.recibido&&r.comprobante){estado.textContent='Propuesta RECIBIDA. Comprobante: '+r.comprobante;
+        form.reset();pendiente=null;return}
+      estado.textContent='No se pudo confirmar la recepción. Intenta nuevamente.';
+    }).withFailureHandler(function(err){
+      btn.disabled=false;estado.textContent='No se confirmó la recepción: '+(err&&err.message?err.message:'error de conexión')+'. Puedes reintentar sin cambiar la propuesta.';
+    }).registrarAcuerdo({seudonimo:document.getElementById('seudonimo').value,
+      propuesta:document.getElementById('propuesta').value,control:document.getElementById('control').value,idPeticion:pendiente});
+  });
+})();
+</script></body></html>
