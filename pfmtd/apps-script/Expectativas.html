@@ -1,0 +1,18 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- PFMTTD Expectativas v1.0 · 2026-11-15 · Nuevo registro, no modifica acuerdos -->
+<style>body{font:1.1rem/1.5 system-ui;background:#eef3fc;color:#132747;max-width:750px;margin:auto;padding:1rem}main{background:white;border:1px solid #d6e3f5;border-radius:16px;padding:clamp(1rem,4vw,2rem)}h1{font-size:clamp(1.65rem,4vw,2.5rem);color:#0c32a6}label{display:block;font-weight:700;margin-top:1rem}input,textarea{width:100%;box-sizing:border-box;font:inherit;margin-top:.5rem;padding:.8rem;border-radius:8px;border:1px solid #8092b6}button{background:#123eb0;border:0;color:#fff;padding:1rem;font:inherit;border-radius:10px;font-weight:700;margin-top:1rem}button:disabled{opacity:.5}button:focus-visible{outline:3px solid #eb9800}small{color:#52637e}.offscreen{position:absolute;left:-9999px}</style></head><body><main>
+<small>PFMTTD · Inicio de curso · 06:00–07:00</small><h1>¿Qué esperamos aprender?</h1>
+<p>Registra una expectativa para el <strong>programa de 80 horas</strong> y otra para esta <strong>práctica de 30 minutos</strong>.</p>
+<form id="exp"><label for="alias">Identificador de práctica (opcional)</label><input id="alias" maxlength="60" placeholder="Ej.: Grupo 1 / P01" autocomplete="off">
+<label for="programa">Durante la formación de 80 horas espero…</label><textarea id="programa" required minlength="8" maxlength="350" rows="3" placeholder="Al finalizar el programa quisiera..."></textarea>
+<label for="practica">Durante la práctica de hoy espero…</label><textarea id="practica" required minlength="8" maxlength="350" rows="3" placeholder="Hoy me gustaría comprender..."></textarea>
+<div class="offscreen" aria-hidden="true"><label for="control">Dejar vacío</label><input id="control" tabindex="-1" autocomplete="off"></div>
+<button id="send" type="submit">Enviar expectativas</button></form>
+<p id="status" role="status" aria-live="polite"></p>
+<p><small>Se almacenan en una hoja privada. Podremos recuperarlas en el cierre; compartir una expectativa no equivale a demostrar que se cumplió. Evita datos personales sensibles.</small></p></main>
+<script>(function(){const form=document.querySelector('#exp'),btn=document.querySelector('#send'),status=document.querySelector('#status');let id=null;
+function makeId(){const b=new Uint8Array(16);crypto.getRandomValues(b);return Array.from(b,x=>x.toString(16).padStart(2,'0')).join('')}
+form.addEventListener('input',()=>{if(!btn.disabled)id=null});
+form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity()||btn.disabled)return;if(!id)id=makeId();btn.disabled=true;status.textContent='Enviando expectativas…';
+google.script.run.withSuccessHandler(r=>{btn.disabled=false;if(r&&r.recibido&&r.comprobante){status.textContent='Expectativas RECIBIDAS. Comprobante: '+r.comprobante;id=null;form.reset()}else status.textContent='No se confirmó la recepción.';}).withFailureHandler(err=>{btn.disabled=false;status.textContent='No fue posible confirmar la recepción: '+(err?.message||'error de conexión')+'. Puedes intentar nuevamente.';}).registrarExpectativas({pseudonimo:document.querySelector('#alias').value,programa:document.querySelector('#programa').value,practica:document.querySelector('#practica').value,control:document.querySelector('#control').value,idPeticion:id});
+});})();</script></body></html>
