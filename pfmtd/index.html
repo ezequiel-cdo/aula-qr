@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PFMTTD | Encuadre e inicio de sesión v1.4.2 · AulaQR</title>
+<title>PFMTTD | Encuadre e inicio de sesión v1.4.3 · AulaQR</title>
 <!-- Objeto: encuadre público PFMTTD; versión 1.0.1-github; fecha 2026-11-15.
 Estado: prototipo en revisión. Nuevo: se retira el recurso independiente AulaQR; permanecen construcción conceptual y práctica formativa. La franja 15:00–16:00 requiere armonización del RT-03. Diagnóstico previo en proceso de armonización curricular.
 Correcciones: elimina avisos superados. Sólo proyecta propuestas aprobadas; lista nominal autorizada publicada.
@@ -127,7 +127,7 @@ footer{display:none}
 #modalBody .recall-reveal{border-left:5px solid #17914a;background:#eaf7f0;padding:13px 16px;border-radius:8px;margin-top:12px}
 @media(max-width:820px){#sesion .pf-brand{margin:4% 4% 0}#sesion .pf-brand .pf-pill{white-space:normal}#sesion .pf-kicker{margin:4% 4% 0}#sesion h1{margin:2% 4%}#sesion>.lead{margin:0 4%}#sesion .pf-session-cards{margin:5% 4%;grid-template-columns:1fr}#sesion .pf-session-note{margin:5% 4%}#modalBody .recall-prompts{grid-template-columns:1fr}}
 
-/* Etapa 3: desarrollo de la sesión, v1.4.2 */
+/* Etapa 3: desarrollo de la sesión, v1.4.3 */
 #desarrollo{background:linear-gradient(132deg,#f4f8ff,#fff 70%)}
 #desarrollo:before{content:"";position:absolute;left:0;top:0;bottom:0;width:1%;background:linear-gradient(#1136ad 0 70%,#fff 70% 72%,#ef8d15 72%)}
 #desarrollo .pf-brand{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4.1% 7% 0}
@@ -155,7 +155,7 @@ footer{display:none}
 #modalBody .concept-check{border-left:5px solid #18914c;background:#eaf7ef;padding:13px 18px;border-radius:8px;margin-top:14px}
 @media(max-width:820px){#desarrollo .pf-brand{margin:4% 4% 0}#desarrollo .pf-brand .pf-pill{white-space:normal}#desarrollo .pf-kicker{margin:4% 4% 0}#desarrollo h1{margin:2% 4%}#desarrollo>.lead{margin:0 4%}#desarrollo .pf-session-cards{margin:5% 4%;grid-template-columns:1fr}#desarrollo .pf-session-note{margin:5% 4%}}
 
-/* v1.4.2: pantalla única por comunidad, contraste y tipografía amplia */
+/* v1.4.3: pantalla única por comunidad, contraste y tipografía amplia */
 .lab-draw-dialog{width:min(1060px,96vw);max-height:92vh;padding:clamp(1rem,2.5vw,2rem)}
 .lab-fixed-legend{font-size:clamp(.95rem,1.55vw,1.16rem);border-bottom:1px solid #cbd8eb;padding:.7rem 0;line-height:1.4}
 .lab-progress{font-weight:800;font-size:clamp(1.1rem,1.7vw,1.3rem);color:#50617a;margin:1rem 0 .4rem}
@@ -185,7 +185,7 @@ footer{display:none}
 .evocation-nav button{min-height:44px}
 .evocation-feedback[hidden]{display:none}
 
-/* v1.4.2 — ficha de pilares legible en proyección, práctica formativa breve */
+/* v1.4.3 — ficha de pilares legible en proyección, práctica formativa breve */
 .maturity-path{display:flex;justify-content:center;flex-wrap:wrap;gap:.35rem;border-radius:9px;background:#eaf0ff;color:#143aa4;font-weight:800;font-size:clamp(.86rem,1.35vw,1.08rem);padding:.75rem;margin:.8rem 0}
 .maturity-path span{color:#e78209}
 .maturity-tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:8px;margin:.85rem 0}
@@ -228,7 +228,7 @@ footer{display:none}
 #cierre-curso .pf-session-note{margin:2.5% 5%;padding:14px 17px;border-left:5px solid #e78209;background:#fff;border-radius:9px}
 @media(max-width:820px){#cierre-curso .pf-session-cards{grid-template-columns:1fr}#cierre-curso .pf-session-card{min-height:115px}}
 
-/* v1.4.2: las marcas horarias son privadas del RT-03, nunca de la proyección. */
+/* v1.4.3: las marcas horarias son privadas del RT-03, nunca de la proyección. */
 #cierre-sesion .time,#cierre-curso .time{display:none!important}
 #cierre-sesion [data-internal-time],#cierre-curso [data-internal-time]{display:none!important}
 
@@ -359,7 +359,13 @@ const silentClock=(()=>{
  function persist(){if(!data)return;try{sessionStorage.setItem(key,JSON.stringify(data))}catch(e){}}
  function elapsed(){return data?Math.max(0,(Date.now()-data.started)*rate/1000):0}
  function log(type,value){if(!data)return;data.events.push({t:Math.round(elapsed()*10)/10,type,value});if(data.events.length>1500)data.events=data.events.slice(-1500);persist()}
- function start(){if(!data){data={started:Date.now(),rate,events:[],visits:{},seconds:{}};persist();log('inicio','Comenzar encuadre grupal')}paint()}
+ function start(){
+  // Cada pulsación es un ensayo nuevo: reinicia reloj, visitas y duraciones.
+  // No modifica las comunidades, los acuerdos ni las expectativas, que usan otras claves.
+  activeResource=null;resourceStarted=null;
+  data={started:Date.now(),rate,events:[],visits:{},seconds:{}};
+  persist();log('inicio','Comenzar encuadre grupal');paint();
+ }
  function closeResource(){if(!activeResource||!data)return;let now=elapsed();data.seconds[activeResource]=(data.seconds[activeResource]||0)+Math.max(0,now-resourceStarted);log('cierre_recurso',activeResource);activeResource=null;resourceStarted=null;persist()}
  function resource(id){if(!data)return;if(activeResource===id)return;closeResource();activeResource=id;resourceStarted=elapsed();data.visits[id]=(data.visits[id]||0)+1;log('abrir_recurso',id);paint()}
  function section(id){if(!data)return;log('pantalla',id);paint()}
