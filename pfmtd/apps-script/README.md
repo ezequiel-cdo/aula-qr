@@ -26,3 +26,25 @@ Esa página actúa como puerta de entrada y dirige al formulario alojado por App
 - La publicación en GitHub Pages no sustituye la configuración de Apps Script.
 - Tras modificar Apps Script, publica una **nueva versión** de la implementación para que los cambios se reflejen.
 - Pruebas pendientes: Android, iPhone, escaneo físico, permisos de Google, conexión desde red móvil, envío duplicado y concurrencia.
+
+
+## Mejoras del encuadre v0.6: panel visible y ruleta
+Se agregó `Panel.html` para proyectar en el mismo recurso «Nuestros acuerdos» las propuestas que el facilitador haya seleccionado para presentación. La hoja sigue privada y **no** se divulgan seudónimos, identificadores ni comprobantes.
+
+### Actualizar Apps Script sin interrumpir la recepción
+1. Abrir el proyecto Google Apps Script asociado a la hoja de la cuenta autorizada.
+2. Sustituir `Código.gs` con la versión 1.1 de este repositorio. No borrar la hoja de respuestas.
+3. Añadir archivo HTML llamado `Panel` y pegar íntegro `Panel.html`.
+4. Guardar; elegir **Implementar → Gestionar implementaciones → Editar** y seleccionar **Nueva versión** de la implementación existente. Verificar que la URL pública /exec se conserve.
+5. Ejecutar `configurar` si la columna I todavía no tiene encabezado `Proyectar`; esto agrega la columna sin borrar los acuerdos previos.
+6. En la columna I de la hoja, marcar **SI** únicamente en las filas cuyo texto se considere apropiado para proyección pública. Las demás permanecen ocultas.
+7. Abrir `https://script.google.com/macros/s/.../exec?vista=panel`, confirmar que solo aparecen los textos aprobados y comprobar la actualización. La vista puede abrirse en el modal de AulaQR; si el navegador bloquea el iframe, usar su enlace «Abrir consolidación en pantalla completa».
+8. Probar con dos teléfonos, enviando aportes distintos, comprobando filas y marcando solo uno «SI». Verificar que el no aprobado no aparece.
+
+### Limitaciones relevantes
+- **No existe publicación automática de todas las propuestas**: se requiere revisión en la hoja antes de marcarlas `SI`; esto evita proyectar contenido enviado por cualquiera con el QR.
+- La vista pública es accesible a cualquiera que conozca su URL, pero solo devuelve los textos aprobados.
+- La aceptación final del conjunto de acuerdos se realiza presencialmente, no mediante el listado.
+- La conexión nueva no estará activa mientras no se actualice la implementación de Apps Script.
+- Probar iframe y QR en Android y iPhone antes de la simulación.
+- La asignación de comunidades sigue local en el navegador de conducción para mantener el sorteo durante la sesión; la recepción central se aplica a **acuerdos**, no a toda interacción.
