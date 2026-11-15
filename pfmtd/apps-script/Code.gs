@@ -146,7 +146,7 @@ function listarExpectativasProyectables() {
   const filas=hoja.getRange(2,6,last-1,5).getDisplayValues();
   const items=[];
   filas.forEach(f=>{
-    if(String(f[3]).toUpperCase()==='RECIBIDO'&&String(f[4]).toUpperCase()==='SI'&&items.length<35){
+    if(String(f[2]).toUpperCase()==='RECIBIDO'&&String(f[4]).toUpperCase()==='SI'&&items.length<35){
       items.push({programa:String(f[0]).slice(0,350),practica:String(f[1]).slice(0,350)});
     }
   });
