@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PFMTTD | Encuadre e inicio de sesión v1.1.0 · AulaQR</title>
+<title>PFMTTD | Encuadre e inicio de sesión v1.2.0 · AulaQR</title>
 <!-- Objeto: encuadre público PFMTTD; versión 1.0.1-github; fecha 2026-11-15.
 Estado: prototipo en revisión. Nuevo: se retira el recurso independiente AulaQR; permanecen construcción conceptual y práctica formativa. La franja 15:00–16:00 requiere armonización del RT-03. Diagnóstico previo en proceso de armonización curricular.
 Correcciones: elimina avisos superados. Sólo proyecta propuestas aprobadas; lista nominal autorizada publicada.
@@ -127,7 +127,7 @@ footer{display:none}
 #modalBody .recall-reveal{border-left:5px solid #17914a;background:#eaf7f0;padding:13px 16px;border-radius:8px;margin-top:12px}
 @media(max-width:820px){#sesion .pf-brand{margin:4% 4% 0}#sesion .pf-brand .pf-pill{white-space:normal}#sesion .pf-kicker{margin:4% 4% 0}#sesion h1{margin:2% 4%}#sesion>.lead{margin:0 4%}#sesion .pf-session-cards{margin:5% 4%;grid-template-columns:1fr}#sesion .pf-session-note{margin:5% 4%}#modalBody .recall-prompts{grid-template-columns:1fr}}
 
-/* Etapa 3: desarrollo de la sesión, v1.1.0 */
+/* Etapa 3: desarrollo de la sesión, v1.2.0 */
 #desarrollo{background:linear-gradient(132deg,#f4f8ff,#fff 70%)}
 #desarrollo:before{content:"";position:absolute;left:0;top:0;bottom:0;width:1%;background:linear-gradient(#1136ad 0 70%,#fff 70% 72%,#ef8d15 72%)}
 #desarrollo .pf-brand{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4.1% 7% 0}
@@ -155,7 +155,7 @@ footer{display:none}
 #modalBody .concept-check{border-left:5px solid #18914c;background:#eaf7ef;padding:13px 18px;border-radius:8px;margin-top:14px}
 @media(max-width:820px){#desarrollo .pf-brand{margin:4% 4% 0}#desarrollo .pf-brand .pf-pill{white-space:normal}#desarrollo .pf-kicker{margin:4% 4% 0}#desarrollo h1{margin:2% 4%}#desarrollo>.lead{margin:0 4%}#desarrollo .pf-session-cards{margin:5% 4%;grid-template-columns:1fr}#desarrollo .pf-session-note{margin:5% 4%}}
 
-/* v1.1.0: pantalla única por comunidad, contraste y tipografía amplia */
+/* v1.2.0: pantalla única por comunidad, contraste y tipografía amplia */
 .lab-draw-dialog{width:min(1060px,96vw);max-height:92vh;padding:clamp(1rem,2.5vw,2rem)}
 .lab-fixed-legend{font-size:clamp(.95rem,1.55vw,1.16rem);border-bottom:1px solid #cbd8eb;padding:.7rem 0;line-height:1.4}
 .lab-progress{font-weight:800;font-size:clamp(1.1rem,1.7vw,1.3rem);color:#50617a;margin:1rem 0 .4rem}
@@ -185,7 +185,7 @@ footer{display:none}
 .evocation-nav button{min-height:44px}
 .evocation-feedback[hidden]{display:none}
 
-/* v1.1.0 — ficha de pilares legible en proyección, práctica formativa breve */
+/* v1.2.0 — ficha de pilares legible en proyección, práctica formativa breve */
 .maturity-path{display:flex;justify-content:center;flex-wrap:wrap;gap:.35rem;border-radius:9px;background:#eaf0ff;color:#143aa4;font-weight:800;font-size:clamp(.86rem,1.35vw,1.08rem);padding:.75rem;margin:.8rem 0}
 .maturity-path span{color:#e78209}
 .maturity-tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:8px;margin:.85rem 0}
@@ -203,6 +203,18 @@ footer{display:none}
 .maturity-model,.maturity-recorded{border-radius:8px;background:#e4f1ff;padding:.8rem;font-size:clamp(1rem,1.45vw,1.15rem)}
 .maturity-model[hidden],.maturity-recorded[hidden]{display:none}
 @media(max-width:650px){.maturity-columns{grid-template-columns:1fr}.maturity-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Cierre de sesión 23:00–26:00 · coherencia con la identidad 16:9 */
+#cierre-sesion{min-height:100%;background:linear-gradient(142deg,#f8fbff,#edf3ff)}
+#cierre-sesion .pf-session-cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:3% 5% 0}
+#cierre-sesion .pf-session-card{background:#fff;border:2px solid #dae4f4;border-radius:14px;padding:20px;text-align:left;color:#102ba0;min-height:160px;box-shadow:0 9px 23px #14254c12;cursor:pointer}
+#cierre-sesion .pf-session-card .time{font-weight:850;color:#e78209;font-size:clamp(.9rem,1.2vw,1.05rem);display:block;margin-bottom:10px}
+#cierre-sesion .pf-session-card strong{font-size:clamp(1.1rem,1.65vw,1.55rem);display:block}
+#cierre-sesion .pf-session-card small{font-size:clamp(.9rem,1.2vw,1.05rem);font-weight:400;display:block;color:#475872;margin-top:8px}
+#cierre-sesion .pf-session-note{margin:2.5% 5%;border-left:5px solid #e78209;padding:16px;background:white;border-radius:9px}
+#cierre-sesion .pf-brand{margin:3% 5% 0}
+#cierre-sesion .pf-kicker,#cierre-sesion h1,#cierre-sesion .lead{margin-left:5%;margin-right:5%}
+@media(max-width:850px){#cierre-sesion .pf-session-cards{grid-template-columns:1fr}#cierre-sesion .pf-session-card{min-height:115px}}
 </style></head><body>
 <header><strong>AulaQR · PFMTTD</strong><span>Práctica didáctica · 30 minutos</span></header>
 <main>
@@ -252,8 +264,21 @@ footer{display:none}
 <button type="button" class="pf-session-card" data-modal="madurez"><span class="time">20:00–23:00 · 3 minutos</span><strong>④ Madurez tecnológica</strong><small>Siete pilares · indicador y evidencia</small></button>
 </div><div class="pf-session-note"><strong>RA1.1:</strong> distinguir y explicar conceptos aplicados a procesos de una MiPyME. Esta actividad introduce los fundamentos; todavía no demuestra un diagnóstico completo.</div>
 </section>
+<section id="cierre-sesion" class="screen" hidden>
+<div class="pf-brand"><div><strong>PFMTTD</strong><span class="pf-word"> / Formación por competencias</span></div><span class="pf-pill">CIERRE DE SESIÓN · 23:00–26:00</span></div>
+<p class="pf-kicker">RECONOCEMOS LO APRENDIDO</p>
+<h1>¿Qué aprendimos y qué necesitamos mejorar?</h1>
+<p class="lead">Sinteticemos una idea, comprobemos lo realmente observado y conectemos con el diagnóstico de madurez tecnológica.</p>
+<div class="pf-session-cards">
+<button type="button" class="pf-session-card" data-modal="cierreSintesis"><span class="time">23:00–24:00 · 1 minuto</span><strong>① Síntesis participativa</strong><small>Un ejemplo para distinguir los tres conceptos</small></button>
+<button type="button" class="pf-session-card" data-modal="cierreCotejo"><span class="time">24:00–25:00 · 1 minuto</span><strong>② Verificamos y reforzamos</strong><small>Logros observados, dificultad y corrección</small></button>
+<button type="button" class="pf-session-card" data-modal="cierreProximo"><span class="time">25:00–26:00 · 1 minuto</span><strong>③ Próxima sesión</strong><small>Del concepto al diagnóstico por pilares</small></button>
+</div>
+<div class="pf-session-note"><strong>RA1.1 · Evaluación formativa:</strong> solo contamos intervenciones y criterios efectivamente observados. La participación no se presume por abrir el recurso. <strong>EPRADI 31–32:</strong> síntesis, logros, aspectos pendientes y continuidad.</div>
+</section>
+
 </main>
-<div class="pf-bottom"><button id="backSlide" type="button">← Anterior</button><span id="slideCounter">1 / 3</span><button id="nextSlide" type="button">Siguiente →</button><span class="pf-minitext" style="position:absolute;right:14px;color:#dce8ff">Teclas ← → · F: pantalla completa</span></div>
+<div class="pf-bottom"><button id="backSlide" type="button">← Anterior</button><span id="slideCounter">1 / 5</span><button id="nextSlide" type="button">Siguiente →</button><span class="pf-minitext" style="position:absolute;right:14px;color:#dce8ff">Teclas ← → · F: pantalla completa</span></div>
 <dialog id="modal"><div class="head"><strong id="modalTitle"></strong><button class="secondary" id="close">Cerrar ×</button></div><div id="modalBody"></div></dialog>
 <dialog id="labDrawDialog" aria-labelledby="labDrawHeading" class="lab-draw-dialog">
 <div class="head"><strong id="labDrawHeading">Sorteo de perspectivas de negocio</strong><button type="button" class="secondary" id="lab-draw-close">Volver a la actividad ×</button></div>
@@ -266,7 +291,7 @@ footer{display:none}
 <footer>PFMTTD · Encuadre académico. La recepción central de acuerdos se realiza mediante Google Apps Script.</footer>
 <script>
 const K='pfmtd_v04_';const roster=["ENMANUEL BENAVIDES","FRANCISCO BONILLA","EMMANUEL BRITO","RAYMEL CEDANO","EZEQUIEL CUELLO","MARGARITA GIL","OMAR HERNANDEZ","CAROLA JIMENEZ","SERGIO MARTINEZ","ANGEL MATOS","ELISSA PAOLA ORTEGA","RANDY PEDIE","YOMIL PENA","CHRISTOPHER RODRIGUEZ","FIORDALIZA RODRIGUEZ","KERLIN RODRIGUEZ","LESLY SANTIAGO","YUDDY SUERO","JOSELIN URENA"];const get=(k,def)=>{try{return JSON.parse(localStorage.getItem(K+k))??def}catch{return def}};const put=(k,v)=>localStorage.setItem(K+k,JSON.stringify(v));
-const SECTIONS=['portada','panel','sesion','desarrollo'];
+const SECTIONS=['portada','panel','sesion','desarrollo','cierre-sesion'];
 function slideIndex(){return SECTIONS.findIndex(id=>!document.getElementById(id).hidden)}
 function showSlide(index){const n=Math.max(0,Math.min(SECTIONS.length-1,index));SECTIONS.forEach((id,i)=>document.getElementById(id).hidden=(i!==n));updateSlideBar()}
 function showPanel(){showSlide(1)}
@@ -382,7 +407,22 @@ function setupMaturity(){
 }
 
 const maturityPillars=[{"name":"Estrategia","indicator":"Objetivos y prioridades digitales definidos","evidence":"Plan de mejora con objetivos, responsables y seguimiento","prompt":"¿La MiPyME decide qué digitalizar y por qué?"},{"name":"Cultura","indicator":"Adopción de nuevas prácticas por el equipo","evidence":"Registro de participación, acuerdos y uso real de una nueva práctica","prompt":"¿El equipo utiliza los cambios o mantiene hábitos anteriores?"},{"name":"Talento","indicator":"Capacidades para utilizar herramientas y datos","evidence":"Capacitaciones realizadas y demostraciones de uso en el puesto","prompt":"¿Quién puede ejecutar y sostener la mejora?"},{"name":"Procesos","indicator":"Ejecución coordinada y seguimiento de entregas","evidence":"Registro de pedidos, responsables por etapa y tiempos de despacho","prompt":"¿Dónde hay retrasos, duplicidad o tareas sin responsable?"},{"name":"Tecnología","indicator":"Disponibilidad y uso funcional de sistemas","evidence":"Inventario de herramientas y registro de funcionamiento","prompt":"¿Las herramientas apoyan de forma efectiva el trabajo?"},{"name":"Datos y seguridad","indicator":"Calidad de registros y control de acceso","evidence":"Muestra de registros completos, respaldos y permisos de acceso","prompt":"¿Los datos son confiables y se protegen?"},{"name":"Experiencia y valor","indicator":"Calidad de atención y satisfacción del cliente","evidence":"Registro de reclamaciones, tiempos de respuesta y mejoras del servicio","prompt":"¿Qué valor recibe realmente el cliente?"}];
+function setupCierreCotejo(){
+ const key='pfmtd_cierre_sesion_v1',observado=document.getElementById('cierre-observado'),refuerzo=document.getElementById('cierre-refuerzo'),estado=document.getElementById('cierre-estado');
+ try{const saved=JSON.parse(sessionStorage.getItem(key)||'null');if(saved){observado.value=saved.observado||'';refuerzo.value=saved.refuerzo||'';estado.textContent='Registro local recuperado; verifica que corresponda a observaciones reales.'}}catch(e){}
+ document.getElementById('cierre-guardar').onclick=()=>{
+  if(!observado.value){estado.textContent='Selecciona un resultado realmente observado o «No observado». No se registró un logro sin evidencia.';return}
+  if(!refuerzo.value){estado.textContent='Identifica el punto pendiente o indica «Ninguno identificado».';return}
+  try{sessionStorage.setItem(key,JSON.stringify({observado:observado.value,refuerzo:refuerzo.value}));estado.textContent='Observación guardada solo en este navegador. Contrasta con la lista de cotejo; no se envió a Google Sheets.'}
+  catch(e){estado.textContent='No se pudo guardar localmente. Conserva la observación en tu lista de cotejo.'}
+ };
+ document.getElementById('cierre-next').onclick=()=>openModal('cierreProximo');
+}
 const views={
+cierreSintesis:['Síntesis participativa · 23:00–24:00',()=>'<p class="stage">CIERRE DE SESIÓN · 1 MINUTO · EPRADI 31</p><h2>Una idea, tres formas de mejorar</h2><p>Solicita <strong>una intervención oral</strong>: que un participante diferencie los tres conceptos mediante un ejemplo sencillo de MiPyME.</p><div class="pf-cards"><div class="pf-tile"><h3>Digitalizar</h3><p>Registrar datos en soporte digital.</p></div><div class="pf-tile"><h3>Automatizar</h3><p>Ejecutar tareas mediante reglas.</p></div><div class="pf-tile"><h3>Transformar</h3><p>Reorganizar procesos, personas, decisiones y tecnología para aportar valor.</p></div></div><div class="pf-hero">¿Qué diferencia hay entre registrar una venta, generar una alerta y reorganizar el negocio?</div><div class="pf-footer"><strong>Observación del facilitador:</strong> escuchar una explicación y pedir un ejemplo concreto; no asignar logro a todo el grupo por una sola intervención.</div><button type="button" id="cierre-sintesis-next">Continuar a la comprobación →</button>',()=>{document.getElementById('cierre-sintesis-next').onclick=()=>openModal('cierreCotejo')}],
+cierreCotejo:['Comprobamos y reforzamos · 24:00–25:00',()=>'<p class="stage">CIERRE DE SESIÓN · 1 MINUTO · EPRADI 32</p><h2>¿Qué demostramos y qué debemos mejorar?</h2><div class="pf-hero">¿Digitalizar un registro significa necesariamente transformar una empresa? <strong>Justifica tu respuesta.</strong></div><div class="pf-columns"><div class="pf-tile"><h3>Observación real</h3><label for="cierre-observado">Clasificación y justificación</label><select id="cierre-observado"><option value="">Sin registrar</option><option value="si">Sí, observado</option><option value="no">No, necesita refuerzo</option><option value="na">No observado</option></select><p class="pf-minitext">Utiliza el registro del cotejo aplicado en el Desarrollo. No inventes resultados.</p></div><div class="pf-tile"><h3>Punto por reforzar</h3><label for="cierre-refuerzo">Concepto que requiere aclaración</label><select id="cierre-refuerzo"><option value="">Sin determinar</option><option value="digitalizacion">Digitalización</option><option value="automatizacion">Automatización</option><option value="transformacion">Transformación digital</option><option value="ninguno">Ninguno identificado</option></select></div></div><div class="pf-footer"><strong>Retroalimentación y corrección:</strong> registrar una venta en Excel es digitalización; transformar implica cambios coordinados en procesos, responsabilidades y decisiones. Escucha una reformulación del participante.</div><button type="button" id="cierre-guardar">Guardar observación local</button> <button type="button" class="secondary" id="cierre-next">Continuar a la próxima sesión →</button><p id="cierre-estado" class="pf-minitext" aria-live="polite"></p>',()=>setupCierreCotejo()],
+cierreProximo:['Continuidad · 25:00–26:00',()=>'<p class="stage">CIERRE DE SESIÓN · 1 MINUTO · EPRADI 32</p><h2>Del concepto al diagnóstico</h2><p>Ahora sabemos distinguir usos de tecnología. En el siguiente encuentro analizaremos <strong>indicadores y evidencias</strong> de los siete pilares de madurez de una MiPyME, sin atribuirle todavía un nivel.</p><div class="maturity-path">Pilar <span>→</span> Indicador <span>→</span> Evidencia <span>→</span> Nivel <span>→</span> Brecha <span>→</span> Prioridad</div><div class="pf-tile"><h3>Pregunta para continuar</h3><p>En una MiPyME que entrega tarde sus pedidos, ¿qué evidencia recogerías antes de decidir cómo mejorar?</p><p class="pf-minitext">Ejemplos posibles: tiempos de preparación, registro de entregas, responsables y reclamaciones. Los niveles se determinarán con evidencia contrastada posteriormente.</p></div><div class="pf-footer"><strong>Cierre del encuentro:</strong> recuperar un logro y un aspecto pendiente, anunciar la próxima sesión y reconocer la participación. La simulación continuará con el cierre de curso, sin afirmar haber impartido 80 horas.</div>',()=>{}],
+
 madurez:['Madurez tecnológica · Siete pilares',()=>'<p class="stage">DESARROLLO · MADUREZ TECNOLÓGICA · 20:00–23:00</p><h2>¿Cómo sabemos si una MiPyME está avanzando?</h2><p>La madurez no se mide por tener más aplicaciones. Observamos <strong>capacidades, prácticas y resultados verificables</strong>. Explora los siete pilares y relaciona un proceso con una evidencia.</p><div class="maturity-path" aria-label="Ruta de diagnóstico">Pilar <span>→</span> Indicador <span>→</span> Evidencia <span>→</span> Nivel <span>→</span> Brecha <span>→</span> Prioridad</div><div class="maturity-tabs" role="group" aria-label="Seleccionar pilar de madurez"><button type="button" data-maturity="0" aria-pressed="true">Estrategia</button><button type="button" data-maturity="1" aria-pressed="false">Cultura</button><button type="button" data-maturity="2" aria-pressed="false">Talento</button><button type="button" data-maturity="3" aria-pressed="false">Procesos</button><button type="button" data-maturity="4" aria-pressed="false">Tecnología</button><button type="button" data-maturity="5" aria-pressed="false">Datos y seguridad</button><button type="button" data-maturity="6" aria-pressed="false">Experiencia y valor</button></div><div class="maturity-spotlight" aria-live="polite"><p class="maturity-overline">PILAR SELECCIONADO</p><h3 id="maturity-name">Estrategia</h3><div class="maturity-columns"><div><strong>Indicador posible</strong><p id="maturity-indicator"></p></div><div><strong>Evidencia observable</strong><p id="maturity-evidence"></p></div></div><p class="maturity-question"><strong>Pregunta al grupo:</strong> <span id="maturity-prompt"></span></p></div><div class="maturity-practice"><strong>Microactividad · Despacho y entregas</strong><p>Una MiPyME entrega tarde porque las tareas no están coordinadas. ¿Qué pilar elegiríamos y qué evidencia revisaríamos?</p><div class="maturity-controls"><button type="button" id="maturity-show" class="secondary">Mostrar ejemplo tras escuchar al grupo</button><button type="button" id="maturity-record">Registrar propuesta oral</button></div><p id="maturity-model" class="maturity-model" hidden><strong>Una respuesta defendible:</strong> Procesos. Indicador: cumplimiento de tiempos de despacho. Evidencia: registro de pedidos, responsables por etapa y entregas a tiempo. Otras respuestas son válidas si se justifican con indicadores y evidencias.</p><p id="maturity-recorded" class="maturity-recorded" hidden></p></div><div class="pf-footer"><strong>Alcance:</strong> esta actividad introduce el razonamiento diagnóstico, pero no asigna un nivel real ni demuestra por sí sola RA1.2. El nivel, la brecha y la prioridad requieren recopilar y contrastar datos en sesiones posteriores.</div>',()=>setupMaturity()],
 
 evocacion:['Evocación · ¿Digitalizar, automatizar o transformar?',()=>'<p class="stage">DESARROLLO · ACTIVACIÓN CONCEPTUAL</p><h2>¿Qué está haciendo esta MiPyME?</h2><p>Escucha el caso, elige una categoría y <strong>justifica la decisión antes de revelar la respuesta</strong>. El banco tiene 12 situaciones; durante la simulación utilizaremos solo las que permita el tiempo.</p><div class="evocation-card"><p id="evoc-number" class="evocation-meta">Situación 1 de 12</p><h3 id="evoc-business">MiPyME</h3><p id="evoc-scenario" class="evocation-scenario"></p></div><div class="evocation-options" role="group" aria-label="Selecciona una clasificación"><button type="button" data-evoc-answer="Digitalizar">Digitalizar</button><button type="button" data-evoc-answer="Automatizar">Automatizar</button><button type="button" data-evoc-answer="Transformar">Transformar</button></div><div class="evocation-feedback" id="evoc-feedback" hidden aria-live="polite"></div><p id="evoc-guidance" class="pf-minitext">Pregunta al grupo: ¿qué cambia realmente: el soporte, una tarea o la organización del negocio?</p><div class="evocation-nav"><button type="button" id="evoc-back" class="secondary">← Caso anterior</button><button type="button" id="evoc-reveal" class="secondary">Revelar explicación</button><button type="button" id="evoc-next">Siguiente caso →</button><button type="button" id="evoc-return" class="secondary">Volver a los conceptos</button></div><p class="pf-minitext">Apoyo para evocación y comprobación oral; no califica participantes ni sustituye la lista de cotejo. No se necesita recorrer los 12 casos.</p>',()=>setupEvocation()],
