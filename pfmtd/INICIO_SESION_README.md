@@ -25,4 +25,4 @@ Este cambio implementa su aplicación opcional, pero **no cambia el RT-03**: la 
 - **Temporalización:** se requiere reconciliar el RT-03 con la nueva exigencia de aplicación; no afirmar que se realizaron las dos cosas en los mismos 30 segundos sin prueba cronometrada.
 
 ## Pruebas
-Validación estática JavaScript realizada; no se ha actualizado todavía Apps Script, probado recepción en teléfono ni verificado la temporalización con participantes. No fusionar antes de completar esas validaciones.
+Validación estática JavaScript realizada; según las capturas compartidas, Apps Script v1.4 fue implementado (versión 4) y configurar() terminó sin errores visibles. Sigue sin acreditarse recepción efectiva de un diagnóstico, prueba completa desde teléfono ni temporización con participantes. No fusionar antes de completar esas validaciones.
