@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PFMTTD · Acuerdos para proyectar</title>
+<!-- Versión 1.1 · 2026-11-15 · Vista pública aprobada sin datos personales · Depende de Code.gs v1.1 -->
+<style>
+:root{font-family:system-ui,sans-serif;color:#11294b;background:#f4f7fd}
+*{box-sizing:border-box}body{margin:0;padding:1rem}.top{display:flex;gap:1rem;justify-content:space-between;align-items:center;flex-wrap:wrap}
+h1{margin:.5rem 0;font-size:clamp(1.4rem,3vw,2.25rem);color:#0a3395}
+button{background:#143fae;color:white;border:0;border-radius:10px;padding:.8rem 1.2rem;font:inherit;font-weight:700;cursor:pointer}
+button:focus-visible{outline:3px solid #ff9c00}ul{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.8rem;list-style:none;padding:0}
+li{padding:1.2rem;border:1px solid #d0ddf6;border-radius:12px;background:white;font-size:clamp(1rem,1.5vw,1.35rem);line-height:1.4;overflow-wrap:anywhere}
+small{color:#516581}#status{margin-top:1rem}
+</style></head><body>
+<div class="top"><div><small>AulaQR · PFMTTD · Construcción participativa</small><h1>Acuerdos para nuestra convivencia</h1></div>
+<button id="refresh" type="button">Actualizar propuestas</button></div>
+<p id="status" role="status" aria-live="polite">Consultando propuestas aprobadas…</p>
+<ul id="lista" aria-label="Propuestas aprobadas"></ul>
+<p><small>Solo se proyectan los acuerdos marcados «SI» en la columna Proyectar de la hoja privada. La aceptación final se dialoga con el grupo.</small></p>
+<script>
+(function(){
+const lista=document.querySelector('#lista'),status=document.querySelector('#status'),btn=document.querySelector('#refresh');
+let busy=false;
+function refresh(){
+ if(busy)return;busy=true;btn.disabled=true;status.textContent='Actualizando propuestas…';
+ google.script.run.withSuccessHandler(r=>{
+   busy=false;btn.disabled=false;
+   lista.replaceChildren();
+   const items=Array.isArray(r.items)?r.items:[];
+   items.forEach(t=>{const li=document.createElement('li');li.textContent=t;lista.appendChild(li)});
+   status.textContent=items.length?items.length+' propuestas disponibles para socializar.':'Todavía no hay propuestas seleccionadas para proyección.';
+ }).withFailureHandler(e=>{busy=false;btn.disabled=false;status.textContent='No fue posible actualizar: '+(e&&e.message?e.message:'error de conexión')}).listarAcuerdosProyectables();
+}
+btn.addEventListener('click',refresh);refresh();setInterval(()=>{if(document.visibilityState==='visible')refresh()},15000);
+})();
+</script></body></html>
