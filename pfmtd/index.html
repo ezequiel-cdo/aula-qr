@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PFMTTD | Encuadre grupal v0.7 · AulaQR</title>
-<!-- Objeto: encuadre público PFMTTD; versión 0.7-github; fecha 2026-11-15.
+<title>PFMTTD | Encuadre grupal v0.7.1 · AulaQR</title>
+<!-- Objeto: encuadre público PFMTTD; versión 0.7.1-github; fecha 2026-11-15.
 Estado: revisión de encuadre. Nuevo: panel de acuerdos moderados, ruta de QR activa y ruleta visual.
 Correcciones: elimina avisos superados. Sólo proyecta propuestas aprobadas; lista nominal autorizada publicada.
 Compatibilidad: módulo aislado, no modifica AulaQR Contraseñas seguras. Dependencias: ninguna. -->
@@ -67,6 +67,39 @@ dialog::backdrop{background:#07132de8}
 @media(max-width:750px){main{padding:6px 6px 60px}.screen{width:100%;aspect-ratio:auto;min-height:calc(100dvh - 74px)!important}.grid{grid-template-columns:repeat(2,minmax(0,1fr));margin:5% 4%}.card button{height:auto;min-height:90px;font-size:.93rem}#panel h1{font-size:2.1rem}#panel nav{position:static;margin:22px 4%}.screen{overflow:auto}#modalBody .wheel-layout{grid-template-columns:1fr}#modalBody .teams{grid-template-columns:1fr}}
 @media(max-width:480px){.grid{grid-template-columns:1fr}.card button{min-height:64px}}
 @media(prefers-reduced-motion:reduce){.wheel-visual{transition:none!important}}
+
+/* v0.7.1: panel con cabecera, ruta de 3 columnas y cierre visual */
+#panel .pf-brand{display:flex;justify-content:space-between;align-items:center;margin:4.1% 7% 0;gap:12px}
+#panel .pf-brand strong{font-size:clamp(1rem,1.7vw,1.75rem);color:#102ba0;letter-spacing:.06em}
+#panel .pf-brand .pf-word{color:#58708f;font-size:clamp(.8rem,1.35vw,1.38rem);letter-spacing:.13em}
+#panel .pf-brand .pf-pill{font-size:clamp(.67rem,.95vw,.99rem);font-weight:800;color:#0725a6;background:#e5ecff;padding:9px 16px;border-radius:50px;white-space:nowrap}
+#panel .muted:first-child{display:none}
+#panel .pf-kicker{margin:3% 7% 0;font-weight:900;color:#e78209;letter-spacing:.17em;font-size:clamp(.8rem,1.22vw,1.18rem)}
+#panel h1{margin:2% 7% .55%;font-size:clamp(1.9rem,3.4vw,3.6rem)}
+#panel .grid{margin-top:2.3%;gap:9px}
+#panel .card button{height:clamp(68px,8.7vh,94px);line-height:1.15}
+#panel .pf-participation{position:absolute;left:7%;right:7%;bottom:4.3%;background:#ecf8ef;border-left:5px solid #179746;padding:12px 18px;font-size:clamp(.75rem,1.13vw,1.1rem);color:#18304a}
+#panel nav{display:none}
+.pf-bottom{position:fixed;z-index:5;left:0;right:0;bottom:0;background:#08142d;color:#fff;display:flex;justify-content:center;align-items:center;gap:22px;height:57px;font-size:.86rem}
+.pf-bottom button{font-size:.85rem;padding:.6rem 1rem;background:#193bb4;border:1px solid #6b8ce3;border-radius:9px}
+.pf-bottom button:disabled{opacity:.45;cursor:not-allowed}
+footer{display:none}
+#modalBody .pf-hero{border-left:5px solid #1a3bb4;background:#edf3ff;padding:15px 19px;border-radius:8px;margin:16px 0;font-size:clamp(1rem,1.55vw,1.42rem)}
+#modalBody .pf-columns{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:16px 0}
+#modalBody .pf-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+#modalBody .pf-tile{background:#f2f5ff;border:1px solid #dae4f8;border-radius:12px;padding:18px;min-width:0}
+#modalBody .pf-tile h3{margin:0 0 12px;font-size:1.08rem}
+#modalBody .pf-tile p{font-size:clamp(.88rem,1.13vw,1.04rem);margin:0}
+#modalBody .pf-green{background:#eaf7ef;border-left:5px solid #139a44;padding:14px 18px;margin:18px 0;border-radius:6px}
+#modalBody .pf-minitext{font-size:.83rem;color:#526580}
+#modalBody .pf-module{border-radius:11px;background:#1947b8;color:#fff;padding:20px;font-size:1.15rem}
+#modalBody .pf-module.green{background:#158148}
+#modalBody .pf-module strong{display:block;font-size:1.2rem;margin-bottom:10px}
+#modalBody .pf-module p{margin:0;font-size:1.07rem}
+#modalBody .pf-footer{background:#eaf1ff;border-left:5px solid #1a41b1;padding:15px 18px;border-radius:8px;margin-top:20px}
+#modalBody .projection{height:365px}
+@media(max-width:820px){#panel .pf-brand{margin:4% 4% 0}#panel .pf-kicker{margin:4% 4% 0}#panel h1{margin:2% 4%}#panel>.lead{margin:0 4%}#panel .pf-participation{position:static;margin:22px 4%}#panel .pf-brand .pf-pill{white-space:normal}#modalBody .pf-cards{grid-template-columns:1fr}#modalBody .pf-columns{grid-template-columns:1fr}}
+@media(max-height:650px) and (min-width:850px){#panel .pf-participation{bottom:2%}#panel .grid{margin-top:1%}#panel .card button{height:66px}#panel .pf-brand{margin-top:2%}#panel .pf-kicker{margin-top:2%}}
 </style></head><body>
 <header><strong>AulaQR · PFMTTD</strong><span>Práctica didáctica · 30 minutos</span></header>
 <main>
@@ -76,27 +109,34 @@ dialog::backdrop{background:#07132de8}
 <p class="muted">Diseño académico de práctica; no constituye un programa institucional aprobado.</p>
 <button onclick="showPanel()">Comenzar encuadre grupal →</button></section>
 <section id="panel" class="screen" hidden>
-<p class="muted">Bienvenidos a nuestra experiencia · Inicio de curso</p>
+<div class="pf-brand"><div><strong>PFMTTD</strong><span class="pf-word"> / Formación por competencias</span></div><span class="pf-pill">INICIO DE CURSO · ENCUADRE GRUPAL</span></div>
+<p class="pf-kicker">BIENVENIDOS A NUESTRA EXPERIENCIA</p>
 <h1>Comencemos juntos</h1>
 <p class="lead">Un espacio para conocernos, construir confianza y aprender desde nuestra experiencia.</p>
 <div class="grid">
-<div class="card"><button data-modal="bienvenida">♫ Bienvenida<small>Color Esperanza y motivación ↗</small></button></div>
-<div class="card"><button data-modal="facilitador">👤 El facilitador<small>Conozcamos a Ezequiel ↗</small></button></div>
-<div class="card"><button data-modal="participantes">🎤 Nos presentamos<small>Nombre y actividad productiva ↗</small></button></div>
-<div class="card"><button data-modal="integracion">💬 Integración<small>Tecnología en nuestro trabajo ↗</small></button></div>
-<div class="card"><button data-modal="comunidades">◉ Comunidades<small>Ruleta y equipos de aprendizaje ↗</small></button></div>
-<div class="card"><button data-modal="acuerdos">🤝 Nuestros acuerdos<small>Construyamos la convivencia ↗</small></button></div>
-<div class="card"><button data-modal="programa">▤ Nuestro programa<small>Competencia, módulos y metodología ↗</small></button></div>
-<div class="card"><button data-modal="tema">💡 Tema y aprendizaje<small>Conceptos, RA y compromiso ↗</small></button></div>
-<div class="card"><button data-modal="expectativas">✦ Expectativas<small>Lo que esperamos lograr ↗</small></button></div>
-</div><nav><button class="secondary" onclick="showCover()">← Portada</button><button class="secondary" onclick="document.documentElement.requestFullscreen?.()">Pantalla completa</button></nav></section>
+<div class="card"><button data-modal="bienvenida">♫ Bienvenida<small>Color Esperanza y motivación</small></button></div>
+<div class="card"><button data-modal="facilitador">👤 El facilitador<small>Conozcamos a Ezequiel</small></button></div>
+<div class="card"><button data-modal="participantes">🎤 Nos presentamos<small>Nombre y actividad productiva</small></button></div>
+<div class="card"><button data-modal="integracion">💬 Integración<small>Tecnología en nuestro trabajo</small></button></div>
+<div class="card"><button data-modal="comunidades">◉ Comunidades<small>Ruleta y equipos de aprendizaje</small></button></div>
+<div class="card"><button data-modal="acuerdos">🤝 Nuestros acuerdos<small>Construyamos la convivencia</small></button></div>
+<div class="card"><button data-modal="programa">▤ Nuestro programa<small>Competencia, módulos y metodología</small></button></div>
+<div class="card"><button data-modal="tema">💡 Tema y aprendizaje<small>Conceptos, RA y compromiso</small></button></div>
+<div class="card"><button data-modal="expectativas">✦ Expectativas<small>Lo que esperamos lograr</small></button></div>
+</div><div class="pf-participation"><strong>Un espacio para participar</strong> con o sin teléfono. Los recursos se abren y regresan a esta pantalla.</div>
+</section>
 </main>
+<div class="pf-bottom"><button id="backSlide" type="button">← Anterior</button><span id="slideCounter">1 / 2</span><button id="nextSlide" type="button">Siguiente →</button><span class="pf-minitext" style="position:absolute;right:14px;color:#dce8ff">Teclas ← → · F: pantalla completa</span></div>
 <dialog id="modal"><div class="head"><strong id="modalTitle"></strong><button class="secondary" id="close">Cerrar ×</button></div><div id="modalBody"></div></dialog>
 <footer>PFMTTD · Encuadre académico. La recepción central de acuerdos se realiza mediante Google Apps Script.</footer>
 <script>
 const K='pfmtd_v04_';const roster=["ENMANUEL BENAVIDES","FRANCISCO BONILLA","EMMANUEL BRITO","RAYMEL CEDANO","EZEQUIEL CUELLO","MARGARITA GIL","OMAR HERNANDEZ","CAROLA JIMENEZ","SERGIO MARTINEZ","ANGEL MATOS","ELISSA PAOLA ORTEGA","RANDY PEDIE","YOMIL PENA","CHRISTOPHER RODRIGUEZ","FIORDALIZA RODRIGUEZ","KERLIN RODRIGUEZ","LESLY SANTIAGO","YUDDY SUERO","JOSELIN URENA"];const get=(k,def)=>{try{return JSON.parse(localStorage.getItem(K+k))??def}catch{return def}};const put=(k,v)=>localStorage.setItem(K+k,JSON.stringify(v));
-function showPanel(){document.querySelector('#portada').hidden=true;document.querySelector('#panel').hidden=false}
-function showCover(){document.querySelector('#portada').hidden=false;document.querySelector('#panel').hidden=true}
+function showPanel(){document.querySelector('#portada').hidden=true;document.querySelector('#panel').hidden=false;updateSlideBar()}
+function showCover(){document.querySelector('#portada').hidden=false;document.querySelector('#panel').hidden=true;updateSlideBar()}
+function updateSlideBar(){const p=!document.querySelector('#panel').hidden;document.querySelector('#slideCounter').textContent=p?'2 / 2':'1 / 2';document.querySelector('#backSlide').disabled=!p;document.querySelector('#nextSlide').disabled=p;}
+document.querySelector('#backSlide').onclick=showCover;document.querySelector('#nextSlide').onclick=showPanel;
+document.addEventListener('keydown',e=>{if(document.querySelector('#modal').open||['INPUT','TEXTAREA'].includes(document.activeElement.tagName))return;if(e.key==='ArrowRight')showPanel();if(e.key==='ArrowLeft')showCover();if(e.key.toLowerCase()==='f')document.documentElement.requestFullscreen?.()});
+updateSlideBar();
 const dlg=document.querySelector('#modal'), title=document.querySelector('#modalTitle'), body=document.querySelector('#modalBody');
 document.querySelector('#close').onclick=()=>dlg.close();
 document.querySelectorAll('[data-modal]').forEach(b=>b.onclick=()=>openModal(b.dataset.modal));
@@ -105,14 +145,14 @@ const esc=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;
 const views={
 bienvenida:['Bienvenida',()=>'<p class="stage">Bienvenida · Música para motivarnos</p><h2>Color Esperanza</h2><p>Escuchemos un fragmento del video oficial de Diego Torres. Pensemos: <strong>¿qué actitud necesitamos para aprender algo nuevo y transformar una realidad?</strong></p><div style="aspect-ratio:16/9;background:#09162e;border-radius:12px;display:grid;place-items:center;overflow:hidden" id="videoBox"><button id="loadVideo" type="button" style="background:white;color:#0a239c">▶ Abrir reproducción oficial</button></div><p style="font-size:.9rem">Requiere Internet. <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Nb1VOQRs-Vs">Abrir directamente en YouTube ↗</a></p><p class="notice"><strong>Para dialogar:</strong> comparte en una frase qué significa para ti comenzar con esperanza.</p>',setupVideo],
 facilitador:['Conozcamos al facilitador',()=>'<p class="stage">Inicio de curso · Presentación del facilitador</p><h2>Conozcamos a Ezequiel</h2><div style="display:grid;grid-template-columns:minmax(155px,240px) 1fr;gap:22px;align-items:start"><img src="assets/ezequiel-cuello.jpg" alt="Fotografía del facilitador Ezequiel N. Cuello del Orbe" style="width:100%;max-height:270px;object-fit:contain;border-radius:12px"><div><h3>Ezequiel N. Cuello del Orbe</h3><p>Profesional del área de tecnología, con formación en Ingeniería Electrónica en Computadoras y experiencia en informática, redes, consultoría tecnológica y docencia.</p><p>Ha participado en contextos relacionados con tecnologías de información, administración de infraestructura tecnológica y formación en informática.</p><p class="muted">Presentación profesional del facilitador.</p></div></div>'],
-participantes:['Nos presentamos',()=>'<p><strong>Ronda de presentación:</strong> cada persona comparte su nombre y el negocio, oficio o actividad productiva que desarrolla.</p><p><strong>En paralelo:</strong> circula el registro físico de asistencia para firma. El sistema no registra asistencia digital.</p><p>Pregunta opcional: ¿qué proceso cotidiano de su actividad podría mejorarse con tecnología?</p>'],
-integracion:['Integración participativa',()=>'<p>Compartan una palabra relacionada con tecnología y un proceso de MiPyME que mejorarían.</p><label>Palabra tecnológica<input id="palabra" maxlength="70"></label><label>Proceso que mejorarías<textarea id="proceso" rows="3"></textarea></label><button id="guardarIntegracion">Guardar en este navegador</button><p class="muted">Se solicitarán dos intervenciones orales. Este registro no se transmite al facilitador.</p>',()=>document.querySelector('#guardarIntegracion').onclick=()=>{put('integracion',{palabra:document.querySelector('#palabra').value,proceso:document.querySelector('#proceso').value});alert('Guardado únicamente en este navegador')}],
+participantes:['Nos presentamos',()=>'<p class="stage">INICIO DE CURSO · PRESENTACIÓN DE PARTICIPANTES</p><h2>¿Quiénes construimos este aprendizaje?</h2><p>Por turnos, compartamos nuestro <strong>nombre</strong> y el <strong>negocio, oficio o actividad productiva</strong> a la que nos dedicamos.</p><div class="pf-hero">“Me llamo... y mi actividad productiva es...”</div><div class="pf-columns"><div class="pf-tile"><h3>Así participamos</h3><p>Intervenciones breves y respetuosas. Escuchemos para descubrir experiencias comunes.</p></div><div class="pf-tile"><h3>Registro de asistencia</h3><p>Mientras nos presentamos, circulará el <strong>control físico de asistencia</strong>. Cada persona firma en el formulario correspondiente.</p></div></div><p class="pf-minitext">La presentación oral y el control de asistencia son actividades distintas.</p>'],
+integracion:['Integración participativa',()=>'<p class="stage">INICIO DE CURSO · DINÁMICA PARTICIPATIVA</p><h2>La tecnología en mi actividad</h2><p>Comparte una <strong>palabra</strong> que relaciones con tecnología y un <strong>proceso</strong> de una MiPyME que mejorarías.</p><div class="pf-hero">¿Qué proceso de un negocio o actividad productiva mejoraría con tecnología?</div><div class="pf-tile"><label>Palabra clave<input id="palabra" maxlength="70" placeholder="Ej.: organización"></label><label>Proceso que mejoraría<input id="proceso" maxlength="180" placeholder="Ej.: registro de ventas"></label><button id="guardarIntegracion">Conservar aportación en este equipo</button><p class="pf-minitext">Invitemos también a dos personas a compartir oralmente.</p></div>',()=>document.querySelector('#guardarIntegracion').onclick=()=>{put('integracion',{palabra:document.querySelector('#palabra').value,proceso:document.querySelector('#proceso').value});alert('Aportación conservada en este navegador.')} ],
 comunidades:['Comunidades tecnológicas',()=>'<p class="stage">Inicio de curso · Comunidades de aprendizaje</p><h2>Una ruleta, cinco comunidades</h2><p>Formaremos comunidades con nombres vinculados a nuestra transformación tecnológica.</p><div class="wheel-layout"><div><div class="wheel-visual" id="wheel"><div class="wheel-core" id="wheelText">¡Comunidades listas!</div></div><p class="muted" id="cnt"></p><button id="sortear">⟳ Girar ruleta y formar comunidades</button> <button class="secondary" id="exportarGrupos">Exportar grupos</button></div><div id="grupos" class="teams" aria-live="polite"></div></div><details><summary>Configurar participantes antes del sorteo</summary><label>Participantes (uno por línea)<textarea id="nombres" rows="7"></textarea></label><p class="muted">Los nombres no constituyen un registro de asistencia.</p></details>',setupTeams],
 acuerdos:['Nuestros acuerdos',()=>'<p class="stage">Inicio de curso · Convivencia</p><h2>Nuestros acuerdos los construimos juntos</h2><p>¿Qué normas necesitamos para aprender en un ambiente de confianza, colaboración y respeto?</p><div class="wheel-layout"><div><h3>Propón un acuerdo</h3><p>Escanea el código QR y completa una propuesta breve desde tu teléfono.</p><img alt="QR para enviar propuesta de acuerdos" width="220" height="220" style="max-width:90%;height:auto" src="https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=https%3A%2F%2Fezequiel-cdo.github.io%2Faula-qr%2Fpfmtd%2Facuerdos.html"><p><a target="_blank" rel="noopener" href="https://ezequiel-cdo.github.io/aula-qr/pfmtd/acuerdos.html">Abrir formulario de acuerdos ↗</a></p><p>También puedes compartir una idea oralmente.</p></div><div><h3>Consolidación visible</h3><p>Las propuestas recibidas y seleccionadas para socialización aparecen aquí. Debemos acordar juntos cuáles conservar.</p><iframe class="projection" title="Propuestas de acuerdos recibidas y aprobadas" src="https://script.google.com/macros/s/AKfycbwRmkf9weUlTWs68OMy4ZqPWz4DH0JgzIqqb40H_siBoYxWi3Zsl7b9EemWUWDLcOwH-g/exec?vista=panel"></iframe><p><a target="_blank" rel="noopener" href="https://script.google.com/macros/s/AKfycbwRmkf9weUlTWs68OMy4ZqPWz4DH0JgzIqqb40H_siBoYxWi3Zsl7b9EemWUWDLcOwH-g/exec?vista=panel">Abrir consolidación en pantalla completa ↗</a></p></div></div><p class="notice">Leamos las propuestas y solicitemos al grupo confirmación o ajustes. Mostrar una idea no equivale a aprobarla.</p>'],
 
-programa:['Programa de formación',()=>'<h2>PFMTTD · 80 horas</h2><p><strong>M01 (36 horas):</strong> diagnóstico de madurez tecnológica de MiPyME.</p><p><strong>M02 (44 horas):</strong> formulación de un proyecto de transformación digital.</p><p><strong>Metodología:</strong> aprendizaje basado en proyectos (ABPr), con diagnóstico, formulación, evidencias y mejora.</p><p class="notice">La competencia general literal y los criterios curriculares deben contrastarse con el RT-03 revisado antes de la práctica evaluada.</p>'],
-tema:['Nuestro tema y resultado de aprendizaje',()=>'<h2>De los datos a la transformación</h2><ol><li><strong>Digitalización:</strong> registrar las ventas en una hoja electrónica.</li><li><strong>Automatización:</strong> generar alertas de existencias por reglas.</li><li><strong>Transformación digital:</strong> rediseñar ventas, atención, entregas y decisiones con datos y tecnología integrados.</li></ol><p>Una <strong>MiPyME</strong> es una micro, pequeña o mediana empresa. Su <strong>madurez tecnológica</strong> expresa el grado en que utiliza estratégicamente tecnología, capacidades y datos para generar valor.</p><p><strong>Pregunta:</strong> ¿cuál de estos cambios implica transformar la manera de trabajar?</p><p class="notice">Presentar RA1.1 y CE1.1a con su redacción validada del RT-03; no declarar su dominio por esta introducción.</p>'],
-expectativas:['Nuestras expectativas',()=>'<p>Escribe una expectativa concreta para las 80 horas y otra alcanzable en esta práctica.</p><label>Durante el programa<textarea id="exp80" rows="2"></textarea></label><label>Durante esta simulación<textarea id="exp30" rows="2"></textarea></label><button id="guardarExp">Guardar expectativas</button> <button class="secondary" id="exportExp">Exportar JSON</button><p class="muted">Se recuperarán para su contraste al cierre. Solo se guardan en este dispositivo.</p>',setupExp]
+programa:['Programa de formación',()=>'<p class="stage">INICIO DE CURSO · PROGRAMA FORMATIVO</p><h2>Nuestro camino de formación</h2><p><strong>PFMTTD · 80 horas.</strong> Aprenderemos a conocer la situación tecnológica de una MiPyME y a construir propuestas de mejora contextualizadas.</p><div class="pf-columns"><div class="pf-module"><strong>M01 · 36 horas</strong><p>Diagnóstico de madurez tecnológica</p></div><div class="pf-module green"><strong>M02 · 44 horas</strong><p>Proyecto de transformación digital</p></div></div><div class="pf-hero">Ruta de trabajo: <strong>diagnosticar → identificar brechas → priorizar → diseñar un proyecto de mejora.</strong></div><p>Aprenderemos mediante actividades prácticas, colaboración y aprendizaje basado en proyectos (ABPr). Emplearemos ejercicios, listas de cotejo, evidencias de desempeño y productos.</p><p class="pf-minitext">Esta práctica representa momentos del programa; no equivale a impartir las 80 horas.</p>'],
+tema:['Nuestro tema y resultado de aprendizaje',()=>'<p class="stage">INICIO DE CURSO · INTRODUCCIÓN</p><h2>¿Qué cambia cuando usamos tecnología?</h2><p>Una <strong>MiPyME</strong> es una micro, pequeña o mediana empresa. Consideremos un mismo negocio que desea mejorar sus ventas y entregas.</p><div class="pf-cards"><div class="pf-tile"><h3>Digitalización</h3><p>Registrar ventas en una hoja electrónica.</p></div><div class="pf-tile"><h3>Automatización</h3><p>Generar alertas automáticas cuando falten productos.</p></div><div class="pf-tile"><h3>Transformación digital</h3><p>Rediseñar ventas, entregas, responsabilidades y decisiones utilizando tecnología y datos.</p></div></div><div class="pf-hero">La <strong>madurez tecnológica</strong> refleja la capacidad de una organización para utilizar y gestionar tecnología de manera articulada y útil. No depende solo de tener herramientas.</div><p><strong>RA1.1:</strong> reconoceremos diferencias entre estos conceptos para introducir el diagnóstico de madurez tecnológica de las MiPyME.</p><div class="pf-footer"><strong>Compromiso de participación:</strong> ¿qué acción concreta aportarás para aprender con el grupo?</div>'],
+expectativas:['Nuestras expectativas',()=>'<p class="stage">INICIO DE CURSO · EXPECTATIVAS</p><h2>¿Qué esperamos aprender?</h2><p>Diferenciemos lo que deseamos lograr a lo largo del programa completo de aquello que podremos demostrar en esta práctica breve.</p><div class="pf-columns"><div class="pf-tile"><label>Expectativa para la formación de 80 horas<textarea id="exp80" rows="4" placeholder="Al finalizar el programa quisiera..."></textarea></label></div><div class="pf-tile"><label>Expectativa para la práctica de hoy<textarea id="exp30" rows="4" placeholder="En esta práctica me gustaría comprender..."></textarea></label></div></div><button id="guardarExp">Guardar expectativas en este equipo</button> <button class="secondary" id="exportExp">Exportar para recuperar al cierre</button><div class="pf-footer">Volveremos a estas expectativas al cierre para valorar qué se observó realmente.</div>',setupExp]
 };
 function setupVideo(){const box=document.querySelector('#videoBox');const button=document.querySelector('#loadVideo');if(!box||!button)return;button.onclick=()=>{const frame=document.createElement('iframe');frame.title='Color Esperanza - video oficial';frame.src='https://www.youtube-nocookie.com/embed/Nb1VOQRs-Vs?autoplay=1&rel=0';frame.allow='autoplay; encrypted-media; picture-in-picture';frame.allowFullscreen=true;frame.style.cssText='width:100%;height:100%;border:0';box.replaceChildren(frame)};}
 dlg.addEventListener('close',()=>{const frame=document.querySelector('#videoBox iframe');if(frame)frame.src='about:blank';});
