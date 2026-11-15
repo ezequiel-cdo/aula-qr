@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PFMTTD · Modelo de diagnóstico inicial</title>
+<!-- Objeto: Modelo didáctico de instrumento diagnóstico PFMTTD
+Versión 0.1 · Fecha 2026-11-15 · Estado: modelo para exhibición, no aprobado
+Nuevo: hoja ilustrativa imprimible. Correcciones: ninguna.
+Compatibilidad: PFMTTD 0.9.1; no cambia Apps Script ni el piloto AulaQR.
+Dependencias: ninguna. NO aplicación ni calificación en la simulación. -->
+<style>
+*{box-sizing:border-box}body{font:1.05rem/1.5 system-ui,sans-serif;background:#f0f5fc;color:#152643;margin:0}
+main{max-width:950px;margin:2rem auto;padding:clamp(1rem,4vw,2.6rem);background:white;border:1px solid #d5e0f1;border-radius:16px}
+h1{font-size:clamp(1.6rem,4vw,2.6rem);color:#1233a5;line-height:1.15}
+small{color:#52637a}.mark{color:#b56b00;font-weight:800;text-transform:uppercase;letter-spacing:.1em}
+.note{border-left:5px solid #1b43b2;background:#edf3ff;border-radius:7px;padding:.9rem 1.1rem}
+header{border-bottom:2px solid #d7e2f5;margin-bottom:1.5rem;padding-bottom:1rem}
+.item{border:1px solid #d7e1f5;background:#f7f9ff;border-radius:10px;padding:1rem;margin:1rem 0}
+label{display:block;margin:.5rem 0}p{margin:.5rem 0}
+button{font:inherit;background:#113bb2;color:white;border:0;border-radius:9px;padding:.7rem 1.2rem;cursor:pointer}
+button:focus-visible{outline:3px solid #f59c00}fieldset{border:0;margin:0;padding:0}
+@media print{body{background:white}main{border:0;margin:0;padding:0}button{display:none}.item{break-inside:avoid}body{font-size:11pt}}
+</style></head>
+<body><main><header><small>PFMTTD · M01 — Diagnóstico de madurez tecnológica de MiPyME</small><p class="mark">Modelo didáctico para exhibición</p>
+<h1>Diagnóstico inicial de conocimientos previos</h1><p><strong>Finalidad:</strong> conocer el punto de partida de las personas participantes para adaptar ejemplos y actividades de aprendizaje.</p>
+<p class="note"><strong>Uso durante la simulación (08:00–08:30):</strong> mostrar y explicar este modelo. <strong>No responder, aplicar ni calificar</strong> en los 30 minutos de práctica.</p></header>
+<p><strong>Identificador:</strong> _______________________ &nbsp; <strong>Fecha:</strong> _______________________</p>
+<section aria-label="Ejemplos de ítems">
+<h2>Ejemplos de preguntas diagnósticas</h2>
+<div class="item"><p><strong>1.</strong> ¿Qué proceso de una MiPyME conoces que actualmente se registre en papel o en un archivo digital?</p><p>________________________________________________________________________</p></div>
+<div class="item"><p><strong>2.</strong> Marca el ejemplo que mejor represente una tarea automatizada.</p>
+<fieldset><label><input type="checkbox" disabled> Registrar ventas manualmente en una libreta.</label><label><input type="checkbox" disabled> Recibir una alerta automática al agotarse un producto.</label><label><input type="checkbox" disabled> Enviar un mensaje escrito individualmente.</label></fieldset></div>
+<div class="item"><p><strong>3.</strong> Explica con tus palabras una diferencia entre usar una herramienta digital y transformar el funcionamiento de una empresa.</p><p>________________________________________________________________________</p></div>
+<div class="item"><p><strong>4.</strong> ¿Qué información podría ayudar a una MiPyME a decidir qué proceso necesita mejorar?</p><p>________________________________________________________________________</p></div>
+</section>
+<div class="note"><strong>Observación técnica:</strong> este modelo fue elaborado para apoyar la demostración pedagógica. No se presenta como el instrumento oficial definitivo ni sustituye un diagnóstico existente aprobado. La actividad del RT-03 exige únicamente exhibir y entregar el instrumento inicial, sin aplicación ni puntuación.</div>
+<p><button type="button" onclick="print()">Imprimir modelo</button></p>
+</main></body></html>
