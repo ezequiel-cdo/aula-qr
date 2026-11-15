@@ -24,3 +24,11 @@ El formulario `pfmtd/acuerdos.html` permite redactar y exportar propuestas. **No
 
 ## Compatibilidad
 Los archivos nuevos están confinados en `pfmtd/`. No se cambia la ruta del AulaQR existente. Las funciones de la versión local v0.3 permanecen disponibles en el artefacto descargable de la conversación; este módulo elimina los datos personales incrustados antes de publicarse.
+
+
+## Actualización 0.4 — 15/11/2026
+- Se precargaron en el HTML público los **19 nombres** suministrados por la coordinación, con autorización expresa de publicación indicada en la conversación. Faltan dos registros para completar las 21 plazas previstas.
+- Se añadió un enlace y código QR propuesto a `/aula-qr/pfmtd/acuerdos.html`; **el destino no ha sido verificado públicamente** y no debe proyectarse como funcional mientras continúe en la rama sin publicación.
+- El formulario incluye estructura para POST HTTPS a un servicio receptor, pero `RECEPTOR_HTTPS` permanece vacío. Solo marcará recepción si el servidor devuelve HTTP 2xx y `receipt_id` en JSON. GitHub Pages por sí solo no almacena envíos.
+- La portada gráfica exacta y la fotografía original están preparadas en un paquete de activos para incorporarlas a `pfmtd/assets/portada-programa.png` y `pfmtd/assets/ezequiel-cuello.jpg`. **No están aún subidas al repositorio**, por lo que la portada que se ve en la rama es una reconstrucción tipográfica provisional.
+- Pendiente: autorización y configuración del servicio de respuestas (por ejemplo, Apps Script, Function o backend autorizado), persistencia segura y panel de consolidación; pruebas reales de punta a punta.
