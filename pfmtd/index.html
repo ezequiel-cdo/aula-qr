@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PFMTTD | Encuadre e inicio de sesión v1.0.6 · AulaQR</title>
+<title>PFMTTD | Encuadre e inicio de sesión v1.0.7 · AulaQR</title>
 <!-- Objeto: encuadre público PFMTTD; versión 1.0.1-github; fecha 2026-11-15.
 Estado: prototipo en revisión. Nuevo: se retira el recurso independiente AulaQR; permanecen construcción conceptual y práctica formativa. La franja 15:00–16:00 requiere armonización del RT-03. Diagnóstico previo en proceso de armonización curricular.
 Correcciones: elimina avisos superados. Sólo proyecta propuestas aprobadas; lista nominal autorizada publicada.
@@ -127,7 +127,7 @@ footer{display:none}
 #modalBody .recall-reveal{border-left:5px solid #17914a;background:#eaf7f0;padding:13px 16px;border-radius:8px;margin-top:12px}
 @media(max-width:820px){#sesion .pf-brand{margin:4% 4% 0}#sesion .pf-brand .pf-pill{white-space:normal}#sesion .pf-kicker{margin:4% 4% 0}#sesion h1{margin:2% 4%}#sesion>.lead{margin:0 4%}#sesion .pf-session-cards{margin:5% 4%;grid-template-columns:1fr}#sesion .pf-session-note{margin:5% 4%}#modalBody .recall-prompts{grid-template-columns:1fr}}
 
-/* Etapa 3: desarrollo de la sesión, v1.0.6 */
+/* Etapa 3: desarrollo de la sesión, v1.0.7 */
 #desarrollo{background:linear-gradient(132deg,#f4f8ff,#fff 70%)}
 #desarrollo:before{content:"";position:absolute;left:0;top:0;bottom:0;width:1%;background:linear-gradient(#1136ad 0 70%,#fff 70% 72%,#ef8d15 72%)}
 #desarrollo .pf-brand{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4.1% 7% 0}
@@ -155,7 +155,7 @@ footer{display:none}
 #modalBody .concept-check{border-left:5px solid #18914c;background:#eaf7ef;padding:13px 18px;border-radius:8px;margin-top:14px}
 @media(max-width:820px){#desarrollo .pf-brand{margin:4% 4% 0}#desarrollo .pf-brand .pf-pill{white-space:normal}#desarrollo .pf-kicker{margin:4% 4% 0}#desarrollo h1{margin:2% 4%}#desarrollo>.lead{margin:0 4%}#desarrollo .pf-session-cards{margin:5% 4%;grid-template-columns:1fr}#desarrollo .pf-session-note{margin:5% 4%}}
 
-/* v1.0.6 — Sorteo independiente de la actividad */
+/* v1.0.7 — Sorteo independiente de la actividad */
 .lab-draw-dialog{width:min(940px,94vw);max-height:90vh;padding:clamp(1rem,3vw,2rem)}
 .lab-draw-focus{background:#f0f4ff;border:2px solid #cbd9fa;border-radius:16px;padding:clamp(1.1rem,3vw,2rem);margin:1rem 0;text-align:center;min-height:150px}
 .lab-draw-focus strong{display:block;color:#0c30a4;font-size:clamp(1.3rem,3vw,2.2rem);line-height:1.2}
@@ -245,11 +245,11 @@ const esc=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;
 
 // Sorteo independiente de perspectivas: no altera la asignación de integrantes.
 const labPerspectives=[
- {name:'Ventas y atención',prompt:'¿Qué hábito de atención al cliente debe cambiar y quién decide cómo responder?',evidence:'Ej.: registro de tiempos de respuesta y responsable definido'},
- {name:'Inventario y compras',prompt:'¿Qué procedimiento y regla de reposición se necesitan, además de alertas?',evidence:'Ej.: umbrales definidos y registro de faltantes'},
- {name:'Entregas y coordinación',prompt:'¿Cómo cambia la distribución de responsabilidades entre venta, almacén y reparto?',evidence:'Ej.: pedidos entregados a tiempo y responsable por etapa'},
- {name:'Cultura y talento',prompt:'¿Qué resistencia, hábito o habilidad del equipo influye en adoptar la mejora?',evidence:'Ej.: práctica observada, capacitación y acuerdos de uso'},
- {name:'Dirección, datos y decisiones',prompt:'¿Quién analiza indicadores, decide prioridades y protege la información?',evidence:'Ej.: revisión periódica de métricas y acceso controlado'}
+ {name:'Ventas y servicios',context:'El negocio recibe pedidos por mensajes y en el mostrador, pero algunas solicitudes se pierden y nadie sabe quién debe responder.',prompt:'¿Cómo organizar pedidos y responsables sin depender de la memoria de una persona?',evidence:'Registro de solicitudes, tiempo de respuesta y persona responsable'},
+ {name:'Inventario y compras',context:'La tienda se queda sin productos porque cuenta existencias a mano y compra cuando alguien nota el faltante.',prompt:'¿Qué registro, regla de reposición y responsabilidad ayudarían a evitar faltantes?',evidence:'Inventario actualizado, límites de reposición y registro de faltantes'},
+ {name:'Despacho y entregas',context:'Los pedidos están listos, pero salen tarde porque el área de ventas no coordina bien con quienes preparan y despachan.',prompt:'¿Qué coordinación entre ventas, preparación y despacho permitiría entregar a tiempo?',evidence:'Hora de preparación, responsable de despacho y entregas puntuales'},
+ {name:'Cultura y talento',context:'Se instaló un sistema nuevo, pero una parte del equipo continúa utilizando libretas por costumbre o falta de capacitación.',prompt:'¿Qué prácticas, acuerdos y habilidades necesita el equipo para adoptar el cambio?',evidence:'Capacitación realizada y uso efectivo del sistema por el equipo'},
+ {name:'Zonas y rutas de entregas',context:'La MiPyME realiza entregas en varios barrios sin agrupar destinos; hace recorridos repetidos y aumenta sus costos.',prompt:'¿Cómo organizar zonas, rutas y responsabilidades con datos sin limitarse a instalar una aplicación?',evidence:'Registro de destinos, tiempos por ruta y costo de entrega'}
 ];
 function setupLab(){
  const steps=[
@@ -280,7 +280,7 @@ function setupLab(){
   const ol=document.createElement('ol');ol.style.paddingLeft='24px';
   assigned.forEach((idx,i)=>{
    const item=labPerspectives[idx],li=document.createElement('li'),group=document.createElement('strong'),topic=document.createElement('div');
-   group.textContent='Comunidad: '+groups[i];topic.textContent='Situación de negocio: '+item.name;
+   group.textContent='Comunidad: '+groups[i];topic.textContent='Situación de negocio: '+item.name+' — '+item.context;
    li.append(group,topic);ol.appendChild(li);
   });list.appendChild(ol);
   focus.replaceChildren();
@@ -289,7 +289,7 @@ function setupLab(){
   else{heading.textContent='Turno de '+groups[next];desc.textContent='Pulsa «Revelar perspectiva» para asignar una situación de negocio a esta comunidad.'}
   focus.append(heading,desc);
   if(highlighted&&highlighted.step===next-1){
-    const result=document.createElement('div');result.className='lab-result';result.textContent='Asignación revelada: '+highlighted.group+' → '+labPerspectives[highlighted.index].name+' · '+labPerspectives[highlighted.index].prompt;focus.appendChild(result);
+    const result=document.createElement('div');result.className='lab-result';result.textContent='Asignación revelada: '+highlighted.group+' → '+labPerspectives[highlighted.index].name+'. Situación: '+labPerspectives[highlighted.index].context+' Pregunta: '+labPerspectives[highlighted.index].prompt;focus.appendChild(result);
   }
   sort.disabled=next===5;sort.textContent=next<5?'Sortear para '+groups[next]:'Sorteo completado';
   status.textContent=next===5?'Las cinco comunidades tienen una perspectiva asignada.':next+' de 5 perspectivas asignadas.';
