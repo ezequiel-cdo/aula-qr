@@ -1,7 +1,7 @@
 /**
  * PFMTTD · Receptor central de acuerdos (Apps Script)
- * Versión: 1.1 | Fecha: 2026-11-15 | Estado: requiere actualizar implementación activa.
- * Nuevas funciones: registro en hoja privada, comprobante, deduplicación.
+ * Versión: 1.2 | Fecha: 2026-11-15 | Estado: requiere actualizar implementación activa.
+ * Nuevas funciones: registro, comprobante y proyección inmediata por defecto (SI).
  * Compatibilidad: AulaQR en GitHub Pages; no altera el piloto original.
  * Dependencias: Google Sheets y Apps Script asociado a la hoja.
  *
@@ -84,7 +84,7 @@ function registrarAcuerdo(datos) {
     const seguro=s=>/^[=+@-]/.test(s)?'\''+s:s;
     const comprobante='PFMTTD-'+idPeticion;
     hoja.appendRow([new Date(),comprobante,'PFMTTD-30MIN','INICIO-ACUERDOS',seguro(seudonimo),
-      seguro(propuesta),'RECIBIDO','1.1','']);
+      seguro(propuesta),'RECIBIDO','1.2','SI']);
     SpreadsheetApp.flush();
     return {recibido:true,comprobante:comprobante,duplicado:false};
   } finally {
