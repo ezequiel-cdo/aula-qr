@@ -409,6 +409,7 @@ document.addEventListener('keydown',e=>{if(document.getElementById('modal').open
 updateSlideBar();
 const dlg=document.querySelector('#modal'), title=document.querySelector('#modalTitle'), body=document.querySelector('#modalBody');
 document.querySelector('#close').onclick=()=>{silentClock.closeResource();dlg.close()};
+dlg.addEventListener('close',()=>silentClock.closeResource());
 document.querySelectorAll('[data-modal]').forEach(b=>b.onclick=()=>openModal(b.dataset.modal));
 function openModal(id){const c=views[id];if(!c)return;silentClock.resource(id);title.textContent=c[0];body.innerHTML=c[1]();if(!dlg.open)dlg.showModal();if(c[2])c[2]()}
 const esc=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
