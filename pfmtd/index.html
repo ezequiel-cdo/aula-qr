@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PFMTTD | Encuadre e inicio de sesión v1.2.0 · AulaQR</title>
+<title>PFMTTD | Encuadre e inicio de sesión v1.3.0 · AulaQR</title>
 <!-- Objeto: encuadre público PFMTTD; versión 1.0.1-github; fecha 2026-11-15.
 Estado: prototipo en revisión. Nuevo: se retira el recurso independiente AulaQR; permanecen construcción conceptual y práctica formativa. La franja 15:00–16:00 requiere armonización del RT-03. Diagnóstico previo en proceso de armonización curricular.
 Correcciones: elimina avisos superados. Sólo proyecta propuestas aprobadas; lista nominal autorizada publicada.
@@ -127,7 +127,7 @@ footer{display:none}
 #modalBody .recall-reveal{border-left:5px solid #17914a;background:#eaf7f0;padding:13px 16px;border-radius:8px;margin-top:12px}
 @media(max-width:820px){#sesion .pf-brand{margin:4% 4% 0}#sesion .pf-brand .pf-pill{white-space:normal}#sesion .pf-kicker{margin:4% 4% 0}#sesion h1{margin:2% 4%}#sesion>.lead{margin:0 4%}#sesion .pf-session-cards{margin:5% 4%;grid-template-columns:1fr}#sesion .pf-session-note{margin:5% 4%}#modalBody .recall-prompts{grid-template-columns:1fr}}
 
-/* Etapa 3: desarrollo de la sesión, v1.2.0 */
+/* Etapa 3: desarrollo de la sesión, v1.3.0 */
 #desarrollo{background:linear-gradient(132deg,#f4f8ff,#fff 70%)}
 #desarrollo:before{content:"";position:absolute;left:0;top:0;bottom:0;width:1%;background:linear-gradient(#1136ad 0 70%,#fff 70% 72%,#ef8d15 72%)}
 #desarrollo .pf-brand{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4.1% 7% 0}
@@ -155,7 +155,7 @@ footer{display:none}
 #modalBody .concept-check{border-left:5px solid #18914c;background:#eaf7ef;padding:13px 18px;border-radius:8px;margin-top:14px}
 @media(max-width:820px){#desarrollo .pf-brand{margin:4% 4% 0}#desarrollo .pf-brand .pf-pill{white-space:normal}#desarrollo .pf-kicker{margin:4% 4% 0}#desarrollo h1{margin:2% 4%}#desarrollo>.lead{margin:0 4%}#desarrollo .pf-session-cards{margin:5% 4%;grid-template-columns:1fr}#desarrollo .pf-session-note{margin:5% 4%}}
 
-/* v1.2.0: pantalla única por comunidad, contraste y tipografía amplia */
+/* v1.3.0: pantalla única por comunidad, contraste y tipografía amplia */
 .lab-draw-dialog{width:min(1060px,96vw);max-height:92vh;padding:clamp(1rem,2.5vw,2rem)}
 .lab-fixed-legend{font-size:clamp(.95rem,1.55vw,1.16rem);border-bottom:1px solid #cbd8eb;padding:.7rem 0;line-height:1.4}
 .lab-progress{font-weight:800;font-size:clamp(1.1rem,1.7vw,1.3rem);color:#50617a;margin:1rem 0 .4rem}
@@ -185,7 +185,7 @@ footer{display:none}
 .evocation-nav button{min-height:44px}
 .evocation-feedback[hidden]{display:none}
 
-/* v1.2.0 — ficha de pilares legible en proyección, práctica formativa breve */
+/* v1.3.0 — ficha de pilares legible en proyección, práctica formativa breve */
 .maturity-path{display:flex;justify-content:center;flex-wrap:wrap;gap:.35rem;border-radius:9px;background:#eaf0ff;color:#143aa4;font-weight:800;font-size:clamp(.86rem,1.35vw,1.08rem);padding:.75rem;margin:.8rem 0}
 .maturity-path span{color:#e78209}
 .maturity-tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:8px;margin:.85rem 0}
@@ -215,6 +215,18 @@ footer{display:none}
 #cierre-sesion .pf-brand{margin:3% 5% 0}
 #cierre-sesion .pf-kicker,#cierre-sesion h1,#cierre-sesion .lead{margin-left:5%;margin-right:5%}
 @media(max-width:850px){#cierre-sesion .pf-session-cards{grid-template-columns:1fr}#cierre-sesion .pf-session-card{min-height:115px}}
+
+/* Cierre de curso simulado, mantener 16:9 y tipografía proyectable */
+#cierre-curso{min-height:100%;background:linear-gradient(145deg,#f8fbff,#eef4ff)}
+#cierre-curso .pf-brand{margin:3% 5% 0}
+#cierre-curso .pf-kicker,#cierre-curso h1,#cierre-curso .lead{margin-left:5%;margin-right:5%}
+#cierre-curso .pf-session-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:2.5% 5% 0}
+#cierre-curso .pf-session-card{background:#fff;color:#102ba0;border:2px solid #dae4f4;border-radius:14px;text-align:left;padding:18px 22px;min-height:142px;box-shadow:0 8px 22px #14254c13;cursor:pointer}
+#cierre-curso .pf-session-card .time{font-weight:850;color:#e78209;font-size:clamp(.95rem,1.2vw,1.12rem);display:block;margin-bottom:6px}
+#cierre-curso .pf-session-card strong{font-size:clamp(1.12rem,1.6vw,1.52rem);display:block}
+#cierre-curso .pf-session-card small{font-size:clamp(.92rem,1.2vw,1.06rem);font-weight:400;color:#475872;display:block;margin-top:7px}
+#cierre-curso .pf-session-note{margin:2.5% 5%;padding:14px 17px;border-left:5px solid #e78209;background:#fff;border-radius:9px}
+@media(max-width:820px){#cierre-curso .pf-session-cards{grid-template-columns:1fr}#cierre-curso .pf-session-card{min-height:115px}}
 </style></head><body>
 <header><strong>AulaQR · PFMTTD</strong><span>Práctica didáctica · 30 minutos</span></header>
 <main>
@@ -276,9 +288,21 @@ footer{display:none}
 </div>
 <div class="pf-session-note"><strong>RA1.1 · Evaluación formativa:</strong> solo contamos intervenciones y criterios efectivamente observados. La participación no se presume por abrir el recurso. <strong>EPRADI 31–32:</strong> síntesis, logros, aspectos pendientes y continuidad.</div>
 </section>
+<section id="cierre-curso" class="screen" hidden>
+<div class="pf-brand"><div><strong>PFMTTD</strong><span class="pf-word"> / Formación por competencias</span></div><span class="pf-pill">CIERRE DE CURSO SIMULADO · 26:00–30:00</span></div>
+<p class="pf-kicker">BALANCE · VALORACIÓN · TRANSFERENCIA</p>
+<h1>¿Qué aprendimos para mejorar una MiPyME?</h1>
+<p class="lead">Representamos el último encuentro del programa: recuperamos propósitos, revisamos evidencias y proyectamos su aplicación.</p>
+<div class="pf-session-cards">
+<button type="button" class="pf-session-card" data-modal="cursoBalance"><span class="time">26:00–27:00 · 1 minuto</span><strong>① Balance de competencias</strong><small>Diagnóstico y mejora digital, sin simular resultados</small></button>
+<button type="button" class="pf-session-card" data-modal="cursoInstrumentos"><span class="time">27:00–28:00 · 1 minuto</span><strong>② Evidencias e instrumentos</strong><small>Proyecto, instrumentos INP y rúbrica M02</small></button>
+<button type="button" class="pf-session-card" data-modal="cursoExpectativas"><span class="time">28:00–29:00 · 1 minuto</span><strong>③ Expectativas y acuerdos</strong><small>Recuperamos y valoramos lo establecido al inicio</small></button>
+<button type="button" class="pf-session-card" data-modal="cursoTransferencia"><span class="time">29:00–30:00 · 1 minuto</span><strong>④ Aplicación y despedida</strong><small>Compromiso realista y formación continua</small></button>
+</div><div class="pf-session-note"><strong>Salto temporal explícito:</strong> se representa un cierre del programa PFMTTD de 80 horas; esta práctica de 30 minutos <strong>no acredita</strong> haber impartido las 80 horas ni haber comprobado las competencias finales. <strong>EPRADI 33–35:</strong> balance, valoración compartida y transferencia.</div>
+</section>
 
 </main>
-<div class="pf-bottom"><button id="backSlide" type="button">← Anterior</button><span id="slideCounter">1 / 5</span><button id="nextSlide" type="button">Siguiente →</button><span class="pf-minitext" style="position:absolute;right:14px;color:#dce8ff">Teclas ← → · F: pantalla completa</span></div>
+<div class="pf-bottom"><button id="backSlide" type="button">← Anterior</button><span id="slideCounter">1 / 6</span><button id="nextSlide" type="button">Siguiente →</button><span class="pf-minitext" style="position:absolute;right:14px;color:#dce8ff">Teclas ← → · F: pantalla completa</span></div>
 <dialog id="modal"><div class="head"><strong id="modalTitle"></strong><button class="secondary" id="close">Cerrar ×</button></div><div id="modalBody"></div></dialog>
 <dialog id="labDrawDialog" aria-labelledby="labDrawHeading" class="lab-draw-dialog">
 <div class="head"><strong id="labDrawHeading">Sorteo de perspectivas de negocio</strong><button type="button" class="secondary" id="lab-draw-close">Volver a la actividad ×</button></div>
@@ -291,7 +315,7 @@ footer{display:none}
 <footer>PFMTTD · Encuadre académico. La recepción central de acuerdos se realiza mediante Google Apps Script.</footer>
 <script>
 const K='pfmtd_v04_';const roster=["ENMANUEL BENAVIDES","FRANCISCO BONILLA","EMMANUEL BRITO","RAYMEL CEDANO","EZEQUIEL CUELLO","MARGARITA GIL","OMAR HERNANDEZ","CAROLA JIMENEZ","SERGIO MARTINEZ","ANGEL MATOS","ELISSA PAOLA ORTEGA","RANDY PEDIE","YOMIL PENA","CHRISTOPHER RODRIGUEZ","FIORDALIZA RODRIGUEZ","KERLIN RODRIGUEZ","LESLY SANTIAGO","YUDDY SUERO","JOSELIN URENA"];const get=(k,def)=>{try{return JSON.parse(localStorage.getItem(K+k))??def}catch{return def}};const put=(k,v)=>localStorage.setItem(K+k,JSON.stringify(v));
-const SECTIONS=['portada','panel','sesion','desarrollo','cierre-sesion'];
+const SECTIONS=['portada','panel','sesion','desarrollo','cierre-sesion','cierre-curso'];
 function slideIndex(){return SECTIONS.findIndex(id=>!document.getElementById(id).hidden)}
 function showSlide(index){const n=Math.max(0,Math.min(SECTIONS.length-1,index));SECTIONS.forEach((id,i)=>document.getElementById(id).hidden=(i!==n));updateSlideBar()}
 function showPanel(){showSlide(1)}
@@ -419,6 +443,11 @@ function setupCierreCotejo(){
  document.getElementById('cierre-next').onclick=()=>openModal('cierreProximo');
 }
 const views={
+cursoBalance:['Balance de competencias · 26:00–27:00',()=>'<p class="stage">CIERRE DE CURSO SIMULADO · 1 MINUTO · EPRADI 33</p><h2>Una idea de diagnóstico y otra de mejora</h2><div class="pf-columns"><div class="pf-tile"><h3>Módulo I · 36 horas</h3><p><strong>Diagnosticar:</strong> analizar procesos, identificar pilares, recopilar evidencias y reconocer brechas de madurez.</p><p><strong>Pregunta:</strong> ¿qué evidencia necesitaríamos para diagnosticar una MiPyME?</p></div><div class="pf-tile"><h3>Módulo II · 44 horas</h3><p><strong>Mejorar:</strong> planificar, ensayar y evaluar una intervención digital viable, cuidando a las personas, los datos y los resultados.</p><p><strong>Pregunta:</strong> ¿qué mejora concreta propondríamos a partir de esa brecha?</p></div></div><div class="pf-hero">Solicita dos ideas al grupo: <strong>una de diagnóstico</strong> y <strong>otra de mejora digital</strong>.</div><div class="pf-footer"><strong>Importante:</strong> estas respuestas son parte del balance representado; la comprobación de competencias del programa completo exigiría resultados y evidencias de las 80 horas reales. No declarar logros ni calificaciones inexistentes.</div><button type="button" id="curso-balance-next">Ver instrumentos de evaluación →</button>',()=>{document.getElementById('curso-balance-next').onclick=()=>openModal('cursoInstrumentos')}],
+cursoInstrumentos:['Evidencias e instrumentos · 27:00–28:00',()=>'<p class="stage">CIERRE DE CURSO SIMULADO · 1 MINUTO · EPRADI 33</p><h2>¿Con qué demostraríamos las competencias?</h2><div class="pf-cards"><div class="pf-tile"><h3>Proyecto M02</h3><p>Matriz del proyecto: problema, proceso, objetivo, actividades, responsables, indicadores y evidencias.</p></div><div class="pf-tile"><h3>Instrumentos INP</h3><p>Referentes de evaluación de desempeño y productos: observar tareas y comprobar resultados en situaciones reales.</p></div><div class="pf-tile"><h3>Rúbrica sumativa M02</h3><p>Criterios para valorar el proyecto y justificar decisiones de evaluación con evidencias pertinentes.</p></div></div><div class="pf-footer"><strong>Presentación demostrativa:</strong> describimos qué instrumentos utilizaríamos en el curso real. No aplicamos ahora una rúbrica ni atribuimos notas al Módulo II.</div><button type="button" id="curso-instrumentos-next">Recuperar expectativas y acuerdos →</button>',()=>{document.getElementById('curso-instrumentos-next').onclick=()=>openModal('cursoExpectativas')}],
+cursoExpectativas:['Expectativas y acuerdos · 28:00–29:00',()=>'<p class="stage">CIERRE DE CURSO SIMULADO · 1 MINUTO · EPRADI 34</p><h2>Volvemos a lo que acordamos al comenzar</h2><div class="pf-columns"><div class="pf-tile"><h3>Expectativas iniciales</h3><p>Recupera expectativas registradas y seleccionadas; invita a dos personas a identificar una alcanzada o pendiente.</p><p><a href="https://script.google.com/macros/s/AKfycbwRmkf9weUlTWs68OMy4ZqPWz4DH0JgzIqqb40H_siBoYxWi3Zsl7b9EemWUWDLcOwH-g/exec?vista=expectativas-panel" target="_blank" rel="noopener">Abrir panel de expectativas ↗</a></p></div><div class="pf-tile"><h3>Acuerdos de convivencia</h3><p>Recupera los acuerdos iniciales y solicita valorar a mano alzada el cumplimiento de uno de ellos.</p><p><a href="https://script.google.com/macros/s/AKfycbwRmkf9weUlTWs68OMy4ZqPWz4DH0JgzIqqb40H_siBoYxWi3Zsl7b9EemWUWDLcOwH-g/exec?vista=panel" target="_blank" rel="noopener">Abrir panel de acuerdos ↗</a></p></div></div><div class="pf-hero">¿Qué expectativa se trabajó? ¿Qué acuerdo respetamos? ¿Qué quedó pendiente?</div><div class="pf-footer"><strong>Valoración participativa:</strong> escuchar dos respuestas y solicitar una señal a mano alzada. No atribuir resultados del programa de 80 horas a esta simulación. Los paneles muestran información solo si existen registros y la moderación está configurada.</div><button type="button" id="curso-expectativas-next">Continuar con transferencia →</button>',()=>{document.getElementById('curso-expectativas-next').onclick=()=>openModal('cursoTransferencia')}],
+cursoTransferencia:['Transferencia y despedida · 29:00–30:00',()=>'<p class="stage">CIERRE DE CURSO SIMULADO · 1 MINUTO · EPRADI 35</p><h2>¿Qué aplicaré en una MiPyME?</h2><div class="pf-hero">Invita a formular un compromiso concreto: <strong>identificar un proceso, seleccionar una evidencia y proponer una mejora digital viable</strong>.</div><div class="pf-tile"><h3>Compromiso para compartir</h3><p>«En una MiPyME, comenzaré por observar el proceso de ________, recogeré ________ como evidencia y consideraré mejorar ________».</p><p class="pf-minitext">El participante puede expresarlo oralmente; no se requiere otro formulario en este minuto.</p></div><div class="pf-footer"><strong>Cierre del facilitador:</strong> agradecer, invitar a continuar la formación y recordar que una transformación sostenible combina procesos, personas, cultura, datos y tecnología. Concluye la demostración didáctica; no certifica 80 horas.</div>',()=>{}],
+
 cierreSintesis:['Síntesis participativa · 23:00–24:00',()=>'<p class="stage">CIERRE DE SESIÓN · 1 MINUTO · EPRADI 31</p><h2>Una idea, tres formas de mejorar</h2><p>Solicita <strong>una intervención oral</strong>: que un participante diferencie los tres conceptos mediante un ejemplo sencillo de MiPyME.</p><div class="pf-cards"><div class="pf-tile"><h3>Digitalizar</h3><p>Registrar datos en soporte digital.</p></div><div class="pf-tile"><h3>Automatizar</h3><p>Ejecutar tareas mediante reglas.</p></div><div class="pf-tile"><h3>Transformar</h3><p>Reorganizar procesos, personas, decisiones y tecnología para aportar valor.</p></div></div><div class="pf-hero">¿Qué diferencia hay entre registrar una venta, generar una alerta y reorganizar el negocio?</div><div class="pf-footer"><strong>Observación del facilitador:</strong> escuchar una explicación y pedir un ejemplo concreto; no asignar logro a todo el grupo por una sola intervención.</div><button type="button" id="cierre-sintesis-next">Continuar a la comprobación →</button>',()=>{document.getElementById('cierre-sintesis-next').onclick=()=>openModal('cierreCotejo')}],
 cierreCotejo:['Comprobamos y reforzamos · 24:00–25:00',()=>'<p class="stage">CIERRE DE SESIÓN · 1 MINUTO · EPRADI 32</p><h2>¿Qué demostramos y qué debemos mejorar?</h2><div class="pf-hero">¿Digitalizar un registro significa necesariamente transformar una empresa? <strong>Justifica tu respuesta.</strong></div><div class="pf-columns"><div class="pf-tile"><h3>Observación real</h3><label for="cierre-observado">Clasificación y justificación</label><select id="cierre-observado"><option value="">Sin registrar</option><option value="si">Sí, observado</option><option value="no">No, necesita refuerzo</option><option value="na">No observado</option></select><p class="pf-minitext">Utiliza el registro del cotejo aplicado en el Desarrollo. No inventes resultados.</p></div><div class="pf-tile"><h3>Punto por reforzar</h3><label for="cierre-refuerzo">Concepto que requiere aclaración</label><select id="cierre-refuerzo"><option value="">Sin determinar</option><option value="digitalizacion">Digitalización</option><option value="automatizacion">Automatización</option><option value="transformacion">Transformación digital</option><option value="ninguno">Ninguno identificado</option></select></div></div><div class="pf-footer"><strong>Retroalimentación y corrección:</strong> registrar una venta en Excel es digitalización; transformar implica cambios coordinados en procesos, responsabilidades y decisiones. Escucha una reformulación del participante.</div><button type="button" id="cierre-guardar">Guardar observación local</button> <button type="button" class="secondary" id="cierre-next">Continuar a la próxima sesión →</button><p id="cierre-estado" class="pf-minitext" aria-live="polite"></p>',()=>setupCierreCotejo()],
 cierreProximo:['Continuidad · 25:00–26:00',()=>'<p class="stage">CIERRE DE SESIÓN · 1 MINUTO · EPRADI 32</p><h2>Del concepto al diagnóstico</h2><p>Ahora sabemos distinguir usos de tecnología. En el siguiente encuentro analizaremos <strong>indicadores y evidencias</strong> de los siete pilares de madurez de una MiPyME, sin atribuirle todavía un nivel.</p><div class="maturity-path">Pilar <span>→</span> Indicador <span>→</span> Evidencia <span>→</span> Nivel <span>→</span> Brecha <span>→</span> Prioridad</div><div class="pf-tile"><h3>Pregunta para continuar</h3><p>En una MiPyME que entrega tarde sus pedidos, ¿qué evidencia recogerías antes de decidir cómo mejorar?</p><p class="pf-minitext">Ejemplos posibles: tiempos de preparación, registro de entregas, responsables y reclamaciones. Los niveles se determinarán con evidencia contrastada posteriormente.</p></div><div class="pf-footer"><strong>Cierre del encuentro:</strong> recuperar un logro y un aspecto pendiente, anunciar la próxima sesión y reconocer la participación. La simulación continuará con el cierre de curso, sin afirmar haber impartido 80 horas.</div>',()=>{}],
