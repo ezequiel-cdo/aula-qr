@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PFMTTD | Encuadre e inicio de sesión v1.0.7 · AulaQR</title>
+<title>PFMTTD | Encuadre e inicio de sesión v1.0.8 · AulaQR</title>
 <!-- Objeto: encuadre público PFMTTD; versión 1.0.1-github; fecha 2026-11-15.
 Estado: prototipo en revisión. Nuevo: se retira el recurso independiente AulaQR; permanecen construcción conceptual y práctica formativa. La franja 15:00–16:00 requiere armonización del RT-03. Diagnóstico previo en proceso de armonización curricular.
 Correcciones: elimina avisos superados. Sólo proyecta propuestas aprobadas; lista nominal autorizada publicada.
@@ -127,7 +127,7 @@ footer{display:none}
 #modalBody .recall-reveal{border-left:5px solid #17914a;background:#eaf7f0;padding:13px 16px;border-radius:8px;margin-top:12px}
 @media(max-width:820px){#sesion .pf-brand{margin:4% 4% 0}#sesion .pf-brand .pf-pill{white-space:normal}#sesion .pf-kicker{margin:4% 4% 0}#sesion h1{margin:2% 4%}#sesion>.lead{margin:0 4%}#sesion .pf-session-cards{margin:5% 4%;grid-template-columns:1fr}#sesion .pf-session-note{margin:5% 4%}#modalBody .recall-prompts{grid-template-columns:1fr}}
 
-/* Etapa 3: desarrollo de la sesión, v1.0.7 */
+/* Etapa 3: desarrollo de la sesión, v1.0.8 */
 #desarrollo{background:linear-gradient(132deg,#f4f8ff,#fff 70%)}
 #desarrollo:before{content:"";position:absolute;left:0;top:0;bottom:0;width:1%;background:linear-gradient(#1136ad 0 70%,#fff 70% 72%,#ef8d15 72%)}
 #desarrollo .pf-brand{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4.1% 7% 0}
@@ -155,16 +155,22 @@ footer{display:none}
 #modalBody .concept-check{border-left:5px solid #18914c;background:#eaf7ef;padding:13px 18px;border-radius:8px;margin-top:14px}
 @media(max-width:820px){#desarrollo .pf-brand{margin:4% 4% 0}#desarrollo .pf-brand .pf-pill{white-space:normal}#desarrollo .pf-kicker{margin:4% 4% 0}#desarrollo h1{margin:2% 4%}#desarrollo>.lead{margin:0 4%}#desarrollo .pf-session-cards{margin:5% 4%;grid-template-columns:1fr}#desarrollo .pf-session-note{margin:5% 4%}}
 
-/* v1.0.7 — Sorteo independiente de la actividad */
-.lab-draw-dialog{width:min(940px,94vw);max-height:90vh;padding:clamp(1rem,3vw,2rem)}
-.lab-draw-focus{background:#f0f4ff;border:2px solid #cbd9fa;border-radius:16px;padding:clamp(1.1rem,3vw,2rem);margin:1rem 0;text-align:center;min-height:150px}
-.lab-draw-focus strong{display:block;color:#0c30a4;font-size:clamp(1.3rem,3vw,2.2rem);line-height:1.2}
-.lab-draw-focus p{font-size:clamp(1rem,1.8vw,1.45rem);margin:.6rem 0}
-.lab-draw-focus .lab-result{background:#e5f6eb;color:#09542e;border-radius:10px;padding:12px;margin-top:12px}
-.lab-draw-controls{display:flex;flex-wrap:wrap;gap:12px;margin:1rem 0}
-.lab-draw-dialog #lab-assignments{max-height:25vh;overflow:auto;border-top:1px solid #d2def6}
-.lab-draw-dialog #lab-assignments li{padding:6px 0}
-@media(max-width:600px){.lab-draw-dialog .head{align-items:flex-start;flex-direction:column}.lab-draw-controls button{flex:1 1 180px}}
+/* v1.0.8: pantalla única por comunidad, contraste y tipografía amplia */
+.lab-draw-dialog{width:min(1060px,96vw);max-height:92vh;padding:clamp(1rem,2.5vw,2rem)}
+.lab-fixed-legend{font-size:clamp(.95rem,1.55vw,1.16rem);border-bottom:1px solid #cbd8eb;padding:.7rem 0;line-height:1.4}
+.lab-progress{font-weight:800;font-size:clamp(1.1rem,1.7vw,1.3rem);color:#50617a;margin:1rem 0 .4rem}
+.lab-draw-focus{background:#eef3ff;border:2px solid #c9d7fa;border-radius:16px;padding:clamp(1.3rem,3vw,2.4rem);min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.75rem}
+.lab-draw-focus .lab-team{font-size:clamp(1.65rem,3.4vw,2.7rem);font-weight:850;color:#1036ac;line-height:1.14}
+.lab-draw-focus .lab-result-title{font-size:clamp(1.5rem,2.6vw,2.2rem);font-weight:850;color:#117040}
+.lab-draw-focus .lab-context{font-size:clamp(1.12rem,1.9vw,1.45rem);line-height:1.35}
+.lab-draw-focus .lab-question{font-size:clamp(1rem,1.5vw,1.18rem);line-height:1.4}
+.lab-draw-controls{display:flex;flex-wrap:wrap;gap:.7rem;margin:1rem 0}
+.lab-draw-controls button{font-size:clamp(.96rem,1.4vw,1.13rem);min-height:48px}
+.lab-draw-controls button[hidden],#lab-summary-panel[hidden],#lab-focus[hidden],#lab-progress[hidden]{display:none}
+#lab-summary-panel{border-top:1px solid #cad7ea;margin-top:1rem}
+#lab-assignments{max-height:38vh;overflow:auto}
+#lab-assignments li{margin:.7rem 0;font-size:clamp(1rem,1.55vw,1.2rem)}
+@media(max-width:600px){.lab-draw-dialog .head{flex-direction:column;align-items:flex-start}.lab-draw-controls button{flex:1 1 45%}.lab-draw-focus{min-height:270px}}
 </style></head><body>
 <header><strong>AulaQR · PFMTTD</strong><span>Práctica didáctica · 30 minutos</span></header>
 <main>
@@ -218,11 +224,12 @@ footer{display:none}
 <div class="pf-bottom"><button id="backSlide" type="button">← Anterior</button><span id="slideCounter">1 / 3</span><button id="nextSlide" type="button">Siguiente →</button><span class="pf-minitext" style="position:absolute;right:14px;color:#dce8ff">Teclas ← → · F: pantalla completa</span></div>
 <dialog id="modal"><div class="head"><strong id="modalTitle"></strong><button class="secondary" id="close">Cerrar ×</button></div><div id="modalBody"></div></dialog>
 <dialog id="labDrawDialog" aria-labelledby="labDrawHeading" class="lab-draw-dialog">
-<div class="head"><strong id="labDrawHeading">Sorteo · Perspectivas de negocio</strong><button type="button" class="secondary" id="lab-draw-close">Volver a la actividad ×</button></div>
-<p class="pf-minitext"><strong>Comunidad</strong> = equipo del encuadre. <strong>Perspectiva</strong> = situación de negocio asignada. No cambian los integrantes.</p>
+<div class="head"><strong id="labDrawHeading">Sorteo de perspectivas de negocio</strong><button type="button" class="secondary" id="lab-draw-close">Volver a la actividad ×</button></div>
+<p class="lab-fixed-legend"><strong>COMUNIDAD</strong> = equipo de aprendizaje. <strong>PERSPECTIVA</strong> = situación de negocio. <strong>No cambian los integrantes.</strong></p>
+<div id="lab-progress" class="lab-progress">Comunidad 1 de 5</div>
 <div id="lab-focus" class="lab-draw-focus" aria-live="polite"></div>
-<div class="lab-draw-controls"><button type="button" id="lab-sort">Revelar perspectiva</button><button type="button" class="secondary" id="lab-reset">Reiniciar perspectivas</button></div>
-<h3>Asignaciones reveladas</h3><div id="lab-assignments" aria-live="polite"></div>
+<div class="lab-draw-controls"><button type="button" id="lab-sort">Revelar perspectiva</button><button type="button" id="lab-next" hidden>Siguiente comunidad →</button><button type="button" class="secondary" id="lab-summary">Ver resumen</button><button type="button" class="secondary" id="lab-reset">Reiniciar perspectivas</button></div>
+<div id="lab-summary-panel" hidden><h3>Resumen de asignaciones</h3><div id="lab-assignments"></div><button type="button" class="secondary" id="lab-summary-back">Volver al sorteo</button></div>
 </dialog>
 <footer>PFMTTD · Encuadre académico. La recepción central de acuerdos se realiza mediante Google Apps Script.</footer>
 <script>
@@ -264,47 +271,35 @@ function setupLab(){
   document.querySelectorAll('[data-lab-step]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
  });
  const modal=document.getElementById('labDrawDialog'),open=document.getElementById('lab-open-sort'),close=document.getElementById('lab-draw-close');
- const list=document.getElementById('lab-assignments'),focus=document.getElementById('lab-focus'),sort=document.getElementById('lab-sort'),reset=document.getElementById('lab-reset');
- const status=document.getElementById('lab-status');
+ const focus=document.getElementById('lab-focus'),sort=document.getElementById('lab-sort'),reset=document.getElementById('lab-reset'),list=document.getElementById('lab-assignments');
+ const next=document.getElementById('lab-next'),summary=document.getElementById('lab-summary'),panel=document.getElementById('lab-summary-panel'),back=document.getElementById('lab-summary-back'),progress=document.getElementById('lab-progress'),status=document.getElementById('lab-status');
  const key='pfmtd_lab_perspectivas_por_comunidad_v2';
  const groups=['Estrategia Digital','Cultura de Innovación','Procesos Inteligentes','Datos y Seguridad','Experiencia y Valor'];
- function read(){
-  let v=null;try{v=JSON.parse(sessionStorage.getItem(key)||'null')}catch(e){}
-  if(!Array.isArray(v)||v.length>5||v.some((n,i)=>!Number.isInteger(n)||n<0||n>=5||v.indexOf(n)!==i))return [];
-  return v;
- }
- let highlighted=null;
+ let current=0,summaryMode=false;
+ function read(){let a=null;try{a=JSON.parse(sessionStorage.getItem(key)||'null')}catch(e){}return Array.isArray(a)&&a.length<=5&&a.every((v,i)=>Number.isInteger(v)&&v>=0&&v<5&&a.indexOf(v)===i)?a:[]}
+ function el(tag,cls,value){const e=document.createElement(tag);if(cls)e.className=cls;if(value!==undefined)e.textContent=value;return e}
  function render(){
-  const assigned=read(),next=assigned.length;
-  list.replaceChildren();
-  const ol=document.createElement('ol');ol.style.paddingLeft='24px';
-  assigned.forEach((idx,i)=>{
-   const item=labPerspectives[idx],li=document.createElement('li'),group=document.createElement('strong'),topic=document.createElement('div');
-   group.textContent='Comunidad: '+groups[i];topic.textContent='Situación de negocio: '+item.name+' — '+item.context;
-   li.append(group,topic);ol.appendChild(li);
-  });list.appendChild(ol);
-  focus.replaceChildren();
-  const heading=document.createElement('strong'),desc=document.createElement('p');
-  if(next===5){heading.textContent='¡Las cinco comunidades están listas!';desc.textContent='Todas tienen una perspectiva distinta. El equipo original se mantiene.'}
-  else{heading.textContent='Turno de '+groups[next];desc.textContent='Pulsa «Revelar perspectiva» para asignar una situación de negocio a esta comunidad.'}
-  focus.append(heading,desc);
-  if(highlighted&&highlighted.step===next-1){
-    const result=document.createElement('div');result.className='lab-result';result.textContent='Asignación revelada: '+highlighted.group+' → '+labPerspectives[highlighted.index].name+'. Situación: '+labPerspectives[highlighted.index].context+' Pregunta: '+labPerspectives[highlighted.index].prompt;focus.appendChild(result);
+  const assigned=read();current=Math.min(current,4);focus.replaceChildren();list.replaceChildren();
+  progress.textContent='Comunidad '+(current+1)+' de 5';
+  focus.append(el('div','lab-team',groups[current]));
+  if(current<assigned.length){
+   const p=labPerspectives[assigned[current]];
+   focus.append(el('div','lab-result-title',p.name),el('div','lab-context',p.context),el('div','lab-question','Pregunta orientadora: '+p.prompt));
+  }else{
+   focus.append(el('div','lab-context','¿Qué situación de negocio analizará esta comunidad?'),el('div','lab-question','Revela una perspectiva sin alterar sus integrantes.'));
   }
-  sort.disabled=next===5;sort.textContent=next<5?'Sortear para '+groups[next]:'Sorteo completado';
-  status.textContent=next===5?'Las cinco comunidades tienen una perspectiva asignada.':next+' de 5 perspectivas asignadas.';
+  const ol=el('ol');assigned.forEach((idx,i)=>{const li=el('li');li.append(el('strong','',groups[i]),el('span','',' — '+labPerspectives[idx].name));ol.append(li)});list.append(ol);
+  sort.hidden=current<assigned.length;sort.disabled=current!==assigned.length;next.hidden=current>=assigned.length||current===4;
+  summary.disabled=assigned.length===0;summary.textContent=assigned.length===5?'Ver resumen final':'Ver asignaciones realizadas';
+  panel.hidden=!summaryMode;focus.hidden=summaryMode;progress.hidden=summaryMode;
+  status.textContent=assigned.length+' de 5 comunidades con perspectivas asignadas.';
  }
- open.onclick=()=>{highlighted=null;render();modal.showModal()};
+ open.onclick=()=>{current=Math.min(read().length,4);summaryMode=false;render();modal.showModal()};
  close.onclick=()=>modal.close();
- sort.onclick=()=>{
-  const assigned=read();if(assigned.length>=5)return;
-  const available=[0,1,2,3,4].filter(n=>!assigned.includes(n));
-  const random=new Uint32Array(1);crypto.getRandomValues(random);
-  const idx=available[random[0]%available.length];
-  highlighted={step:assigned.length,group:groups[assigned.length],index:idx};
-  assigned.push(idx);sessionStorage.setItem(key,JSON.stringify(assigned));render();
- };
- reset.onclick=()=>{if(!confirm('¿Reiniciar las perspectivas sorteadas? Los integrantes de las comunidades no cambiarán.'))return;sessionStorage.removeItem(key);highlighted=null;render()};
+ sort.onclick=()=>{const a=read();if(current!==a.length||a.length===5)return;const free=[0,1,2,3,4].filter(n=>!a.includes(n));const v=new Uint32Array(1);crypto.getRandomValues(v);a.push(free[v[0]%free.length]);sessionStorage.setItem(key,JSON.stringify(a));render()};
+ next.onclick=()=>{if(current<4&&current<read().length){current++;summaryMode=false;render()}};
+ summary.onclick=()=>{summaryMode=true;render()};back.onclick=()=>{summaryMode=false;render()};
+ reset.onclick=()=>{if(!confirm('¿Reiniciar perspectivas? No cambiarán los integrantes de las comunidades.'))return;sessionStorage.removeItem(key);current=0;summaryMode=false;render()};
  render();
 }
 
