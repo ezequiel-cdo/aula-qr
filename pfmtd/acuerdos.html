@@ -1,0 +1,22 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PFMTTD | Propuesta de acuerdo</title><!-- Versión 0.3-github · 2026-11-15 · formulario autónomo sin backend -->
+<style>body{font:1.15rem/1.5 system-ui;max-width:670px;margin:auto;padding:1.5rem;background:#edf3fb;color:#10243d}main{background:white;padding:2rem;border-radius:16px}textarea,input{display:block;width:100%;box-sizing:border-box;padding:.8rem;margin:.6rem 0 1.3rem;font:inherit}button{padding:1rem;background:#124b9c;color:white;border:0;border-radius:9px;font:inherit;cursor:pointer}button:focus-visible{outline:4px solid #ffbd2f}small{color:#526784}</style></head><body><main><p>AulaQR · PFMTTD</p><h1>¿Qué acuerdo propones para aprender juntos?</h1><p>Escribe una propuesta breve sobre respeto, escucha, participación, colaboración o protección de datos.</p><label>Propuesta<textarea id="propuesta" rows="5" maxlength="300" required></textarea></label><button id="guardar">Enviar propuesta al facilitador</button><button id="exportar" type="button" style="margin-left:.6rem;background:#526784">Exportar como respaldo</button><p id="estado" role="status"></p><small>No escribas datos personales. El envío central solo se habilitará cuando el facilitador configure un receptor HTTPS autorizado; antes de eso utiliza la exportación o la alternativa oral.</small></main><script>
+/* Configurar SOLO después de implantar y verificar servidor HTTPS autorizado.
+   No añadir tokens privados ni credenciales a esta página pública. */
+const RECEPTOR_HTTPS='';
+const estado=document.querySelector('#estado');
+const getItem=()=>({sesion:'PFMTTD-30MIN',actividad:'ACUERDOS-INICIO',propuesta:document.querySelector('#propuesta').value.trim(),marca_tiempo:new Date().toISOString()});
+document.querySelector('#guardar').onclick=async()=>{
+ const item=getItem(); if(!item.propuesta){estado.textContent='Escribe una propuesta primero.';return}
+ if(!RECEPTOR_HTTPS){estado.textContent='Recepción central no configurada. Usa «Exportar como respaldo» y entrega el archivo al facilitador.';return}
+ try{let u=new URL(RECEPTOR_HTTPS);if(u.protocol!=='https:')throw Error('El receptor debe usar HTTPS');
+ let response=await fetch(u.href,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(item)});
+ if(!response.ok)throw Error('Receptor respondió '+response.status);
+ let data=await response.json();if(!data||!data.receipt_id)throw Error('Respuesta sin comprobante verificable');
+ estado.textContent='Recibido por el sistema. Comprobante: '+data.receipt_id;
+ }catch(e){estado.textContent='No se pudo confirmar recepción: '+e.message+'. Exporta tu propuesta como respaldo.'}
+};
+document.querySelector('#exportar').onclick=()=>{let item=getItem();if(!item.propuesta){estado.textContent='Escribe una propuesta primero.';return}
+ const url=URL.createObjectURL(new Blob([JSON.stringify({...item,estado_recepcion:'no_enviado'},null,2)],{type:'application/json'}));
+ const a=document.createElement('a');a.href=url;a.download='propuesta_acuerdo_pfmtd.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);estado.textContent='Archivo descargado como respaldo; no se ha recibido automáticamente.'};
+</script></body></html>
