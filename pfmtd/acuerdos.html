@@ -19,7 +19,7 @@ a:focus-visible{outline:4px solid #d89d00;outline-offset:3px}</style></head><bod
 <script>
 // Se completa tras desplegar Apps Script con la cuenta autorizada.
 // Debe ser una URL https://script.google.com/macros/s/.../exec
-const APPS_SCRIPT_URL='';
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbwRmkf9weUlTWs68OMy4ZqPWz4DH0JgzIqqb40H_siBoYxWi3Zsl7b9EemWUWDLcOwH-g/exec';
 const target=document.querySelector('#acceso');
 if(/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(APPS_SCRIPT_URL)){
  const link=document.createElement('a');link.className='button';link.href=APPS_SCRIPT_URL;
