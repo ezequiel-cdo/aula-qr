@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PFMTTD · Acuerdos para proyectar</title>
-<!-- Versión 1.1 · 2026-11-15 · Vista pública aprobada sin datos personales · Depende de Code.gs v1.1 -->
+<!-- Versión 1.2 · 2026-11-15 · Vista pública de propuestas recibidas sin datos personales · Depende de Code.gs v1.1 -->
 <style>
 :root{font-family:system-ui,sans-serif;color:#11294b;background:#f4f7fd}
 *{box-sizing:border-box}body{margin:0;padding:1rem}.top{display:flex;gap:1rem;justify-content:space-between;align-items:center;flex-wrap:wrap}
@@ -13,9 +13,9 @@ small{color:#516581}#status{margin-top:1rem}
 </style></head><body>
 <div class="top"><div><small>AulaQR · PFMTTD · Construcción participativa</small><h1>Acuerdos para nuestra convivencia</h1></div>
 <button id="refresh" type="button">Actualizar propuestas</button></div>
-<p id="status" role="status" aria-live="polite">Consultando propuestas aprobadas…</p>
-<ul id="lista" aria-label="Propuestas aprobadas"></ul>
-<p><small>Solo se proyectan los acuerdos marcados «SI» en la columna Proyectar de la hoja privada. La aceptación final se dialoga con el grupo.</small></p>
+<p id="status" role="status" aria-live="polite">Consultando propuestas recibidas…</p>
+<ul id="lista" aria-label="Propuestas recibidas para socialización"></ul>
+<p><small>Las propuestas nuevas se muestran automáticamente. El facilitador puede retirar una escribiendo NO en la columna Proyectar de la hoja privada. La aceptación final se dialoga con el grupo.</small></p>
 <script>
 (function(){
 const lista=document.querySelector('#lista'),status=document.querySelector('#status'),btn=document.querySelector('#refresh');
@@ -27,7 +27,7 @@ function refresh(){
    lista.replaceChildren();
    const items=Array.isArray(r.items)?r.items:[];
    items.forEach(t=>{const li=document.createElement('li');li.textContent=t;lista.appendChild(li)});
-   status.textContent=items.length?items.length+' propuestas disponibles para socializar.':'Todavía no hay propuestas seleccionadas para proyección.';
+   status.textContent=items.length?items.length+' propuestas disponibles para socializar.':'Todavía no hay propuestas visibles.';
  }).withFailureHandler(e=>{busy=false;btn.disabled=false;status.textContent='No fue posible actualizar: '+(e&&e.message?e.message:'error de conexión')}).listarAcuerdosProyectables();
 }
 btn.addEventListener('click',refresh);refresh();setInterval(()=>{if(document.visibilityState==='visible')refresh()},15000);
