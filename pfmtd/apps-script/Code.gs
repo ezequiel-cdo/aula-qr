@@ -1,6 +1,6 @@
 /**
- * PFMTTD · Receptor central de acuerdos (Apps Script)
- * Versión: 1.4 | Fecha: 2026-11-15 | Estado: requiere actualizar implementación activa.
+ * PFMTTD · Receptor central PFMTTD (Apps Script)
+ * Versión: 1.5 | Fecha: 2026-11-15 | Estado: requiere actualizar implementación activa.
  * Nuevas funciones: registro, comprobante y proyección inmediata por defecto (SI).
  * Compatibilidad: AulaQR en GitHub Pages; no altera el piloto original.
  * Dependencias: Google Sheets y Apps Script asociado a la hoja.
@@ -11,6 +11,8 @@
 const CONFIG = Object.freeze({
   SHEET_NAME: 'Acuerdos_PFMTTD',
   EXPECT_SHEET: 'Expectativas_PFMTTD',
+  PRACTICE_SHEET: 'Practica_PFMTTD',
+  PRACTICE_HEADERS: ['Recepción UTC','Comprobante','ID sesión','ID actividad','Pseudónimo','ID intento','Fase','Caso A','Caso B','Caso C','Justificación','Comprobante inicial','Estado','Versión','Cotejo clasificación','Cotejo justificación','Observaciones facilitador'],
   DIAG_SHEET: 'Diagnostico_PFMTTD',
   DIAG_HEADERS: ['Recepción UTC','ID comprobante','ID sesión','ID actividad','Pseudónimo (opcional)','Proceso MiPyME','Automatización elegida','Diferencia transformación','Información útil','Estado','Versión'],
   EXPECT_HEADERS: ['Recepción UTC','ID comprobante','ID sesión','ID actividad','Pseudónimo (opcional)','Expectativa 80h','Expectativa práctica 30min','Estado','Versión','Proyectar'],
@@ -32,13 +34,16 @@ function configurar() {
   if(expectativas.getLastRow()===0){expectativas.appendRow(CONFIG.EXPECT_HEADERS);expectativas.setFrozenRows(1);}
   let diag=libro.getSheetByName(CONFIG.DIAG_SHEET)||libro.insertSheet(CONFIG.DIAG_SHEET);
   if(diag.getLastRow()===0){diag.appendRow(CONFIG.DIAG_HEADERS);diag.setFrozenRows(1);}
-  return 'Hojas preparadas: '+CONFIG.SHEET_NAME+', '+CONFIG.EXPECT_SHEET+' y '+CONFIG.DIAG_SHEET;
+  const practica=libro.getSheetByName(CONFIG.PRACTICE_SHEET)||libro.insertSheet(CONFIG.PRACTICE_SHEET);
+  if(practica.getLastRow()===0){practica.appendRow(CONFIG.PRACTICE_HEADERS);practica.setFrozenRows(1);}
+  return 'Hojas preparadas: '+CONFIG.SHEET_NAME+', '+CONFIG.EXPECT_SHEET+', '+CONFIG.DIAG_SHEET+' y '+CONFIG.PRACTICE_SHEET;
 }
 function doGet(e) {
   const vista=(e&&e.parameter&&e.parameter.vista)||'';
   const rutas={
     panel:['Panel','PFMTTD · Acuerdos para proyectar'],
     diagnostico:['Diagnostico','PFMTTD · Diagnóstico inicial'],
+    practica:['Practica','PFMTTD · Clasifica y justifica'],
     expectativas:['Expectativas','PFMTTD · Registro de expectativas'],
     'expectativas-panel':['ExpectativasPanel','PFMTTD · Recuperación de expectativas']
   };
@@ -182,5 +187,41 @@ function registrarDiagnostico(datos) {
     hoja.appendRow([new Date(),receipt,'PFMTTD-30MIN','INICIO-DIAGNOSTICO',...values.map(safe),'RECIBIDO','1.4']);
     SpreadsheetApp.flush();
     return {recibido:true,comprobante:receipt,duplicado:false};
+  }finally{lock.releaseLock();}
+}
+
+/** PFMTTD: recibe respuestas iniciales y revisadas, no las califica. */
+function registrarPractica(datos){
+  const p=datos&&typeof datos==='object'?datos:{};
+  if(String(p.control||''))throw new Error('Solicitud no admitida.');
+  const idPeticion=String(p.idPeticion||'');
+  const idIntento=String(p.idIntento||'');
+  const fase=String(p.fase||'');
+  if(!/^[A-Za-z0-9-]{12,80}$/.test(idPeticion)||!/^[A-Za-z0-9-]{12,80}$/.test(idIntento))throw new Error('Identificador inválido.');
+  if(!['INICIAL','CORREGIDA'].includes(fase))throw new Error('Fase inválida.');
+  const alias=String(p.pseudonimo||'').trim().replace(/\s+/g,' ');
+  const cats=['digitalizacion','automatizacion','transformacion'];
+  const a=String(p.a||''),b=String(p.b||''),c=String(p.c||'');
+  if(!cats.includes(a)||!cats.includes(b)||!cats.includes(c))throw new Error('Clasifica los tres casos.');
+  const just=String(p.justificacion||'').trim().replace(/\s+/g,' ');
+  if(just.length<12||just.length>500)throw new Error('Justifica tu elección (12–500 caracteres).');
+  if(alias.length>60)throw new Error('Pseudónimo demasiado largo.');
+  const initialReceipt=String(p.comprobanteInicial||'');
+  if(fase==='CORREGIDA'&&!/^PFMTTD-PRAC-[A-Za-z0-9-]{12,80}$/.test(initialReceipt))throw new Error('Se requiere comprobante inicial.');
+  const id=PropertiesService.getScriptProperties().getProperty('PFMTTD_SHEET_ID');
+  if(!id)throw new Error('Servicio no configurado.');
+  const lock=LockService.getScriptLock();lock.waitLock(15000);
+  try{
+    const hoja=SpreadsheetApp.openById(id).getSheetByName(CONFIG.PRACTICE_SHEET);
+    if(!hoja)throw new Error('Ejecute configurar() para crear Practica_PFMTTD.');
+    const receipt='PFMTTD-PRAC-'+idPeticion;
+    const last=hoja.getLastRow();
+    const ids=last>1?hoja.getRange(2,2,last-1,1).getDisplayValues().flat():[];
+    if(ids.includes(receipt))return {recibido:true,duplicado:true,comprobante:receipt,fase:fase};
+    if(fase==='CORREGIDA'&&!ids.includes(initialReceipt))throw new Error('No se encuentra la respuesta inicial en esta sesión.');
+    const safe=x=>/^[=+@-]/.test(x)?"'"+x:x;
+    hoja.appendRow([new Date(),receipt,'PFMTTD-30MIN','DESARROLLO-CLASIFICA',safe(alias),idIntento,fase,a,b,c,safe(just),initialReceipt,'RECIBIDO','1.5','','','']);
+    SpreadsheetApp.flush();
+    return {recibido:true,duplicado:false,comprobante:receipt,fase:fase};
   }finally{lock.releaseLock();}
 }
