@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PFMTTD | Encuadre e inicio de sesión v0.9.4 · AulaQR</title>
-<!-- Objeto: encuadre público PFMTTD; versión 0.9.4-github; fecha 2026-11-15.
-Estado: prototipo en revisión. Nuevo: ruta RA1.1 y evaluación (10:00–11:00). Diagnóstico aplicable por QR; RT-03 pendiente de armonización.
+<title>PFMTTD | Encuadre e inicio de sesión v1.1.0 · AulaQR</title>
+<!-- Objeto: encuadre público PFMTTD; versión 1.0.1-github; fecha 2026-11-15.
+Estado: prototipo en revisión. Nuevo: se retira el recurso independiente AulaQR; permanecen construcción conceptual y práctica formativa. La franja 15:00–16:00 requiere armonización del RT-03. Diagnóstico previo en proceso de armonización curricular.
 Correcciones: elimina avisos superados. Sólo proyecta propuestas aprobadas; lista nominal autorizada publicada.
 Compatibilidad: módulo aislado, no modifica AulaQR Contraseñas seguras. Dependencias: ninguna. -->
 <style>
@@ -126,6 +126,83 @@ footer{display:none}
 #modalBody .recall-prompts p{font-size:1.03rem;margin:.35rem 0}
 #modalBody .recall-reveal{border-left:5px solid #17914a;background:#eaf7f0;padding:13px 16px;border-radius:8px;margin-top:12px}
 @media(max-width:820px){#sesion .pf-brand{margin:4% 4% 0}#sesion .pf-brand .pf-pill{white-space:normal}#sesion .pf-kicker{margin:4% 4% 0}#sesion h1{margin:2% 4%}#sesion>.lead{margin:0 4%}#sesion .pf-session-cards{margin:5% 4%;grid-template-columns:1fr}#sesion .pf-session-note{margin:5% 4%}#modalBody .recall-prompts{grid-template-columns:1fr}}
+
+/* Etapa 3: desarrollo de la sesión, v1.1.0 */
+#desarrollo{background:linear-gradient(132deg,#f4f8ff,#fff 70%)}
+#desarrollo:before{content:"";position:absolute;left:0;top:0;bottom:0;width:1%;background:linear-gradient(#1136ad 0 70%,#fff 70% 72%,#ef8d15 72%)}
+#desarrollo .pf-brand{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4.1% 7% 0}
+#desarrollo .pf-brand strong{color:#102ba0;letter-spacing:.06em;font-size:clamp(1rem,1.7vw,1.75rem)}
+#desarrollo .pf-brand .pf-word{color:#58708f;letter-spacing:.13em;font-size:clamp(.8rem,1.35vw,1.38rem)}
+#desarrollo .pf-brand .pf-pill{color:#0725a6;background:#e5ecff;font-size:clamp(.67rem,.95vw,.99rem);font-weight:800;padding:9px 16px;border-radius:50px;white-space:nowrap}
+#desarrollo .pf-kicker{margin:3% 7% 0;color:#e78209;letter-spacing:.17em;font-size:clamp(.8rem,1.22vw,1.18rem);font-weight:900}
+#desarrollo h1{margin:2% 7% .55%;font-size:clamp(1.9rem,3.4vw,3.6rem);color:#13233a}
+#desarrollo>.lead{margin:0 7%;font-size:clamp(.85rem,1.3vw,1.28rem);color:#56647a}
+#desarrollo .pf-session-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:3% 7% 0}
+#desarrollo .pf-session-card{background:#fff;border:2px solid #dae4f4;border-radius:14px;padding:19px;text-align:left;color:#102ba0;min-height:110px;box-shadow:0 9px 23px #14254c12}
+#desarrollo button.pf-session-card{cursor:pointer;font-weight:800}
+#desarrollo .pf-session-card .time{font-weight:850;color:#e78209;font-size:.86rem;display:block;margin-bottom:4px}
+#desarrollo .pf-session-card strong{font-size:clamp(1.05rem,1.45vw,1.45rem);display:block}
+#desarrollo .pf-session-card small{font-weight:400;font-size:clamp(.78rem,1vw,1rem);display:block;margin-top:5px;color:#475872}
+#desarrollo .pf-session-card.pending{background:#f3f6fc;color:#62718a;border-style:dashed;box-shadow:none}
+#desarrollo .pf-session-card.pending strong{color:#64718b}
+#desarrollo .pf-session-note{margin:2.5% 7%;padding:13px 17px;border-left:5px solid #198a4a;background:#eaf7ef;color:#14364c;font-size:clamp(.8rem,1.11vw,1.1rem)}
+#modalBody .concept-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+#modalBody .concept-tabs button{flex:1 1 150px;background:#edf3ff;color:#1132a3;border:2px solid #d2def8;padding:11px;border-radius:10px}
+#modalBody .concept-tabs button[aria-pressed="true"]{background:#173db2;color:white}
+#modalBody .concept-panel{background:#f1f5ff;border:1px solid #d6e2f5;border-radius:12px;padding:16px}
+#modalBody .concept-panel h3{font-size:clamp(1.1rem,1.8vw,1.5rem)}
+#modalBody .concept-panel p{margin:.35em 0}
+#modalBody .concept-check{border-left:5px solid #18914c;background:#eaf7ef;padding:13px 18px;border-radius:8px;margin-top:14px}
+@media(max-width:820px){#desarrollo .pf-brand{margin:4% 4% 0}#desarrollo .pf-brand .pf-pill{white-space:normal}#desarrollo .pf-kicker{margin:4% 4% 0}#desarrollo h1{margin:2% 4%}#desarrollo>.lead{margin:0 4%}#desarrollo .pf-session-cards{margin:5% 4%;grid-template-columns:1fr}#desarrollo .pf-session-note{margin:5% 4%}}
+
+/* v1.1.0: pantalla única por comunidad, contraste y tipografía amplia */
+.lab-draw-dialog{width:min(1060px,96vw);max-height:92vh;padding:clamp(1rem,2.5vw,2rem)}
+.lab-fixed-legend{font-size:clamp(.95rem,1.55vw,1.16rem);border-bottom:1px solid #cbd8eb;padding:.7rem 0;line-height:1.4}
+.lab-progress{font-weight:800;font-size:clamp(1.1rem,1.7vw,1.3rem);color:#50617a;margin:1rem 0 .4rem}
+.lab-draw-focus{background:#eef3ff;border:2px solid #c9d7fa;border-radius:16px;padding:clamp(1.3rem,3vw,2.4rem);min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.75rem}
+.lab-draw-focus .lab-team{font-size:clamp(1.65rem,3.4vw,2.7rem);font-weight:850;color:#1036ac;line-height:1.14}
+.lab-draw-focus .lab-result-title{font-size:clamp(1.5rem,2.6vw,2.2rem);font-weight:850;color:#117040}
+.lab-draw-focus .lab-context{font-size:clamp(1.12rem,1.9vw,1.45rem);line-height:1.35}
+.lab-draw-focus .lab-question{font-size:clamp(1rem,1.5vw,1.18rem);line-height:1.4}
+.lab-draw-controls{display:flex;flex-wrap:wrap;gap:.7rem;margin:1rem 0}
+.lab-draw-controls button{font-size:clamp(.96rem,1.4vw,1.13rem);min-height:48px}
+.lab-draw-controls button[hidden],#lab-summary-panel[hidden],#lab-focus[hidden],#lab-progress[hidden]{display:none}
+#lab-summary-panel{border-top:1px solid #cad7ea;margin-top:1rem}
+#lab-assignments{max-height:38vh;overflow:auto}
+#lab-assignments li{margin:.7rem 0;font-size:clamp(1rem,1.55vw,1.2rem)}
+@media(max-width:600px){.lab-draw-dialog .head{flex-direction:column;align-items:flex-start}.lab-draw-controls button{flex:1 1 45%}.lab-draw-focus{min-height:270px}}
+
+/* Evocación contextualizada: una situación por pantalla, lectura desde proyector */
+.evocation-card{background:#eef3ff;border:2px solid #d0defa;border-radius:14px;padding:clamp(1rem,2.5vw,2rem);text-align:center;margin:1rem 0;min-height:210px}
+.evocation-meta{font-size:clamp(.9rem,1.3vw,1.1rem);color:#536481;font-weight:750}
+.evocation-card h3{font-size:clamp(1.6rem,2.8vw,2.4rem);color:#1239ad;margin:.4rem 0}
+.evocation-scenario{font-size:clamp(1.1rem,2vw,1.55rem);line-height:1.45}
+.evocation-options{display:flex;flex-wrap:wrap;gap:.8rem;margin:1rem 0}
+.evocation-options button{flex:1 1 180px;font-size:clamp(1rem,1.6vw,1.3rem);padding:.9rem}
+.evocation-options button[aria-pressed="true"]{background:#187842}
+.evocation-feedback{background:#e9f7ee;border-left:5px solid #16804a;padding:1rem;border-radius:10px;font-size:clamp(1rem,1.6vw,1.2rem)}
+.evocation-nav{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+.evocation-nav button{min-height:44px}
+.evocation-feedback[hidden]{display:none}
+
+/* v1.1.0 — ficha de pilares legible en proyección, práctica formativa breve */
+.maturity-path{display:flex;justify-content:center;flex-wrap:wrap;gap:.35rem;border-radius:9px;background:#eaf0ff;color:#143aa4;font-weight:800;font-size:clamp(.86rem,1.35vw,1.08rem);padding:.75rem;margin:.8rem 0}
+.maturity-path span{color:#e78209}
+.maturity-tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:8px;margin:.85rem 0}
+#modalBody .maturity-tabs button{font-size:clamp(.94rem,1.35vw,1.08rem);line-height:1.25;background:#edf3ff;border:2px solid #d3ddf4;color:#1433a1;border-radius:9px;padding:11px 7px}
+#modalBody .maturity-tabs button[aria-pressed="true"]{background:#173db2;color:#fff}
+.maturity-spotlight{background:#eff4ff;border:1px solid #cbdcf6;border-radius:13px;padding:clamp(.9rem,2vw,1.5rem)}
+.maturity-spotlight h3{font-size:clamp(1.6rem,2.6vw,2.2rem);color:#0d32a5;margin:.25rem 0 .75rem}
+.maturity-overline{font-size:.85rem;letter-spacing:.08em;font-weight:800;color:#db7e00;margin:0}
+.maturity-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.maturity-columns>div{background:#fff;border-radius:9px;padding:.8rem}
+.maturity-columns p{font-size:clamp(1rem,1.45vw,1.18rem);margin:.35rem 0}
+.maturity-question{font-size:clamp(1rem,1.45vw,1.18rem)}
+.maturity-practice{border-left:5px solid #18884c;padding:1rem;background:#f2f9f4;border-radius:9px;margin:1rem 0}
+.maturity-controls{display:flex;flex-wrap:wrap;gap:.7rem}
+.maturity-model,.maturity-recorded{border-radius:8px;background:#e4f1ff;padding:.8rem;font-size:clamp(1rem,1.45vw,1.15rem)}
+.maturity-model[hidden],.maturity-recorded[hidden]{display:none}
+@media(max-width:650px){.maturity-columns{grid-template-columns:1fr}.maturity-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style></head><body>
 <header><strong>AulaQR · PFMTTD</strong><span>Práctica didáctica · 30 minutos</span></header>
 <main>
@@ -163,13 +240,33 @@ footer{display:none}
 <button type="button" class="pf-session-card" data-modal="ruta"><span class="time">10:00–11:00 · 1 minuto</span><strong>➜ Nuestra ruta</strong><small>RA1.1, contenidos, estrategias y evaluación</small></button>
 </div><div class="pf-session-note"><strong>Salto temporal:</strong> representamos una sesión posterior; no afirmamos que se hayan desarrollado las horas intermedias del programa.</div>
 </section>
+<section id="desarrollo" class="screen" hidden>
+<div class="pf-brand"><div><strong>PFMTTD</strong><span class="pf-word"> / Formación por competencias</span></div><span class="pf-pill">DESARROLLO · 11:00–23:00</span></div>
+<p class="pf-kicker">APRENDEMOS HACIENDO</p>
+<h1>De usar tecnología a transformar</h1>
+<p class="lead">Observemos un mismo negocio, contrastemos decisiones y construyamos explicaciones con evidencias.</p>
+<div class="pf-session-cards">
+<button type="button" class="pf-session-card" data-modal="conceptos"><span class="time">11:00–15:00 · 4 minutos</span><strong>① Construcción conceptual</strong><small>Digitalización, automatización y transformación digital</small></button>
+
+<button type="button" class="pf-session-card" data-modal="clasifica"><span class="time">16:00–20:00 · 4 minutos</span><strong>③ Clasifica y justifica</strong><small>Responde, contrasta y mejora</small></button>
+<button type="button" class="pf-session-card" data-modal="madurez"><span class="time">20:00–23:00 · 3 minutos</span><strong>④ Madurez tecnológica</strong><small>Siete pilares · indicador y evidencia</small></button>
+</div><div class="pf-session-note"><strong>RA1.1:</strong> distinguir y explicar conceptos aplicados a procesos de una MiPyME. Esta actividad introduce los fundamentos; todavía no demuestra un diagnóstico completo.</div>
+</section>
 </main>
 <div class="pf-bottom"><button id="backSlide" type="button">← Anterior</button><span id="slideCounter">1 / 3</span><button id="nextSlide" type="button">Siguiente →</button><span class="pf-minitext" style="position:absolute;right:14px;color:#dce8ff">Teclas ← → · F: pantalla completa</span></div>
 <dialog id="modal"><div class="head"><strong id="modalTitle"></strong><button class="secondary" id="close">Cerrar ×</button></div><div id="modalBody"></div></dialog>
+<dialog id="labDrawDialog" aria-labelledby="labDrawHeading" class="lab-draw-dialog">
+<div class="head"><strong id="labDrawHeading">Sorteo de perspectivas de negocio</strong><button type="button" class="secondary" id="lab-draw-close">Volver a la actividad ×</button></div>
+<p class="lab-fixed-legend"><strong>COMUNIDAD</strong> = equipo de aprendizaje. <strong>PERSPECTIVA</strong> = situación de negocio. <strong>No cambian los integrantes.</strong></p>
+<div id="lab-progress" class="lab-progress">Comunidad 1 de 5</div>
+<div id="lab-focus" class="lab-draw-focus" aria-live="polite"></div>
+<div class="lab-draw-controls"><button type="button" id="lab-sort">Revelar perspectiva</button><button type="button" id="lab-next" hidden>Siguiente comunidad →</button><button type="button" class="secondary" id="lab-summary">Ver resumen</button><button type="button" class="secondary" id="lab-reset">Reiniciar perspectivas</button></div>
+<div id="lab-summary-panel" hidden><h3>Resumen de asignaciones</h3><div id="lab-assignments"></div><button type="button" class="secondary" id="lab-summary-back">Volver al sorteo</button></div>
+</dialog>
 <footer>PFMTTD · Encuadre académico. La recepción central de acuerdos se realiza mediante Google Apps Script.</footer>
 <script>
 const K='pfmtd_v04_';const roster=["ENMANUEL BENAVIDES","FRANCISCO BONILLA","EMMANUEL BRITO","RAYMEL CEDANO","EZEQUIEL CUELLO","MARGARITA GIL","OMAR HERNANDEZ","CAROLA JIMENEZ","SERGIO MARTINEZ","ANGEL MATOS","ELISSA PAOLA ORTEGA","RANDY PEDIE","YOMIL PENA","CHRISTOPHER RODRIGUEZ","FIORDALIZA RODRIGUEZ","KERLIN RODRIGUEZ","LESLY SANTIAGO","YUDDY SUERO","JOSELIN URENA"];const get=(k,def)=>{try{return JSON.parse(localStorage.getItem(K+k))??def}catch{return def}};const put=(k,v)=>localStorage.setItem(K+k,JSON.stringify(v));
-const SECTIONS=['portada','panel','sesion'];
+const SECTIONS=['portada','panel','sesion','desarrollo'];
 function slideIndex(){return SECTIONS.findIndex(id=>!document.getElementById(id).hidden)}
 function showSlide(index){const n=Math.max(0,Math.min(SECTIONS.length-1,index));SECTIONS.forEach((id,i)=>document.getElementById(id).hidden=(i!==n));updateSlideBar()}
 function showPanel(){showSlide(1)}
@@ -182,9 +279,116 @@ updateSlideBar();
 const dlg=document.querySelector('#modal'), title=document.querySelector('#modalTitle'), body=document.querySelector('#modalBody');
 document.querySelector('#close').onclick=()=>dlg.close();
 document.querySelectorAll('[data-modal]').forEach(b=>b.onclick=()=>openModal(b.dataset.modal));
-function openModal(id){const c=views[id];title.textContent=c[0];body.innerHTML=c[1]();dlg.showModal();if(c[2])c[2]()}
+function openModal(id){const c=views[id];title.textContent=c[0];body.innerHTML=c[1]();if(!dlg.open)dlg.showModal();if(c[2])c[2]()}
 const esc=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+
+// Sorteo independiente de perspectivas: no altera la asignación de integrantes.
+const labPerspectives=[
+ {name:'Ventas y servicios',context:'El negocio recibe pedidos por mensajes y en el mostrador, pero algunas solicitudes se pierden y nadie sabe quién debe responder.',prompt:'¿Cómo organizar pedidos y responsables sin depender de la memoria de una persona?',evidence:'Registro de solicitudes, tiempo de respuesta y persona responsable'},
+ {name:'Inventario y compras',context:'La tienda se queda sin productos porque cuenta existencias a mano y compra cuando alguien nota el faltante.',prompt:'¿Qué registro, regla de reposición y responsabilidad ayudarían a evitar faltantes?',evidence:'Inventario actualizado, límites de reposición y registro de faltantes'},
+ {name:'Despacho y entregas',context:'Los pedidos están listos, pero salen tarde porque el área de ventas no coordina bien con quienes preparan y despachan.',prompt:'¿Qué coordinación entre ventas, preparación y despacho permitiría entregar a tiempo?',evidence:'Hora de preparación, responsable de despacho y entregas puntuales'},
+ {name:'Cultura y talento',context:'Se instaló un sistema nuevo, pero una parte del equipo continúa utilizando libretas por costumbre o falta de capacitación.',prompt:'¿Qué prácticas, acuerdos y habilidades necesita el equipo para adoptar el cambio?',evidence:'Capacitación realizada y uso efectivo del sistema por el equipo'},
+ {name:'Zonas y rutas de entregas',context:'La MiPyME realiza entregas en varios barrios sin agrupar destinos; hace recorridos repetidos y aumenta sus costos.',prompt:'¿Cómo organizar zonas, rutas y responsabilidades con datos sin limitarse a instalar una aplicación?',evidence:'Registro de destinos, tiempos por ruta y costo de entrega'}
+];
+function setupLab(){
+ const steps=[
+  {title:'Yo clasifico',body:'Clasifica A: ventas en hoja electrónica, B: alertas de existencias y C: reorganización integrada. Justifica uno con una característica observable.',prompt:'¿Qué cambió en el proceso y qué todavía no cambió?'},
+  {title:'Pensamos en pareja',body:'Contrasta una clasificación. Acuerden una explicación y añadan la perspectiva asignada a su comunidad.',prompt:'¿Cambió solamente una herramienta, o también hábitos, roles y decisiones?'},
+  {title:'Compartimos perspectivas',body:'Escuchemos dos comunidades con matices distintos y reconozcamos coincidencias y divergencias.',prompt:'¿Qué evidencia demostraría que la mejora funciona en ese proceso?'},
+  {title:'Revisamos y mejoramos',body:'Con la retroalimentación recibida, corrige una respuesta o fortalece su justificación y explica por qué.',prompt:'¿Qué argumento mejoró y qué aspecto organizacional ahora consideras?'}
+ ];
+ const currentTitle=document.getElementById('lab-title'),currentBody=document.getElementById('lab-body'),currentPrompt=document.getElementById('lab-prompt');
+ document.querySelectorAll('[data-lab-step]').forEach(b=>b.onclick=()=>{
+  const i=Number(b.dataset.labStep);currentTitle.textContent=steps[i].title;currentBody.textContent=steps[i].body;currentPrompt.textContent=steps[i].prompt;
+  document.querySelectorAll('[data-lab-step]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+ });
+ const modal=document.getElementById('labDrawDialog'),open=document.getElementById('lab-open-sort'),close=document.getElementById('lab-draw-close');
+ const focus=document.getElementById('lab-focus'),sort=document.getElementById('lab-sort'),reset=document.getElementById('lab-reset'),list=document.getElementById('lab-assignments');
+ const next=document.getElementById('lab-next'),summary=document.getElementById('lab-summary'),panel=document.getElementById('lab-summary-panel'),back=document.getElementById('lab-summary-back'),progress=document.getElementById('lab-progress'),status=document.getElementById('lab-status');
+ const key='pfmtd_lab_perspectivas_por_comunidad_v2';
+ const groups=['Estrategia Digital','Cultura de Innovación','Procesos Inteligentes','Datos y Seguridad','Experiencia y Valor'];
+ let current=0,summaryMode=false;
+ function read(){let a=null;try{a=JSON.parse(sessionStorage.getItem(key)||'null')}catch(e){}return Array.isArray(a)&&a.length<=5&&a.every((v,i)=>Number.isInteger(v)&&v>=0&&v<5&&a.indexOf(v)===i)?a:[]}
+ function el(tag,cls,value){const e=document.createElement(tag);if(cls)e.className=cls;if(value!==undefined)e.textContent=value;return e}
+ function render(){
+  const assigned=read();current=Math.min(current,4);focus.replaceChildren();list.replaceChildren();
+  progress.textContent='Comunidad '+(current+1)+' de 5';
+  focus.append(el('div','lab-team',groups[current]));
+  if(current<assigned.length){
+   const p=labPerspectives[assigned[current]];
+   focus.append(el('div','lab-result-title',p.name),el('div','lab-context',p.context),el('div','lab-question','Pregunta orientadora: '+p.prompt));
+  }else{
+   focus.append(el('div','lab-context','¿Qué situación de negocio analizará esta comunidad?'),el('div','lab-question','Revela una perspectiva sin alterar sus integrantes.'));
+  }
+  const ol=el('ol');assigned.forEach((idx,i)=>{const li=el('li');li.append(el('strong','',groups[i]),el('span','',' — '+labPerspectives[idx].name));ol.append(li)});list.append(ol);
+  sort.hidden=current<assigned.length;sort.disabled=current!==assigned.length;next.hidden=current>=assigned.length||current===4;
+  summary.disabled=assigned.length===0;summary.textContent=assigned.length===5?'Ver resumen final':'Ver asignaciones realizadas';
+  panel.hidden=!summaryMode;focus.hidden=summaryMode;progress.hidden=summaryMode;
+  status.textContent=assigned.length+' de 5 comunidades con perspectivas asignadas.';
+ }
+ open.onclick=()=>{current=Math.min(read().length,4);summaryMode=false;render();modal.showModal()};
+ close.onclick=()=>modal.close();
+ sort.onclick=()=>{const a=read();if(current!==a.length||a.length===5)return;const free=[0,1,2,3,4].filter(n=>!a.includes(n));const v=new Uint32Array(1);crypto.getRandomValues(v);a.push(free[v[0]%free.length]);sessionStorage.setItem(key,JSON.stringify(a));render()};
+ next.onclick=()=>{if(current<4&&current<read().length){current++;summaryMode=false;render()}};
+ summary.onclick=()=>{summaryMode=true;render()};back.onclick=()=>{summaryMode=false;render()};
+ reset.onclick=()=>{if(!confirm('¿Reiniciar perspectivas? No cambiarán los integrantes de las comunidades.'))return;sessionStorage.removeItem(key);current=0;summaryMode=false;render()};
+ render();
+}
+
+const evocationCases=[{"business":"Colmado","scenario":"Las ventas que antes se anotaban en una libreta se registran ahora en una hoja electrónica.","answer":"Digitalizar","why":"El soporte del registro pasa del papel a un archivo; no necesariamente cambia el proceso."},{"business":"Farmacia","scenario":"El sistema envía una alerta automáticamente cuando las unidades de un medicamento bajan de un límite.","answer":"Automatizar","why":"Una regla desencadena el aviso sin revisar las existencias una por una."},{"business":"Tienda de ropa","scenario":"Reorganiza ventas, inventario y atención, asigna nuevas funciones y toma decisiones con indicadores compartidos.","answer":"Transformar","why":"Cambian procesos, responsabilidades y decisiones, además de incorporar tecnología."},{"business":"Salón de belleza","scenario":"La encargada pasa a una agenda digital las citas que antes apuntaba en papel.","answer":"Digitalizar","why":"Se digitaliza la información, aunque las citas todavía se gestionen manualmente."},{"business":"Panadería","scenario":"El horno ajusta automáticamente su temperatura según una programación previamente configurada.","answer":"Automatizar","why":"Una acción repetitiva ocurre con reglas y sensores, sin ajustes manuales continuos."},{"business":"Taller mecánico","scenario":"Integra recepción, órdenes de trabajo, repuestos y seguimiento al cliente; capacita al equipo y redefine responsables.","answer":"Transformar","why":"Rediseña el servicio, la coordinación del equipo y el uso de información."},{"business":"Restaurante","scenario":"Convierte su menú impreso en un archivo PDF consultable desde un código QR.","answer":"Digitalizar","why":"El menú se consulta en soporte digital; un QR por sí solo no transforma la organización."},{"business":"Lavandería","scenario":"El sistema manda un mensaje automático cuando la ropa está lista para retirar.","answer":"Automatizar","why":"Una condición activa una notificación sin intervención manual en cada pedido."},{"business":"Cooperativa de productores","scenario":"Conecta pedidos, producción y distribución; cambia acuerdos internos y revisa indicadores cada semana.","answer":"Transformar","why":"Integra procesos y crea nuevas prácticas de coordinación y decisiones."},{"business":"Consultorio odontológico","scenario":"Escanea historiales antiguos para disponer de documentos digitales, sin cambiar cómo se asignan las citas.","answer":"Digitalizar","why":"Convierte documentación al formato digital, pero no rediseña la atención."},{"business":"Ferretería","scenario":"Al facturar una venta, el sistema descuenta automáticamente las unidades del inventario.","answer":"Automatizar","why":"La venta ejecuta una actualización automática según una regla definida."},{"business":"Servicio de mensajería","scenario":"Reorganiza zonas y rutas de entregas, redefine responsabilidades y analiza tiempos, costos y experiencia del cliente.","answer":"Transformar","why":"La tecnología acompaña cambios en procesos, decisiones y cultura de servicio."}];
+function setupEvocation(){
+ let current=0,selected=null,visible=false;
+ const num=document.getElementById('evoc-number'),business=document.getElementById('evoc-business'),scenario=document.getElementById('evoc-scenario'),feedback=document.getElementById('evoc-feedback');
+ const opts=[...document.querySelectorAll('[data-evoc-answer]')],prev=document.getElementById('evoc-back'),next=document.getElementById('evoc-next'),reveal=document.getElementById('evoc-reveal');
+ function render(){
+  const item=evocationCases[current];
+  num.textContent='Situación '+(current+1)+' de '+evocationCases.length;business.textContent=item.business;scenario.textContent=item.scenario;
+  opts.forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.evocAnswer===selected));b.disabled=visible});
+  feedback.hidden=!visible;feedback.replaceChildren();
+  if(visible){
+   const strong=document.createElement('strong'),why=document.createElement('p');
+   strong.textContent='Clasificación esperada: '+item.answer+(selected?' · '+(selected===item.answer?'Coincide con tu elección.':'Revisemos tu elección.'):'');
+   why.textContent=item.why;feedback.append(strong,why);
+  }
+  reveal.disabled=visible;prev.disabled=current===0;next.disabled=current===evocationCases.length-1;
+  next.textContent=current===evocationCases.length-1?'Último caso':'Siguiente caso →';
+ }
+ opts.forEach(b=>b.onclick=()=>{if(visible)return;selected=b.dataset.evocAnswer;render()});
+ reveal.onclick=()=>{visible=true;render()};
+ next.onclick=()=>{if(current>=evocationCases.length-1)return;current++;selected=null;visible=false;render()};
+ prev.onclick=()=>{if(current<=0)return;current--;selected=null;visible=false;render()};
+ document.getElementById('evoc-return').onclick=()=>openModal('conceptos');
+ render();
+}
+function setupMaturity(){
+ const name=document.getElementById('maturity-name'),indicator=document.getElementById('maturity-indicator'),evidence=document.getElementById('maturity-evidence'),question=document.getElementById('maturity-prompt');
+ function select(i){
+  const p=maturityPillars[i];name.textContent=p.name;indicator.textContent=p.indicator;evidence.textContent=p.evidence;question.textContent=p.prompt;
+  document.querySelectorAll('[data-maturity]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.maturity)===i)));
+ }
+ document.querySelectorAll('[data-maturity]').forEach(b=>b.onclick=()=>select(Number(b.dataset.maturity)));
+ select(0);
+ const model=document.getElementById('maturity-model'),show=document.getElementById('maturity-show');
+ show.onclick=()=>{model.hidden=!model.hidden;show.textContent=model.hidden?'Mostrar ejemplo tras escuchar al grupo':'Ocultar ejemplo'};
+ document.getElementById('maturity-record').onclick=()=>{
+  const entered=prompt('Registra una propuesta realmente escuchada (pilar + evidencia), sin datos sensibles. Deja vacío para cancelar.');
+  if(!entered||!entered.trim())return;
+  const text=entered.trim().slice(0,320),output=document.getElementById('maturity-recorded');
+  output.textContent='Propuesta oral registrada en este navegador: '+text;
+  output.hidden=false;
+  try{sessionStorage.setItem('pfmtd_madurez_aporte_v1',text)}catch(e){}
+ };
+ try{const saved=sessionStorage.getItem('pfmtd_madurez_aporte_v1');if(saved){const output=document.getElementById('maturity-recorded');output.textContent='Propuesta oral registrada en este navegador: '+saved;output.hidden=false}}catch(e){}
+}
+
+const maturityPillars=[{"name":"Estrategia","indicator":"Objetivos y prioridades digitales definidos","evidence":"Plan de mejora con objetivos, responsables y seguimiento","prompt":"¿La MiPyME decide qué digitalizar y por qué?"},{"name":"Cultura","indicator":"Adopción de nuevas prácticas por el equipo","evidence":"Registro de participación, acuerdos y uso real de una nueva práctica","prompt":"¿El equipo utiliza los cambios o mantiene hábitos anteriores?"},{"name":"Talento","indicator":"Capacidades para utilizar herramientas y datos","evidence":"Capacitaciones realizadas y demostraciones de uso en el puesto","prompt":"¿Quién puede ejecutar y sostener la mejora?"},{"name":"Procesos","indicator":"Ejecución coordinada y seguimiento de entregas","evidence":"Registro de pedidos, responsables por etapa y tiempos de despacho","prompt":"¿Dónde hay retrasos, duplicidad o tareas sin responsable?"},{"name":"Tecnología","indicator":"Disponibilidad y uso funcional de sistemas","evidence":"Inventario de herramientas y registro de funcionamiento","prompt":"¿Las herramientas apoyan de forma efectiva el trabajo?"},{"name":"Datos y seguridad","indicator":"Calidad de registros y control de acceso","evidence":"Muestra de registros completos, respaldos y permisos de acceso","prompt":"¿Los datos son confiables y se protegen?"},{"name":"Experiencia y valor","indicator":"Calidad de atención y satisfacción del cliente","evidence":"Registro de reclamaciones, tiempos de respuesta y mejoras del servicio","prompt":"¿Qué valor recibe realmente el cliente?"}];
 const views={
+madurez:['Madurez tecnológica · Siete pilares',()=>'<p class="stage">DESARROLLO · MADUREZ TECNOLÓGICA · 20:00–23:00</p><h2>¿Cómo sabemos si una MiPyME está avanzando?</h2><p>La madurez no se mide por tener más aplicaciones. Observamos <strong>capacidades, prácticas y resultados verificables</strong>. Explora los siete pilares y relaciona un proceso con una evidencia.</p><div class="maturity-path" aria-label="Ruta de diagnóstico">Pilar <span>→</span> Indicador <span>→</span> Evidencia <span>→</span> Nivel <span>→</span> Brecha <span>→</span> Prioridad</div><div class="maturity-tabs" role="group" aria-label="Seleccionar pilar de madurez"><button type="button" data-maturity="0" aria-pressed="true">Estrategia</button><button type="button" data-maturity="1" aria-pressed="false">Cultura</button><button type="button" data-maturity="2" aria-pressed="false">Talento</button><button type="button" data-maturity="3" aria-pressed="false">Procesos</button><button type="button" data-maturity="4" aria-pressed="false">Tecnología</button><button type="button" data-maturity="5" aria-pressed="false">Datos y seguridad</button><button type="button" data-maturity="6" aria-pressed="false">Experiencia y valor</button></div><div class="maturity-spotlight" aria-live="polite"><p class="maturity-overline">PILAR SELECCIONADO</p><h3 id="maturity-name">Estrategia</h3><div class="maturity-columns"><div><strong>Indicador posible</strong><p id="maturity-indicator"></p></div><div><strong>Evidencia observable</strong><p id="maturity-evidence"></p></div></div><p class="maturity-question"><strong>Pregunta al grupo:</strong> <span id="maturity-prompt"></span></p></div><div class="maturity-practice"><strong>Microactividad · Despacho y entregas</strong><p>Una MiPyME entrega tarde porque las tareas no están coordinadas. ¿Qué pilar elegiríamos y qué evidencia revisaríamos?</p><div class="maturity-controls"><button type="button" id="maturity-show" class="secondary">Mostrar ejemplo tras escuchar al grupo</button><button type="button" id="maturity-record">Registrar propuesta oral</button></div><p id="maturity-model" class="maturity-model" hidden><strong>Una respuesta defendible:</strong> Procesos. Indicador: cumplimiento de tiempos de despacho. Evidencia: registro de pedidos, responsables por etapa y entregas a tiempo. Otras respuestas son válidas si se justifican con indicadores y evidencias.</p><p id="maturity-recorded" class="maturity-recorded" hidden></p></div><div class="pf-footer"><strong>Alcance:</strong> esta actividad introduce el razonamiento diagnóstico, pero no asigna un nivel real ni demuestra por sí sola RA1.2. El nivel, la brecha y la prioridad requieren recopilar y contrastar datos en sesiones posteriores.</div>',()=>setupMaturity()],
+
+evocacion:['Evocación · ¿Digitalizar, automatizar o transformar?',()=>'<p class="stage">DESARROLLO · ACTIVACIÓN CONCEPTUAL</p><h2>¿Qué está haciendo esta MiPyME?</h2><p>Escucha el caso, elige una categoría y <strong>justifica la decisión antes de revelar la respuesta</strong>. El banco tiene 12 situaciones; durante la simulación utilizaremos solo las que permita el tiempo.</p><div class="evocation-card"><p id="evoc-number" class="evocation-meta">Situación 1 de 12</p><h3 id="evoc-business">MiPyME</h3><p id="evoc-scenario" class="evocation-scenario"></p></div><div class="evocation-options" role="group" aria-label="Selecciona una clasificación"><button type="button" data-evoc-answer="Digitalizar">Digitalizar</button><button type="button" data-evoc-answer="Automatizar">Automatizar</button><button type="button" data-evoc-answer="Transformar">Transformar</button></div><div class="evocation-feedback" id="evoc-feedback" hidden aria-live="polite"></div><p id="evoc-guidance" class="pf-minitext">Pregunta al grupo: ¿qué cambia realmente: el soporte, una tarea o la organización del negocio?</p><div class="evocation-nav"><button type="button" id="evoc-back" class="secondary">← Caso anterior</button><button type="button" id="evoc-reveal" class="secondary">Revelar explicación</button><button type="button" id="evoc-next">Siguiente caso →</button><button type="button" id="evoc-return" class="secondary">Volver a los conceptos</button></div><p class="pf-minitext">Apoyo para evocación y comprobación oral; no califica participantes ni sustituye la lista de cotejo. No se necesita recorrer los 12 casos.</p>',()=>setupEvocation()],
+
+clasifica:['Laboratorio colaborativo · Clasifica y justifica',()=>'<p class="stage">DESARROLLO · LABORATORIO COLABORATIVO · 16:00–20:00</p><h2>Una MiPyME, cinco miradas</h2><p>Todos clasificamos los mismos casos A (registro), B (alerta) y C (reorganización). Cada comunidad añade una <strong>mirada distinta del negocio</strong> para justificar qué cambia en procesos, cultura, personas y organización.</p><div class="concept-tabs" role="group" aria-label="Etapas de colaboración"><button type="button" class="lab-step" data-lab-step="0" aria-pressed="true">1 · Individual</button><button type="button" class="lab-step" data-lab-step="1" aria-pressed="false">2 · Parejas</button><button type="button" class="lab-step" data-lab-step="2" aria-pressed="false">3 · Plenaria</button><button type="button" class="lab-step" data-lab-step="3" aria-pressed="false">4 · Mejora</button></div><div class="concept-panel" aria-live="polite"><h3 id="lab-title">Yo clasifico</h3><p id="lab-body">Identifica qué cambio representa digitalización, automatización y transformación. Justifica uno con una característica observable.</p><p><strong>Pregunta:</strong> <span id="lab-prompt">¿Qué cambió en el proceso y qué todavía no cambió?</span></p></div><div class="pf-columns"><div class="pf-tile"><h3>Perspectivas de negocio</h3><p>Las cinco comunidades conservarán sus integrantes. Cada una recibirá una situación distinta para analizar procesos, cultura, responsabilidades y evidencias.</p><button type="button" id="lab-open-sort">Abrir sorteo de comunidades ↗</button><p id="lab-status" class="pf-minitext" aria-live="polite">Consulta el sorteo en una ventana independiente.</p></div><div class="pf-tile" style="text-align:center"><h3>Instrumento individual</h3><img src="https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=https%3A%2F%2Fezequiel-cdo.github.io%2Faula-qr%2Fpfmtd%2Fclasifica-justifica.html" width="165" height="165" style="max-width:100%;height:auto" alt="QR de Clasifica y justifica"><p><a href="https://ezequiel-cdo.github.io/aula-qr/pfmtd/clasifica-justifica.html" target="_blank" rel="noopener">Abrir actividad ↗</a></p><p class="pf-minitext">Alternativa: respuesta oral o en papel. El QR no acredita por sí solo interacción.</p></div></div><div class="pf-footer"><strong>Criterios de calidad de los argumentos:</strong> identificar un proceso, una responsabilidad o decisión, una práctica cultural y una evidencia observable. En cuatro minutos no se exige exposición de las cinco comunidades: escucharemos dos perspectivas y construiremos una síntesis común.</div><p class="pf-minitext">La respuesta individual y su corrección pueden tener comprobantes de recepción cuando el servicio esté desplegado. El diálogo entre compañeros requiere observación del facilitador; no se infiere automáticamente del formulario.</p>',()=>setupLab()],
+conceptos:['Construcción conceptual',()=>'<p class="stage">DESARROLLO · CONSTRUCCIÓN CONCEPTUAL · 11:00–15:00</p><h2>Un negocio, tres formas de mejorar</h2><p>Imaginemos una <strong>MiPyME que vende productos y organiza entregas</strong>. Actualmente anota las ventas en papel y verifica existencias de forma manual.</p><div class="concept-tabs" role="group" aria-label="Conceptos para comparar"><button type="button" data-concept="0" aria-pressed="true">1 · Digitalizar</button><button type="button" data-concept="1" aria-pressed="false">2 · Automatizar</button><button type="button" data-concept="2" aria-pressed="false">3 · Transformar</button></div><section class="concept-panel" aria-live="polite"><h3 id="conceptTitle">Digitalización</h3><p id="conceptDefinition">Registrar la información de ventas en formato digital, por ejemplo, mediante una hoja electrónica.</p><p><strong>Qué cambia:</strong> <span id="conceptImpact">el soporte del registro; aún puede mantenerse el mismo proceso.</span></p></section><div class="pf-footer"><strong>Pregunta al grupo:</strong> <span id="conceptQuestion">¿Qué ventaja obtiene el negocio al consultar sus ventas digitalmente?</span><p class="pf-minitext">Escuchemos una intervención y pidamos una característica observable para justificarla.</p></div><button type="button" id="conceptEvocation" class="secondary">Evocación · Clasifiquemos 12 situaciones ↗</button> <button type="button" id="conceptExplain">Mostrar síntesis después del diálogo</button><div class="concept-check" id="conceptSummary" hidden><strong>Clave para contrastar:</strong> digitalizar registra datos; automatizar ejecuta tareas con reglas; transformar reorganiza procesos, personas, datos y tecnología para generar valor. No son equivalentes y una herramienta aislada no prueba transformación.</div><p class="pf-minitext">Evidencia: intervenciones y justificaciones efectivamente observadas; no se registra una calificación por abrir las tarjetas.</p>',()=>{const items=[{title:'Digitalización',definition:'Registrar la información de ventas en formato digital, por ejemplo, mediante una hoja electrónica.',impact:'el soporte del registro; aún puede mantenerse el mismo proceso.',question:'¿Qué ventaja obtiene el negocio al consultar sus ventas digitalmente?'},{title:'Automatización',definition:'Configurar un sistema que genere alertas de existencias cuando un producto alcance un límite.',impact:'una tarea se ejecuta mediante reglas sin tener que revisar manualmente cada producto.',question:'¿Qué tarea repetitiva se evita y qué regla activa la alerta?'},{title:'Transformación digital',definition:'Rediseñar de manera coordinada ventas, inventario, entregas, atención al cliente, responsabilidades e indicadores mediante datos y sistemas integrados.',impact:'la forma en que se organiza el negocio y toma decisiones para aportar valor.',question:'¿Qué procesos y responsabilidades tuvieron que cambiar, además de usar tecnología?'}];document.querySelectorAll("[data-concept]").forEach(btn=>btn.addEventListener("click",()=>{const o=items[Number(btn.dataset.concept)];document.getElementById("conceptTitle").textContent=o.title;document.getElementById("conceptDefinition").textContent=o.definition;document.getElementById("conceptImpact").textContent=o.impact;document.getElementById("conceptQuestion").textContent=o.question;document.querySelectorAll("[data-concept]").forEach(b=>b.setAttribute("aria-pressed",String(b===btn)))}));document.getElementById("conceptEvocation").onclick=()=>openModal("evocacion");document.getElementById("conceptExplain").onclick=()=>{const box=document.getElementById("conceptSummary");box.hidden=!box.hidden;document.getElementById("conceptExplain").textContent=box.hidden?"Mostrar síntesis después del diálogo":"Ocultar síntesis"}}],
 ruta:['Nuestra ruta de aprendizaje',()=>'<p class="stage">INICIO DE SESIÓN · RUTA DE APRENDIZAJE · 10:00–11:00</p><h2>¿Qué aprenderemos y cómo lo comprobaremos?</h2><div class="pf-hero"><strong>RA1.1:</strong> Analiza el contexto y los fundamentos de la transformación digital de una MiPyME, identificando sus procesos y capacidades tecnológicas.</div><div class="pf-cards"><div class="pf-tile"><h3>¿Qué aprenderemos?</h3><p>Digitalización, automatización, transformación digital y aproximación a los pilares de madurez tecnológica.</p></div><div class="pf-tile"><h3>¿Cómo participaremos?</h3><p>Exposición dialogada, demostración, clasificación individual, contraste por parejas y actividades con AulaQR.</p></div><div class="pf-tile"><h3>¿Cómo evaluaremos?</h3><p>Preguntas de contraste, clasificación y justificación de casos, y lista de cotejo formativa vinculada a CE1.1a–c.</p></div></div><div class="pf-footer"><strong>Tiempo y alcance:</strong> esta práctica dura 30 minutos y representa momentos seleccionados de un programa de 80 horas. El diagnóstico inicial no sustituye la evaluación formativa de los casos.<p><strong>Pregunta breve:</strong> ¿qué relación encuentras entre analizar los procesos de una MiPyME y proponer una mejora digital?</p></div><p class="pf-minitext">Este es un plan de trabajo, no una constancia de que RA1.1 ya se haya logrado.</p>'],
 sabemos:['¿Qué sabemos?',()=>'<p class="stage">INICIO DE SESIÓN · CONOCIMIENTOS PREVIOS · 08:30–10:00</p><h2>¿Excel o WhatsApp significan transformación digital?</h2><p>Una MiPyME utiliza Excel para registrar sus ventas y WhatsApp para responder consultas. <strong>¿Podemos afirmar que se ha transformado digitalmente?</strong></p><div class="pf-cards"><div class="pf-tile"><h3>1 · Piensa</h3><p>Elige una postura e identifica una razón.</p></div><div class="pf-tile"><h3>2 · Comparte</h3><p>Escuchemos dos explicaciones distintas.</p></div><div class="pf-tile"><h3>3 · Contrasta</h3><p>¿Qué tendría que cambiar en procesos, personas y decisiones?</p></div></div><div class="pf-hero"><strong>Pregunta al grupo:</strong> ¿usar herramientas digitales es suficiente para transformar una empresa?</div><div class="pf-columns"><button id="sabemosSi" class="secondary" type="button">Sí, es suficiente</button><button id="sabemosNo" class="secondary" type="button">No necesariamente</button></div><p id="sabemosEleccion" class="pf-minitext" role="status">Selecciona una postura para iniciar el contraste. Esta selección no registra respuestas individuales ni calificaciones.</p><div class="pf-footer"><button id="sabemosMostrar" type="button">Mostrar retroalimentación tras el diálogo</button><div id="sabemosFeedback" hidden><h3>Conclusión para contrastar</h3><p>Excel y WhatsApp pueden ser ejemplos de <strong>digitalización</strong> o apoyo a un proceso. La <strong>transformación digital</strong> supone cambios coordinados en procesos, personas, datos, responsabilidades y decisiones para generar valor.</p><p><strong>Pregunta de profundización:</strong> ¿qué evidencia concreta demostraría un cambio real en la atención, las ventas o la entrega?</p></div></div><p class="pf-minitext">Evidencia prevista: argumentos orales realmente expresados y contraste guiado. No confundir un clic con una respuesta registrada del participante.</p>',()=>{const estado=document.getElementById('sabemosEleccion'),feedback=document.getElementById('sabemosFeedback'),b=document.getElementById('sabemosMostrar');document.getElementById('sabemosSi').onclick=()=>{estado.textContent='Postura seleccionada para discutir: Sí. Solicitemos la justificación antes de opinar.'};document.getElementById('sabemosNo').onclick=()=>{estado.textContent='Postura seleccionada para discutir: No necesariamente. Solicitemos la justificación antes de opinar.'};b.onclick=()=>{feedback.hidden=!feedback.hidden;b.textContent=feedback.hidden?'Mostrar retroalimentación tras el diálogo':'Ocultar retroalimentación'}}],
 diagnostico:['Instrumento diagnóstico',()=>'<p class="stage">INICIO DE SESIÓN · DIAGNÓSTICO INICIAL · 08:00–08:30</p><h2>¿Qué sabemos antes de comenzar?</h2><p>Este instrumento identifica conocimientos previos para adaptar las explicaciones y los ejercicios. <strong>Ahora se habilita su aplicación mediante QR</strong> como ajuste solicitado al RT-03, que originalmente preveía solo su exhibición.</p><div class="pf-columns"><div class="pf-tile" style="text-align:center"><h3>Escanea para responder</h3><img alt="QR de acceso al diagnóstico inicial de PFMTTD" width="195" height="195" style="max-width:100%;height:auto" src="https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=https%3A%2F%2Fezequiel-cdo.github.io%2Faula-qr%2Fpfmtd%2Fdiagnostico-responder.html"><p><a href="diagnostico-responder.html" target="_blank" rel="noopener">Abrir formulario de diagnóstico ↗</a></p></div><div class="pf-tile"><h3>¿Para qué lo hacemos?</h3><p>Reconocer qué sabemos acerca de los procesos de una MiPyME, digitalización, automatización y transformación digital.</p><p>Las respuestas se registrarán en una hoja privada, sin calificación automática, cuando el servicio esté activado.</p><p><a href="diagnostico-inicial.html" target="_blank" rel="noopener">Consultar o imprimir modelo de respaldo ↗</a></p></div></div><div class="pf-footer"><strong>Atención al tiempo:</strong> 30 segundos permiten presentar y abrir el instrumento, pero <strong>no garantizan contestarlo por completo</strong>. Debemos ajustar la temporalización del RT-03 si la ejecución completa debe observarse dentro de los 30 minutos.</div>'],
