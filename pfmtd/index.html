@@ -361,9 +361,9 @@ function setupEvocation(){
  render();
 }
 function setupMaturity(){
- const name=document.getElementById('maturity-name'),indicator=document.getElementById('maturity-indicator'),evidence=document.getElementById('maturity-evidence'),prompt=document.getElementById('maturity-prompt');
+ const name=document.getElementById('maturity-name'),indicator=document.getElementById('maturity-indicator'),evidence=document.getElementById('maturity-evidence'),question=document.getElementById('maturity-prompt');
  function select(i){
-  const p=maturityPillars[i];name.textContent=p.name;indicator.textContent=p.indicator;evidence.textContent=p.evidence;prompt.textContent=p.prompt;
+  const p=maturityPillars[i];name.textContent=p.name;indicator.textContent=p.indicator;evidence.textContent=p.evidence;question.textContent=p.prompt;
   document.querySelectorAll('[data-maturity]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.maturity)===i)));
  }
  document.querySelectorAll('[data-maturity]').forEach(b=>b.onclick=()=>select(Number(b.dataset.maturity)));
