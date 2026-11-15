@@ -1,0 +1,45 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PFMTTD · Clasifica y justifica</title>
+<!-- Objeto: formulario AulaQR PFMTTD · Versión 1.0 · Fecha 2026-11-15
+Estado: desarrollo sujeto a despliegue Apps Script 1.5.
+Nuevo: dos entregas identificables inicial y corregida, retroalimentación y comprobantes.
+Compatibilidad: misma hoja privada, conserva receptores anteriores.
+Dependencias: Google Apps Script desplegado, función registrarPractica. -->
+<style>:root{font-family:system-ui,sans-serif;color:#142747;background:#edf3fd}*{box-sizing:border-box}body{margin:0;padding:1rem}main{max-width:850px;margin:auto;background:white;border:1px solid #d5e1f3;border-radius:16px;padding:clamp(1rem,4vw,2rem)}h1{font-size:clamp(1.65rem,4vw,2.55rem);line-height:1.14;color:#1134a6}h2{color:#1238ad;font-size:1.3rem}p{line-height:1.5}small{color:#536580}.stage{font-size:.84rem;color:#b86904;letter-spacing:.1em;font-weight:800;text-transform:uppercase}.case{background:#f2f6ff;border:1px solid #d7e3f4;border-radius:13px;padding:1rem;margin:.8rem 0}.case label{display:block;font-weight:700;margin:.6rem 0 .35rem}select,textarea,input{width:100%;font:inherit;padding:.78rem;border-radius:9px;border:1px solid #9caccb}button{font:inherit;border:0;border-radius:9px;background:#153caf;color:white;font-weight:750;padding:.82rem 1rem;margin:.5rem .4rem .5rem 0}button:disabled{opacity:.52}button:focus-visible{outline:3px solid #f09305;outline-offset:2px}.hidden{position:absolute;left:-9999px}.note{background:#eaf6ef;border-left:5px solid #14904a;border-radius:8px;padding:1rem;margin:1rem 0}.feedback{background:#ecf2ff;border-left:5px solid #1b40b2;padding:1rem;border-radius:8px;margin:1rem 0}.feedback[hidden],#revise[hidden]{display:none}.error{color:#9a2600}</style></head><body><main>
+<p class="stage">PFMTTD · M01 · RA1.1 · 16:00–20:00</p><h1>Clasifica y justifica</h1>
+<p>Responde primero individualmente, contrasta con tu pareja y escucha la retroalimentación. Después podrás corregir y enviar una segunda versión.</p>
+<p><strong>Una MiPyME de ventas y entregas</strong> introduce tres mejoras diferentes. ¿Qué concepto representa cada caso?</p>
+<label for="alias">Identificador de práctica (opcional)</label><input id="alias" maxlength="60" placeholder="Ej.: P01 / Comunidad 2" autocomplete="off">
+<div class="case"><strong>Caso A</strong><p>Registrar las ventas en una hoja electrónica.</p><label for="a">Clasificación A</label><select id="a"><option value="">Seleccionar…</option><option value="digitalizacion">Digitalización</option><option value="automatizacion">Automatización</option><option value="transformacion">Transformación digital</option></select></div>
+<div class="case"><strong>Caso B</strong><p>Generar alertas automáticas de existencias cuando quedan pocos productos.</p><label for="b">Clasificación B</label><select id="b"><option value="">Seleccionar…</option><option value="digitalizacion">Digitalización</option><option value="automatizacion">Automatización</option><option value="transformacion">Transformación digital</option></select></div>
+<div class="case"><strong>Caso C</strong><p>Reorganizar ventas, entregas, atención, responsabilidades e indicadores con sistemas integrados.</p><label for="c">Clasificación C</label><select id="c"><option value="">Seleccionar…</option><option value="digitalizacion">Digitalización</option><option value="automatizacion">Automatización</option><option value="transformacion">Transformación digital</option></select></div>
+<label for="just">Justifica una de tus clasificaciones indicando una característica observable.</label><textarea id="just" rows="3" minlength="12" maxlength="500" placeholder="Elegí... porque en el caso se observa..."></textarea>
+<div class="hidden" aria-hidden="true"><label for="control">Dejar vacío</label><input id="control" tabindex="-1" autocomplete="off"></div>
+<div id="phase" class="note"><strong>Momento 1:</strong> respuesta individual. Envía tu versión inicial para obtener comprobante.</div>
+<button id="send" type="button">Enviar respuesta inicial</button>
+<p id="status" aria-live="polite" role="status"></p>
+<section id="revise" hidden>
+<h2>Contraste y mejora</h2><p><strong>Momento 2:</strong> compara tus respuestas con tu pareja. <strong>Momento 3:</strong> escucha la plenaria y revisa los fundamentos.</p>
+<button id="feedback" type="button">Mostrar retroalimentación después del diálogo</button>
+<div class="feedback" id="keys" hidden><p><strong>A:</strong> digitalización; se cambia el soporte del registro.</p><p><strong>B:</strong> automatización; una regla ejecuta una alerta.</p><p><strong>C:</strong> transformación digital; se reorganizan procesos, decisiones, responsabilidades y uso de datos.</p><p><strong>Para mejorar:</strong> identifica una señal observable, no solamente el nombre del concepto.</p></div>
+<button type="button" id="correct" disabled>Enviar versión corregida</button>
+</section>
+<p><small>La recepción central se confirma únicamente con comprobante del servidor. La lista de cotejo se aplica por el facilitador, no automáticamente. No utilices información sensible de empresas reales.</small></p>
+</main>
+<script>(function(){
+const $=id=>document.getElementById(id);let attempt=null,receipt=null,requestId=null,phase='INICIAL';let sending=false;
+function makeId(){const a=new Uint8Array(16);crypto.getRandomValues(a);return Array.from(a,x=>x.toString(16).padStart(2,'0')).join('')}
+function values(){return {pseudonimo:$('alias').value,a:$('a').value,b:$('b').value,c:$('c').value,justificacion:$('just').value.trim(),control:$('control').value}}
+function validate(v){if(!v.a||!v.b||!v.c)return 'Selecciona las tres clasificaciones.';if(v.justificacion.length<12||v.justificacion.length>500)return 'Añade una justificación de 12 a 500 caracteres.';return ''}
+function send(){if(sending)return;const v=values(),error=validate(v);if(error){$('status').textContent=error;return}
+attempt=attempt||makeId();requestId=requestId||makeId();sending=true;$('send').disabled=true;$('correct').disabled=true;
+$('status').textContent='Enviando '+(phase==='INICIAL'?'versión inicial':'corrección')+'…';
+google.script.run.withSuccessHandler(r=>{sending=false;if(!(r&&r.recibido&&r.comprobante)){$('status').textContent='No se pudo confirmar la recepción.';$('send').disabled=phase==='CORREGIDA';$('correct').disabled=phase==='INICIAL';return}
+$('status').textContent=(phase==='INICIAL'?'Versión inicial':'Corrección')+' RECIBIDA. Comprobante: '+r.comprobante;
+requestId=null;
+if(phase==='INICIAL'){receipt=r.comprobante;phase='CORREGIDA';$('send').hidden=true;$('revise').hidden=false;$('alias').readOnly=true;$('correct').disabled=true;}else{$('correct').hidden=true;$('phase').textContent='Versión inicial y corregida recibidas. El facilitador contrastará ambas con la lista de cotejo.'}
+}).withFailureHandler(e=>{sending=false;$('status').textContent='No se confirmó la recepción: '+(e?.message||'Error de conexión')+'. Reintenta sin modificar el formulario.';if(phase==='INICIAL')$('send').disabled=false;else $('correct').disabled=false}).registrarPractica({...v,idPeticion:requestId,idIntento:attempt,fase,comprobanteInicial:receipt||''});
+}
+$('send').onclick=send;$('correct').onclick=send;
+$('feedback').onclick=()=>{const k=$('keys');k.hidden=!k.hidden;$('correct').disabled=k.hidden;$('feedback').textContent=k.hidden?'Mostrar retroalimentación después del diálogo':'Ocultar retroalimentación'};
+})();</script></body></html>
