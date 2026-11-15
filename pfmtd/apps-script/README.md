@@ -37,14 +37,17 @@ Se agregó `Panel.html` para proyectar en el mismo recurso «Nuestros acuerdos»
 3. Añadir archivo HTML llamado `Panel` y pegar íntegro `Panel.html`.
 4. Guardar; elegir **Implementar → Gestionar implementaciones → Editar** y seleccionar **Nueva versión** de la implementación existente. Verificar que la URL pública /exec se conserve.
 5. Ejecutar `configurar` si la columna I todavía no tiene encabezado `Proyectar`; esto agrega la columna sin borrar los acuerdos previos.
-6. En la columna I de la hoja, marcar **SI** únicamente en las filas cuyo texto se considere apropiado para proyección pública. Las demás permanecen ocultas.
+6. En la columna I de la hoja, las propuestas nuevas llegarán marcadas **SI** y se mostrarán automáticamente; cambiar a **NO** las que no deban proyectarse. Las propuestas anteriores con columna vacía deben marcarse manualmente si se desean mostrar.
 7. Abrir `https://script.google.com/macros/s/.../exec?vista=panel`, confirmar que solo aparecen los textos aprobados y comprobar la actualización. La vista puede abrirse en el modal de AulaQR; si el navegador bloquea el iframe, usar su enlace «Abrir consolidación en pantalla completa».
-8. Probar con dos teléfonos, enviando aportes distintos, comprobando filas y marcando solo uno «SI». Verificar que el no aprobado no aparece.
+8. Probar con dos teléfonos, enviando aportes distintos, comprobando filas y cambiando uno a «NO». Verificar que desaparezca del panel.
 
 ### Limitaciones relevantes
-- **No existe publicación automática de todas las propuestas**: se requiere revisión en la hoja antes de marcarlas `SI`; esto evita proyectar contenido enviado por cualquiera con el QR.
+- **Existe publicación automática de las propuestas nuevas (SI por defecto)**: el facilitador puede marcar `NO` para ocultarlas, pero la revisión es posterior a la publicación y existe riesgo de visualizar contenido impropio antes de retirarlo.
 - La vista pública es accesible a cualquiera que conozca su URL, pero solo devuelve los textos aprobados.
 - La aceptación final del conjunto de acuerdos se realiza presencialmente, no mediante el listado.
 - La conexión nueva no estará activa mientras no se actualice la implementación de Apps Script.
 - Probar iframe y QR en Android y iPhone antes de la simulación.
 - La asignación de comunidades sigue local en el navegador de conducción para mantener el sorteo durante la sesión; la recepción central se aplica a **acuerdos**, no a toda interacción.
+
+### Cambio de comportamiento v1.2
+El envío nuevo escribe `SI` por defecto en la columna **Proyectar**. La vista muestra las propuestas en cuanto se actualiza (aprox. cada 15 segundos). Para retirar una propuesta: escribir **NO** en la columna I de su fila. **Esto no elimina la respuesta del registro ni revoca visualizaciones anteriores.** En una aplicación web pública, cualquier persona con la URL podría enviar propuestas; supervisar la proyección durante la práctica.
