@@ -422,6 +422,14 @@ const silentClock=(()=>{
     btn.style.setProperty('--silent-progress',(100*Math.min(1,Math.max(0,(t-item.start)/(item.end-item.start)))).toFixed(1)+'%');
    });
   });
+  const dialog=document.getElementById('modal');
+  if(dialog&&dialog.open&&activeResource){
+   let matched=null;
+   for(const stage of stages){matched=items(stage).find(item=>item.id===activeResource);if(matched)break}
+   if(matched){
+    dialog.dataset.silentStatus=stateFor(matched,t,data.records[activeResource]||[]);
+   }else delete dialog.dataset.silentStatus;
+  }else if(dialog){delete dialog.dataset.silentStatus}
  }
  function exportLog(){
   if(!data)return;
@@ -484,7 +492,7 @@ document.addEventListener('keydown',e=>{if(document.getElementById('modal').open
 updateSlideBar();
 const dlg=document.querySelector('#modal'), title=document.querySelector('#modalTitle'), body=document.querySelector('#modalBody');
 document.querySelector('#close').onclick=()=>{silentClock.closeResource();dlg.close()};
-dlg.addEventListener('close',()=>silentClock.closeResource());
+dlg.addEventListener('close',()=>{silentClock.closeResource();delete dlg.dataset.silentStatus});
 document.querySelectorAll('[data-modal]').forEach(b=>b.onclick=()=>openModal(b.dataset.modal));
 function openModal(id){
  const c=views[id];if(!c)return;
