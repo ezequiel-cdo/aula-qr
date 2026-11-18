@@ -11,6 +11,16 @@ La planificación aprobada ya es una fuente de datos que lee la interfaz sin nec
 - La factorización M1.A01 es una ampliación sujeta a validación; los vínculos CE–IL son propuestas didácticas. La matriz aprobada de 37 encuentros sigue siendo la fuente que debe actualizarse antes de regenerar este archivo.
 - La simulación P1 de 40 preguntas sigue operativa pero exige una auditoría de cobertura curricular con el nuevo orden de contenidos antes de una adopción oficial.
 
+## Experiencia de aprendizaje piloto · P1, Encuentro 1
+
+- `encuentro1.js`: lección interactiva centrada en el participante, con cinco pasos (recordar, comprender, resolver un problema, autoestudio de 120 minutos y comprobación).
+- Explicación de expresiones algebraicas mediante situaciones de ingresos y gastos, tabla de valores, pregunta de activación, ejercicio guiado, dos expresiones personales y reflexión.
+- Comprobación final de cinco preguntas con explicaciones y posibilidad de repetir el intento.
+- El trabajo se conserva en el navegador bajo la clave `epja_p1_e1_v1` y aparece resumido en **Mis registros**.
+- El botón **Comenzar a aprender** de Inicio y la primera tarjeta de P1 abren la lección.
+- **Importante:** es un piloto pedagógico, no una evaluación oficial; los demás 36 encuentros mantienen por ahora su estructura de planificación hasta desarrollarse.
+- Validación realizada: sintaxis de los scripts y estructura de las referencias. El navegador automatizado disponible no permitió navegación por restricciones de administración, por lo que falta una prueba funcional completa en dispositivo.
+
 ## Estado del proyecto
 
 ## Estado actual
