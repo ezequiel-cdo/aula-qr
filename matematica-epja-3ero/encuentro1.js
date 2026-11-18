@@ -44,6 +44,7 @@ function render(){if(node.hidden)return;$('learningNav').innerHTML=NAMES.map((v,
 $('learningBack').onclick=()=>navigate(progress.step-1);$('learningForward').onclick=()=>navigate(progress.step===4?0:progress.step+1);
 const previousDrawRecords=drawRecords;
 drawRecords=function(){
+ read();
  previousDrawRecords();
  const summary=document.createElement('div');summary.className='card';
  const h=document.createElement('h3');h.textContent='Mi aprendizaje · Encuentro 1';summary.appendChild(h);
