@@ -42,5 +42,16 @@ function wire(){
 }
 function render(){if(node.hidden)return;$('learningNav').innerHTML=NAMES.map((v,i)=>`<button type="button" data-step="${i}" class="${progress.step===i?'active':''} ${progress.visited[i]?'visited':''}" aria-current="${progress.step===i?'step':'false'}" title="${v}">${i+1}. ${v}</button>`).join('');$('learningNav').querySelectorAll('button').forEach(b=>b.onclick=()=>navigate(Number(b.dataset.step)));$('learningBack').disabled=progress.step===0;$('learningForward').textContent=progress.step===4?'Volver al inicio ↺':'Siguiente paso →';$('learningScreen').innerHTML=[lesson1,lesson2,lesson3,lesson4,lesson5][progress.step]();wire()}
 $('learningBack').onclick=()=>navigate(progress.step-1);$('learningForward').onclick=()=>navigate(progress.step===4?0:progress.step+1);
+const previousDrawRecords=drawRecords;
+drawRecords=function(){
+ previousDrawRecords();
+ const summary=document.createElement('div');summary.className='card';
+ const h=document.createElement('h3');h.textContent='Mi aprendizaje · Encuentro 1';summary.appendChild(h);
+ const p=document.createElement('p');p.textContent=progress.attempts.length?'Prácticas formativas realizadas: '+progress.attempts.length+'. Último intento: '+progress.attempts.at(-1).score+' de 5 respuestas correctas.':'Tu lección interactiva está disponible para continuar. Las prácticas y producciones escritas son parte de tu proceso de aprendizaje.';
+ summary.appendChild(p);
+ const written=document.createElement('p');written.className='small muted';written.textContent='Actividades de autoestudio redactadas: '+[progress.study1,progress.study2,progress.study3].filter(x=>x.trim()).length+' de 3. Resultados guardados localmente; no equivalen a una calificación oficial.';summary.appendChild(written);
+ const btn=document.createElement('button');btn.className='secondary';btn.type='button';btn.textContent='Volver a mi lección →';btn.onclick=()=>openEncounter(0,true,0);summary.appendChild(btn);
+ $('recordsHistory').prepend(summary);
+};
 window.EPJA_LECCION1={start:()=>openEncounter(0,true,0),version:'aprendizaje-p1-e1-v1'};
 })();
