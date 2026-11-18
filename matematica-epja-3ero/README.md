@@ -4,10 +4,10 @@ Piloto independiente dentro de `ezequiel-cdo/aula-qr`. No altera el recurso PFMT
 
 ## Estado actual
 
-- Portada gráfica provisional, encuadre, inicio, ruta P1–P4, recuperación de encuentros.
+- Portada con imagen de 3.er Año proporcionada por el usuario (incorporada como SVG autocontenido con imagen JPEG), encuadre, inicio, ruta P1–P4, recuperación de encuentros.
 - Calendario 2026–2027: 37 sábados lectivos propuestos.
 - Ruta de cinco pasos por encuentro; guías completas de encuentros pendientes de desarrollo.
-- P1: simulación de 40 preguntas, 10 por cada bloque C1–C4.
+- P1: simulación de 40 preguntas, 10 por cada bloque C1–C4, disponible desde el cierre de P1 (31/10/2026).
 - Correcciones exclusivamente después de finalizar.
 - Historial de intentos finales de P1 en `localStorage`, resultados por bloque, diagnóstico, revisión de respuestas, exportación JSON.
 - Cierre anual posterior al módulo IV (vista de estructura y resultados locales existentes).
@@ -16,6 +16,7 @@ Piloto independiente dentro de `ezequiel-cdo/aula-qr`. No altera el recurso PFMT
 ## Archivos
 
 - `index.html`: interfaz del aula y navegación.
+- `portada-grado.svg`: imagen institucional del grado incrustada de manera autónoma.
 - `evaluacion-p1.js`: banco de preguntas y almacenamiento.
 - `motor-p1.js`: navegación, corrección y resultados de P1.
 - `apps-script/Code.gs`: **plantilla de backend desactivada**; NO recibe evidencias.
