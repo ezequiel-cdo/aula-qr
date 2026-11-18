@@ -62,7 +62,7 @@
  const oldDraw=drawRecords;
  drawRecords=function(){oldDraw();if(selectedResultsPeriod==="P1")showRecords()};
  const oldEval=drawEvaluations;
- drawEvaluations=function(){oldEval();const card=document.getElementById("evalPeriods");const p1=card.querySelector("article");if(p1){const b=document.createElement("button");b.textContent="Iniciar simulación P1 · 40 preguntas →";b.onclick=()=>start(false);p1.appendChild(b);const p=p1.querySelector(".small.muted");if(p)p.textContent="Banco disponible: 40 preguntas en cuatro bloques. Corrección exclusivamente al finalizar."}};
+ drawEvaluations=function(){oldEval();const card=document.getElementById("evalPeriods");const p1=card.querySelector("article");if(p1){const b=document.createElement("button");b.textContent="Iniciar simulación P1 · 40 preguntas →";b.onclick=()=>start(false);if(shownDate<periods[0].end){b.disabled=true;b.textContent="Simulación P1 disponible al cierre: "+periods[0].end;}p1.appendChild(b);const p=p1.querySelector(".small.muted");if(p)p.textContent="Banco disponible: 40 preguntas en cuatro bloques. Corrección exclusivamente al finalizar."}};
  const oldExport=el("exportRecords").onclick;el("exportRecords").onclick=()=>exportJSON({exportedLocalAt:new Date().toISOString(),finals:storage(),shortPractices:state.attempts,notice:"Registros locales sin validación de servidor"},"epja-registros-completos.json");
  window.epjaExamStart=start;
 })();
