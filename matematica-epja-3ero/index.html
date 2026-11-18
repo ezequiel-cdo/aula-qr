@@ -24,6 +24,8 @@ button:disabled{opacity:.55;cursor:not-allowed}button.block{width:100%;text-alig
 nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:5px;background:#fff;border-top:1px solid #cbd5e6;padding:8px;z-index:5}
 nav button{background:transparent;color:#40506a;font-size:.84rem;border-radius:9px;min-width:80px;padding:9px 12px}
 nav button[aria-current="page"]{background:#e8efff;color:#1e438c}
+details{border-top:1px solid #e0e7f1;padding:15px 4px}details:first-of-type{border-top:0}summary{cursor:pointer;color:#223e7c;line-height:1.5}details p{margin:12px 0}details:focus-within{border-radius:6px}
+
 section[hidden]{display:none!important}.notice{border-left:4px solid #c38b29;background:#fff8e7;padding:12px;border-radius:7px}
 label{font-weight:700;display:block;margin-bottom:5px}input[type=text],input[type=date]{padding:10px;border:1px solid #aab9d3;border-radius:8px;max-width:100%;width:310px}
 .options{display:grid;gap:9px;margin:12px 0}.option{display:block;padding:12px;border:1px solid #cfdaeb;border-radius:9px;cursor:pointer;background:#fafcff}.option input{margin-right:9px}
@@ -39,7 +41,7 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
  <div class="card hero"><div class="row"><div><small>PERÍODO SEGÚN CALENDARIO</small><h2 id="currentPeriod">Cargando…</h2><p class="muted" id="periodDates"></p></div><span class="pill" id="currentStatus">—</span></div>
  <button type="button" id="continue">Continuar mi aprendizaje →</button></div>
  <div class="grid"><div class="card"><h3>📅 Mi ruta</h3><p>Consulta los cuatro períodos y los encuentros disponibles.</p><button class="secondary block" data-go="ruta">Ver mi calendario</button></div>
- <div class="card"><h3>📈 Mis avances</h3><p>Revisa tus prácticas, intentos y entregas locales.</p><button class="secondary block" data-go="avances">Ver mis avances</button></div></div>
+ <div class="card"><h3>↶ Recuperación de encuentros</h3><p>Vuelve a los contenidos y actividades de encuentros anteriores, sin identificarte.</p><button class="secondary block" data-go="recuperacion">Recuperar encuentros</button></div></div>
  <div class="card notice small"><b>Piloto de navegación.</b> Los resultados de esta versión se guardan únicamente en este navegador. Aún no se envían evidencias a Google Drive. Ningún dato de dispositivo se transmite.</div>
 </section>
 <section id="ruta" hidden>
@@ -54,16 +56,26 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
  <div id="encounterCards" class="route" style="margin-top:15px"></div>
  <p><button class="secondary" data-go="ruta">← Volver a mi ruta</button></p>
 </section>
+<section id="recuperacion" hidden>
+ <p class="eyebrow">Biblioteca de encuentros anteriores</p><h1>Recuperación de encuentros</h1>
+ <p class="muted">Consulta libremente materiales y tareas programadas en encuentros cuya fecha ya pasó. No se presupone que hayas faltado ni se atribuyen pendientes personales.</p>
+ <div class="card"><label for="recPeriod">Período</label><select id="recPeriod" style="font:inherit;padding:10px;border:1px solid #aab9d3;border-radius:9px;width:100%;max-width:320px"></select></div>
+ <div id="recCards" class="route"></div>
+ <p class="small muted">El registro individual de entregas se habilitará cuando esté disponible una identificación persistente y el servicio de recepción de evidencias.</p>
+</section>
 <section id="encuentro" hidden>
  <p class="eyebrow" id="encEyebrow">Mi encuentro</p><h1 id="encTitle">Continúa tu aprendizaje</h1>
  <div class="card"><h3 id="encHeadline"></h3><p id="encDescription"></p><p class="small muted" id="encCurricular"></p></div>
- <div class="card"><h3>Contenidos y recursos</h3><div id="encResources"></div></div>
- <div class="card"><h3>Entregables del encuentro</h3><div id="encDeliverables"></div></div>
+ <div class="card">
+  <h3>Ruta de este encuentro</h3>
+  <p class="muted small">Abre los cinco pasos en el orden que prefieras. Puedes regresar cuando necesites.</p>
+  <details open><summary><b>1 · Recordemos lo aprendido</b></summary><p id="recallText">Recuperemos los saberes previos necesarios.</p></details>
+  <details><summary><b>2 · Comprendamos el procedimiento</b></summary><p id="conceptText">Estudia la explicación y el ejemplo.</p><div id="encResources"></div></details>
+  <details><summary><b>3 · Resolvamos un problema</b></summary><p id="guidedText">Aplica lo aprendido a una situación del entorno.</p></details>
+  <details><summary><b>4 · Practica por tu cuenta</b></summary><p id="autostudyText">Realiza tu trabajo autónomo.</p><div id="encDeliverables"></div></details>
+  <details><summary><b>5 · Comprueba lo aprendido</b></summary><p>Revisa tu comprensión con una práctica formativa, cuando esté disponible para este contenido.</p><div id="encPractice"></div></details>
+ </div>
  <p><button class="secondary" id="backToList">← Ver todos los encuentros del período</button></p>
- <div class="card"><h3>1 · Recordemos</h3><p>¿Qué conocimientos previos te ayudarán a comprender el tema de este encuentro?</p></div>
- <div class="card"><h3>2 · Comprendamos</h3><p id="conceptText">Estudia el ejemplo y explica con tus palabras lo que representa cada término.</p></div>
- <div class="card"><h3>3 · Practiquemos</h3><p>Resuelve una pregunta contextualizada. La explicación se muestra después de entregar.</p><button data-go="practica">Abrir práctica de muestra →</button></div>
- <div class="card"><h3>4 · Mi autoestudio</h3><p>Escribe en tu cuaderno un ejemplo relacionado con tu trabajo, familia o comunidad y comprueba el procedimiento.</p><p class="muted small">Esta orientación no representa una entrega formal.</p></div>
 </section>
 <section id="practica" hidden>
  <p class="eyebrow">Práctica formativa de navegación</p><h1>Comprueba lo aprendido</h1>
@@ -80,7 +92,7 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
  <div class="card"><h3>Envío de evidencias al facilitador</h3><p>La integración con Google Sheets, Drive y Apps Script se habilitará después de configurar un endpoint seguro y comprobar su recepción.</p><button disabled class="block">Envío a Drive: pendiente de conexión</button><p class="small muted">Sin inicio de sesión obligatorio ni matrícula. Se utilizará un mecanismo flexible de identificación declarado al participante, sujeto a validación.</p></div>
 </section>
 </main>
-<nav aria-label="Navegación principal"><button data-go="inicio" aria-current="page">⌂ Inicio</button><button data-go="ruta">▦ Mi ruta</button><button data-go="practica">✎ Practicar</button><button data-go="avances">▥ Mis avances</button></nav>
+<nav aria-label="Navegación principal"><button data-go="inicio" aria-current="page">⌂ Inicio</button><button data-go="ruta">▦ Mi ruta</button><button data-go="recuperacion">↶ Recuperar</button><button data-go="practica">✎ Practicar</button><button data-go="avances">▥ Mis avances</button></nav>
 <script>
 "use strict";
 const periods=[
@@ -109,13 +121,17 @@ const p1Topics=[
 function encounterData(i,n){if(i===0)return p1Topics[n]||["Contenido por confirmar","Pendiente de revisión curricular.","Sin actividad asignada.","Pendiente de publicación."];return ["Encuentro "+(n+1)+" · por desarrollar","La secuencia detallada se incorporará al disponer de los módulos didácticos de este período.","Contenido curricular pendiente de validación.","Entregable aún no definido."]}
 function datesFor(p){const arr=[];for(let d=new Date(p.start+"T12:00:00");d<=new Date(p.end+"T12:00:00");d.setDate(d.getDate()+1)){const s=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");if(d.getDay()===6&&!excluded.has(s))arr.push(s)}return arr}
 function actualPeriod(){const ix=periods.findIndex(p=>shownDate>=p.start&&shownDate<=p.end);if(ix>=0)return ix;if(shownDate<periods[0].start)return 0;const prev=periods.findLastIndex(p=>p.start<=shownDate);return Math.max(0,prev)}
-function go(id){document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);document.querySelectorAll("nav [data-go]").forEach(b=>b.setAttribute("aria-current",b.dataset.go===id?"page":"false"));window.scrollTo(0,0);if(id==="avances")drawAdvances()}
+function go(id){if(id==="recuperacion")drawRecovery();document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);document.querySelectorAll("nav [data-go]").forEach(b=>b.setAttribute("aria-current",b.dataset.go===id?"page":"false"));window.scrollTo(0,0);if(id==="avances")drawAdvances()}
 function render(){currentIndex=actualPeriod();const p=periods[currentIndex];$("currentPeriod").textContent=p.id+" · "+p.mod;$("periodDates").textContent=fmt(p.start)+" — "+fmt(p.end);
  const badge=$("currentStatus");badge.textContent=shownDate<p.start?"Próximamente":shownDate>p.end?"Disponible para repasar":"Período activo";badge.className="pill "+(shownDate<p.start?"lock":"live");
  $("dateTest").value=shownDate;
  $("periodCards").innerHTML=periods.map((x,i)=>{const dates=datesFor(x),open=dates.filter(d=>d<=shownDate).length,status=shownDate<x.start?"Programado":shownDate>x.end?"Para repasar":"Disponible";return '<article class="'+(i===currentIndex?'active':'')+'"><div class="row"><h3>'+x.id+' · '+x.mod+'</h3><span class="pill '+(shownDate<x.start?'lock':'live')+'">'+status+'</span></div><p>'+x.topic+'</p><p class="muted small">'+fmt(x.start)+' a '+fmt(x.end)+' · '+open+'/'+dates.length+' encuentros habilitados por fecha</p><div class="progress"><span style="width:'+(open/dates.length*100)+'%"></span></div>'+(shownDate>=x.start?'<p><button type="button" class="secondary" data-open="'+i+'">Ver encuentros →</button></p>':'')+'</article>'}).join("");
  document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>openPeriod(Number(b.dataset.open)));
  openEncounter(currentIndex,false)
+}
+function drawRecovery(){const selector=$("recPeriod"),old=selector.value||"0";selector.innerHTML=periods.map((p,i)=>'<option value="'+i+'">'+p.id+' · '+p.mod+'</option>').join("");selector.value=old;if(!selector.value)selector.value="0";const i=Number(selector.value);const p=periods[i],ds=datesFor(p);
+ $("recCards").innerHTML=ds.map((date,n)=>{const d=encounterData(i,n),past=date<=shownDate;return '<article><div class="row"><h3>Encuentro '+(n+1)+' · '+d[0]+'</h3><span class="pill '+(past?'live':'lock')+'">'+(past?'Consultable':'Próximamente')+'</span></div><p class="small muted">'+fmt(date)+'</p><p>'+d[1]+'</p><p class="small"><b>Trabajo previsto:</b> '+d[3]+'</p>'+(past?'<button class="secondary" data-recover="'+n+'">Abrir los cinco pasos →</button>':'')+'</article>'}).join("");
+ document.querySelectorAll("[data-recover]").forEach(b=>b.onclick=()=>openEncounter(i,true,Number(b.dataset.recover)))
 }
 function openPeriod(i){selectedPeriod=i;const p=periods[i],ds=datesFor(p);$("listPeriod").textContent=p.id+" · "+p.mod;$("listSummary").textContent=p.topic+" · "+ds.length+" encuentros programados. Selecciona cualquiera que ya esté habilitado.";
 $("encounterCards").innerHTML=ds.map((d,n)=>{const item=encounterData(i,n),ready=d<=shownDate,hasAttempt=i===0&&n===0&&state.attempts.some(x=>x.activity==="P1-C1-T1-DEMO");const status=ready?(hasAttempt?"Práctica de muestra realizada":"Disponible"):"Programado";return '<article><div class="row"><h3>Encuentro '+(n+1)+' · '+item[0]+'</h3><span class="pill '+(ready?'live':'lock')+'">'+status+'</span></div><p class="small muted">Sábado '+fmt(d)+'</p><p>'+item[1]+'</p><p class="small"><b>Entregable previsto:</b> '+item[3]+'</p>'+(ready?'<button class="secondary" data-enc="'+n+'">Ver contenidos y entregables →</button>':'<p class="small muted">Se habilitará en la fecha programada.</p>')+'</article>'}).join("");
@@ -126,13 +142,20 @@ function openEncounter(i,navigate=true,n=null){const p=periods[i],dates=datesFor
  $("encHeadline").textContent=item[1];
  $("encDescription").textContent="Encuentro "+number+" de "+dates.length+" · "+fmt(dates[number-1])+". Disponible desde la fecha programada; no acredita finalización.";
  $("encCurricular").textContent=p.id==="P1"?"Indicadores de referencia: "+p.ils:"Distribución curricular provisional: "+p.ils;
- $("conceptText").textContent=item[2];$("encResources").innerHTML=p.id==="P1"?"<p><b>Contenido del encuentro:</b> "+item[0]+".</p><p class=\"muted small\">Esquema preliminar del Módulo I. La guía completa y los materiales se añadirán después de su revisión documental.</p>":"<p class=\"muted\">Los recursos detallados de este período aún no están publicados.</p>";$("encDeliverables").innerHTML="<p>"+item[3]+"</p><p class=\"muted small\">Estado: "+(i===0&&number===1&&state.attempts.some(x=>x.activity==="P1-C1-T1-DEMO")?"existe una práctica local de demostración; no equivale a entrega":"sin evidencia enviada al facilitador")+". La recepción por Google Drive se habilitará al conectar el servidor.</p>";
+ $("recallText").textContent="Antes de comenzar, explica con tus palabras qué sabes sobre "+item[0].toLowerCase()+".";
+ $("guidedText").textContent=item[2];
+ $("autostudyText").textContent=item[3];
+ $("encPractice").innerHTML=(i===0&&number===1)?'<button type="button" id="encTryDemo">Abrir pregunta de demostración →</button>':'<p class="muted small">Práctica interactiva de este encuentro todavía pendiente de elaboración y validación curricular.</p>';
+ const demo=$("encTryDemo");if(demo)demo.onclick=()=>go("practica");
+ $("conceptText").textContent=item[1]+" Identifica conceptos y procedimientos, y comprueba ejemplos con ayuda del facilitador.";
+$("encResources").innerHTML=p.id==="P1"?"<p><b>Contenido del encuentro:</b> "+item[0]+".</p><p class=\"muted small\">Esquema preliminar del Módulo I. La guía completa y los materiales se añadirán después de su revisión documental.</p>":"<p class=\"muted\">Los recursos detallados de este período aún no están publicados.</p>";$("encDeliverables").innerHTML="<p>"+item[3]+"</p><p class=\"muted small\">Estado: "+(i===0&&number===1&&state.attempts.some(x=>x.activity==="P1-C1-T1-DEMO")?"existe una práctica local de demostración; no equivale a entrega":"sin evidencia enviada al facilitador")+". La recepción por Google Drive se habilitará al conectar el servidor.</p>";
  if(navigate)go("encuentro")
 }
 $("backToList").onclick=()=>openPeriod(selectedPeriod);
 function drawAdvances(){$("attemptCount").textContent=state.attempts.length;const last=state.attempts.at(-1);$("lastScore").textContent=last?(last.correct?"100":"0")+"/100":"—";
  $("history").innerHTML=state.attempts.length?'<table><thead><tr><th>Intento</th><th>Hora local</th><th class="num">Resultado</th></tr></thead><tbody>'+state.attempts.slice().reverse().map((a,i)=>'<tr><td>'+(state.attempts.length-i)+'</td><td>'+new Date(a.localTime).toLocaleString("es-DO")+'</td><td class="num">'+(a.correct?"100":"0")+'</td></tr>').join("")+'</tbody></table>':"<p>Aún no has realizado intentos.</p>"}
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
+$("recPeriod").addEventListener("change",drawRecovery);
 $("continue").onclick=()=>openPeriod(currentIndex);
 $("dateTest").addEventListener("change",e=>{if(e.target.value){shownDate=e.target.value;render()}});
 $("resetDate").onclick=()=>{shownDate=isoToday();render()};
