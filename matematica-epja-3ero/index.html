@@ -24,6 +24,11 @@ button:disabled{opacity:.55;cursor:not-allowed}button.block{width:100%;text-alig
 nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:5px;background:#fff;border-top:1px solid #cbd5e6;padding:8px;z-index:5}
 nav button{background:transparent;color:#40506a;font-size:.84rem;border-radius:9px;min-width:80px;padding:9px 12px}
 nav button[aria-current="page"]{background:#e8efff;color:#1e438c}
+.cover{max-width:650px;margin:12px auto 0;padding:25px 10px 13px;text-align:center;background:#fff;border-radius:18px;overflow:hidden}
+.cover-grade{display:flex;justify-content:center;align-items:end;line-height:.82;gap:0}.cover-num{font-family:Georgia,serif;font-size:clamp(9rem,30vw,19rem);font-weight:800;font-style:italic;color:#f00089;letter-spacing:-.13em}.cover-right{text-align:left}.cover-er{font-family:Georgia,serif;font-size:clamp(4rem,13vw,8rem);font-weight:800;font-style:italic;color:#f00089;text-decoration:underline}.cover-year{font-size:clamp(4rem,11vw,8rem);font-weight:1000;color:#233d7d;letter-spacing:-.075em;margin-top:32px}.cover-cycle{font-size:clamp(1.8rem,6vw,3.8rem);font-weight:900;color:white;background:#ed0088;border-radius:24px;padding:10px;margin-top:5px}.cover-level{font-weight:900;color:#213b78;font-size:clamp(1.05rem,3.5vw,2.2rem);margin:16px 0}.cover-epja{color:#213b78;font-size:clamp(.87rem,2.5vw,1.5rem);letter-spacing:.07em}.cover-intro{max-width:650px;margin:14px auto}
+.criteria-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.criteria-grid>div{background:#f2f6fd;padding:14px;border:1px solid #dfe6f2;border-radius:11px}.criteria-grid p{margin:5px 0 0;font-size:.91rem}.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.levels span{background:#ecf2ff;border-radius:10px;padding:11px;font-size:.84rem}.checkline{display:flex;align-items:flex-start;gap:8px;margin-bottom:12px}.checkline input{margin-top:4px}.period-tabs{display:flex;gap:7px;margin:10px 0 18px}.period-tabs button{flex:1}
+@media(max-width:650px){.criteria-grid{grid-template-columns:1fr}.levels{grid-template-columns:1fr 1fr}.cover-num{font-size:40vw}.cover-er{font-size:13vw}.cover-year{font-size:12vw;margin-top:18px}.cover-cycle{font-size:7vw}}
+
 details{border-top:1px solid #e0e7f1;padding:15px 4px}details:first-of-type{border-top:0}summary{cursor:pointer;color:#223e7c;line-height:1.5}details p{margin:12px 0}details:focus-within{border-radius:6px}
 
 section[hidden]{display:none!important}.notice{border-left:4px solid #c38b29;background:#fff8e7;padding:12px;border-radius:7px}
@@ -36,13 +41,33 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
 </style></head><body>
 <header><div><strong>Aula Virtual de Matemática</strong><small>EPJA · 3.er año · Segundo Ciclo · 2026–2027</small></div><span class="brand">3.er AÑO</span></header>
 <main>
-<section id="inicio">
- <p class="eyebrow">Bienvenido a tu espacio de aprendizaje</p><h1>Aprende a tu ritmo. Continúa desde aquí.</h1>
+<section id="portada">
+ <div class="cover">
+ <div class="cover-grade"><span class="cover-num">3</span><div class="cover-right"><div class="cover-er">er</div><div class="cover-year">AÑO</div></div></div>
+ <div class="cover-cycle">SEGUNDO CICLO</div>
+ <div class="cover-level">NIVEL SECUNDARIO DE EDUCACIÓN</div>
+ <div class="cover-epja">DE PERSONAS JÓVENES Y ADULTAS</div>
+ </div>
+ <div class="card cover-intro"><p class="eyebrow">AULA VIRTUAL · MATEMÁTICA</p><h1>Aprendemos y avanzamos juntos</h1><p>3.er Año · Segundo Ciclo · Año escolar 2026–2027</p><button id="coverStart" class="block">Entrar al aula →</button><p><button class="secondary block" data-go="encuadre">Conocer el encuadre y la evaluación</button></p></div>
+ <p class="small muted">Portada vectorial de presentación basada en la identidad cromática del material de 3.er año. La imagen institucional original se incorporará como recurso gráfico separado.</p>
+</section>
+<section id="encuadre" hidden>
+ <p class="eyebrow">Orientaciones generales · Antes del Módulo I</p><h1>Conoce cómo funciona tu aula</h1>
+ <p class="muted">Aquí conocerás la ruta anual, las formas de aprender, cómo se evaluarán tus actividades y cómo conservar tus evidencias.</p>
+ <div class="card"><h3>1 · Nuestro programa</h3><p>Matemática de Tercer Año, Segundo Ciclo EPJA. Año escolar 2026–2027: cuatro períodos y cuatro módulos, con 37 sábados hábiles previstos según el calendario propuesto.</p><p>Los módulos se habilitan progresivamente. Puedes recuperar encuentros anteriores sin iniciar sesión.</p></div>
+ <div class="card"><h3>2 · Cómo aprenderemos</h3><p>En cada encuentro encontrarás cinco pasos: recordar, comprender, resolver un problema, practicar por cuenta propia y comprobar aprendizajes. La matemática se trabajará mediante problemas de la familia, el trabajo y la comunidad.</p></div>
+ <div class="card"><h3>3 · Cómo seremos evaluados</h3><table><thead><tr><th>Momento</th><th>Propósito</th></tr></thead><tbody><tr><td>Inicio</td><td>Diagnóstico de saberes previos, sin calificación</td></tr><tr><td>Durante el módulo</td><td>Prácticas formativas y evidencias de trabajo</td></tr><tr><td>Cierre del módulo</td><td>Simulación de práctica por bloques de competencias</td></tr><tr><td>Valoración docente</td><td>Revisión integral de evidencias para el registro oficial</td></tr><tr><td>Recuperación</td><td>Refuerzo de aprendizajes que necesitan mejora</td></tr></tbody></table></div>
+ <div class="card"><h3>4 · Competencias, criterios y niveles de desempeño</h3><p>La evaluación se organiza en cuatro bloques. Cada bloque reúne aspectos específicos de las competencias y sus indicadores de logro; solo se valoran los contenidos efectivamente trabajados.</p><div class="criteria-grid"><div><b>C1 · Comunicar</b><p>Comprender, interpretar y expresar ideas matemáticas.</p></div><div><b>C2 · Razonar y resolver</b><p>Comparar procedimientos, resolver y justificar soluciones.</p></div><div><b>C3 · Aplicar al entorno</b><p>Interpretar problemas comunitarios y proponer decisiones.</p></div><div><b>C4 · Integrar y analizar</b><p>Aplicar conocimientos y herramientas a problemas diversos.</p></div></div><h3 style="margin-top:18px">Progresión pedagógica</h3><div class="levels"><span><b>1</b> Reconoce</span><span><b>2</b> Aplica</span><span><b>3</b> Analiza</span><span><b>4</b> Transfiere y justifica</span></div><p class="small muted">Estos cuatro niveles son criterios orientativos de las actividades, no una escala automática ni una declaración de logro oficial. La asociación precisa de CE-MAT4 a CE-MAT7 en los bloques C3 y C4 requiere confirmación por la discrepancia documental detectada.</p></div>
+ <div class="card"><h3>5 · Resultados, evidencias y uso del dispositivo</h3><p>Los resultados de práctica se guardan en este navegador. Se recomienda trabajar habitualmente desde un mismo dispositivo y exportar una copia de respaldo. Si borras los datos del navegador, usas modo privado o cambias de teléfono, podrías perder el registro local.</p><p>Las prácticas no sustituyen las calificaciones oficiales. Cuando se conecte Google Apps Script, podrás compartir evidencias, y el facilitador podrá revisar lo recibido.</p></div>
+ <div class="card"><h3>Acuerdo de orientación</h3><label class="checkline"><input type="checkbox" id="understood"> He leído las orientaciones generales del aula y sé dónde consultarlas de nuevo.</label><button class="block" id="finishIntro">Ir a Mi aula →</button><p class="small muted">Esta confirmación orienta la navegación; no autentica ni identifica personalmente a quien usa el dispositivo.</p></div>
+</section>
+<section id="inicio" hidden>
+ <p class="eyebrow">Mi aula · Aprende a tu ritmo</p><h1>Aprende a tu ritmo. Continúa desde aquí.</h1>
  <div class="card hero"><div class="row"><div><small>PERÍODO SEGÚN CALENDARIO</small><h2 id="currentPeriod">Cargando…</h2><p class="muted" id="periodDates"></p></div><span class="pill" id="currentStatus">—</span></div>
  <button type="button" id="continue">Continuar mi aprendizaje →</button></div>
  <div class="grid"><div class="card"><h3>📅 Mi ruta</h3><p>Consulta los cuatro períodos y los encuentros disponibles.</p><button class="secondary block" data-go="ruta">Ver mi calendario</button></div>
  <div class="card"><h3>↶ Recuperación de encuentros</h3><p>Vuelve a los contenidos y actividades de encuentros anteriores, sin identificarte.</p><button class="secondary block" data-go="recuperacion">Recuperar encuentros</button></div></div>
- <div class="card notice small"><b>Piloto de navegación.</b> Los resultados de esta versión se guardan únicamente en este navegador. Aún no se envían evidencias a Google Drive. Ningún dato de dispositivo se transmite.</div>
+ <div class="card"><h3>Orientaciones y evaluaciones</h3><p>Consulta el encuadre, los criterios de evaluación y las prácticas de cada período.</p><div class="row"><button class="secondary" data-go="encuadre">Ver encuadre</button><button class="secondary" data-go="evaluaciones">Ver evaluaciones</button></div></div><div class="card notice small"><b>Piloto de navegación.</b> Los resultados de esta versión se guardan únicamente en este navegador. Aún no se envían evidencias a Google Drive. Ningún dato de dispositivo se transmite.</div>
 </section>
 <section id="ruta" hidden>
  <p class="eyebrow">Mi recorrido anual</p><h1>Cuatro períodos, una sola ruta</h1>
@@ -77,12 +102,28 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
  </div>
  <p><button class="secondary" id="backToList">← Ver todos los encuentros del período</button></p>
 </section>
+<section id="evaluaciones" hidden>
+ <p class="eyebrow">Diagnóstico · Formación · Cierre · Recuperación</p><h1>Evaluaciones de Matemática</h1>
+ <p>Conoce cómo se organiza cada evaluación y accede a las prácticas disponibles. La simulación final prevista contempla 40 preguntas, diez por bloque, pero esos bancos todavía no están incorporados en este piloto.</p>
+ <div class="card"><h3>Momentos de evaluación</h3><div class="criteria-grid"><div><b>Diagnóstica</b><p>Reconocer saberes previos; no se califica.</p></div><div><b>Formativa</b><p>Practicar, recibir retroalimentación y mejorar.</p></div><div><b>Simulación de cierre</b><p>Comprobar aprendizajes por C1, C2, C3 y C4.</p></div><div><b>Recuperación pedagógica</b><p>Reforzar aspectos no alcanzados con acompañamiento.</p></div></div></div>
+ <div class="card"><h3>Elegir un período</h3><div id="evalPeriods" class="route"></div></div>
+ <div class="card notice small"><b>Importante:</b> Las notas generadas por una simulación son resultados de práctica. Las calificaciones oficiales requieren evidencias y valoración docente, según el registro correspondiente.</div>
+</section>
 <section id="practica" hidden>
  <p class="eyebrow">Práctica formativa de navegación</p><h1>Comprueba lo aprendido</h1>
  <div class="card"><p><b>Pregunta de demostración · C1 · IL-1</b></p><p>Una persona recibe RD$180 por cada servicio que realiza. Si <i>s</i> es el número de servicios, ¿qué expresión representa sus ingresos?</p>
  <form id="demoForm"><div class="options"><label class="option"><input type="radio" name="ans" value="0"> 180 + s</label><label class="option"><input type="radio" name="ans" value="1"> 180s</label><label class="option"><input type="radio" name="ans" value="2"> s − 180</label><label class="option"><input type="radio" name="ans" value="3"> 180/s</label></div><button type="submit">Entregar intento y ver explicación</button></form>
  <div id="feedback" hidden></div></div>
  <div class="card notice small">Esta pregunta es una <b>muestra de interfaz</b>, no el examen final de 40 preguntas. Las evaluaciones finales por módulo usarán identificadores propios de entrega y validación del servidor cuando se integre el backend.</div>
+</section>
+<section id="registros" hidden>
+ <p class="eyebrow">Registros locales · Evidencias</p><h1>Mis registros y resultados</h1>
+ <p class="muted">Consulta tus intentos de práctica en este navegador, guarda una copia y distingue el registro local de una evidencia recibida o revisada por el facilitador.</p>
+ <div class="card"><h3>Resultados por período</h3><div class="period-tabs" id="periodTabs"></div>
+ <table><thead><tr><th>Bloque</th><th class="num" id="resultPeriodHead">P1</th><th class="num" id="resultRecoverHead">RP1</th></tr></thead><tbody id="resultRows"></tbody></table><div class="row"><strong>Promedio de práctica</strong><strong id="resultAverage">—</strong></div><p id="resultsNote" class="muted small">Aún no existe una evaluación final del período guardada en este dispositivo.</p></div>
+ <div class="grid"><div class="card"><h3>Intentos locales</h3><div id="recordsCount" class="score">0</div><p class="small muted">Sin calificación oficial</p></div><div class="card"><h3>Estado de sincronización</h3><p><span class="pill lock">Solo local</span></p><p class="small muted">No existe recepción en servidor ni revisión docente confirmada.</p></div></div>
+ <div class="card"><h3>Historial de intentos</h3><div id="recordsHistory"></div><button id="exportRecords" class="secondary">Exportar respaldo JSON</button></div>
+ <div class="card notice small">Se recomienda utilizar habitualmente el mismo dispositivo. Los datos guardados en el navegador pueden borrarse por acciones del usuario, del navegador o del sistema. Exporta periódicamente una copia.</div>
 </section>
 <section id="avances" hidden>
  <p class="eyebrow">Mi seguimiento</p><h1>Mis avances y evidencias</h1>
@@ -92,7 +133,7 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
  <div class="card"><h3>Envío de evidencias al facilitador</h3><p>La integración con Google Sheets, Drive y Apps Script se habilitará después de configurar un endpoint seguro y comprobar su recepción.</p><button disabled class="block">Envío a Drive: pendiente de conexión</button><p class="small muted">Sin inicio de sesión obligatorio ni matrícula. Se utilizará un mecanismo flexible de identificación declarado al participante, sujeto a validación.</p></div>
 </section>
 </main>
-<nav aria-label="Navegación principal"><button data-go="inicio" aria-current="page">⌂ Inicio</button><button data-go="ruta">▦ Mi ruta</button><button data-go="recuperacion">↶ Recuperar</button><button data-go="practica">✎ Practicar</button><button data-go="avances">▥ Mis avances</button></nav>
+<nav aria-label="Navegación principal"><button data-go="inicio">⌂ Inicio</button><button data-go="ruta">▦ Mi ruta</button><button data-go="evaluaciones">✓ Evaluaciones</button><button data-go="registros">▥ Mis registros</button></nav>
 <script>
 "use strict";
 const periods=[
@@ -105,7 +146,9 @@ const excluded=new Set(["2026-12-19","2026-12-26","2027-01-02","2027-02-27","202
 const key="epja_matematica_piloto_v1";let state={attempts:[]};try{const raw=JSON.parse(localStorage.getItem(key)||"null");if(raw&&Array.isArray(raw.attempts))state=raw}catch(e){}
 const $=id=>document.getElementById(id),fmt=s=>new Date(s+"T12:00:00").toLocaleDateString("es-DO",{day:"numeric",month:"short",year:"numeric"});
 const isoToday=()=>{const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"America/Santo_Domingo",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());const find=t=>parts.find(x=>x.type===t).value;return find("year")+"-"+find("month")+"-"+find("day")};
-let shownDate=isoToday();let currentIndex=0;let selectedPeriod=0;
+let shownDate=isoToday();let currentIndex=0;let selectedPeriod=0;let selectedResultsPeriod="P1";
+const introKey="epja_matematica_encuadre_v1";const readIntro=()=>{try{return localStorage.getItem(introKey)==="yes"}catch(e){return false}};const saveIntro=()=>{try{localStorage.setItem(introKey,"yes")}catch(e){}};
+
 const p1Topics=[
 ["Lenguaje cotidiano y algebraico","Traducir situaciones reales a expresiones algebraicas.","Identificar variables, constantes y relaciones; escribir dos expresiones del entorno.","Actividad de autoestudio: escribir y explicar dos traducciones algebraicas en el cuaderno."],
 ["Elementos de un término algebraico","Reconocer coeficientes, variables y exponentes.","Identificar los elementos de términos en situaciones de costos e ingresos.","Ficha de análisis de términos algebraicos."],
@@ -121,7 +164,7 @@ const p1Topics=[
 function encounterData(i,n){if(i===0)return p1Topics[n]||["Contenido por confirmar","Pendiente de revisión curricular.","Sin actividad asignada.","Pendiente de publicación."];return ["Encuentro "+(n+1)+" · por desarrollar","La secuencia detallada se incorporará al disponer de los módulos didácticos de este período.","Contenido curricular pendiente de validación.","Entregable aún no definido."]}
 function datesFor(p){const arr=[];for(let d=new Date(p.start+"T12:00:00");d<=new Date(p.end+"T12:00:00");d.setDate(d.getDate()+1)){const s=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");if(d.getDay()===6&&!excluded.has(s))arr.push(s)}return arr}
 function actualPeriod(){const ix=periods.findIndex(p=>shownDate>=p.start&&shownDate<=p.end);if(ix>=0)return ix;if(shownDate<periods[0].start)return 0;const prev=periods.findLastIndex(p=>p.start<=shownDate);return Math.max(0,prev)}
-function go(id){if(id==="recuperacion")drawRecovery();document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);document.querySelectorAll("nav [data-go]").forEach(b=>b.setAttribute("aria-current",b.dataset.go===id?"page":"false"));window.scrollTo(0,0);if(id==="avances")drawAdvances()}
+function go(id){if(id==="recuperacion")drawRecovery();if(id==="evaluaciones")drawEvaluations();if(id==="registros")drawRecords();document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);document.querySelectorAll("nav [data-go]").forEach(b=>b.setAttribute("aria-current",b.dataset.go===id?"page":"false"));window.scrollTo(0,0);if(id==="avances")drawAdvances()}
 function render(){currentIndex=actualPeriod();const p=periods[currentIndex];$("currentPeriod").textContent=p.id+" · "+p.mod;$("periodDates").textContent=fmt(p.start)+" — "+fmt(p.end);
  const badge=$("currentStatus");badge.textContent=shownDate<p.start?"Próximamente":shownDate>p.end?"Disponible para repasar":"Período activo";badge.className="pill "+(shownDate<p.start?"lock":"live");
  $("dateTest").value=shownDate;
@@ -129,6 +172,12 @@ function render(){currentIndex=actualPeriod();const p=periods[currentIndex];$("c
  document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>openPeriod(Number(b.dataset.open)));
  openEncounter(currentIndex,false)
 }
+function drawEvaluations(){const root=$("evalPeriods");root.innerHTML=periods.map(p=>{const available=shownDate>=p.start;return '<article><div class="row"><h3>'+p.id+' · '+p.mod+'</h3><span class="pill '+(available?'live':'lock')+'">'+(available?'Contenido disponible':'Próximamente')+'</span></div><p class="small">'+p.topic+'</p><p class="small muted">Evaluación final de 40 preguntas: pendiente de incorporación curricular. Diagnóstico y prácticas: en desarrollo.</p>'+(available?'<button type="button" class="secondary" data-eval-route="'+p.id+'">Ver módulo →</button>':'')+'</article>'}).join("");root.querySelectorAll("[data-eval-route]").forEach(b=>b.onclick=()=>openPeriod(periods.findIndex(p=>p.id===b.dataset.evalRoute)))}
+function drawRecords(){const tabs=$("periodTabs");tabs.innerHTML=periods.map(p=>'<button class="'+(selectedResultsPeriod===p.id?'':'secondary')+'" data-result-period="'+p.id+'">'+p.id+'</button>').join("");tabs.querySelectorAll("button").forEach(b=>b.onclick=()=>{selectedResultsPeriod=b.dataset.resultPeriod;drawRecords()});
+$("resultPeriodHead").textContent=selectedResultsPeriod;$("resultRecoverHead").textContent="R"+selectedResultsPeriod;
+$("resultRows").innerHTML=[1,2,3,4].map(n=>'<tr><td>C'+n+'</td><td class="num">—</td><td class="num">—</td></tr>').join("");
+$("resultAverage").textContent="—";$("resultsNote").textContent="No hay simulación final de "+selectedResultsPeriod+" guardada en este dispositivo. Los intentos de demostración no generan automáticamente calificaciones C1–C4.";
+$("recordsCount").textContent=state.attempts.length;$("recordsHistory").innerHTML=state.attempts.length?'<table><thead><tr><th>Actividad</th><th>Fecha local</th><th class="num">Resultado</th></tr></thead><tbody>'+state.attempts.slice().reverse().map(a=>'<tr><td>'+a.activity+'</td><td>'+new Date(a.localTime).toLocaleString("es-DO")+'</td><td class="num">'+(a.correct?'Acierto':'Revisar')+'</td></tr>').join("")+'</tbody></table>':'<p class="muted">No hay intentos locales registrados todavía.</p>'}
 function drawRecovery(){const selector=$("recPeriod"),old=selector.value||"0";selector.innerHTML=periods.map((p,i)=>'<option value="'+i+'">'+p.id+' · '+p.mod+'</option>').join("");selector.value=old;if(!selector.value)selector.value="0";const i=Number(selector.value);const p=periods[i],ds=datesFor(p);
  $("recCards").innerHTML=ds.map((date,n)=>{const d=encounterData(i,n),past=date<=shownDate;return '<article><div class="row"><h3>Encuentro '+(n+1)+' · '+d[0]+'</h3><span class="pill '+(past?'live':'lock')+'">'+(past?'Consultable':'Próximamente')+'</span></div><p class="small muted">'+fmt(date)+'</p><p>'+d[1]+'</p><p class="small"><b>Trabajo previsto:</b> '+d[3]+'</p>'+(past?'<button class="secondary" data-recover="'+n+'">Abrir los cinco pasos →</button>':'')+'</article>'}).join("");
  document.querySelectorAll("[data-recover]").forEach(b=>b.onclick=()=>openEncounter(i,true,Number(b.dataset.recover)))
@@ -155,6 +204,10 @@ $("backToList").onclick=()=>openPeriod(selectedPeriod);
 function drawAdvances(){$("attemptCount").textContent=state.attempts.length;const last=state.attempts.at(-1);$("lastScore").textContent=last?(last.correct?"100":"0")+"/100":"—";
  $("history").innerHTML=state.attempts.length?'<table><thead><tr><th>Intento</th><th>Hora local</th><th class="num">Resultado</th></tr></thead><tbody>'+state.attempts.slice().reverse().map((a,i)=>'<tr><td>'+(state.attempts.length-i)+'</td><td>'+new Date(a.localTime).toLocaleString("es-DO")+'</td><td class="num">'+(a.correct?"100":"0")+'</td></tr>').join("")+'</tbody></table>':"<p>Aún no has realizado intentos.</p>"}
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
+$("coverStart").onclick=()=>go(readIntro()?"inicio":"encuadre");
+$("finishIntro").onclick=()=>{if($("understood").checked)saveIntro();go("inicio")};
+$("exportRecords").onclick=()=>$("export").click();
+
 $("recPeriod").addEventListener("change",drawRecovery);
 $("continue").onclick=()=>openPeriod(currentIndex);
 $("dateTest").addEventListener("change",e=>{if(e.target.value){shownDate=e.target.value;render()}});
@@ -162,5 +215,5 @@ $("resetDate").onclick=()=>{shownDate=isoToday();render()};
 $("demoForm").onsubmit=e=>{e.preventDefault();const checked=document.querySelector('input[name="ans"]:checked');if(!checked){alert("Selecciona una respuesta antes de entregar.");return}const correct=checked.value==="1";const entry={activity:"P1-C1-T1-DEMO",localTime:new Date().toISOString(),correct,answer:checked.value,serverReceivedAt:null,status:"local_no_enviado"};state.attempts.push(entry);try{localStorage.setItem(key,JSON.stringify(state))}catch(e){}
  $("feedback").hidden=false;$("feedback").innerHTML='<div class="notice"><p><strong>'+(correct?'Respuesta correcta.':'Respuesta para revisar.')+'</strong> La expresión es <strong>180s</strong>, porque el pago por servicio se multiplica por la cantidad de servicios.</p><p>Resultado de esta única pregunta: <b>'+(correct?'100':'0')+'/100</b>. Es un ejercicio demostrativo, no una calificación de competencia.</p><button type="button" id="seeAdvances" class="secondary">Ver intento registrado</button></div>';$("seeAdvances").onclick=()=>go("avances")};
 $("export").onclick=()=>{const blob=new Blob([JSON.stringify({exportedLocalAt:new Date().toISOString(),records:state.attempts,notice:"Registro local sin verificación de servidor"},null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="epja-registro-local.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
-render();
+render();go(readIntro()?"inicio":"portada");
 </script></body></html>
