@@ -68,7 +68,18 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
  <p class="eyebrow">Mi recorrido anual</p><h1>Cuatro períodos, una sola ruta</h1>
  <div class="card testdate"><label for="dateTest">Probar navegación con otra fecha (solo demostración)</label><input id="dateTest" type="date" min="2026-08-29" max="2027-06-30"><button id="resetDate" class="secondary">Usar fecha de hoy</button><p class="muted small">Este control solo cambia la vista del calendario; no altera marcas horarias ni resultados guardados.</p></div>
  <div id="periodCards" class="route"></div>
+ <div class="card"><h3>Catálogo de contenidos del año</h3><p class="muted small">Consulta los temas programados de los cuatro módulos, sus conceptos y procedimientos asociados.</p>
+ <button class="secondary" type="button" data-go="catalogo">Ver los 29 contenidos →</button></div>
  <div class="card" style="margin-top:17px"><h3>Cierre anual · Después del cuarto módulo</h3><p>Al finalizar P4 podrás consultar aquí tu balance de simulaciones y los contenidos que necesitas reforzar.</p><button class="secondary" data-go="cierre">Consultar el cierre anual →</button></div>
+</section>
+<section id="catalogo" hidden>
+ <p class="eyebrow">Planificación curricular · 2026–2027</p>
+ <h1>Contenidos de Matemática</h1>
+ <p class="muted">29 contenidos agrupados en cuatro módulos. Los códigos organizan la planificación del aula.</p>
+ <div class="card"><label for="catalogPeriod">Seleccionar módulo</label>
+ <select id="catalogPeriod" style="font:inherit;padding:10px;border:1px solid #aab9d3;border-radius:9px;width:100%;max-width:360px"></select></div>
+ <div id="catalogCards" class="route"></div>
+ <p><button class="secondary" data-go="ruta">← Volver a Mi ruta</button></p>
 </section>
 <section id="lista" hidden>
  <p class="eyebrow" id="listPeriod">Mi período</p><h1>Todos mis encuentros</h1>
@@ -159,7 +170,7 @@ const introKey="epja_matematica_encuadre_v1";const readIntro=()=>{try{return loc
 function encounterData(i,n){const e=getEncounter(i,n);return e?[e.titulo,e.objetivo,e.presencial,e.evidencia]:["Encuentro pendiente","Contenido no disponible","La jornada no se encuentra en la matriz",""];}
 function datesFor(p){return curriculum.encuentros.filter(e=>e.periodo===p.id).map(e=>e.fecha)}
 function actualPeriod(){const ix=periods.findIndex(p=>shownDate>=p.start&&shownDate<=p.end);if(ix>=0)return ix;if(shownDate<periods[0].start)return 0;const prev=periods.findLastIndex(p=>p.start<=shownDate);return Math.max(0,prev)}
-function go(id){if(id==="recuperacion")drawRecovery();if(id==="evaluaciones")drawEvaluations();if(id==="registros")drawRecords();if(id==="cierre")drawClosure();document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);document.querySelectorAll("nav [data-go]").forEach(b=>b.setAttribute("aria-current",b.dataset.go===id?"page":"false"));window.scrollTo(0,0);if(id==="avances")drawAdvances()}
+function go(id){if(id==="catalogo")drawCatalog();if(id==="recuperacion")drawRecovery();if(id==="evaluaciones")drawEvaluations();if(id==="registros")drawRecords();if(id==="cierre")drawClosure();document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);document.querySelectorAll("nav [data-go]").forEach(b=>b.setAttribute("aria-current",b.dataset.go===id?"page":"false"));window.scrollTo(0,0);if(id==="avances")drawAdvances()}
 function render(){currentIndex=actualPeriod();const p=periods[currentIndex];$("currentPeriod").textContent=p.id+" · "+p.mod;$("periodDates").textContent=fmt(p.start)+" — "+fmt(p.end);
  const badge=$("currentStatus");badge.textContent=shownDate<p.start?"Próximamente":shownDate>p.end?"Disponible para repasar":"Período activo";badge.className="pill "+(shownDate<p.start?"lock":"live");
  $("dateTest").value=shownDate;
@@ -177,6 +188,24 @@ $("resultPeriodHead").textContent=selectedResultsPeriod;$("resultRecoverHead").t
 $("resultRows").innerHTML=[1,2,3,4].map(n=>'<tr><td>C'+n+'</td><td class="num">—</td><td class="num">—</td></tr>').join("");
 $("resultAverage").textContent="—";$("resultsNote").textContent="No hay simulación final de "+selectedResultsPeriod+" guardada en este dispositivo. Los intentos de demostración no generan automáticamente calificaciones C1–C4.";
 $("recordsCount").textContent=state.attempts.length;$("recordsHistory").innerHTML=state.attempts.length?'<table><thead><tr><th>Actividad</th><th>Fecha local</th><th class="num">Resultado</th></tr></thead><tbody>'+state.attempts.slice().reverse().map(a=>'<tr><td>'+a.activity+'</td><td>'+new Date(a.localTime).toLocaleString("es-DO")+'</td><td class="num">'+(a.correct?'Acierto':'Revisar')+'</td></tr>').join("")+'</tbody></table>':'<p class="muted">No hay intentos locales registrados todavía.</p>'}
+function drawCatalog(){
+ const selector=$("catalogPeriod"),prior=selector.value||"1";
+ selector.innerHTML=periods.map((p,i)=>'<option value="'+(i+1)+'">'+p.id+' · '+p.mod+'</option>').join("");
+ selector.value=prior;const moduleNumber=Number(selector.value),p=periods[moduleNumber-1];
+ $("catalogCards").replaceChildren();
+ curriculum.contenidos.filter(x=>x.modulo===moduleNumber).forEach(item=>{
+ const article=document.createElement("article");
+ const hd=document.createElement("h3");hd.textContent=item.codigo+" · "+item.contenido;article.appendChild(hd);
+ const add=(name,value)=>{if(!value)return;const el=document.createElement("p");el.className="small";const strong=document.createElement("b");strong.textContent=name+": ";el.appendChild(strong);el.appendChild(document.createTextNode(String(value)));article.appendChild(el)};
+ add("Eje",item.eje);add("Especificación",item.especificacion);add("Conceptos",item.conceptos);add("Procedimientos",item.procedimientos);
+ const dates=curriculum.encuentros.filter(e=>e.codigos.includes(item.codigo)).map(e=>e.fecha);
+ add("Fechas programadas",dates.map(fmt).join("; "));
+ if(item.codigo==="M1.A01"){add("Nota","Ampliación introductoria cuya ubicación requiere validación curricular.")}
+ if(shownDate>=p.start){const button=document.createElement("button");button.className="secondary";button.textContent="Ver encuentros del módulo →";button.onclick=()=>openPeriod(moduleNumber-1);article.appendChild(button)}
+ $("catalogCards").appendChild(article)
+ });
+ selector.onchange=drawCatalog;
+}
 function drawRecovery(){const selector=$("recPeriod"),old=selector.value||"0";selector.innerHTML=periods.map((p,i)=>'<option value="'+i+'">'+p.id+' · '+p.mod+'</option>').join("");selector.value=old;if(!selector.value)selector.value="0";const i=Number(selector.value);const p=periods[i],ds=datesFor(p);
  $("recCards").innerHTML=ds.map((date,n)=>{const d=encounterData(i,n),past=date<=shownDate;return '<article><div class="row"><h3>Encuentro '+(n+1)+' · '+d[0]+'</h3><span class="pill '+(past?'live':'lock')+'">'+(past?'Consultable':'Próximamente')+'</span></div><p class="small muted">'+fmt(date)+'</p><p>'+d[1]+'</p><p class="small"><b>Trabajo previsto:</b> '+d[3]+'</p>'+(past?'<button class="secondary" data-recover="'+n+'">Abrir los cinco pasos →</button>':'')+'</article>'}).join("");
  document.querySelectorAll("[data-recover]").forEach(b=>b.onclick=()=>openEncounter(i,true,Number(b.dataset.recover)))
