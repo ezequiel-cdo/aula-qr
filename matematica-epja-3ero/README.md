@@ -1,6 +1,17 @@
 # Aula virtual de Matemática EPJA · Tercer Año
 
-Piloto independiente dentro de `ezequiel-cdo/aula-qr`. No altera el recurso PFMTTD.
+## Estructura curricular de los 37 encuentros (integrada)
+
+La planificación aprobada ya es una fuente de datos que lee la interfaz sin necesidad de duplicar manualmente las jornadas en el HTML.
+
+- `estructura-37.js`: 29 contenidos (códigos M, conceptos, procedimientos), 37 jornadas (fechas, aprendizajes, actividades presenciales, 120 min de autoestudio, CE/IL propuestos, evidencias y observaciones) y seis recesos.
+- `index.html`: las vistas **Mi ruta**, **Catálogo de contenidos**, **Encuentros** y **Recuperación** consumen estos datos.
+- Secuencia aprobada: P1 polinomios (10), P2 ecuaciones e inecuaciones (10), P3 sistemas lineales (7) y P4 relaciones y funciones (10).
+- Esta fase estructura y publica la **planificación**; no significa que las 37 guías explicativas ni sus prácticas interactivas se hayan redactado.
+- La factorización M1.A01 es una ampliación sujeta a validación; los vínculos CE–IL son propuestas didácticas. La matriz aprobada de 37 encuentros sigue siendo la fuente que debe actualizarse antes de regenerar este archivo.
+- La simulación P1 de 40 preguntas sigue operativa pero exige una auditoría de cobertura curricular con el nuevo orden de contenidos antes de una adopción oficial.
+
+## Estado del proyecto
 
 ## Estado actual
 
