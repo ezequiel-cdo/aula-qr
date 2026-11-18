@@ -47,9 +47,19 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
  <div class="card testdate"><label for="dateTest">Probar navegación con otra fecha (solo demostración)</label><input id="dateTest" type="date" min="2026-08-29" max="2027-06-30"><button id="resetDate" class="secondary">Usar fecha de hoy</button><p class="muted small">Este control solo cambia la vista del calendario; no altera marcas horarias ni resultados guardados.</p></div>
  <div id="periodCards" class="route"></div>
 </section>
+<section id="lista" hidden>
+ <p class="eyebrow" id="listPeriod">Mi período</p><h1>Todos mis encuentros</h1>
+ <p class="muted" id="listSummary"></p>
+ <div class="notice small">Puedes volver a los encuentros anteriores ya habilitados. Una fecha transcurrida no significa que una actividad haya sido completada. Los entregables definitivos se incorporarán con sus guías y con la conexión a Drive.</div>
+ <div id="encounterCards" class="route" style="margin-top:15px"></div>
+ <p><button class="secondary" data-go="ruta">← Volver a mi ruta</button></p>
+</section>
 <section id="encuentro" hidden>
  <p class="eyebrow" id="encEyebrow">Mi encuentro</p><h1 id="encTitle">Continúa tu aprendizaje</h1>
  <div class="card"><h3 id="encHeadline"></h3><p id="encDescription"></p><p class="small muted" id="encCurricular"></p></div>
+ <div class="card"><h3>Contenidos y recursos</h3><div id="encResources"></div></div>
+ <div class="card"><h3>Entregables del encuentro</h3><div id="encDeliverables"></div></div>
+ <p><button class="secondary" id="backToList">← Ver todos los encuentros del período</button></p>
  <div class="card"><h3>1 · Recordemos</h3><p>¿Qué conocimientos previos te ayudarán a comprender el tema de este encuentro?</p></div>
  <div class="card"><h3>2 · Comprendamos</h3><p id="conceptText">Estudia el ejemplo y explica con tus palabras lo que representa cada término.</p></div>
  <div class="card"><h3>3 · Practiquemos</h3><p>Resuelve una pregunta contextualizada. La explicación se muestra después de entregar.</p><button data-go="practica">Abrir práctica de muestra →</button></div>
@@ -83,7 +93,20 @@ const excluded=new Set(["2026-12-19","2026-12-26","2027-01-02","2027-02-27","202
 const key="epja_matematica_piloto_v1";let state={attempts:[]};try{const raw=JSON.parse(localStorage.getItem(key)||"null");if(raw&&Array.isArray(raw.attempts))state=raw}catch(e){}
 const $=id=>document.getElementById(id),fmt=s=>new Date(s+"T12:00:00").toLocaleDateString("es-DO",{day:"numeric",month:"short",year:"numeric"});
 const isoToday=()=>{const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"America/Santo_Domingo",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());const find=t=>parts.find(x=>x.type===t).value;return find("year")+"-"+find("month")+"-"+find("day")};
-let shownDate=isoToday();let currentIndex=0;
+let shownDate=isoToday();let currentIndex=0;let selectedPeriod=0;
+const p1Topics=[
+["Lenguaje cotidiano y algebraico","Traducir situaciones reales a expresiones algebraicas.","Identificar variables, constantes y relaciones; escribir dos expresiones del entorno.","Actividad de autoestudio: escribir y explicar dos traducciones algebraicas en el cuaderno."],
+["Elementos de un término algebraico","Reconocer coeficientes, variables y exponentes.","Identificar los elementos de términos en situaciones de costos e ingresos.","Ficha de análisis de términos algebraicos."],
+["Términos semejantes","Distinguir y agrupar términos semejantes.","Reducir expresiones sencillas justificando qué términos son semejantes.","Ejercicios razonados de reducción de términos."],
+["Polinomios y grado","Identificar términos y grado de un polinomio.","Clasificar expresiones algebraicas y reconocer su grado.","Tabla de clasificación y explicación."],
+["Tipos de polinomios","Clasificar según términos y grado.","Comparar representaciones y ordenar polinomios.","Tabla de tipos de polinomios."],
+["Polinomios especiales y valor numérico","Reconocer polinomios especiales y evaluar valores.","Sustituir valores en contextos de producción y costos.","Cálculos comentados de valor numérico."],
+["Suma y resta de polinomios","Operar polinomios en problemas de ingresos y gastos.","Aplicar reducción de términos y verificar resultados.","Problema contextualizado de presupuesto."],
+["Multiplicación de polinomios","Representar y resolver productos algebraicos.","Aplicar la distributiva en modelos de área.","Problema de modelación de áreas."],
+["División y comprobación","Calcular cociente y resto, comprobar resultados.","Verificar la identidad dividendo = divisor × cociente + resto.","Procedimiento y comprobación de una división."],
+["Aplicaciones y cierre del módulo","Aplicar polinomios a cajas, volúmenes y presupuestos.","Integrar procedimientos y revisar errores.","Caso contextualizado y práctica final del módulo."]
+];
+function encounterData(i,n){if(i===0)return p1Topics[n]||["Contenido por confirmar","Pendiente de revisión curricular.","Sin actividad asignada.","Pendiente de publicación."];return ["Encuentro "+(n+1)+" · por desarrollar","La secuencia detallada se incorporará al disponer de los módulos didácticos de este período.","Contenido curricular pendiente de validación.","Entregable aún no definido."]}
 function datesFor(p){const arr=[];for(let d=new Date(p.start+"T12:00:00");d<=new Date(p.end+"T12:00:00");d.setDate(d.getDate()+1)){const s=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");if(d.getDay()===6&&!excluded.has(s))arr.push(s)}return arr}
 function actualPeriod(){const ix=periods.findIndex(p=>shownDate>=p.start&&shownDate<=p.end);if(ix>=0)return ix;if(shownDate<periods[0].start)return 0;const prev=periods.findLastIndex(p=>p.start<=shownDate);return Math.max(0,prev)}
 function go(id){document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);document.querySelectorAll("nav [data-go]").forEach(b=>b.setAttribute("aria-current",b.dataset.go===id?"page":"false"));window.scrollTo(0,0);if(id==="avances")drawAdvances()}
@@ -91,22 +114,26 @@ function render(){currentIndex=actualPeriod();const p=periods[currentIndex];$("c
  const badge=$("currentStatus");badge.textContent=shownDate<p.start?"Próximamente":shownDate>p.end?"Disponible para repasar":"Período activo";badge.className="pill "+(shownDate<p.start?"lock":"live");
  $("dateTest").value=shownDate;
  $("periodCards").innerHTML=periods.map((x,i)=>{const dates=datesFor(x),open=dates.filter(d=>d<=shownDate).length,status=shownDate<x.start?"Programado":shownDate>x.end?"Para repasar":"Disponible";return '<article class="'+(i===currentIndex?'active':'')+'"><div class="row"><h3>'+x.id+' · '+x.mod+'</h3><span class="pill '+(shownDate<x.start?'lock':'live')+'">'+status+'</span></div><p>'+x.topic+'</p><p class="muted small">'+fmt(x.start)+' a '+fmt(x.end)+' · '+open+'/'+dates.length+' encuentros habilitados por fecha</p><div class="progress"><span style="width:'+(open/dates.length*100)+'%"></span></div>'+(shownDate>=x.start?'<p><button type="button" class="secondary" data-open="'+i+'">Ver encuentros →</button></p>':'')+'</article>'}).join("");
- document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>openEncounter(Number(b.dataset.open)));
+ document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>openPeriod(Number(b.dataset.open)));
  openEncounter(currentIndex,false)
 }
-function openEncounter(i,navigate=true){const p=periods[i],dates=datesFor(p),available=dates.filter(d=>d<=shownDate),number=Math.max(1,available.length);
+function openPeriod(i){selectedPeriod=i;const p=periods[i],ds=datesFor(p);$("listPeriod").textContent=p.id+" · "+p.mod;$("listSummary").textContent=p.topic+" · "+ds.length+" encuentros programados. Selecciona cualquiera que ya esté habilitado.";
+$("encounterCards").innerHTML=ds.map((d,n)=>{const item=encounterData(i,n),ready=d<=shownDate,hasAttempt=i===0&&n===0&&state.attempts.some(x=>x.activity==="P1-C1-T1-DEMO");const status=ready?(hasAttempt?"Práctica de muestra realizada":"Disponible"):"Programado";return '<article><div class="row"><h3>Encuentro '+(n+1)+' · '+item[0]+'</h3><span class="pill '+(ready?'live':'lock')+'">'+status+'</span></div><p class="small muted">Sábado '+fmt(d)+'</p><p>'+item[1]+'</p><p class="small"><b>Entregable previsto:</b> '+item[3]+'</p>'+(ready?'<button class="secondary" data-enc="'+n+'">Ver contenidos y entregables →</button>':'<p class="small muted">Se habilitará en la fecha programada.</p>')+'</article>'}).join("");
+$("encounterCards").querySelectorAll("[data-enc]").forEach(b=>b.onclick=()=>openEncounter(i,true,Number(b.dataset.enc)));go("lista")}
+function openEncounter(i,navigate=true,n=null){const p=periods[i],dates=datesFor(p),available=dates.filter(d=>d<=shownDate),number=n===null?Math.max(1,available.length):n+1;const item=encounterData(i,number-1);selectedPeriod=i;
  $("encEyebrow").textContent=p.id+" · "+p.mod+" · Encuentro "+number+" de "+dates.length;
- $("encTitle").textContent=p.id==="P1"?"Mi aprendizaje de polinomios":"Mi encuentro de "+p.mod;
- $("encHeadline").textContent=p.topic;
- $("encDescription").textContent="Encuentros habilitados por calendario: "+available.length+" de "+dates.length+". La disponibilidad no significa actividad realizada.";
+ $("encTitle").textContent=item[0];
+ $("encHeadline").textContent=item[1];
+ $("encDescription").textContent="Encuentro "+number+" de "+dates.length+" · "+fmt(dates[number-1])+". Disponible desde la fecha programada; no acredita finalización.";
  $("encCurricular").textContent=p.id==="P1"?"Indicadores de referencia: "+p.ils:"Distribución curricular provisional: "+p.ils;
- $("conceptText").textContent=p.id==="P1"?"Ejemplo: si cada entrega genera RD$180, el ingreso de s entregas es 180s. Identifica la variable y el coeficiente.":"Este módulo requiere incorporar sus contenidos didácticos completos antes de publicar actividades curriculares definitivas.";
+ $("conceptText").textContent=item[2];$("encResources").innerHTML=p.id==="P1"?"<p><b>Contenido del encuentro:</b> "+item[0]+".</p><p class=\"muted small\">Esquema preliminar del Módulo I. La guía completa y los materiales se añadirán después de su revisión documental.</p>":"<p class=\"muted\">Los recursos detallados de este período aún no están publicados.</p>";$("encDeliverables").innerHTML="<p>"+item[3]+"</p><p class=\"muted small\">Estado: "+(i===0&&number===1&&state.attempts.some(x=>x.activity==="P1-C1-T1-DEMO")?"existe una práctica local de demostración; no equivale a entrega":"sin evidencia enviada al facilitador")+". La recepción por Google Drive se habilitará al conectar el servidor.</p>";
  if(navigate)go("encuentro")
 }
+$("backToList").onclick=()=>openPeriod(selectedPeriod);
 function drawAdvances(){$("attemptCount").textContent=state.attempts.length;const last=state.attempts.at(-1);$("lastScore").textContent=last?(last.correct?"100":"0")+"/100":"—";
  $("history").innerHTML=state.attempts.length?'<table><thead><tr><th>Intento</th><th>Hora local</th><th class="num">Resultado</th></tr></thead><tbody>'+state.attempts.slice().reverse().map((a,i)=>'<tr><td>'+(state.attempts.length-i)+'</td><td>'+new Date(a.localTime).toLocaleString("es-DO")+'</td><td class="num">'+(a.correct?"100":"0")+'</td></tr>').join("")+'</tbody></table>':"<p>Aún no has realizado intentos.</p>"}
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
-$("continue").onclick=()=>openEncounter(currentIndex);
+$("continue").onclick=()=>openPeriod(currentIndex);
 $("dateTest").addEventListener("change",e=>{if(e.target.value){shownDate=e.target.value;render()}});
 $("resetDate").onclick=()=>{shownDate=isoToday();render()};
 $("demoForm").onsubmit=e=>{e.preventDefault();const checked=document.querySelector('input[name="ans"]:checked');if(!checked){alert("Selecciona una respuesta antes de entregar.");return}const correct=checked.value==="1";const entry={activity:"P1-C1-T1-DEMO",localTime:new Date().toISOString(),correct,answer:checked.value,serverReceivedAt:null,status:"local_no_enviado"};state.attempts.push(entry);try{localStorage.setItem(key,JSON.stringify(state))}catch(e){}
