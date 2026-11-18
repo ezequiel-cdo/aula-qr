@@ -73,6 +73,7 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
  <p class="eyebrow">Mi recorrido anual</p><h1>Cuatro períodos, una sola ruta</h1>
  <div class="card testdate"><label for="dateTest">Probar navegación con otra fecha (solo demostración)</label><input id="dateTest" type="date" min="2026-08-29" max="2027-06-30"><button id="resetDate" class="secondary">Usar fecha de hoy</button><p class="muted small">Este control solo cambia la vista del calendario; no altera marcas horarias ni resultados guardados.</p></div>
  <div id="periodCards" class="route"></div>
+ <div class="card" style="margin-top:17px"><h3>Cierre anual · Después del cuarto módulo</h3><p>Al finalizar P4 podrás consultar aquí tu balance de simulaciones y los contenidos que necesitas reforzar.</p><button class="secondary" data-go="cierre">Consultar el cierre anual →</button></div>
 </section>
 <section id="lista" hidden>
  <p class="eyebrow" id="listPeriod">Mi período</p><h1>Todos mis encuentros</h1>
@@ -104,7 +105,7 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
 </section>
 <section id="evaluaciones" hidden>
  <p class="eyebrow">Diagnóstico · Formación · Cierre · Recuperación</p><h1>Evaluaciones de Matemática</h1>
- <p>Conoce cómo se organiza cada evaluación y accede a las prácticas disponibles. La simulación final prevista contempla 40 preguntas, diez por bloque, pero esos bancos todavía no están incorporados en este piloto.</p>
+ <p>Conoce cómo se organiza cada evaluación y accede a las prácticas disponibles. La práctica final del Módulo I contiene 40 preguntas organizadas en cuatro bloques. Los bancos de P2, P3 y P4 se incorporarán después de su validación curricular.</p>
  <div class="card"><h3>Momentos de evaluación</h3><div class="criteria-grid"><div><b>Diagnóstica</b><p>Reconocer saberes previos; no se califica.</p></div><div><b>Formativa</b><p>Practicar, recibir retroalimentación y mejorar.</p></div><div><b>Simulación de cierre</b><p>Comprobar aprendizajes por C1, C2, C3 y C4.</p></div><div><b>Recuperación pedagógica</b><p>Reforzar aspectos no alcanzados con acompañamiento.</p></div></div></div>
  <div class="card"><h3>Elegir un período</h3><div id="evalPeriods" class="route"></div></div>
  <div class="card notice small"><b>Importante:</b> Las notas generadas por una simulación son resultados de práctica. Las calificaciones oficiales requieren evidencias y valoración docente, según el registro correspondiente.</div>
@@ -115,6 +116,14 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
  <form id="demoForm"><div class="options"><label class="option"><input type="radio" name="ans" value="0"> 180 + s</label><label class="option"><input type="radio" name="ans" value="1"> 180s</label><label class="option"><input type="radio" name="ans" value="2"> s − 180</label><label class="option"><input type="radio" name="ans" value="3"> 180/s</label></div><button type="submit">Entregar intento y ver explicación</button></form>
  <div id="feedback" hidden></div></div>
  <div class="card notice small">Esta pregunta es una <b>muestra de interfaz</b>, no el examen final de 40 preguntas. Las evaluaciones finales por módulo usarán identificadores propios de entrega y validación del servidor cuando se integre el backend.</div>
+</section>
+<section id="cierre" hidden>
+ <p class="eyebrow">Balance académico · Después del Módulo IV</p><h1>Cierre anual de Matemática</h1>
+ <p class="muted" id="closureState">Este espacio se consolida al finalizar P4. Puedes consultar la estructura desde ahora.</p>
+ <div class="card"><h3>Resumen local de prácticas por bloque y período</h3>
+ <div style="overflow-x:auto"><table><thead><tr><th>Bloque</th><th class="num">P1</th><th class="num">P2</th><th class="num">P3</th><th class="num">P4</th></tr></thead><tbody id="closureGrid"></tbody></table></div>
+ <p class="small muted">Se muestran exclusivamente los resultados de simulaciones que existan en este dispositivo. No se calculan promedios oficiales ni calificaciones de recuperación sin evidencias validadas.</p></div>
+ <div class="card"><h3>Evidencias y próximas acciones</h3><p id="closureAdvice">Las actividades de seguimiento y recuperación se comunicarán en los módulos y por el facilitador.</p><div class="row"><button class="secondary" data-go="registros">Ver Mis registros</button><button class="secondary" data-go="ruta">Volver a Mi ruta</button></div></div>
 </section>
 <section id="registros" hidden>
  <p class="eyebrow">Registros locales · Evidencias</p><h1>Mis registros y resultados</h1>
@@ -164,7 +173,7 @@ const p1Topics=[
 function encounterData(i,n){if(i===0)return p1Topics[n]||["Contenido por confirmar","Pendiente de revisión curricular.","Sin actividad asignada.","Pendiente de publicación."];return ["Encuentro "+(n+1)+" · por desarrollar","La secuencia detallada se incorporará al disponer de los módulos didácticos de este período.","Contenido curricular pendiente de validación.","Entregable aún no definido."]}
 function datesFor(p){const arr=[];for(let d=new Date(p.start+"T12:00:00");d<=new Date(p.end+"T12:00:00");d.setDate(d.getDate()+1)){const s=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");if(d.getDay()===6&&!excluded.has(s))arr.push(s)}return arr}
 function actualPeriod(){const ix=periods.findIndex(p=>shownDate>=p.start&&shownDate<=p.end);if(ix>=0)return ix;if(shownDate<periods[0].start)return 0;const prev=periods.findLastIndex(p=>p.start<=shownDate);return Math.max(0,prev)}
-function go(id){if(id==="recuperacion")drawRecovery();if(id==="evaluaciones")drawEvaluations();if(id==="registros")drawRecords();document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);document.querySelectorAll("nav [data-go]").forEach(b=>b.setAttribute("aria-current",b.dataset.go===id?"page":"false"));window.scrollTo(0,0);if(id==="avances")drawAdvances()}
+function go(id){if(id==="recuperacion")drawRecovery();if(id==="evaluaciones")drawEvaluations();if(id==="registros")drawRecords();if(id==="cierre")drawClosure();document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);document.querySelectorAll("nav [data-go]").forEach(b=>b.setAttribute("aria-current",b.dataset.go===id?"page":"false"));window.scrollTo(0,0);if(id==="avances")drawAdvances()}
 function render(){currentIndex=actualPeriod();const p=periods[currentIndex];$("currentPeriod").textContent=p.id+" · "+p.mod;$("periodDates").textContent=fmt(p.start)+" — "+fmt(p.end);
  const badge=$("currentStatus");badge.textContent=shownDate<p.start?"Próximamente":shownDate>p.end?"Disponible para repasar":"Período activo";badge.className="pill "+(shownDate<p.start?"lock":"live");
  $("dateTest").value=shownDate;
@@ -172,6 +181,10 @@ function render(){currentIndex=actualPeriod();const p=periods[currentIndex];$("c
  document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>openPeriod(Number(b.dataset.open)));
  openEncounter(currentIndex,false)
 }
+function drawClosure(){const isOpen=shownDate>="2027-06-19";$("closureState").textContent=isOpen?"El calendario ha llegado al final de P4. Consulta los resultados locales disponibles.":"Este cierre está programado después del cuarto módulo (19 de junio de 2027). Puedes consultar su estructura, pero no existe calificación anual anticipada.";
+const tries=(typeof epjaGetFinals==="function"?epjaGetFinals():[]);const last={};tries.forEach(x=>{if(["P1","P2","P3","P4"].includes(x.period)&&Array.isArray(x.score))last[x.period]=x});
+$("closureGrid").innerHTML=[0,1,2,3].map((i)=>'<tr><td>C'+(i+1)+'</td>'+["P1","P2","P3","P4"].map(p=>'<td class="num">'+(last[p]?last[p].score[i]:"—")+'</td>').join("")+'</tr>').join("");
+$("closureAdvice").textContent=isOpen?"Para valorar los aprendizajes finales se necesitan las evidencias de proceso, las recuperaciones que procedan y la revisión del facilitador.":"La evaluación y el cierre anual se realizan después del Módulo IV. Mientras tanto, puedes continuar tus prácticas y recuperar los encuentros ya abiertos."}
 function drawEvaluations(){const root=$("evalPeriods");root.innerHTML=periods.map(p=>{const available=shownDate>=p.start;return '<article><div class="row"><h3>'+p.id+' · '+p.mod+'</h3><span class="pill '+(available?'live':'lock')+'">'+(available?'Contenido disponible':'Próximamente')+'</span></div><p class="small">'+p.topic+'</p><p class="small muted">Evaluación final de 40 preguntas: pendiente de incorporación curricular. Diagnóstico y prácticas: en desarrollo.</p>'+(available?'<button type="button" class="secondary" data-eval-route="'+p.id+'">Ver módulo →</button>':'')+'</article>'}).join("");root.querySelectorAll("[data-eval-route]").forEach(b=>b.onclick=()=>openPeriod(periods.findIndex(p=>p.id===b.dataset.evalRoute)))}
 function drawRecords(){const tabs=$("periodTabs");tabs.innerHTML=periods.map(p=>'<button class="'+(selectedResultsPeriod===p.id?'':'secondary')+'" data-result-period="'+p.id+'">'+p.id+'</button>').join("");tabs.querySelectorAll("button").forEach(b=>b.onclick=()=>{selectedResultsPeriod=b.dataset.resultPeriod;drawRecords()});
 $("resultPeriodHead").textContent=selectedResultsPeriod;$("resultRecoverHead").textContent="R"+selectedResultsPeriod;
