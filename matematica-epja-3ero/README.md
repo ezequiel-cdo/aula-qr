@@ -11,6 +11,15 @@ La planificación aprobada ya es una fuente de datos que lee la interfaz sin nec
 - La factorización M1.A01 es una ampliación sujeta a validación; los vínculos CE–IL son propuestas didácticas. La matriz aprobada de 37 encuentros sigue siendo la fuente que debe actualizarse antes de regenerar este archivo.
 - La simulación P1 de 40 preguntas sigue operativa pero exige una auditoría de cobertura curricular con el nuevo orden de contenidos antes de una adopción oficial.
 
+## Diagnóstico de entrada al grado · antes de P1
+
+- **Sección Diagnóstico** accesible desde el final del Encuadre, Inicio y Mi ruta. El diagnóstico **no bloquea** el acceso a los módulos: respeta la autonomía de EPJA.
+- `diagnostico-grado.js`: repaso con ejemplos de siete fundamentos (números, propiedades, signos, fracciones, potencias, raíces, jerarquía), seguido de 28 preguntas diagnósticas (cuatro niveles didácticos por eje). Muestra desempeño por eje y por nivel de dificultad.
+- Niveles operativos de las tareas: Reconoce, Aplica, Analiza y Transfiere. No son escala oficial ni una medición psicométrica del dominio real. Una prueba de cuatro ítems por eje ofrece una **aproximación inicial orientativa**, complementable con observación y resolución explicada.
+- **Plan de mejora** para ejes con ≤2/4 respuestas correctas, con acceso a repaso y una comprobación adicional de dos preguntas diferentes por eje. Registrar esas comprobaciones por separado del diagnóstico inicial evita sustituir retroactivamente el resultado.
+- `repaso-aritmetica.html`: recurso autónomo basado en el HTML aportado por el usuario y adaptado a EPJA: tablas, laboratorios de signos, fracciones, potencias, raíces y jerarquía. Su autoevaluación interna de seis preguntas **no** es la prueba diagnóstica del grado.
+- Las respuestas y revisiones de diagnóstico se guardan localmente (`epja_3ero_diagnostico_v1`), son consultables desde **Mis registros** y pueden exportarse como JSON. No se simula recepción docente ni calificación oficial.
+
 ## Experiencia de aprendizaje piloto · P1, Encuentro 1
 
 - `encuentro1.js`: lección interactiva centrada en el participante, con cinco pasos (recordar, comprender, resolver un problema, autoestudio de 120 minutos y comprobación).
