@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>De la Aritmética al Álgebra | Recurso Didáctico Interactivo</title>
+<style>
+  :root{
+    --bg:#f6f8fc; --panel:#ffffff; --ink:#182033; --muted:#667085;
+    --primary:#3157d5; --primary2:#6b5cff; --ok:#198754; --warn:#c57a00; --bad:#c0392b;
+    --line:#dfe5f0; --soft:#eef2ff; --shadow:0 10px 30px rgba(26,38,72,.10);
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(180deg,#eef2ff 0,#f8f9fc 260px);color:var(--ink);line-height:1.5}
+  header{padding:40px 20px 26px;background:linear-gradient(135deg,#263eaf,#6b5cff);color:#fff}
+  .wrap{max-width:1180px;margin:auto}
+  h1{margin:0 0 8px;font-size:clamp(2rem,4vw,3.5rem);line-height:1.05}
+  h2{margin-top:0;font-size:clamp(1.45rem,2.5vw,2rem)}
+  h3{margin:.2rem 0 .5rem}
+  .lead{font-size:1.08rem;max-width:900px;opacity:.95}
+  .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .chip{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);font-size:.92rem}
+  nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:8px;overflow:auto;padding:10px 14px}
+  nav button{white-space:nowrap;border:0;background:#f0f3f8;padding:9px 12px;border-radius:12px;cursor:pointer;font-weight:700;color:#344054}
+  nav button:hover{background:#e4e9f5}
+  main{padding:24px 16px 70px}
+  section{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin:18px auto;max-width:1180px}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .col-4{grid-column:span 4}.col-6{grid-column:span 6}.col-8{grid-column:span 8}.col-12{grid-column:span 12}
+  @media(max-width:800px){.col-4,.col-6,.col-8{grid-column:span 12}}
+  .card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+  .card.soft{background:var(--soft)}
+  .kicker{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--primary);font-weight:800}
+  .goal{border-left:5px solid var(--primary);background:#f5f7ff;padding:14px 16px;border-radius:10px}
+  .equation{font-family:Cambria,Georgia,serif;font-size:clamp(1.5rem,3vw,2.2rem);text-align:center;padding:16px;background:#fbfcff;border:1px dashed #bfc8e8;border-radius:14px;margin:10px 0}
+  .bridge{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;margin:16px 0}
+  .bridge .step{padding:12px 16px;border-radius:14px;background:#f3f5fb;border:1px solid var(--line);font-weight:800}
+  .arrow{font-size:1.5rem;color:var(--primary)}
+  button.action{border:0;background:var(--primary);color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:800}
+  button.action.secondary{background:#eef2ff;color:var(--primary);border:1px solid #cfd6ff}
+  button.action.ghost{background:#f4f5f7;color:#344054}
+  input,select{padding:9px 10px;border:1px solid #cfd6df;border-radius:10px;font:inherit;max-width:100%}
+  .feedback{margin-top:10px;padding:10px 12px;border-radius:10px;display:none}
+  .feedback.show{display:block}.feedback.ok{background:#e9f8ef;color:#146c43}.feedback.bad{background:#fff0ee;color:#9b2c20}.feedback.info{background:#eef4ff;color:#294a9b}
+  .term{display:inline-flex;align-items:flex-end;gap:1px;padding:6px 9px;border-radius:10px;background:#f4f6fb;margin:4px;cursor:pointer;border:1px solid transparent}
+  .term:hover,.term.active{border-color:var(--primary);background:#eef1ff}
+  .legend{font-size:.95rem;color:var(--muted)}
+  .option{display:block;width:100%;text-align:left;margin:8px 0;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer}
+  .option:hover{border-color:#aab5e8;background:#fafbff}
+  .option.correct{background:#e8f7ef;border-color:#69b987}.option.wrong{background:#fff0ee;border-color:#da8a80}
+  .pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#eef2ff;color:#334db6;font-size:.85rem;font-weight:700;margin:3px}
+  .progress{height:12px;background:#edf0f5;border-radius:99px;overflow:hidden}.progress>div{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary2));width:0;transition:.4s}
+  .dropzone{border:2px dashed #b8c1d8;border-radius:14px;padding:14px;min-height:105px;background:#fbfcff}
+  .draggable{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;margin:7px 0;cursor:grab}
+  .draggable.dragging{opacity:.5}
+  table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;text-align:left}th{background:#f5f7fb}
+  .mini{font-size:.9rem;color:var(--muted)}
+  .score{font-weight:800;color:var(--primary)}
+  .callout{padding:14px;border-radius:12px;background:#fff8e7;border:1px solid #f1d28a}
+  .hidden{display:none}
+  footer{max-width:1180px;margin:auto;padding:0 16px 40px;color:#667085}
+  .print-note{font-size:.86rem;color:#667085}
+  @media print{nav,.no-print{display:none!important}body{background:white}section{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="kicker" style="color:#dce3ff">Recurso didáctico interactivo · EPJA · Tercer Año, Segundo Ciclo</div>
+    <h1>De la Aritmética al Álgebra</h1>
+    <p class="lead">Una experiencia para comprender por qué aparecen las letras en Matemática, cómo se construyen expresiones algebraicas y cómo identificar sus elementos, conectando conocimientos aritméticos previos con el lenguaje algebraico.</p>
+    <div class="meta">
+      <span class="chip">Expresiones algebraicas</span><span class="chip">Lenguaje ordinario ↔ algebraico</span><span class="chip">Términos y coeficientes</span><span class="chip">Patrones</span><span class="chip">Práctica con retroalimentación</span>
+    </div>
+  </div>
+</header>
+<nav>
+  <div class="wrap">
+    <button onclick="go('inicio')">Inicio</button><button onclick="go('puente')">1. El puente</button><button onclick="go('lenguaje')">2. Traducir</button><button onclick="go('anatomia')">3. Anatomía</button><button onclick="go('clasificar')">4. Clasificar</button><button onclick="go('evaluar')">5. Evaluar</button><button onclick="go('semejantes')">6. Semejantes</button><button onclick="go('reto')">7. Reto</button><button onclick="go('salida')">Cierre</button>
+  </div>
+</nav>
+<main>
+<section id="inicio">
+  <div class="grid">
+    <div class="col-8">
+      <div class="kicker">Situación de aprendizaje</div>
+      <h2>¿Qué cambia cuando pasamos de calcular números a representar relaciones?</h2>
+      <p>En aritmética trabajamos principalmente con números conocidos. En álgebra usamos números, operaciones y letras para representar cantidades desconocidas, variables, relaciones y patrones generales.</p>
+      <div class="goal"><strong>Meta observable:</strong> al finalizar, podrás construir e interpretar expresiones algebraicas, identificar términos, coeficientes, variables, exponentes y constantes, evaluar expresiones para valores dados y distinguir términos semejantes.</div>
+    </div>
+    <div class="col-4 card soft">
+      <h3>Ruta de aprendizaje</h3>
+      <ol><li>Reconocer patrones.</li><li>Generalizar con letras.</li><li>Traducir frases.</li><li>Identificar elementos.</li><li>Evaluar expresiones.</li><li>Aplicar en contexto.</li></ol>
+      <div class="progress"><div id="progressBar"></div></div>
+      <p class="mini">Progreso: <span id="progressText">0%</span></p>
+    </div>
+  </div>
+</section>
+
+<section id="puente">
+  <div class="kicker">1 · De casos concretos a una regla general</div>
+  <h2>El puente entre aritmética y álgebra</h2>
+  <div class="bridge"><span class="step">Números</span><span class="arrow">→</span><span class="step">Operaciones</span><span class="arrow">→</span><span class="step">Patrones</span><span class="arrow">→</span><span class="step">Letras</span><span class="arrow">→</span><span class="step">Expresiones</span></div>
+  <div class="grid">
+    <div class="col-6 card">
+      <h3>Observa el patrón</h3>
+      <div class="equation">7 + 7 + 7 = 3·7<br>12 + 12 + 12 = 3·12<br>25 + 25 + 25 = 3·25</div>
+      <p>Si el mismo número se repite tres veces, ¿cómo escribirías la regla para <em>cualquier número</em>?</p>
+      <input id="patternAnswer" placeholder="Escribe, por ejemplo: 3x" /> <button class="action" onclick="checkPattern()">Comprobar</button>
+      <div id="patternFeedback" class="feedback"></div>
+    </div>
+    <div class="col-6 card">
+      <h3>Idea esencial</h3>
+      <p>La letra no es un adorno. Permite expresar una relación sin tener que enumerar todos los casos posibles.</p>
+      <div class="callout"><strong>Aritmética:</strong> responde preguntas sobre valores concretos.<br><strong>Álgebra:</strong> además permite describir estructuras y reglas generales.</div>
+      <p><strong>Ejemplo:</strong> “un número aumentado en 5” puede representarse como <span class="pill">x + 5</span>. La letra <strong>x</strong> puede tomar diferentes valores.</p>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>Mini-experimento: cambia el número</h3>
+    <p>Selecciona un valor y observa cómo una misma regla produce diferentes resultados.</p>
+    <label>x = <input type="range" id="sliderX" min="-5" max="10" value="2" oninput="updateRule()"> <strong id="xVal">2</strong></label>
+    <div class="equation" id="ruleDisplay">3x + 2 = 3(2) + 2 = 8</div>
+  </div>
+</section>
+
+<section id="lenguaje">
+  <div class="kicker">2 · Lenguaje ordinario y lenguaje algebraico</div>
+  <h2>Traducir significa representar una relación</h2>
+  <p>No se trata de sustituir palabras mecánicamente. Primero identifica <strong>qué cantidad cambia</strong>, <strong>qué operación se realiza</strong> y <strong>en qué orden</strong>.</p>
+  <div class="grid">
+    <div class="col-6 card">
+      <h3>Ejemplos guiados</h3>
+      <table><tr><th>Lenguaje ordinario</th><th>Expresión</th></tr>
+      <tr><td>El doble de un número</td><td>2x</td></tr>
+      <tr><td>Un número aumentado en 7</td><td>x + 7</td></tr>
+      <tr><td>La mitad de un número</td><td>x / 2</td></tr>
+      <tr><td>El triple de un número menos 4</td><td>3x − 4</td></tr>
+      <tr><td>El cuadrado de un número</td><td>x²</td></tr></table>
+    </div>
+    <div class="col-6 card">
+      <h3>Practica</h3>
+      <p id="translatePrompt"><strong>1.</strong> El cuádruple de un número más 3.</p>
+      <input id="translateInput" placeholder="Escribe la expresión" /> <button class="action" onclick="checkTranslate()">Comprobar</button>
+      <button class="action secondary" onclick="nextTranslate()">Otro ejercicio</button>
+      <div id="translateFeedback" class="feedback"></div>
+    </div>
+  </div>
+</section>
+
+<section id="anatomia">
+  <div class="kicker">3 · Anatomía de una expresión</div>
+  <h2>¿De qué está hecha una expresión algebraica?</h2>
+  <div class="equation"><span class="term" onclick="showPart('coeficiente')">4</span><span class="term" onclick="showPart('variable')">x</span><sup class="term" onclick="showPart('exponente')">2</sup> − <span class="term" onclick="showPart('termino')">3x</span> + <span class="term" onclick="showPart('constante')">7</span></div>
+  <div id="partInfo" class="feedback info show">Haz clic en una parte de la expresión para explorar su función.</div>
+  <div class="grid" style="margin-top:16px">
+    <div class="col-4 card"><h3>Término</h3><p>Cada parte separada por suma o resta. En 4x² − 3x + 7 hay tres términos.</p></div>
+    <div class="col-4 card"><h3>Coeficiente</h3><p>Factor numérico que multiplica a la variable. En −3x, el coeficiente es −3.</p></div>
+    <div class="col-4 card"><h3>Variable</h3><p>Letra que representa una cantidad que puede cambiar o cuyo valor no se conoce.</p></div>
+    <div class="col-4 card"><h3>Exponente</h3><p>Indica cuántas veces la base se usa como factor. x² = x·x.</p></div>
+    <div class="col-4 card"><h3>Constante</h3><p>Término sin variable. Su valor permanece fijo dentro de la expresión.</p></div>
+    <div class="col-4 card"><h3>Grado de un término</h3><p>En una variable, corresponde al exponente de la variable. Por ejemplo, 5x³ tiene grado 3.</p></div>
+  </div>
+</section>
+
+<section id="clasificar">
+  <div class="kicker">4 · Reconocer y clasificar</div>
+  <h2>¿Aritmética o expresión algebraica?</h2>
+  <p>Clasifica cada tarjeta. Una expresión algebraica contiene al menos una variable.</p>
+  <div class="grid">
+    <div class="col-4"><div class="dropzone" id="pool"><strong>Tarjetas</strong></div></div>
+    <div class="col-4"><div class="dropzone" id="arith"><strong>Aritmética</strong></div></div>
+    <div class="col-4"><div class="dropzone" id="alg"><strong>Álgebra</strong></div></div>
+  </div>
+  <p><button class="action" onclick="checkSort()">Verificar clasificación</button> <button class="action ghost" onclick="resetSort()">Reiniciar</button></p>
+  <div id="sortFeedback" class="feedback"></div>
+</section>
+
+<section id="evaluar">
+  <div class="kicker">5 · Evaluar una expresión</div>
+  <h2>Sustituir una variable por un valor</h2>
+  <p>Evaluar una expresión significa reemplazar la variable por un valor y efectuar las operaciones respetando su orden.</p>
+  <div class="grid">
+    <div class="col-6 card soft">
+      <h3>Ejemplo</h3><div class="equation">2x + 5, si x = 4<br>2(4) + 5 = 8 + 5 = 13</div>
+      <p class="mini">Importante: cuando se sustituye una variable, conviene usar paréntesis.</p>
+    </div>
+    <div class="col-6 card">
+      <h3>Ahora tú</h3>
+      <p>Evalúa <strong id="evalExpr">3x − 2</strong> para <strong id="evalValue">x = 5</strong>.</p>
+      <input id="evalInput" type="number" placeholder="Resultado" /> <button class="action" onclick="checkEval()">Comprobar</button>
+      <button class="action secondary" onclick="newEval()">Nuevo</button>
+      <div id="evalFeedback" class="feedback"></div>
+    </div>
+  </div>
+</section>
+
+<section id="semejantes">
+  <div class="kicker">6 · Estructura algebraica</div>
+  <h2>Términos semejantes: lo que realmente debe coincidir</h2>
+  <p>Dos términos son semejantes cuando tienen la misma parte literal: mismas variables con los mismos exponentes. Los coeficientes sí pueden ser diferentes.</p>
+  <div class="equation">3x + 5x = 8x &nbsp;&nbsp; | &nbsp;&nbsp; 4x² + 2x² = 6x²</div>
+  <div class="grid">
+    <div class="col-6 card"><h3>¿Son semejantes?</h3><p id="likePair"><strong>3x</strong> y <strong>−7x</strong></p><button class="action" onclick="answerLike(true)">Sí</button> <button class="action secondary" onclick="answerLike(false)">No</button><div id="likeFeedback" class="feedback"></div></div>
+    <div class="col-6 card"><h3>Error frecuente</h3><p><strong>2x + 3x²</strong> no puede convertirse en 5x³. La suma no combina exponentes. Son términos diferentes.</p><div class="callout">Pregunta clave: <strong>¿la parte literal coincide exactamente?</strong></div></div>
+  </div>
+</section>
+
+<section id="reto">
+  <div class="kicker">7 · Aplicación y transferencia</div>
+  <h2>Construye un modelo algebraico a partir de una situación</h2>
+  <div class="card soft">
+    <h3>Situación</h3>
+    <p>Una entrada a un centro recreativo cuesta <strong>RD$250</strong>. Cada juego adicional cuesta <strong>RD$75</strong>. Llamaremos <strong>j</strong> al número de juegos.</p>
+  </div>
+  <div class="grid" style="margin-top:16px">
+    <div class="col-6 card"><h3>A. Construye la expresión</h3><p>¿Qué expresión representa el costo total?</p><input id="modelInput" placeholder="Ej.: 250 + 75j" /> <button class="action" onclick="checkModel()">Comprobar</button><div id="modelFeedback" class="feedback"></div></div>
+    <div class="col-6 card"><h3>B. Interpreta sus partes</h3><p>¿Qué representa 250?</p><select id="meaning250"><option value="">Selecciona</option><option value="fixed">Costo fijo de entrada</option><option value="games">Número de juegos</option><option value="unit">Costo por juego</option></select><p>¿Qué representa 75?</p><select id="meaning75"><option value="">Selecciona</option><option value="fixed">Costo fijo de entrada</option><option value="games">Número de juegos</option><option value="unit">Costo por juego</option></select><p><button class="action" onclick="checkMeaning()">Verificar</button></p><div id="meaningFeedback" class="feedback"></div></div>
+  </div>
+  <div class="card" style="margin-top:16px"><h3>C. Usa el modelo</h3><p>Si una persona participa en <input id="games" type="number" value="4" min="0" style="width:80px"> juegos, ¿cuánto paga?</p><button class="action" onclick="calcCost()">Calcular con el modelo</button><div id="costFeedback" class="feedback"></div></div>
+</section>
+
+<section id="salida">
+  <div class="kicker">Cierre · Evidencia de aprendizaje</div>
+  <h2>Ticket de salida</h2>
+  <p>Responde estas tres preguntas sin mirar las explicaciones anteriores.</p>
+  <div class="card">
+    <p><strong>1.</strong> ¿Cuál expresión representa “cinco menos que el doble de un número”?</p>
+    <button class="option" onclick="quiz(this,false)">5 − 2x</button><button class="option" onclick="quiz(this,true)">2x − 5</button><button class="option" onclick="quiz(this,false)">2(x − 5)</button>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <p><strong>2.</strong> En 6a² − 4a + 9, ¿cuál es el término constante?</p>
+    <button class="option" onclick="quiz(this,false)">6</button><button class="option" onclick="quiz(this,false)">−4a</button><button class="option" onclick="quiz(this,true)">9</button>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <p><strong>3.</strong> Si x = 3, ¿cuánto vale 4x + 1?</p>
+    <button class="option" onclick="quiz(this,false)">8</button><button class="option" onclick="quiz(this,true)">13</button><button class="option" onclick="quiz(this,false)">16</button>
+  </div>
+  <p class="score">Aciertos en el ticket: <span id="quizScore">0</span>/3</p>
+  <div class="callout"><strong>Reflexión:</strong> explica con tus palabras por qué el álgebra puede considerarse una extensión de la aritmética.</div>
+  <textarea id="reflection" rows="4" style="width:100%;margin-top:10px;border:1px solid var(--line);border-radius:12px;padding:12px" placeholder="Escribe tu explicación..."></textarea>
+  <p class="no-print"><button class="action" onclick="window.print()">Imprimir / Guardar como PDF</button> <button class="action secondary" onclick="resetAll()">Reiniciar recurso</button></p>
+  <p class="print-note">Sugerencia docente: pedir al participante que justifique al menos dos respuestas, no solo que marque la opción correcta.</p>
+</section>
+</main>
+<footer><strong>Propósito didáctico:</strong> favorecer la transición conceptual de la aritmética al álgebra mediante observación de patrones, generalización, traducción entre representaciones, identificación estructural, práctica guiada y aplicación contextual.</footer>
+<script>
+let completed=new Set();
+function mark(id){completed.add(id);let p=Math.round(completed.size/8*100);document.getElementById('progressBar').style.width=p+'%';document.getElementById('progressText').textContent=p+'%'}
+function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
+function fb(id,msg,type){let e=document.getElementById(id);e.textContent=msg;e.className='feedback show '+type}
+function norm(s){return s.toLowerCase().replace(/\s/g,'').replace(/\*/g,'').replace(/·/g,'').replace(/−/g,'-')}
+function checkPattern(){let a=norm(document.getElementById('patternAnswer').value);if(['3x','x3','3*x'].map(norm).includes(a)){fb('patternFeedback','Correcto. 3x representa tres veces cualquier valor de x.','ok');mark('puente')}else fb('patternFeedback','Revisa el patrón: el mismo número aparece tres veces. Intenta expresarlo como una multiplicación usando x.','bad')}
+function updateRule(){let x=+document.getElementById('sliderX').value;document.getElementById('xVal').textContent=x;document.getElementById('ruleDisplay').textContent=`3x + 2 = 3(${x}) + 2 = ${3*x+2}`}
+const trans=[['El cuádruple de un número más 3.',['4x+3']],['La mitad de un número menos 6.',['x/2-6','0.5x-6']],['El cuadrado de un número aumentado en 5.',['x^2+5','x²+5']],['Tres veces un número disminuido en 2.',['3x-2']],['La suma de un número y 12.',['x+12','12+x']]];let ti=0;
+function checkTranslate(){let a=norm(document.getElementById('translateInput').value);let ok=trans[ti][1].some(v=>norm(v)===a);if(ok){fb('translateFeedback','Correcto. Has representado la relación indicada.','ok');mark('lenguaje')}else fb('translateFeedback','Aún no. Identifica primero la operación principal y luego la cantidad variable.','bad')}
+function nextTranslate(){ti=(ti+1)%trans.length;document.getElementById('translatePrompt').innerHTML='<strong>'+(ti+1)+'.</strong> '+trans[ti][0];document.getElementById('translateInput').value='';document.getElementById('translateFeedback').className='feedback'}
+function showPart(p){const d={coeficiente:'Coeficiente: 4 multiplica a x². Indica cuántas unidades de x² participan en ese término.',variable:'Variable: x representa una cantidad que puede cambiar.',exponente:'Exponente: 2 indica que x se multiplica por sí misma: x·x.',termino:'Término: −3x es una de las partes separadas por suma o resta. Su coeficiente es −3.',constante:'Constante: 7 no contiene variable y mantiene un valor fijo.'};fb('partInfo',d[p],'info');mark('anatomia')}
+const cards=[['8 + 5','arith'],['3(7) − 2','arith'],['x + 5','alg'],['2n + 1','alg'],['4a² − 3a + 7','alg'],['12 ÷ 3','arith']];
+function resetSort(){let pool=document.getElementById('pool');pool.innerHTML='<strong>Tarjetas</strong>';cards.forEach((c,i)=>{let d=document.createElement('div');d.className='draggable';d.draggable=true;d.dataset.kind=c[1];d.id='card'+i;d.textContent=c[0];d.addEventListener('dragstart',e=>{d.classList.add('dragging');e.dataTransfer.setData('text/plain',d.id)});d.addEventListener('dragend',()=>d.classList.remove('dragging'));pool.appendChild(d)});document.getElementById('arith').innerHTML='<strong>Aritmética</strong>';document.getElementById('alg').innerHTML='<strong>Álgebra</strong>';document.querySelectorAll('.dropzone').forEach(z=>{z.ondragover=e=>e.preventDefault();z.ondrop=e=>{e.preventDefault();let el=document.getElementById(e.dataTransfer.getData('text/plain'));if(el)z.appendChild(el)}});document.getElementById('sortFeedback').className='feedback'}
+function checkSort(){let ok=true;document.querySelectorAll('#arith .draggable').forEach(e=>{if(e.dataset.kind!=='arith')ok=false});document.querySelectorAll('#alg .draggable').forEach(e=>{if(e.dataset.kind!=='alg')ok=false});if(document.querySelectorAll('#pool .draggable').length)ok=false;if(ok){fb('sortFeedback','Excelente. Clasificaste correctamente según la presencia o ausencia de variables.','ok');mark('clasificar')}else fb('sortFeedback','Hay al menos una tarjeta fuera de lugar o sin clasificar. Recuerda: una expresión algebraica contiene variables.','bad')}
+let evalSet=[['3x − 2',5,13],['2x + 7',-2,3],['x² + 1',4,17],['5x',-3,-15],['2x² − 3',3,15]],ei=0;
+function newEval(){ei=(ei+1)%evalSet.length;let q=evalSet[ei];document.getElementById('evalExpr').textContent=q[0];document.getElementById('evalValue').textContent='x = '+q[1];document.getElementById('evalInput').value='';document.getElementById('evalFeedback').className='feedback'}
+function checkEval(){let q=evalSet[ei],a=+document.getElementById('evalInput').value;if(a===q[2]){fb('evalFeedback','Correcto. Sustituiste y calculaste adecuadamente.','ok');mark('evaluar')}else fb('evalFeedback','Revisa la sustitución y el orden de las operaciones.','bad')}
+const likePairs=[['3x','−7x',true],['4a²','9a²',true],['2x','2x²',false],['5ab','−3ab',true],['7m','7n',false]];let li=0;
+function answerLike(ans){let q=likePairs[li];if(ans===q[2]){fb('likeFeedback','Correcto. Compara siempre la parte literal completa.','ok');mark('semejantes')}else fb('likeFeedback','Revisa variables y exponentes: deben coincidir exactamente.','bad');li=(li+1)%likePairs.length;setTimeout(()=>{let n=likePairs[li];document.getElementById('likePair').innerHTML='<strong>'+n[0]+'</strong> y <strong>'+n[1]+'</strong>';},700)}
+function checkModel(){let a=norm(document.getElementById('modelInput').value);if(['250+75j','75j+250'].includes(a)){fb('modelFeedback','Correcto: 250 es el costo fijo y 75j representa el costo variable por juegos.','ok');mark('reto')}else fb('modelFeedback','Piensa en costo total = costo fijo + costo por juego × cantidad de juegos.','bad')}
+function checkMeaning(){let ok=document.getElementById('meaning250').value==='fixed'&&document.getElementById('meaning75').value==='unit';fb('meaningFeedback',ok?'Correcto. Has interpretado el significado contextual de los números.':'Revisa: uno de los valores no depende de los juegos y el otro es un costo por cada juego.',ok?'ok':'bad')}
+function calcCost(){let j=Math.max(0,+document.getElementById('games').value||0),c=250+75*j;fb('costFeedback',`Para j = ${j}: 250 + 75(${j}) = RD$${c}.`,'info')}
+let answered=new Set(),score=0;
+function quiz(btn,correct){let box=btn.parentElement;if(answered.has(box))return;answered.add(box);if(correct){btn.classList.add('correct');score++;}else{btn.classList.add('wrong');[...box.querySelectorAll('.option')].find(b=>b.getAttribute('onclick').includes('true')).classList.add('correct')}document.getElementById('quizScore').textContent=score;if(answered.size===3)mark('salida')}
+function resetAll(){location.reload()}
+resetSort();updateRule();
+</script>
+</body>
+</html>
