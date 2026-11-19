@@ -15,7 +15,7 @@
    return r.lecturas.map(x=>`<span>${esc(x.etiqueta)} del libro oficial del Módulo ${['I','II','III','IV'][r.modulo-1]}</span>`).join(' · ');
  };
  const official=(id)=>data.catalogoCE[id];
- const ilText=(list)=>list.length?`<ul>${list.map(k=>`<li><b>${esc(k)}</b>: ${esc(data.catalogoIL[k].texto)}</li>`).join('')}</ul>`:'<p>No se propone un indicador adicional para esta jornada.</p>';
+ const ilText=(list)=>list.length?`<ul>${list.map(k=>`<li><b>${esc(k)} · ${esc(data.catalogoIL[k].ce)}</b>: ${esc(data.catalogoIL[k].texto)}</li>`).join('')}</ul>`:'<p>No se propone un indicador adicional para esta jornada.</p>';
  const css=document.createElement('style');css.textContent=`
  .epja-align{background:#ffffff;border:1px solid #d5deed;border-radius:15px;padding:17px;margin:13px 0 16px;color:#1b3155}
  .epja-align h2,.epja-align h3{margin:4px 0 12px;color:#17365e}.epja-align p{line-height:1.6}
@@ -27,7 +27,7 @@
  .epja-route-goal{margin:8px 0;font-size:.87rem;line-height:1.45;color:#38516f}
  @media(max-width:590px){.epja-align{padding:13px}.epja-align h2{font-size:1.12rem}}
  `;document.head.appendChild(css);
- function descriptionModule(m){const d=data.modulos[String(m)];return `
+ function descriptionModule(m){const d=data.modulos[String(m)];const auxCE=[...new Set([...d.ilComplementarios,...d.ilCondicionales].map(il=>data.catalogoIL[il].ce).filter(ce=>!d.cePrincipales.includes(ce)))];return `
  <p class="epja-note">Módulo ${['I','II','III','IV'][m-1]} · ${esc(d.encuentros)} encuentros</p>
  <h2>${esc(d.titulo)}</h2>
  <p><b>¿Para qué aprenderemos esto?</b> ${esc(d.proposito)}</p>
@@ -36,7 +36,10 @@
  <details><summary>Competencias específicas e indicadores prioritarios del módulo</summary>
  <p class="epja-note">Los propósitos son redacciones didácticas del aula. Las competencias específicas y los indicadores se transcriben del Registro de Evaluación. Los vínculos por módulo y encuentro son propuestas de la matriz aprobada, no calificaciones.</p>
  <h3>Competencias principales propuestas</h3><ul>${d.competenciasEspecificas.map(c=>`<li><b>${esc(c.id)} · ${esc(c.fundamental)}</b>: ${esc(c.texto)}</li>`).join('')}</ul>
- <h3>Indicadores prioritarios de este módulo</h3>${ilText(d.ilPrioritarios)}</details>`}
+ <h3>Competencias vinculadas por indicadores complementarios o condicionales</h3><ul>${auxCE.map(id=>`<li><b>${esc(id)} · ${esc(official(id).fundamental)}</b>: ${esc(official(id).texto)}</li>`).join('')}</ul>
+ <h3>Indicadores prioritarios del módulo</h3>${ilText(d.ilPrioritarios)}
+ <h3>Indicadores complementarios</h3>${ilText(d.ilComplementarios)}
+ <h3>Indicadores condicionales (solo si se produce evidencia)</h3>${ilText(d.ilCondicionales)}</details>`}
  function updateRoute(){const cards=$('periodCards');if(!cards)return;Array.from(cards.children).forEach((card,i)=>{if(i>=4)return;const d=data.modulos[String(i+1)];let p=card.querySelector('.epja-route-goal');if(!p){p=document.createElement('p');p.className='epja-route-goal';const heading=card.querySelector('h3');if(heading)heading.insertAdjacentElement('afterend',p);else card.prepend(p)}p.textContent=d.proposito;});}
  function drawModule(m){const area=$('encounterCards');if(!area)return;let panel=$('epjaModulePurpose');if(!panel){panel=document.createElement('section');panel.id='epjaModulePurpose';panel.className='epja-align';area.parentNode.insertBefore(panel,area)}panel.innerHTML=descriptionModule(m);
  const guide=document.querySelector('#lista>.notice');if(guide)guide.textContent=m===1?'Los diez encuentros de este módulo cuentan con sus cinco pestañas de aprendizaje, prácticas interactivas y evaluaciones formativas. Puedes regresar a cualquier encuentro habilitado.':'Cada encuentro presenta una guía de organización curricular y sus páginas de referencia. Las lecciones interactivas específicas de este módulo aún no están desarrolladas. Podrás regresar cuando estén disponibles.';
