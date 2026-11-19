@@ -131,5 +131,18 @@ function wire(){const root=$("dgContent");root.querySelectorAll("[data-dg-axis]"
 function render(){if(root.hidden)return;nav();if(state.active==="review")$("dgContent").innerHTML=review();else if(state.active==="test")$("dgContent").innerHTML=test();else if(state.active==="results")$("dgContent").innerHTML=results();else $("dgContent").innerHTML=improve();wire()}
 const originalGo=go;go=function(id){originalGo(id);if(id==="diagnostico"){read();render()}};
 /* En Inicio y Mi ruta, los CTA están en el HTML principal. */
+const priorDrawRecords=drawRecords;
+drawRecords=function(){
+ priorDrawRecords();
+ read();
+ const box=document.createElement("div");box.className="card";
+ const heading=document.createElement("h3");heading.textContent="Diagnóstico de entrada al grado";box.appendChild(heading);
+ const record=last();const detail=document.createElement("p");
+ detail.textContent=record?"Última prueba inicial: "+record.correct+" de 28 respuestas correctas. "+category(record.scores)+". Comprobaciones de mejora realizadas: "+state.followups.length+".":"Aún no has realizado tu diagnóstico inicial de los fundamentos de Matemática.";
+ box.appendChild(detail);
+ const button=document.createElement("button");button.className="secondary";button.textContent=record?"Consultar diagnóstico y plan de mejora":"Comenzar diagnóstico";
+ button.onclick=()=>go("diagnostico");box.appendChild(button);
+ const place=$("recordsHistory");if(place)place.prepend(box);
+};
 window.EPJA_DIAGNOSTICO={open:()=>go("diagnostico"),status:()=>({attempts:state.attempts.length,followups:state.followups.length})};
 })();
