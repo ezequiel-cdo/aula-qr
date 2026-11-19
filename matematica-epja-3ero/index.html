@@ -69,7 +69,7 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
 <section id="ruta" hidden>
  <p class="eyebrow">Mi recorrido anual</p><h1>Cuatro períodos, una sola ruta</h1>
  <div class="card testdate"><label for="dateTest">Probar navegación con otra fecha (solo demostración)</label><input id="dateTest" type="date" min="2026-08-29" max="2027-06-30"><button id="resetDate" class="secondary">Usar fecha de hoy</button><p class="muted small">Este control solo cambia la vista del calendario; no altera marcas horarias ni resultados guardados.</p></div>
- <div class="card" style="border-left:5px solid #d30078"><h3>Antes de iniciar el primer módulo</h3><p>Explora tus conocimientos previos de Matemática, realiza el diagnóstico inicial y practica los temas que necesites fortalecer.</p><button class="secondary" data-go="diagnostico">Ir al diagnóstico del grado →</button></div><div id="periodCards" class="route"></div>
+ <div class="card" style="border-left:5px solid #d30078"><h3>Antes de iniciar el primer módulo</h3><p>Explora tus conocimientos previos de Matemática, realiza el diagnóstico inicial y practica los temas que necesites fortalecer.</p><button class="secondary" data-go="diagnostico">Ir al diagnóstico del grado →</button></div><div id="periodCards" class="route"></div><div class="card"><h3>Libro de Matemática · Módulo I</h3><p>Recurso de estudio para los encuentros del primer período. Cada encuentro indica sus páginas específicas.</p><a href="modulo1-matematica.pdf" target="_blank" rel="noopener" style="font-weight:750;color:#1e438c">Abrir libro completo (PDF, 24 páginas) ↗</a></div>
  <div class="card"><h3>Catálogo de contenidos del año</h3><p class="muted small">Consulta los temas programados de los cuatro módulos, sus conceptos y procedimientos asociados.</p>
  <button class="secondary" type="button" data-go="catalogo">Ver los 29 contenidos →</button></div>
  <div class="card" style="margin-top:17px"><h3>Cierre anual · Después del cuarto módulo</h3><p>Al finalizar P4 podrás consultar aquí tu balance de simulaciones y los contenidos que necesitas reforzar.</p><button class="secondary" data-go="cierre">Consultar el cierre anual →</button></div>
@@ -151,7 +151,7 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
 </section>
 </main>
 <nav aria-label="Navegación principal"><button data-go="inicio">⌂ Inicio</button><button data-go="ruta">▦ Mi ruta</button><button data-go="evaluaciones">✓ Evaluaciones</button><button data-go="registros">▥ Mis registros</button></nav>
-<script src="estructura-37.js"></script><script>
+<script src="estructura-37.js"></script><script src="mapa-modulo1.js"></script><script>
 "use strict";
 const curriculum=window.EPJA_37;
 if(!curriculum||!Array.isArray(curriculum.encuentros)||curriculum.encuentros.length!==37)throw new Error("No se cargó la planificación de 37 encuentros");
@@ -213,7 +213,7 @@ function drawRecovery(){const selector=$("recPeriod"),old=selector.value||"0";se
  document.querySelectorAll("[data-recover]").forEach(b=>b.onclick=()=>openEncounter(i,true,Number(b.dataset.recover)))
 }
 function openPeriod(i){selectedPeriod=i;const p=periods[i],ds=datesFor(p);$("listPeriod").textContent=p.id+" · "+p.mod;$("listSummary").textContent=p.topic+" · "+ds.length+" encuentros programados. Selecciona cualquiera que ya esté habilitado.";
-$("encounterCards").innerHTML=ds.map((d,n)=>{const item=encounterData(i,n),ready=d<=shownDate,hasAttempt=i===0&&n===0&&state.attempts.some(x=>x.activity==="P1-C1-T1-DEMO");const status=ready?(i===0&&n===0?"Lección interactiva":"Disponible"):"Programado";return '<article><div class="row"><h3>Encuentro '+(n+1)+' · '+item[0]+'</h3><span class="pill '+(ready?'live':'lock')+'">'+status+'</span></div><p class="small muted">Sábado '+fmt(d)+'</p><p>'+item[1]+'</p><p class="small"><b>'+(i===0&&n===0?"En esta lección aprenderás":"Trabajo previsto")+ ':</b> '+(i===0&&n===0?"a representar ingresos y gastos con letras y números.":item[3])+'</p>'+(ready?'<button class="secondary" data-enc="'+n+'">'+(i===0&&n===0?'Comenzar lección interactiva →':'Ver encuentro →')+'</button>':'<p class="small muted">Se habilitará en la fecha programada.</p>')+'</article>'}).join("");
+$("encounterCards").innerHTML=(i===0?'<article><h3>Tu libro del Módulo I</h3><p>El libro completo está disponible para estudiar y repasar. Encontrarás la lectura específica en cada encuentro.</p><a href="modulo1-matematica.pdf" target="_blank" rel="noopener">Abrir el libro de Matemática · Módulo I ↗</a></article>':'')+ds.map((d,n)=>{const item=encounterData(i,n),book=i===0?window.EPJA_MODULO1?.[n]:null,ready=d<=shownDate,hasAttempt=i===0&&n===0&&state.attempts.some(x=>x.activity==="P1-C1-T1-DEMO");const status=ready?(i===0&&n===0?"Lección interactiva":"Disponible"):"Programado";return '<article><div class="row"><h3>Encuentro '+(n+1)+' · '+item[0]+'</h3><span class="pill '+(ready?'live':'lock')+'">'+status+'</span></div><p class="small muted">Sábado '+fmt(d)+'</p>'+(book?'<p class="small"><b>Libro Módulo I:</b> páginas '+book.paginas+'</p>':'')+'<p>'+item[1]+'</p><p class="small"><b>'+(i===0&&n===0?"En esta lección aprenderás":"Trabajo previsto")+ ':</b> '+(i===0&&n===0?"a representar ingresos y gastos con letras y números.":item[3])+'</p>'+(ready?'<button class="secondary" data-enc="'+n+'">'+(i===0&&n===0?'Comenzar lección interactiva →':'Ver encuentro →')+'</button>':'<p class="small muted">Se habilitará en la fecha programada.</p>')+'</article>'}).join("");
 $("encounterCards").querySelectorAll("[data-enc]").forEach(b=>b.onclick=()=>openEncounter(i,true,Number(b.dataset.enc)));go("lista")}
 function openEncounter(i,navigate=true,n=null){
  const p=periods[i],dates=datesFor(p),available=dates.filter(d=>d<=shownDate),number=n===null?Math.max(1,available.length):n+1;
@@ -224,11 +224,20 @@ function openEncounter(i,navigate=true,n=null){
  $("encHeadline").textContent=r.objetivo;
  $("encDescription").textContent="Jornada "+r.id+" · Sábado "+fmt(r.fecha)+" · 120 min presenciales y 120 min de autoestudio.";
  $("encCurricular").textContent="Contenidos: "+r.codigos.join(", ")+" · Competencias propuestas: "+(r.competencias||"por revisar")+" · Indicadores principales: "+(r.ilPrincipal||"por revisar");
- $("recallText").textContent="Antes de comenzar, explica con tus palabras qué recuerdas sobre "+r.titulo.toLowerCase()+". Relaciona tus ideas con una situación del entorno.";
+ const anterior=number>1?getEncounter(i,number-2):i>0?getEncounter(i-1,datesFor(periods[i-1]).length-1):null;
+ $("recallText").textContent=anterior?"Recordemos el encuentro anterior: "+anterior.titulo+". Explica con tus palabras qué aprendiste y cómo te servirá en el contenido de hoy.":"Recuperemos lo aprendido en grados anteriores: operaciones aritméticas, cantidades fijas y variables. Si realizaste el diagnóstico de entrada, recuerda una idea que pudiste aplicar.";
  $("conceptText").textContent="Aprendizaje esperado: "+r.objetivo;
  const resource=$("encResources");resource.replaceChildren();
  const addInfo=(label,value)=>{if(!value)return;const p=document.createElement("p"),strong=document.createElement("b");strong.textContent=label+": ";p.appendChild(strong);p.appendChild(document.createTextNode(String(value)));resource.appendChild(p)};
  addInfo("Contenidos",r.contenidos);addInfo("Conceptos asociados",r.conceptos);addInfo("Procedimientos asociados",r.procedimientos);addInfo("Recursos",r.recursos);
+ if(i===0){
+  const book=window.EPJA_MODULO1?.[number-1];
+  if(book){const p=document.createElement("p"),bold=document.createElement("b"),anchor=document.createElement("a");bold.textContent="Libro de Matemática · Módulo I: ";anchor.textContent="Consultar páginas "+book.paginas+" ↗";anchor.href="modulo1-matematica.pdf#page="+(book.desde-35);anchor.target="_blank";anchor.rel="noopener";p.append(bold,anchor);resource.prepend(p);
+   if(book.observacion){const note=document.createElement("p");note.className="small muted";note.textContent=book.observacion;resource.appendChild(note)}
+   const more=document.createElement("p"),a=document.createElement("a");a.href="transicion-aritmetica-algebra.html";a.target="_blank";a.rel="noopener";a.textContent="Laboratorio complementario: transición de Aritmética al Álgebra ↗";more.append(a);resource.appendChild(more)
+  }
+ }
+
  if(r.ilComplementarios)addInfo("Indicadores complementarios propuestos",r.ilComplementarios);
  if(r.ilCondicionales)addInfo("Indicadores condicionales",r.ilCondicionales);
  if(r.reserva)addInfo("Observación de planificación",r.reserva);
