@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aritmética esencial para iniciar Álgebra · EPJA</title>
+<style>
+:root{
+  --bg:#f6f7fb; --panel:#ffffff; --ink:#172033; --muted:#5f6b7a; --line:#dfe4ee;
+  --accent:#315efb; --accent-2:#6f4ef6; --ok:#167c4b; --warn:#9a5b00; --bad:#b3261e;
+  --soft:#eef2ff; --soft2:#f4efff; --radius:18px; --shadow:0 10px 28px rgba(23,32,51,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.shell{max-width:1180px;margin:auto;padding:18px}
+.hero{background:linear-gradient(135deg,#fff 0%,#f7f8ff 55%,#f4efff 100%);border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:var(--shadow)}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:22px;align-items:center}
+h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.08;margin:.2rem 0 .8rem}
+.kicker{font-size:.84rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.hero p{color:var(--muted);max-width:70ch;margin:.5rem 0}
+.route{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.pill{border:1px solid #cad3ff;background:#fff;color:#25355f;padding:7px 10px;border-radius:999px;font-size:.86rem;font-weight:700}
+.goal{background:#172033;color:#fff;border-radius:18px;padding:18px}
+.goal strong{display:block;font-size:1.05rem;margin-bottom:6px}.goal small{color:#d7deec}
+.toolbar{position:sticky;top:0;z-index:10;background:rgba(246,247,251,.95);backdrop-filter:blur(10px);padding:10px 0 8px;margin:10px 0 0}
+.nav{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.nav button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 12px;border-radius:999px;white-space:nowrap;font-weight:750}
+.nav button:hover,.nav button:focus-visible{border-color:#aab7ff;outline:3px solid rgba(49,94,251,.12)}
+.progress-wrap{margin-top:8px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}.progress{height:9px;background:#e7eaf1;border-radius:99px;overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .25s}.progress-text{font-size:.82rem;color:var(--muted);font-weight:700}
+main{display:grid;gap:18px;margin-top:18px}
+.module{scroll-margin-top:112px;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 6px 20px rgba(23,32,51,.045)}
+.module-head{display:flex;gap:14px;justify-content:space-between;align-items:flex-start;margin-bottom:16px}.module-head h2{margin:0;font-size:1.35rem}.module-head p{margin:.25rem 0 0;color:var(--muted)}
+.tag{font-size:.78rem;font-weight:800;color:#394c7c;background:var(--soft);border-radius:999px;padding:6px 9px;white-space:nowrap}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:16px;padding:15px;background:#fff}.card h3{margin:0 0 8px;font-size:1.02rem}.card p{margin:.35rem 0;color:var(--muted)}
+.formula{font-family:Cambria,Georgia,serif;background:#f8f9fc;border:1px solid #e3e7ef;border-radius:12px;padding:11px 12px;font-size:1.06rem;overflow:auto}
+.note{border-left:4px solid var(--accent);background:var(--soft);padding:11px 12px;border-radius:10px;color:#28365d}.note.warn{border-color:#d68a12;background:#fff7e8;color:#66410a}.note.ok{border-color:var(--ok);background:#eefaf3;color:#135b39}
+.set-map{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center}.venn{position:relative;min-height:310px;border-radius:18px;background:#f9fafc;border:1px solid var(--line);overflow:hidden}.oval{position:absolute;border:3px solid rgba(49,94,251,.55);border-radius:48%;display:flex;align-items:flex-start;justify-content:flex-end;padding:10px;font-weight:900;color:#2e3c67;background:rgba(49,94,251,.03)}.r{inset:18px}.q{left:36px;top:55px;width:57%;height:220px}.z{left:68px;top:86px;width:43%;height:160px}.n{left:98px;top:118px;width:29%;height:98px}.irr{right:45px;top:105px;width:28%;height:120px;border-color:rgba(111,78,246,.55);background:rgba(111,78,246,.04)}
+.legend{display:grid;gap:9px}.legend button{width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 12px}.legend button[data-active="true"]{border-color:#8da3ff;background:var(--soft)}
+.example-box{margin-top:10px;padding:12px;border:1px dashed #b7c0d0;border-radius:12px;background:#fbfcfe;min-height:50px}
+table{border-collapse:collapse;width:100%;font-size:.92rem}th,td{border-bottom:1px solid var(--line);padding:9px 8px;text-align:left;vertical-align:top}th{color:#445067;background:#fafbfc}.yes{color:var(--ok);font-weight:800}.no{color:var(--bad);font-weight:800}.cond{color:var(--warn);font-weight:800}
+.quiz{border:1px solid #dfe4ee;background:#fbfcff;border-radius:16px;padding:15px}.quiz h3{margin:0 0 4px}.quiz .qtext{font-weight:800;margin:8px 0}.choices{display:grid;gap:8px;margin-top:10px}.choice{border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:12px;text-align:left}.choice:hover{border-color:#aab7ff}.choice.correct{border-color:#73bd93;background:#effaf4}.choice.wrong{border-color:#e49a96;background:#fff1f0}.feedback{min-height:24px;margin-top:9px;font-weight:700}.feedback.ok{color:var(--ok)}.feedback.bad{color:var(--bad)}
+.inline-controls{display:flex;flex-wrap:wrap;gap:9px;align-items:end}.field{display:grid;gap:5px}.field label{font-size:.8rem;font-weight:800;color:#566174}.field input,.field select{min-width:110px;border:1px solid #cfd6e2;border-radius:10px;padding:9px 10px;background:#fff;color:var(--ink)}
+.primary,.secondary{border:0;border-radius:11px;padding:10px 13px;font-weight:800}.primary{background:var(--accent);color:#fff}.secondary{background:#edf0f6;color:#27324b}.primary:focus-visible,.secondary:focus-visible{outline:3px solid rgba(49,94,251,.2)}
+.result{margin-top:11px;padding:12px;border-radius:12px;background:#f6f8fc;border:1px solid var(--line);min-height:46px}
+.signs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.sign-card{border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}.sign-card .big{font-size:1.35rem;font-weight:900}.sign-card small{color:var(--muted)}
+.law-list{display:grid;gap:8px}.law{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px}.law b{font-family:Cambria,Georgia,serif;font-size:1.08rem}.law span{color:var(--muted);font-size:.88rem}
+.check-row{display:flex;gap:10px;align-items:flex-start;margin:8px 0}.check-row input{margin-top:4px}
+.diagnostic-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:center}.score{font-size:1.15rem;font-weight:900}.diag-list{display:grid;gap:12px;margin-top:13px}.diag-item{border:1px solid var(--line);border-radius:14px;padding:12px}.diag-item fieldset{border:0;padding:0;margin:8px 0 0}.diag-item legend{font-weight:800;padding:0;margin-bottom:8px}.diag-item label{display:block;margin:7px 0}.diag-feedback{font-size:.9rem;margin-top:8px}
+.footer{padding:22px 4px 36px;color:var(--muted);font-size:.9rem;text-align:center}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:800px){.hero-grid,.set-map,.grid-2,.grid-3{grid-template-columns:1fr}.goal{order:2}.signs{grid-template-columns:repeat(2,1fr)}.module{padding:17px}.module-head{display:grid}.venn{min-height:290px}}
+@media(max-width:430px){.shell{padding:10px}.hero{padding:18px}.signs{grid-template-columns:1fr}.q{width:61%}.z{width:47%}.n{width:32%;left:82px}.irr{right:28px;width:30%}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar{transition:none}}
+</style>
+</head>
+<body>
+<div class="shell" id="app">
+  <header class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="kicker">Puente de Aritmética → Álgebra · Matemática EPJA</div>
+        <h1>Lo que necesitas dominar antes de operar con letras</h1>
+        <p>Un repaso breve y activo de conjuntos numéricos, propiedades, signos, fracciones, potencias, raíces y jerarquía de operaciones. La meta no es memorizar reglas aisladas: es <strong>reconocer qué regla usar, por qué funciona y cuándo deja de ser válida</strong>.</p>
+        <div class="route" aria-label="Ruta de aprendizaje">
+          <span class="pill">1. Números</span><span class="pill">2. Operaciones</span><span class="pill">3. Signos</span><span class="pill">4. Fracciones</span><span class="pill">5. Potencias</span><span class="pill">6. Raíces</span><span class="pill">7. Prioridad</span><span class="pill">8. Autoevaluación</span>
+        </div>
+      </div>
+      <aside class="goal">
+        <strong>Al terminar deberías poder…</strong>
+        <small>clasificar números, anticipar el tipo de resultado, operar con signos y fracciones, aplicar propiedades y leyes de exponentes/raíces, y justificar cada paso antes de iniciar Álgebra.</small>
+      </aside>
+    </div>
+  </header>
+
+  <div class="toolbar" aria-label="Navegación del recurso">
+    <nav class="nav">
+      <button type="button" data-go="m1">Conjuntos</button>
+      <button type="button" data-go="m2">Propiedades</button>
+      <button type="button" data-go="m3">Signos</button>
+      <button type="button" data-go="m4">Fracciones</button>
+      <button type="button" data-go="m5">Potencias</button>
+      <button type="button" data-go="m6">Raíces</button>
+      <button type="button" data-go="m7">Jerarquía</button>
+      <button type="button" data-go="m8">Autoevaluación</button>
+    </nav>
+    <div class="progress-wrap"><div class="progress" aria-hidden="true"><div class="bar" id="bar"></div></div><div class="progress-text" id="progressText">0/8 prácticas completadas</div></div>
+  </div>
+
+  <main>
+    <section class="module" id="m1">
+      <div class="module-head"><div><h2>1. Conjuntos numéricos: ¿dónde vive cada número?</h2><p>Antes de operar, identifica el conjunto y anticipa si el resultado seguirá dentro de él.</p></div><span class="tag">Clasificar</span></div>
+      <div class="set-map">
+        <div class="venn" aria-label="Diagrama de inclusión de conjuntos numéricos">
+          <div class="oval r">ℝ Reales</div><div class="oval q">ℚ Racionales</div><div class="oval z">ℤ Enteros</div><div class="oval n">ℕ Naturales</div><div class="oval irr">I Irracionales</div>
+        </div>
+        <div class="legend">
+          <button type="button" data-set="N"><strong>ℕ Naturales</strong> — 0, 1, 2, 3…</button>
+          <button type="button" data-set="Z"><strong>ℤ Enteros</strong> — … −2, −1, 0, 1, 2…</button>
+          <button type="button" data-set="Q"><strong>ℚ Racionales</strong> — fracciones a/b con a,b enteros y b ≠ 0</button>
+          <button type="button" data-set="I"><strong>I Irracionales</strong> — decimales infinitos no periódicos como √2 o π</button>
+          <button type="button" data-set="R"><strong>ℝ Reales</strong> — racionales e irracionales</button>
+          <div class="example-box" id="setInfo" aria-live="polite">Pulsa un conjunto para ver ejemplos y relaciones.</div>
+        </div>
+      </div>
+      <div class="note" style="margin-top:14px"><strong>Convención usada aquí:</strong> ℕ incluye el 0. Recuerda la cadena <strong>ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ</strong>, mientras que los irracionales también están en ℝ pero no en ℚ.</div>
+      <div class="card" style="margin-top:14px;overflow:auto">
+        <h3>¿Las operaciones permanecen en el mismo conjunto?</h3>
+        <table>
+          <thead><tr><th>Conjunto</th><th>Suma</th><th>Resta</th><th>Multiplicación</th><th>División</th></tr></thead>
+          <tbody>
+            <tr><td>ℕ</td><td class="yes">Sí</td><td class="no">No siempre</td><td class="yes">Sí</td><td class="no">No siempre</td></tr>
+            <tr><td>ℤ</td><td class="yes">Sí</td><td class="yes">Sí</td><td class="yes">Sí</td><td class="no">No siempre</td></tr>
+            <tr><td>ℚ</td><td class="yes">Sí</td><td class="yes">Sí</td><td class="yes">Sí</td><td class="cond">Sí, si divisor ≠ 0</td></tr>
+            <tr><td>ℝ</td><td class="yes">Sí</td><td class="yes">Sí</td><td class="yes">Sí</td><td class="cond">Sí, si divisor ≠ 0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="quiz" data-practice="1" style="margin-top:14px">
+        <h3>Práctica rápida</h3><div class="qtext">¿Cuál es el conjunto más pequeño que contiene a −7?</div>
+        <div class="choices"><button class="choice" data-correct="false">ℕ</button><button class="choice" data-correct="true">ℤ</button><button class="choice" data-correct="false">ℚ</button><button class="choice" data-correct="false">ℝ</button></div>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="module" id="m2">
+      <div class="module-head"><div><h2>2. Propiedades: las reglas que luego usarás con letras</h2><p>Estas propiedades permiten reorganizar y transformar expresiones sin cambiar su valor.</p></div><span class="tag">Justificar</span></div>
+      <div class="grid-2">
+        <div class="card"><h3>Conmutativa</h3><div class="formula">a + b = b + a &nbsp;&nbsp; | &nbsp;&nbsp; a·b = b·a</div><p>No vale, en general, para resta ni división.</p></div>
+        <div class="card"><h3>Asociativa</h3><div class="formula">(a + b) + c = a + (b + c)<br>(a·b)·c = a·(b·c)</div><p>No vale, en general, para resta ni división.</p></div>
+        <div class="card"><h3>Elemento neutro</h3><div class="formula">a + 0 = a &nbsp;&nbsp; | &nbsp;&nbsp; a·1 = a</div><p>0 es neutro de la suma y 1 de la multiplicación.</p></div>
+        <div class="card"><h3>Distributiva</h3><div class="formula">a(b + c) = ab + ac</div><p>Es una de las puertas directas hacia el Álgebra.</p></div>
+      </div>
+      <div class="note warn" style="margin-top:14px"><strong>Atención:</strong> cambiar el orden o agrupar “porque sí” puede alterar el resultado. Por ejemplo, 12 − (7 − 2) ≠ (12 − 7) − 2.</div>
+      <div class="quiz" data-practice="2" style="margin-top:14px">
+        <h3>Práctica rápida</h3><div class="qtext">¿Qué propiedad explica 7(10 + 3) = 7·10 + 7·3?</div>
+        <div class="choices"><button class="choice" data-correct="false">Conmutativa</button><button class="choice" data-correct="false">Asociativa</button><button class="choice" data-correct="true">Distributiva</button><button class="choice" data-correct="false">Elemento neutro</button></div>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="module" id="m3">
+      <div class="module-head"><div><h2>3. Leyes de los signos: separar suma de producto</h2><p>La regla depende de la operación. No uses la tabla de signos de multiplicación para sumar.</p></div><span class="tag">Decidir signo</span></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Suma y resta de enteros</h3>
+          <p><strong>Mismo signo:</strong> suma los valores absolutos y conserva el signo.</p>
+          <div class="formula">−4 + (−6) = −10</div>
+          <p><strong>Signos distintos:</strong> resta los valores absolutos y conserva el signo del número con mayor valor absoluto.</p>
+          <div class="formula">−9 + 5 = −4</div>
+          <p><strong>Restar</strong> equivale a sumar el opuesto: a − b = a + (−b).</p>
+        </div>
+        <div class="card">
+          <h3>Multiplicación y división</h3>
+          <div class="signs"><div class="sign-card"><div class="big">+ × + = +</div><small>mismo signo</small></div><div class="sign-card"><div class="big">− × − = +</div><small>mismo signo</small></div><div class="sign-card"><div class="big">+ × − = −</div><small>distinto</small></div><div class="sign-card"><div class="big">− × + = −</div><small>distinto</small></div></div>
+          <p style="margin-top:10px">La misma regla de signos se aplica en la división.</p>
+        </div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h3>Mini laboratorio de signos</h3>
+        <div class="inline-controls">
+          <div class="field"><label for="sa">Número A</label><input id="sa" type="number" value="-8"></div>
+          <div class="field"><label for="sop">Operación</label><select id="sop"><option value="+">+</option><option value="-">−</option><option value="*">×</option><option value="/">÷</option></select></div>
+          <div class="field"><label for="sb">Número B</label><input id="sb" type="number" value="3"></div>
+          <button type="button" class="primary" id="signCalc">Calcular y explicar</button>
+        </div>
+        <div class="result" id="signResult" aria-live="polite">Prueba con números positivos y negativos.</div>
+      </div>
+      <div class="quiz" data-practice="3" style="margin-top:14px">
+        <h3>Práctica rápida</h3><div class="qtext">¿Cuál es el resultado de (−6)(−4)?</div>
+        <div class="choices"><button class="choice" data-correct="false">−24</button><button class="choice" data-correct="true">24</button><button class="choice" data-correct="false">−10</button><button class="choice" data-correct="false">10</button></div>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="module" id="m4">
+      <div class="module-head"><div><h2>4. Racionales y fracciones: operar sin perder el significado</h2><p>Una fracción representa un número. Para sumar necesitas expresar las partes con el mismo tamaño.</p></div><span class="tag">Equivalencia</span></div>
+      <div class="grid-2">
+        <div class="card"><h3>Suma y resta</h3><div class="formula">a/b + c/d = (ad + bc)/bd</div><p>Si los denominadores son iguales, solo se suman o restan numeradores.</p></div>
+        <div class="card"><h3>Producto y cociente</h3><div class="formula">a/b · c/d = ac/bd<br>a/b ÷ c/d = a/b · d/c</div><p>En una división, el segundo número no puede ser 0.</p></div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h3>Calculadora didáctica de fracciones</h3>
+        <div class="inline-controls">
+          <div class="field"><label for="n1">Numerador 1</label><input id="n1" type="number" value="2"></div>
+          <div class="field"><label for="d1">Denominador 1</label><input id="d1" type="number" value="3"></div>
+          <div class="field"><label for="fop">Operación</label><select id="fop"><option value="+">+</option><option value="-">−</option><option value="*">×</option><option value="/">÷</option></select></div>
+          <div class="field"><label for="n2">Numerador 2</label><input id="n2" type="number" value="1"></div>
+          <div class="field"><label for="d2">Denominador 2</label><input id="d2" type="number" value="4"></div>
+          <button type="button" class="primary" id="fracCalc">Resolver</button>
+        </div>
+        <div class="result" id="fracResult" aria-live="polite">Se mostrará el procedimiento y la fracción simplificada.</div>
+      </div>
+      <div class="quiz" data-practice="4" style="margin-top:14px">
+        <h3>Práctica rápida</h3><div class="qtext">¿Cuál es 2/3 + 1/6?</div>
+        <div class="choices"><button class="choice" data-correct="false">3/9</button><button class="choice" data-correct="true">5/6</button><button class="choice" data-correct="false">3/6</button><button class="choice" data-correct="false">2/18</button></div>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="module" id="m5">
+      <div class="module-head"><div><h2>5. Potencias: comprimir multiplicaciones repetidas</h2><p>Las leyes dependen de tener la misma base o el mismo exponente; identifica la estructura antes de aplicar una regla.</p></div><span class="tag">Estructura</span></div>
+      <div class="law-list">
+        <div class="law"><div><b>a<sup>m</sup> · a<sup>n</sup> = a<sup>m+n</sup></b><br><span>Producto de potencias de igual base</span></div><span>2³·2⁴ = 2⁷</span></div>
+        <div class="law"><div><b>a<sup>m</sup> / a<sup>n</sup> = a<sup>m−n</sup></b><br><span>Cociente, con a ≠ 0</span></div><span>5⁶/5² = 5⁴</span></div>
+        <div class="law"><div><b>(a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup></b><br><span>Potencia de una potencia</span></div><span>(3²)⁴ = 3⁸</span></div>
+        <div class="law"><div><b>(ab)<sup>n</sup> = a<sup>n</sup>b<sup>n</sup></b><br><span>Potencia de un producto</span></div><span>(2·5)³ = 2³·5³</span></div>
+        <div class="law"><div><b>a⁰ = 1</b> y <b>a<sup>−n</sup> = 1/a<sup>n</sup></b><br><span>Siempre que a ≠ 0</span></div><span>2⁻³ = 1/8</span></div>
+      </div>
+      <div class="note warn" style="margin-top:14px"><strong>No existe una ley que diga</strong> a<sup>m</sup> + a<sup>n</sup> = a<sup>m+n</sup>. La suma no se transforma así.</div>
+      <div class="quiz" data-practice="5" style="margin-top:14px">
+        <h3>Práctica rápida</h3><div class="qtext">Simplifica x⁴ · x³.</div>
+        <div class="choices"><button class="choice" data-correct="false">x¹²</button><button class="choice" data-correct="true">x⁷</button><button class="choice" data-correct="false">2x⁷</button><button class="choice" data-correct="false">x</button></div>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="module" id="m6">
+      <div class="module-head"><div><h2>6. Raíces: la operación inversa de elevar</h2><p>√a representa la raíz cuadrada principal: el número no negativo cuyo cuadrado es a.</p></div><span class="tag">Invertir potencia</span></div>
+      <div class="grid-2">
+        <div class="card"><h3>Idea fundamental</h3><div class="formula">√49 = 7 porque 7² = 49</div><p>En los números reales, √a exige a ≥ 0.</p></div>
+        <div class="card"><h3>Propiedades útiles</h3><div class="formula">√(ab) = √a·√b<br>√(a/b) = √a/√b</div><p>Para raíces cuadradas reales, se usan con radicandos adecuados y denominador distinto de 0.</p></div>
+      </div>
+      <div class="note warn" style="margin-top:14px"><strong>Error frecuente:</strong> √(a + b) no es, en general, √a + √b. Ejemplo: √(9+16)=5, pero √9+√16=7.</div>
+      <div class="card" style="margin-top:14px">
+        <h3>Explorador de raíces cuadradas</h3>
+        <div class="inline-controls"><div class="field"><label for="rad">Radicando</label><input id="rad" type="number" min="0" step="1" value="72"></div><button type="button" class="primary" id="rootCalc">Analizar √n</button></div>
+        <div class="result" id="rootResult" aria-live="polite">Busca si contiene un cuadrado perfecto y simplifica cuando sea posible.</div>
+      </div>
+      <div class="quiz" data-practice="6" style="margin-top:14px">
+        <h3>Práctica rápida</h3><div class="qtext">¿Cuál es la forma simplificada de √72?</div>
+        <div class="choices"><button class="choice" data-correct="true">6√2</button><button class="choice" data-correct="false">8√1</button><button class="choice" data-correct="false">36√2</button><button class="choice" data-correct="false">√36 + √2</button></div>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="module" id="m7">
+      <div class="module-head"><div><h2>7. Jerarquía de operaciones: el orden también es una regla</h2><p>En expresiones más largas, el orden evita resultados ambiguos.</p></div><span class="tag">Secuenciar</span></div>
+      <div class="grid-3">
+        <div class="card"><h3>1. Agrupación</h3><p>Paréntesis, corchetes y otros signos de agrupación, de adentro hacia afuera.</p></div>
+        <div class="card"><h3>2. Potencias y raíces</h3><p>Resuélvelas antes de multiplicar, dividir, sumar o restar.</p></div>
+        <div class="card"><h3>3. × y ÷; luego + y −</h3><p>Dentro del mismo nivel, trabaja de izquierda a derecha.</p></div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h3>Constructor de pasos</h3>
+        <div class="formula">18 − 2(3² − 5) ÷ 4</div>
+        <div class="choices" id="orderChoices">
+          <button type="button" class="choice" data-step="pow">Primero calcular 3²</button>
+          <button type="button" class="choice" data-step="mul">Primero calcular 2·3²</button>
+          <button type="button" class="choice" data-step="sub">Primero calcular 18−2</button>
+        </div>
+        <div class="feedback" id="orderFeedback" aria-live="polite"></div>
+      </div>
+      <div class="quiz" data-practice="7" style="margin-top:14px">
+        <h3>Práctica rápida</h3><div class="qtext">Calcula 6 + 2·5.</div>
+        <div class="choices"><button class="choice" data-correct="false">40</button><button class="choice" data-correct="true">16</button><button class="choice" data-correct="false">30</button><button class="choice" data-correct="false">13</button></div>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="module" id="m8">
+      <div class="module-head"><div><h2>8. Autoevaluación breve del repaso</h2><p>Responde sin calculadora si puedes. La retroalimentación señala qué conviene repasar. Esta autoevaluación no sustituye la prueba diagnóstica del grado que se realiza en el Aula Virtual.</p></div><span class="tag">Evidencia</span></div>
+      <div class="diagnostic-head"><div><strong>6 preguntas integradoras</strong><div style="color:var(--muted);font-size:.9rem">No se penaliza intentar. Corrige y vuelve a probar; esta práctica es complementaria.</div></div><div class="score" id="score">Sin corregir</div></div>
+      <form id="diagForm" class="diag-list">
+        <div class="diag-item"><fieldset><legend>1) El conjunto más pequeño que contiene 3/5 es…</legend><label><input type="radio" name="q1" value="N"> ℕ</label><label><input type="radio" name="q1" value="Z"> ℤ</label><label><input type="radio" name="q1" value="Q"> ℚ</label><label><input type="radio" name="q1" value="I"> I</label></fieldset><div class="diag-feedback" data-fb="q1"></div></div>
+        <div class="diag-item"><fieldset><legend>2) (−3)(+8) =</legend><label><input type="radio" name="q2" value="24"> 24</label><label><input type="radio" name="q2" value="-24"> −24</label><label><input type="radio" name="q2" value="-11"> −11</label></fieldset><div class="diag-feedback" data-fb="q2"></div></div>
+        <div class="diag-item"><fieldset><legend>3) 1/2 + 1/3 =</legend><label><input type="radio" name="q3" value="2/5"> 2/5</label><label><input type="radio" name="q3" value="5/6"> 5/6</label><label><input type="radio" name="q3" value="1/5"> 1/5</label></fieldset><div class="diag-feedback" data-fb="q3"></div></div>
+        <div class="diag-item"><fieldset><legend>4) a⁵ / a², con a ≠ 0, se simplifica como…</legend><label><input type="radio" name="q4" value="a7"> a⁷</label><label><input type="radio" name="q4" value="a3"> a³</label><label><input type="radio" name="q4" value="a10"> a¹⁰</label></fieldset><div class="diag-feedback" data-fb="q4"></div></div>
+        <div class="diag-item"><fieldset><legend>5) ¿Qué afirmación es correcta?</legend><label><input type="radio" name="q5" value="bad"> √(a+b)=√a+√b siempre</label><label><input type="radio" name="q5" value="good"> √49=7 porque 7²=49</label><label><input type="radio" name="q5" value="neg"> √9=±3 como valor de la raíz principal</label></fieldset><div class="diag-feedback" data-fb="q5"></div></div>
+        <div class="diag-item"><fieldset><legend>6) 20 − 2·3² =</legend><label><input type="radio" name="q6" value="162"> 162</label><label><input type="radio" name="q6" value="14"> 14</label><label><input type="radio" name="q6" value="2"> 2</label></fieldset><div class="diag-feedback" data-fb="q6"></div></div>
+        <div class="inline-controls"><button type="submit" class="primary">Corregir autoevaluación</button><button type="button" class="secondary" id="resetAll">Reiniciar recurso</button></div>
+      </form>
+      <div class="result" id="diagAdvice" aria-live="polite">Tu resultado orientativo del repaso aparecerá aquí con una recomendación.</div>
+      <div class="note ok" style="margin-top:14px"><strong>Puente al Álgebra:</strong> cuando aparezca una letra, estas reglas no desaparecen. La letra representa un número; por eso clasificar, operar, distribuir, simplificar potencias y respetar la jerarquía seguirá siendo esencial.</div>
+      <div class="quiz" data-practice="8" hidden><div class="feedback"></div></div>
+    </section>
+  </main>
+  <footer class="footer">Recurso autónomo · Aritmética esencial para iniciar Álgebra · EPJA</footer>
+</div>
+<script>
+(() => {
+  const root = document.getElementById('app');
+  if (!root || root.dataset.ready === '1') return;
+  root.dataset.ready = '1';
+
+  const completed = new Set();
+  const bar = document.getElementById('bar');
+  const progressText = document.getElementById('progressText');
+  function updateProgress(){
+    const n = completed.size;
+    bar.style.width = `${(n/8)*100}%`;
+    progressText.textContent = `${n}/8 prácticas completadas`;
+  }
+  function markPractice(n){ completed.add(String(n)); updateProgress(); }
+
+  document.querySelectorAll('[data-go]').forEach(btn => btn.addEventListener('click', () => {
+    document.getElementById(btn.dataset.go)?.scrollIntoView({behavior:'smooth', block:'start'});
+  }));
+
+  const setData = {
+    N:'Ejemplos: 0, 4, 25. Sirven para contar y expresar cantidades enteras no negativas. ℕ está contenido en ℤ.',
+    Z:'Ejemplos: −7, 0, 12. Incluye naturales, sus opuestos y 0. ℤ está contenido en ℚ.',
+    Q:'Ejemplos: 3/5, −2, 0.75, 0.333… Todo racional puede escribirse como a/b con b ≠ 0.',
+    I:'Ejemplos: √2, π, √5. Sus decimales son infinitos no periódicos. No pertenecen a ℚ.',
+    R:'Incluye todos los racionales e irracionales que se representan en la recta numérica.'
+  };
+  document.querySelectorAll('[data-set]').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-set]').forEach(b => b.dataset.active = 'false');
+    btn.dataset.active = 'true';
+    document.getElementById('setInfo').textContent = setData[btn.dataset.set];
+  }));
+
+  document.querySelectorAll('.quiz:not([hidden])').forEach(quiz => {
+    quiz.querySelectorAll('.choice[data-correct]').forEach(btn => btn.addEventListener('click', () => {
+      if (quiz.dataset.done === '1') return;
+      quiz.querySelectorAll('.choice[data-correct]').forEach(b => b.disabled = true);
+      const fb = quiz.querySelector('.feedback');
+      if (btn.dataset.correct === 'true') {
+        btn.classList.add('correct'); fb.className='feedback ok'; fb.textContent='Correcto. La regla está bien identificada.';
+        markPractice(quiz.dataset.practice);
+      } else {
+        btn.classList.add('wrong'); const right=quiz.querySelector('.choice[data-correct="true"]'); right.classList.add('correct');
+        fb.className='feedback bad'; fb.textContent='Revisa la idea clave mostrada arriba y compara con la opción correcta.';
+      }
+      quiz.dataset.done='1';
+    }));
+  });
+
+  document.getElementById('signCalc').addEventListener('click', () => {
+    const a = Number(document.getElementById('sa').value), b = Number(document.getElementById('sb').value), op = document.getElementById('sop').value;
+    const out = document.getElementById('signResult');
+    if (!Number.isFinite(a) || !Number.isFinite(b)) { out.textContent='Introduce dos números válidos.'; return; }
+    if (op==='/' && b===0) { out.textContent='No se puede dividir entre 0.'; return; }
+    let val, expl;
+    if(op==='+'){val=a+b; expl=(Math.sign(a)===Math.sign(b) && a!==0 && b!==0)?'Mismo signo: suma valores absolutos y conserva el signo.':'Signos distintos o cero: compara valores absolutos y determina el signo del de mayor valor absoluto.';}
+    if(op==='-'){val=a-b; expl=`Restar ${b} equivale a sumar su opuesto (${(-b)}).`;}
+    if(op==='*'){val=a*b; expl=(a===0||b===0)?'Todo número multiplicado por 0 da 0.':((Math.sign(a)===Math.sign(b))?'Mismos signos: resultado positivo.':'Signos distintos: resultado negativo.');}
+    if(op==='/'){val=a/b; expl=(a===0)?'0 dividido entre un número no nulo da 0.':((Math.sign(a)===Math.sign(b))?'Mismos signos: cociente positivo.':'Signos distintos: cociente negativo.');}
+    out.innerHTML=`<strong>${a} ${op==='*'?'×':op==='/'?'÷':op} ${b} = ${Number.isInteger(val)?val:Number(val.toFixed(6))}</strong><br><span>${expl}</span>`;
+  });
+
+  function gcd(a,b){ a=Math.abs(Math.trunc(a)); b=Math.abs(Math.trunc(b)); while(b){[a,b]=[b,a%b]} return a||1; }
+  document.getElementById('fracCalc').addEventListener('click', () => {
+    let a=Number(document.getElementById('n1').value), b=Number(document.getElementById('d1').value), c=Number(document.getElementById('n2').value), d=Number(document.getElementById('d2').value), op=document.getElementById('fop').value;
+    const out=document.getElementById('fracResult');
+    if (![a,b,c,d].every(Number.isFinite) || ![a,b,c,d].every(Number.isInteger)){out.textContent='Usa numeradores y denominadores enteros.';return;}
+    if(b===0||d===0){out.textContent='Un denominador no puede ser 0.';return;}
+    let n,den,step;
+    if(op==='+'){n=a*d+c*b;den=b*d;step=`Denominador común ${b}·${d}=${den}; numerador ${a}·${d}+${c}·${b}=${n}.`;}
+    if(op==='-'){n=a*d-c*b;den=b*d;step=`Denominador común ${den}; numerador ${a}·${d}−${c}·${b}=${n}.`;}
+    if(op==='*'){n=a*c;den=b*d;step=`Multiplica numeradores (${a}·${c}) y denominadores (${b}·${d}).`;}
+    if(op==='/'){if(c===0){out.textContent='No se puede dividir por una fracción cuyo valor es 0.';return;} n=a*d;den=b*c;step=`Multiplica por el recíproco: ${a}/${b} · ${d}/${c}.`;}
+    if(den<0){n=-n;den=-den;} const g=gcd(n,den); const sn=n/g, sd=den/g;
+    out.innerHTML=`${step}<br><strong>Resultado: ${sn}/${sd}</strong>${g>1?` &nbsp; (se simplificó dividiendo entre ${g})`:''}`;
+  });
+
+  document.getElementById('rootCalc').addEventListener('click', () => {
+    const n=Number(document.getElementById('rad').value), out=document.getElementById('rootResult');
+    if(!Number.isInteger(n) || n<0){out.textContent='Introduce un entero no negativo para trabajar en ℝ.';return;}
+    if(n===0){out.innerHTML='<strong>√0 = 0</strong> porque 0² = 0.';return;}
+    const r=Math.sqrt(n);
+    if(Number.isInteger(r)){out.innerHTML=`<strong>√${n} = ${r}</strong> porque ${r}² = ${n}.`;return;}
+    let factor=1;
+    for(let k=Math.floor(Math.sqrt(n));k>=2;k--){if(n%(k*k)===0){factor=k;break;}}
+    if(factor>1){const rem=n/(factor*factor);out.innerHTML=`${n} = ${factor*factor}·${rem}. Entonces <strong>√${n} = ${factor}√${rem}</strong>.`;}
+    else{out.innerHTML=`${n} no contiene un factor cuadrado perfecto mayor que 1. <strong>√${n}</strong> ya está simplificada (≈ ${r.toFixed(4)}).`;}
+  });
+
+  document.querySelectorAll('#orderChoices .choice').forEach(btn => btn.addEventListener('click', () => {
+    const fb=document.getElementById('orderFeedback');
+    document.querySelectorAll('#orderChoices .choice').forEach(b=>{b.classList.remove('correct','wrong')});
+    if(btn.dataset.step==='pow'){
+      btn.classList.add('correct'); fb.className='feedback ok'; fb.innerHTML='Correcto. Dentro del paréntesis primero 3²=9; luego 9−5=4; después 2·4÷4=2; finalmente 18−2=16.';
+    } else {btn.classList.add('wrong'); fb.className='feedback bad'; fb.textContent='Todavía no: primero resuelve la potencia que está dentro del paréntesis.';}
+  }));
+
+  const answers={q1:'Q',q2:'-24',q3:'5/6',q4:'a3',q5:'good',q6:'2'};
+  const tips={q1:'3/5 es racional: puede escribirse como cociente de enteros.',q2:'Signos distintos en un producto → resultado negativo.',q3:'Usa denominador común 6: 3/6 + 2/6 = 5/6.',q4:'Al dividir potencias de igual base, resta exponentes: 5−2=3.',q5:'La raíz cuadrada principal de 49 es 7.',q6:'Primero 3²=9; luego 2·9=18; finalmente 20−18=2.'};
+  document.getElementById('diagForm').addEventListener('submit', e => {
+    e.preventDefault(); let score=0, answered=0;
+    Object.keys(answers).forEach(q=>{
+      const sel=document.querySelector(`input[name="${q}"]:checked`), fb=document.querySelector(`[data-fb="${q}"]`);
+      if(sel){answered++; if(sel.value===answers[q]){score++;fb.style.color='var(--ok)';fb.textContent='✓ Correcto.';}else{fb.style.color='var(--bad)';fb.textContent='✗ '+tips[q];}}
+      else{fb.style.color='var(--warn)';fb.textContent='Sin responder.';}
+    });
+    document.getElementById('score').textContent=`${score}/6 correctas`;
+    const advice=document.getElementById('diagAdvice');
+    if(answered<6) advice.textContent=`Respondida(s): ${answered}/6. Completa las preguntas restantes para obtener un diagnóstico más útil.`;
+    else if(score>=5) advice.innerHTML='<strong>Base sólida.</strong> Puedes iniciar Álgebra y usar este recurso como consulta cuando aparezcan signos, fracciones, potencias o raíces.';
+    else if(score>=3) advice.innerHTML='<strong>Base en desarrollo.</strong> Repasa las preguntas falladas y vuelve a resolver las prácticas de esos módulos.';
+    else advice.innerHTML='<strong>Conviene reforzar primero.</strong> Recorre de nuevo conjuntos, signos, fracciones y jerarquía; son los prerrequisitos que más afectan el inicio de Álgebra.';
+    markPractice(8);
+  });
+
+  document.getElementById('resetAll').addEventListener('click', () => {
+    completed.clear(); updateProgress(); document.getElementById('diagForm').reset(); document.getElementById('score').textContent='Sin corregir'; document.getElementById('diagAdvice').textContent='Tu resultado orientativo del repaso aparecerá aquí con una recomendación.';
+    document.querySelectorAll('.diag-feedback').forEach(x=>x.textContent='');
+    document.querySelectorAll('.quiz').forEach(q=>{q.dataset.done='0';q.querySelectorAll('.choice').forEach(b=>{b.disabled=false;b.classList.remove('correct','wrong')});const f=q.querySelector('.feedback');if(f){f.textContent='';f.className='feedback';}});
+    document.querySelectorAll('#orderChoices .choice').forEach(b=>b.classList.remove('correct','wrong')); document.getElementById('orderFeedback').textContent='';
+    document.getElementById('m1').scrollIntoView({behavior:'smooth'});
+  });
+  updateProgress();
+})();
+</script>
+</body>
+</html>
