@@ -11,6 +11,17 @@ La planificación aprobada ya es una fuente de datos que lee la interfaz sin nec
 - La factorización M1.A01 es una ampliación sujeta a validación; los vínculos CE–IL son propuestas didácticas. La matriz aprobada de 37 encuentros sigue siendo la fuente que debe actualizarse antes de regenerar este archivo.
 - La simulación P1 de 40 preguntas sigue operativa pero exige una auditoría de cobertura curricular con el nuevo orden de contenidos antes de una adopción oficial.
 
+## Desarrollo interactivo de M1.01: práctica por destrezas y evaluación formativa
+
+- **Fuente:** matriz didáctica aprobada (Encuentro 1, código M1.01; CE-MAT1 e IL-1 principal, IL-12 complementario e IL-16 condicional) y actividades del libro oficial del Módulo I, páginas impresas **38–39**.
+- **`actividades-e1.js`**: doce actividades de práctica interactivas, con niveles progresivos de dificultad, pistas, explicaciones después del acierto, nuevos intentos y registro local por destreza. Las cuatro familias de trabajo son: constantes y variables (p. 38), traducción de expresiones (p. 39), relación de edades (p. 38) y perímetro de un solar (p. 39). Las tareas son adaptaciones didácticas, no reproducciones literales de las tablas y figuras del libro.
+- **Autoestudio:** se preservan los tres campos abiertos y la orientación **30 + 50 + 40 = 120 minutos** con evidencias de justificación, además de los ejercicios interactivos.
+- **Evaluación:** 16 situaciones nuevas, una por cada combinación de cuatro **bloques de competencia** y cuatro niveles de dificultad (**Reconoce, Aplica, Analiza, Transfiere**). Las agrupaciones se basan en el esquema de cuatro grupos del registro oficial, pero no asignan calificación oficial ni acreditan el dominio integral a partir de cuatro preguntas por bloque. El informe ofrece categorías **orientativas** y explicaciones por respuesta.
+- **Evidencias cualitativas:** justificación de una expresión y comparación de estrategias, reservadas para autoevaluación, coevaluación y heteroevaluación con criterio del facilitador; no se puntúan automáticamente.
+- **Persistencia:** el almacenamiento existente `epja_p1_e1_v1` conserva campos anteriores y añade `practiceE1` y `evalE1`, con historial de intentos de evaluación. «Mis registros» presenta el resumen de ejercicios completados y último intento.
+- **Verificación:** sintaxis de los archivos en GitHub, 12 actividades de práctica, 16 ítems evaluativos, cuatro bloques y niveles, correcta carga de scripts; prueba de componentes en Chromium con script inyectado y página de ensayo (pista, reintento, expresión escrita, captura y reinicio de evaluación, conservación del historial, sin errores JavaScript). Queda pendiente la prueba integral desde la URL pública con teléfonos y datos reales.
+- **Limitación deliberada:** no se activó la recomendación automática entre diagnóstico inicial y módulos; sigue reservada para una decisión posterior.
+
 ## Revalidación documental de Módulo I · Encuentro piloto
 
 - `modulo1-matematica.pdf`: edición web ligera del PDF aportado por el docente; conserva las 24 páginas del módulo y la numeración impresa 36–59. Se ofrece en **Mi ruta**, en la lista del período P1 y mediante enlaces a las páginas pertinentes de cada encuentro.
