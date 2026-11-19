@@ -232,7 +232,10 @@ function openEncounter(i,navigate=true,n=null){
  addInfo("Contenidos",r.contenidos);addInfo("Conceptos asociados",r.conceptos);addInfo("Procedimientos asociados",r.procedimientos);addInfo("Recursos",r.recursos);
  if(i===0){
   const book=window.EPJA_MODULO1?.[number-1];
-  if(book){const p=document.createElement("p"),bold=document.createElement("b"),anchor=document.createElement("a");bold.textContent="Libro de Matemática · Módulo I: ";anchor.textContent="Consultar páginas "+book.paginas+" ↗";anchor.href="modulo1-matematica.pdf#page="+(book.desde-35);anchor.target="_blank";anchor.rel="noopener";p.append(bold,anchor);resource.prepend(p);
+  if(book){const p=document.createElement("p"),bold=document.createElement("b");bold.textContent="Libro de Matemática · Módulo I: ";p.appendChild(bold);
+   if(book.lecturas?.length){book.lecturas.forEach(([start,end],index)=>{const a=document.createElement("a");a.textContent="Páginas "+start+"–"+end+" ↗";a.href="modulo1-matematica.pdf#page="+(start-35);a.target="_blank";a.rel="noopener";if(index)p.appendChild(document.createTextNode(" · "));p.appendChild(a)})}
+   else p.appendChild(document.createTextNode("No existe un capítulo específico sobre factorización en este libro."));
+   resource.prepend(p);
    if(book.observacion){const note=document.createElement("p");note.className="small muted";note.textContent=book.observacion;resource.appendChild(note)}
    const more=document.createElement("p"),a=document.createElement("a");a.href="transicion-aritmetica-algebra.html";a.target="_blank";a.rel="noopener";a.textContent="Laboratorio complementario: transición de Aritmética al Álgebra ↗";more.append(a);resource.appendChild(more)
   }
