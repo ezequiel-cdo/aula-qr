@@ -54,6 +54,12 @@
       const key='e1:'+num;
       const labels=num==='4'?['Constantes y variables','Interpretar expresiones','Edades y relaciones','Perímetros y modelos','Autoestudio · 120 min']:['B1 · Comunicación','B2 · Razonamiento','B3 · Aplicación','B4 · Contexto','Evidencias y entrega'];
       const groups=units.map((unit,i)=>({name:labels[i]||('Sección '+(i+1)),elements:[unit]}));
+      if(num==='5'){
+        // Mostrar el envío único y el informe final junto con las evidencias.
+        const finalUnit=units[units.length-1];
+        let next=finalUnit.nextElementSibling;
+        while(next){const sibling=next.nextElementSibling;groups[4].elements.push(next);next=sibling}
+      }
       const countPractice=gr=>gr.map(g=>{const tasks=g.elements[0].querySelectorAll('[data-practice]');if(!tasks.length)return 'Producción escrita';const ok=[...tasks].filter(t=>t.querySelector('.learning-feedback.good')).length;return ok+'/'+tasks.length+' logradas'});
       createTabs(root,units[0],groups,key,num==='4'?'Practica una destreza a la vez. Puedes pedir pistas y corregir tus respuestas.':'Responde por bloques de competencias. Se conserva un solo intento formativo para todo el encuentro.',num==='4'?countPractice:groupAnswerCount);
     }
