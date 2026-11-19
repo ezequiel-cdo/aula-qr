@@ -1,5 +1,15 @@
 # Aula virtual de Matemática EPJA · Tercer Año
 
+## Subnavegación pedagógica por subtemas y competencias · Módulo I
+
+- `subnavegacion-m1.js` añade un segundo nivel de navegación en **Contenidos** (subtemas), **Práctica** (destrezas) y **Evaluación** (B1-B4 y evidencias/entrega) para los diez encuentros de P1.
+- **Encuentro 1:** 5 subtemas; 4 destrezas con 12 ejercicios y autoestudio; 4 bloques de evaluación con 16 reactivos, seguidos de evidencias, entrega única e informe.
+- **Encuentros 2–10:** conceptos definidos en sus lecciones y una sección de exploración/referencias; 12 prácticas organizadas en 4 grupos de 3, más autoestudio; 16 reactivos organizados en 4 bloques más evidencias/entrega.
+- La navegación es exclusivamente de **presentación** y no cambia el banco de reactivos, las claves de almacenamiento, el motor de corrección ni los resultados. La elección de mini sección se conserva mientras esté abierta la página, sin pretender medir dominio solo por visitarla.
+- Los bloques B1–B4 son agrupaciones didácticas provisionales para orientación y seguimiento, no equivalencias verificadas del cálculo oficial C1–C4; los promedios oficiales de los cuatro períodos **siguen sin automatizarse**.
+- Validación realizada en Chromium mediante página de ensayo (HTML inyectado): mini secciones de contenidos/práctica/evaluación para E1 y E2–E10, acceso a evaluaciones y campos de autoestudio, vista de 375 px y sin errores JavaScript. La última corrección de agrupación de la entrega E1 se verificó sintácticamente; queda pendiente la prueba completa desde la URL pública en un dispositivo del grupo.
+- P2–P4 no se han convertido todavía a este formato, ya que continúan en alineación documental; primero corresponde validar el modelo actualizado en P1.
+
 ## Alineación curricular y documental de los cuatro módulos · noviembre de 2026
 
 - **Archivo de referencia:** `alineacion-37.js` incorpora 37 jornadas (P1:10, P2:10, P3:7, P4:10), los propósitos didácticos redactados para los cuatro módulos, las 7 competencias específicas y los 21 indicadores de logro del Registro de Evaluación, con vínculos principales, complementarios y condicionales conforme a la matriz aprobada.
