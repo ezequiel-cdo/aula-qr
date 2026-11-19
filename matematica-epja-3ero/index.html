@@ -58,6 +58,7 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
 </section>
 <section id="inicio" hidden>
  <p class="eyebrow">Mi aula · Aprende a tu ritmo</p><h1>Aprende a tu ritmo. Continúa desde aquí.</h1>
+ <div class="card" style="border-left:5px solid #d30078"><p class="eyebrow">Antes del Módulo I · Diagnóstico del grado</p><h3>Descubre lo que ya sabes</h3><p>Repasa números, operaciones, signos, fracciones, potencias, raíces y jerarquía. Realiza una prueba inicial y descubre qué contenidos te conviene reforzar.</p><button type="button" class="block" data-go="diagnostico">Comenzar diagnóstico del grado →</button></div>
  <div class="card hero"><div class="row"><div><small>PERÍODO SEGÚN CALENDARIO</small><h2 id="currentPeriod">Cargando…</h2><p class="muted" id="periodDates"></p></div><span class="pill" id="currentStatus">—</span></div>
  <button type="button" id="continue">Continuar mi aprendizaje →</button></div>
  <div class="card" style="border-left:5px solid #2b8976"><p class="eyebrow">Lección interactiva · Módulo I</p><h3>Aprende a utilizar letras y números en situaciones reales</h3><p>Comienza con un ejemplo de reparaciones, aprende a construir expresiones algebraicas, resuelve un problema y comprueba tus respuestas.</p><button type="button" id="startLessonPilot" class="block">Comenzar a aprender →</button></div>
@@ -68,7 +69,7 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
 <section id="ruta" hidden>
  <p class="eyebrow">Mi recorrido anual</p><h1>Cuatro períodos, una sola ruta</h1>
  <div class="card testdate"><label for="dateTest">Probar navegación con otra fecha (solo demostración)</label><input id="dateTest" type="date" min="2026-08-29" max="2027-06-30"><button id="resetDate" class="secondary">Usar fecha de hoy</button><p class="muted small">Este control solo cambia la vista del calendario; no altera marcas horarias ni resultados guardados.</p></div>
- <div id="periodCards" class="route"></div>
+ <div class="card" style="border-left:5px solid #d30078"><h3>Antes de iniciar el primer módulo</h3><p>Explora tus conocimientos previos de Matemática, realiza el diagnóstico inicial y practica los temas que necesites fortalecer.</p><button class="secondary" data-go="diagnostico">Ir al diagnóstico del grado →</button></div><div id="periodCards" class="route"></div>
  <div class="card"><h3>Catálogo de contenidos del año</h3><p class="muted small">Consulta los temas programados de los cuatro módulos, sus conceptos y procedimientos asociados.</p>
  <button class="secondary" type="button" data-go="catalogo">Ver los 29 contenidos →</button></div>
  <div class="card" style="margin-top:17px"><h3>Cierre anual · Después del cuarto módulo</h3><p>Al finalizar P4 podrás consultar aquí tu balance de simulaciones y los contenidos que necesitas reforzar.</p><button class="secondary" data-go="cierre">Consultar el cierre anual →</button></div>
@@ -246,7 +247,7 @@ function drawAdvances(){$("attemptCount").textContent=state.attempts.length;cons
  $("history").innerHTML=state.attempts.length?'<table><thead><tr><th>Intento</th><th>Hora local</th><th class="num">Resultado</th></tr></thead><tbody>'+state.attempts.slice().reverse().map((a,i)=>'<tr><td>'+(state.attempts.length-i)+'</td><td>'+new Date(a.localTime).toLocaleString("es-DO")+'</td><td class="num">'+(a.correct?"100":"0")+'</td></tr>').join("")+'</tbody></table>':"<p>Aún no has realizado intentos.</p>"}
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
 $("coverStart").onclick=()=>go(readIntro()?"inicio":"encuadre");
-$("finishIntro").onclick=()=>{if($("understood").checked)saveIntro();go("inicio")};
+$("finishIntro").onclick=()=>{if($("understood").checked)saveIntro();go("diagnostico")};
 $("exportRecords").onclick=()=>$("export").click();
 
 $("recPeriod").addEventListener("change",drawRecovery);
@@ -258,4 +259,4 @@ $("demoForm").onsubmit=e=>{e.preventDefault();const checked=document.querySelect
  $("feedback").hidden=false;$("feedback").innerHTML='<div class="notice"><p><strong>'+(correct?'Respuesta correcta.':'Respuesta para revisar.')+'</strong> La expresión es <strong>180s</strong>, porque el pago por servicio se multiplica por la cantidad de servicios.</p><p>Resultado de esta única pregunta: <b>'+(correct?'100':'0')+'/100</b>. Es un ejercicio demostrativo, no una calificación de competencia.</p><button type="button" id="seeAdvances" class="secondary">Ver intento registrado</button></div>';$("seeAdvances").onclick=()=>go("avances")};
 $("export").onclick=()=>{const blob=new Blob([JSON.stringify({exportedLocalAt:new Date().toISOString(),records:state.attempts,notice:"Registro local sin verificación de servidor"},null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="epja-registro-local.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
 render();go(readIntro()?"inicio":"portada");
-</script><script src="evaluacion-p1.js"></script><script src="motor-p1.js"></script><script src="encuentro1.js"></script></body></html>
+</script><script src="diagnostico-grado.js"></script><script src="evaluacion-p1.js"></script><script src="motor-p1.js"></script><script src="encuentro1.js"></script></body></html>
