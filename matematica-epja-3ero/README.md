@@ -11,6 +11,18 @@ La planificación aprobada ya es una fuente de datos que lee la interfaz sin nec
 - La factorización M1.A01 es una ampliación sujeta a validación; los vínculos CE–IL son propuestas didácticas. La matriz aprobada de 37 encuentros sigue siendo la fuente que debe actualizarse antes de regenerar este archivo.
 - La simulación P1 de 40 preguntas sigue operativa pero exige una auditoría de cobertura curricular con el nuevo orden de contenidos antes de una adopción oficial.
 
+## Módulo I completo: encuentros 1 a 10 desarrollados
+
+- **Encuentro 1, M1.01:** conserva la lección y los instrumentos previamente aprobados en `encuentro1.js` y `actividades-e1.js`; clave de almacenamiento `epja_p1_e1_v1` inalterada.
+- **Encuentros 2–10:** `modulo1-lecciones.js` contiene una lección con cinco pestañas por encuentro: **¿Qué sabemos?** (recuperación del anterior), **Contenidos** (cuatro explicaciones documentadas), **Ejemplos** (dos aplicaciones resueltas), **Práctica** (12 actividades interactivas, pistas, correcciones y tres evidencias escritas) y **Evaluación** (16 preguntas nuevas, informe por bloque/nivel y dos evidencias cualitativas no puntuadas). Se mantienen 120 minutos de presencialidad y 120 minutos de autoestudio por jornada.
+- **Banco de ejercicios:** 9 × 12 = **108 actividades interactivas de práctica**, 9 × 16 = **144 ítems formativos** y 18 ejemplos resueltos, además de los instrumentos del Encuentro 1. Los ítems fueron elaborados a partir de la matriz y los contenidos del libro, **no son una reproducción literal** de las figuras/tablas de actividades oficiales.
+- **Referencias de lectura** según páginas impresas del Módulo I: E2 40–41; E3 42–43; E4 44–45; E5 46–47; E6 48–49; E7 50–51; E8 ampliación de factorización **sin capítulo específico**, E9 52–53 y 56–59, E10 54–55.
+- **Encuentro 8:** el factor común es una ampliación sujeta a validación curricular, por lo que no debe imponerse como requisito de calificación oficial. **Encuentro 10:** el cierre por evidencias y reflexión no equivale a aplicar ni calcular la calificación oficial del período.
+- **Bloques y niveles:** las cuatro agrupaciones de evidencias y los niveles «Reconoce, Aplica, Analiza, Transfiere» son una **organización pedagógica provisional**, no una equivalencia automática y certificada de los bloques de calificación del registro oficial. La clasificación por cuatro preguntas de cada bloque es orientativa. Las respuestas abiertas requieren coevaluación, autoevaluación y heteroevaluación.
+- **Registros y continuidad:** los encuentros 2–10 se guardan de forma independiente bajo `epja_modulo1_encuentros_2_10_v1`, sin sobrescribir registros del diagnóstico ni del Encuentro 1. La sección **Mis registros** ofrece resumen por encuentro.
+- **Control de calidad:** revisión de las 252 preguntas para evitar opciones duplicadas, sintaxis JavaScript y prueba de interfaz en Chromium con DOM de ensayo: **58/58 verificaciones** de navegación, preguntas, almacenamiento simulado, nueve encuentros y adaptación al tamaño móvil, **0 excepciones JavaScript**. No sustituye la prueba de producción desde la URL pública y dispositivos del grupo.
+- **Alcance:** no se han automatizado las recomendaciones a partir del diagnóstico, conforme a lo acordado; los módulos II–IV conservan su estado de planificación.
+
 ## Desarrollo interactivo de M1.01: práctica por destrezas y evaluación formativa
 
 - **Fuente:** matriz didáctica aprobada (Encuentro 1, código M1.01; CE-MAT1 e IL-1 principal, IL-12 complementario e IL-16 condicional) y actividades del libro oficial del Módulo I, páginas impresas **38–39**.
