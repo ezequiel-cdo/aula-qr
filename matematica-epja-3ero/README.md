@@ -1,5 +1,20 @@
 # Aula virtual de Matemática EPJA · Tercer Año
 
+## Alineación curricular y documental de los cuatro módulos · noviembre de 2026
+
+- **Archivo de referencia:** `alineacion-37.js` incorpora 37 jornadas (P1:10, P2:10, P3:7, P4:10), los propósitos didácticos redactados para los cuatro módulos, las 7 competencias específicas y los 21 indicadores de logro del Registro de Evaluación, con vínculos principales, complementarios y condicionales conforme a la matriz aprobada.
+- **Interfaz:** `alineacion-ui.js` añade propósitos y situaciones contextualizadas por módulo; referencias a lecturas del MINERD por encuentro y, en un panel desplegable, los textos oficiales de competencias e indicadores, sus vínculos propuestos y la evidencia esperada.
+- **Matriz editable:** `Matriz_Alineacion_Curricular_37_Encuentros_EPJA_2026-2027.xlsx` (entregada en la conversación). Conserva intactas las hojas históricas y agrega **Propósitos de módulos** y **Alineación documental 37**. Si se modifican criterios, actualizar primero la matriz y regenerar los datos de aula.
+- **Módulo I (P1):** las 10 lecciones interactivas se mantienen. Todas reciben ficha de propósito, competencia, IL y lectura. El Encuentro 8 sigue siendo **ampliación pendiente de validación curricular** sin capítulo propio; el Encuentro 9 se vincula a pp. 52–53 y 56–59.
+- **Módulo II (P2):** 10 jornadas, libro impreso pp. 38–55; igualdades y ecuaciones, ecuaciones lineales, cuadráticas, números imaginarios, inecuaciones, aplicaciones y evaluación. Se distinguen las tres jornadas de cuadráticas que comparten las pp. 44–45.
+- **Módulo III (P3):** 7 jornadas, libro impreso pp. 38–55; ecuaciones en dos variables, recta, sistemas 2×2, reducción, **igualación y sustitución combinadas en E5** (pp. 46–49), método gráfico y evaluación.
+- **Módulo IV (P4):** 10 jornadas, libro impreso pp. 38–55; relaciones, funciones, dominio y rango, funciones algebraicas, gráficas, funciones lineales, valor absoluto, parábolas, aplicaciones ambientales y evaluación. La función lineal y el valor absoluto comparten la doble página 46–47, pero son jornadas separadas.
+- **Estado de disponibilidad:** P1 tiene prácticas y evaluaciones formativas interactivas; P2–P4 solo cuentan con **guías curriculares y referencias de páginas** hasta que se desarrollen sus lecciones. No mostrar como «lección terminada» ningún encuentro de esos períodos.
+- **Fuentes y derechos:** las referencias de lectura de P2–P4 señalan páginas impresas de los PDF del usuario. No se subieron los libros completos de P2–P4 a GitHub, por su advertencia de reproducción. La interfaz ofrece un vínculo al portal Libro Abierto MINERD; P1 mantiene su recurso PDF ya existente.
+- **Precisión curricular:** los propósitos de módulo son **redacciones didácticas**, no citas oficiales. Las formulaciones CE/IL del catálogo sí proceden del Registro. CE e IL de una jornada se identifican como vínculos **propuestos por la matriz**, no como logros acreditados ni calificaciones.
+- **No se cambia** el diagnóstico de entrada ni se activa la personalización automática según sus resultados.
+- **Verificación:** sintaxis de los scripts, inventario de 37 jornadas/7 CE/21 IL, 37 pruebas de apertura y consulta de fichas en Chromium con HTML de ensayo, sin errores JavaScript ni desplazamiento horizontal a 375 px. La navegación y almacenamiento desde la dirección pública completa necesitan revisión en dispositivo real.
+
 ## Estructura curricular de los 37 encuentros (integrada)
 
 La planificación aprobada ya es una fuente de datos que lee la interfaz sin necesidad de duplicar manualmente las jornadas en el HTML.
