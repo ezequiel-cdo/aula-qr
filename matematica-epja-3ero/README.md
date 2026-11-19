@@ -11,6 +11,15 @@ La planificación aprobada ya es una fuente de datos que lee la interfaz sin nec
 - La factorización M1.A01 es una ampliación sujeta a validación; los vínculos CE–IL son propuestas didácticas. La matriz aprobada de 37 encuentros sigue siendo la fuente que debe actualizarse antes de regenerar este archivo.
 - La simulación P1 de 40 preguntas sigue operativa pero exige una auditoría de cobertura curricular con el nuevo orden de contenidos antes de una adopción oficial.
 
+## Revalidación documental de Módulo I · Encuentro piloto
+
+- `modulo1-matematica.pdf`: edición web ligera del PDF aportado por el docente; conserva las 24 páginas del módulo y la numeración impresa 36–59. Se ofrece en **Mi ruta**, en la lista del período P1 y mediante enlaces a las páginas pertinentes de cada encuentro.
+- `mapa-modulo1.js`: correspondencia estricta de las 10 jornadas del período P1 con códigos de la matriz aprobada, páginas impresas del libro y recurso del maestro. El Encuentro 8 **no** cuenta con capítulo propio de factorización en el PDF y mantiene el aviso de ampliación pendiente de validación. Las lecturas del Encuentro 9 son **52–53 y 56–59**, sin incluir las páginas evaluativas 54–55.
+- `transicion-aritmetica-algebra.html`: versión adaptada para EPJA del HTML del maestro. Se enlaza como laboratorio de exploración complementario; sus temas más avanzados se reservan para encuentros posteriores. Su clasificación por arrastre puede requerir ajustes de accesibilidad móvil.
+- `encuentro1.js`: pestaña **¿Qué sabemos?** recupera operaciones y prerrequisitos del diagnóstico sin adaptar automáticamente la ruta. **Contenidos** desarrolla M1.01 con constantes, variables, expresiones y traducción de frases (páginas 38–39), patrón numérico y control deslizante original integrado. **Ejemplos** presenta temperatura, perímetro e ingresos/gastos; **Práctica** incluye 30+50+40 minutos de autoestudio y referencia al libro; **Evaluación** conserva cinco preguntas de retroalimentación formativa. La clave previa de almacenamiento `epja_p1_e1_v1` se mantiene.
+- Las fichas generales de los encuentros 2–10 recuperan el aprendizaje de la jornada anterior y muestran las lecturas correspondientes. Aún no constituyen diez lecciones interactivas desarrolladas.
+- Comprobaciones: sintaxis de scripts, presencia del libro en el árbol del repositorio, diez fechas y títulos coincidentes con la matriz, 24 páginas preservadas en el PDF, y prueba de comportamiento del Encuentro 1 con DOM simulado (navegación, control deslizante, ejemplos, 120 minutos de práctica, cinco preguntas y persistencia). **Pendiente** una prueba de experiencia real con navegador y dispositivo móvil.
+
 ## Diagnóstico de entrada al grado · antes de P1
 
 - **Sección Diagnóstico** accesible desde el final del Encuadre, Inicio y Mi ruta. El diagnóstico **no bloquea** el acceso a los módulos: respeta la autonomía de EPJA.
