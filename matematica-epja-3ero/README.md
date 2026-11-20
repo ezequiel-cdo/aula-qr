@@ -1,5 +1,15 @@
 # Aula virtual de Matemática EPJA · Tercer Año
 
+## Módulo II · Encuentro 7: número imaginario y naturaleza de las soluciones (09/01/2027)
+
+- **Matriz aprobada:** P2-E07, contenido M2.05, concepto C16, procedimientos P21, P22 y P23; CE-MAT3 e IL-9 principales, IL-7 condicional. Evidencia: tabla de potencias de i y análisis de raíces. 120 minutos presenciales y 120 de autoestudio.
+- **Libro oficial:** Matemática del Módulo II, páginas impresas **46–47** (PDF pp. 19–20). Incluye la definición i²=−1 y el ejemplo x²+4=0, forma binómica A+Bi, ciclo de potencias, reducción del exponente módulo 4, raíces complejas conjugadas y actividad del libro x²−4x+13=0 con soluciones 2±3i. Se incorporan las potencias i⁶², i¹²⁰¹, i²⁴⁹², i¹¹¹ e índices negativos propuestas en p. 47.
+- **Archivo:** `modulo2-encuentro7.js`, clave local `epja_modulo2_encuentro7_v1`, separada de E1–E6 y del Módulo I.
+- **Cinco pestañas:** recuperación de discriminante y raíces reales; cuatro mini secciones con laboratorios (i²=−1, forma binómica y conjugados, potencias positivas/negativas, discriminante negativo y raíces complejas); siete ejemplos explicados; 12 prácticas en cuatro destrezas con pistas y reintentos; 16 reactivos formativos en cuatro bloques y cuatro niveles, dos evidencias abiertas e informe por bloque/dificultad.
+- **Alcance matemático:** se explican raíces complejas conjugadas cuando Δ<0; la interpretación contextual distingue soluciones algebraicas de magnitudes reales. La forma binómica se presenta como A+Bi. No se automatizan calificaciones oficiales C1–C4.
+- **QA:** Chromium a 375 px: cinco pestañas, cuatro comprobaciones de contenido, seis cambios de laboratorios, siete ejemplos, doce prácticas, dieciséis reactivos, bloqueo de entrega incompleta y persistencia local; sin errores JavaScript ni desbordamiento. Se probaron 17 alternancias E1–E7 y restauración de la guía E8. También se validaron claves de respuesta, opciones únicas y resultados matemáticos de las preguntas. Pendiente validación desde la URL pública y en dispositivos reales.
+- **Estado:** P2-E01 a P2-E07 desarrollados individualmente; P2-E08 a P2-E10 continúan como guías curriculares pendientes.
+
 ## Módulo II · Encuentro 6: verificación de ecuaciones cuadráticas (12/12/2026)
 
 - **Matriz aprobada:** P2-E06, contenido M2.04, CE-MAT3/IL-7 principales, IL-18 complementario e IL-8 condicional si existe evidencia del uso de tecnología; 120 minutos presenciales y 120 minutos de autoestudio.
