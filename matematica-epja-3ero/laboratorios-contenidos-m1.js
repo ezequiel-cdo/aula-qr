@@ -41,6 +41,54 @@
    });
    section.appendChild(box);
   });
+  // Completar los controles exploratorios preexistentes cuando aparecen en el DOM.
+  const poly=root.querySelector('#m1PolyPick');
+  if(poly&&!poly.dataset.labReady){
+    poly.dataset.labReady='1';
+    const info=root.querySelector('#m1PolyInfo');
+    const infoByValue={
+      '4x²−3x+7':'Tres términos: 4x², −3x y 7. Coeficientes: 4, −3 y 7. Término principal: 4x². Grado: 2.',
+      '−5x³+2x²−7x+9':'Cuatro términos. Coeficientes: −5, 2, −7 y 9. Término principal: −5x³. Grado: 3.',
+      '6x²+6x':'Dos términos: 6x² y 6x. Coeficientes: 6 y 6. Grado: 2; no son términos semejantes.'
+    };
+    poly.addEventListener('change',()=>{if(info)info.textContent=infoByValue[poly.value]||'Comprueba sus términos y coeficientes.'});
+    poly.dispatchEvent(new Event('change',{bubbles:false}));
+  }
+  const classifier=root.querySelector('#m1ClassPick');
+  if(classifier&&!classifier.dataset.labReady){
+    classifier.dataset.labReady='1';
+    const info=root.querySelector('#m1ClassInfo');
+    const desc={
+      '7x':'Monomio de grado 1: tiene un término y la mayor potencia de x es 1.',
+      'x²−4':'Binomio de grado 2: dos términos y exponente máximo 2.',
+      '3x³+2x−1':'Trinomio de grado 3: tres términos y exponente máximo 3.',
+      '5x⁴−2x²+7x−9':'Polinomio de cuatro términos y grado 4. No todos los polinomios de cuatro términos tienen un nombre especial.',
+      '8':'Polinomio constante no nulo: un término y grado 0.',
+      '0':'Polinomio nulo: todos sus coeficientes son cero y no tiene grado definido.'
+    };
+    classifier.addEventListener('change',()=>{if(info)info.textContent=desc[classifier.value]||'Revisa el grado y los términos.'});
+    classifier.dispatchEvent(new Event('change',{bubbles:false}));
+  }
+  if(n===8){
+    const lab=root.querySelector('.m1-mini');
+    if(lab&&!lab.querySelector('#factorLabPick')){
+      const panel=doc.createElement('div');panel.innerHTML='<label for="factorLabPick"><b>Selecciona una expresión para comprobar el factor común:</b></label><select id="factorLabPick" class="m1-field"><option value="a">6x + 9</option><option value="b">4x² + 8x</option><option value="c">10x³ − 15x²</option></select><p id="factorLabExplanation" role="status" aria-live="polite"></p>';
+      lab.appendChild(panel);
+      const pick=panel.querySelector('select'),info=panel.querySelector('#factorLabExplanation');
+      pick.addEventListener('change',()=>{info.textContent={a:'Ambos coeficientes son divisibles por 3: 6x+9=3(2x+3).',b:'Ambos términos incluyen 4x: 4x²+8x=4x(x+2).',c:'El factor común 5x² permite escribir 10x³−15x²=5x²(2x−3).'}[pick.value]});
+      pick.dispatchEvent(new Event('change',{bubbles:false}));
+    }
+  }
+  if(n===10){
+    const lab=root.querySelector('.m1-mini');
+    if(lab&&!lab.querySelector('#providerLabSlider')){
+      const panel=doc.createElement('div');panel.innerHTML='<label for="providerLabSlider"><b>Cantidad de artículos:</b> <output id="providerLabQty">10</output></label><input type="range" min="0" max="30" step="1" value="10" id="providerLabSlider" style="width:100%"><p id="providerLabDecision" role="status" aria-live="polite"></p>';
+      lab.appendChild(panel);
+      const slider=panel.querySelector('input'),info=panel.querySelector('#providerLabDecision'),out=panel.querySelector('output');
+      slider.addEventListener('input',()=>{const x=Number(slider.value),a=20*x+120,b=25*x+70;out.textContent=x;info.textContent='A: RD$'+a+' · B: RD$'+b+'. '+(a<b?'La opción A cuesta menos.':a>b?'La opción B cuesta menos.':'Los costos son iguales.')});
+      slider.dispatchEvent(new Event('input',{bubbles:false}));
+    }
+  }
  }
  let working=false;
  const observer=new MutationObserver(()=>{if(working)return;working=true;try{enhance()}finally{working=false}});
