@@ -1,5 +1,15 @@
 # Aula virtual de Matemática EPJA · Tercer Año
 
+## Módulo II · Encuentro 4: ecuaciones cuadráticas I, estructura y factorización (28/11/2026)
+
+- **Matriz aprobada:** P2-E04, M2.04; CE-MAT3 e IL-7 principales, IL-18 complementario; IL-8 condicional si se documenta uso tecnológico. Se respeta la jornada de dos horas presenciales y dos horas de autoestudio.
+- **Libro oficial:** Matemática del Módulo II, páginas impresas **44–45** (PDF pp. 17–18). El encuentro aborda forma general y coeficientes, factor común (`c=0`), diferencia de cuadrados (`b=0`), trinomio cuadrado perfecto y comprobación de raíces. La **fórmula general y discriminante** se reservan para el Encuentro 5 de la matriz.
+- **Archivo implementado:** `modulo2-encuentro4.js`, clave independiente `epja_modulo2_encuentro4_v1`; accesible desde calendario y lista P2 como «Lección interactiva».
+- **Experiencia:** cinco pestañas aprobadas; cuatro mini secciones de Contenidos con explicaciones y laboratorios activos (selección de coeficientes, raíces por factor común, raíces opuestas y raíz doble); siete ejemplos resueltos, entre ellos actividades de las páginas 44–45 y una situación de área de terreno; 12 preguntas interactivas en cuatro destrezas y 120 minutos de autoestudio; evaluación formativa con 16 reactivos distintos distribuidos en B1–B4 y cuatro niveles, dos evidencias escritas abiertas y reporte orientativo.
+- **Precisión:** las actividades son recreaciones didácticas y problemas originales, no transcripciones completas del libro. Las raíces negativas de un problema de longitud se descartan por el dominio físico; el uso de factorización aquí corresponde a la secuencia de ecuaciones cuadráticas del libro, independientemente de la ampliación M1.A01, que sigue pendiente de validación específica.
+- **Pruebas:** sintaxis de JS y Chromium a ancho móvil de 375 px: 5 pestañas, 4 subtemas con comprobación correcta, 4 laboratorios manipulables, 7 ejemplos, 12 ejercicios con retroalimentación, 16 reactivos, bloqueo de evaluación incompleta, registro único por intento y persistencia local independiente. También **9 alternancias entre E1–E4**, con restauración de la guía del Encuentro 5 y sin errores JavaScript ni desbordamiento en la página de ensayo. La prueba integral desde el sitio público y con dispositivos reales queda pendiente.
+- **Estado de desarrollo:** P2-E01 a P2-E04 interactivos; P2-E05 a P2-E10 todavía en guías y referencias, a desarrollar secuencialmente. No se calculan promedios oficiales ni se modifican los registros de los otros módulos.
+
 ## Módulo II · Encuentro 3: ecuaciones lineales II, fracciones y paréntesis (noviembre 2026)
 
 - **Matriz aprobada:** P2-E03, sábado 21/11/2026, contenido M2.03; CE-MAT1/IL-3 principales, IL-4 complementario, IL-8/IL-18 condicionales. Dos horas presenciales y dos horas de autoestudio.
