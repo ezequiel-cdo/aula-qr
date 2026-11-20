@@ -1,5 +1,16 @@
 # Aula virtual de Matemática EPJA · Tercer Año
 
+## Módulo II · Encuentro 5: fórmula general y discriminante (05/12/2026)
+
+- **Matriz aprobada:** P2-E05, contenido M2.04, CE-MAT3 e IL-7 principales, IL-18 complementario e IL-8 condicional si existe evidencia de uso tecnológico; dos horas presenciales y dos de autoestudio.
+- **Libro oficial:** Matemática del Módulo II, páginas impresas **44–45**. Se incorpora la fórmula general presentada en p. 44 y el ejercicio `3x²+10x−8=0` de p. 45, con desarrollo original y verificación de las raíces `2/3` y `−4`.
+- **Archivo:** `modulo2-encuentro5.js`; lección interactiva individual P2-E05 con persistencia independiente `epja_modulo2_encuentro5_v1`, visualizada desde calendario y listado del período.
+- **Cinco pestañas:** ¿Qué sabemos? recupera factorización y raíz del E4; Contenidos presenta cuatro subtemas con laboratorios de coeficientes, signo del discriminante, fórmula general y área de parcela; Ejemplos ofrece siete casos comprobados; Práctica incorpora 12 actividades agrupadas en cuatro destrezas y autoestudio 30+50+40 minutos; Evaluación contiene 16 reactivos diferenciados de la práctica, cuatro bloques y niveles, dos explicaciones abiertas e informe formativo.
+- **Ámbito matemático:** el discriminante se interpreta en **números reales**. Los valores negativos de Δ se describen como ausencia de raíces reales, sin anticipar el contenido sobre números imaginarios del Encuentro 7. Se explica la diferencia entre raíz doble y raíces distintas, y se comprueban las soluciones en la ecuación inicial.
+- **Evidencias:** los bloques B1–B4 son agrupaciones didácticas orientativas; no son la agrupación oficial de notas C1–C4. Las producciones abiertas se reservan para autoevaluación, coevaluación y heteroevaluación docente.
+- **QA real de componentes:** Chromium a 375 px: cinco pestañas, cuatro subtemas, siete casos dinámicos de laboratorios, siete ejemplos, doce prácticas, dieciséis reactivos, bloqueo de entrega incompleta y persistencia de intento en almacenamiento simulado; sin errores JS ni desbordamientos. Se comprobaron **11 alternancias** entre E1–E5 y restauración de la guía de E6. Queda pendiente la prueba integral en la URL pública y en dispositivos reales.
+- **Estado:** encuentros P2-E01 a P2-E05 desarrollados individualmente. Los P2-E06 a P2-E10 permanecen como guías pendientes de desarrollo, sin afectar las lecciones anteriores.
+
 ## Módulo II · Encuentro 4: ecuaciones cuadráticas I, estructura y factorización (28/11/2026)
 
 - **Matriz aprobada:** P2-E04, M2.04; CE-MAT3 e IL-7 principales, IL-18 complementario; IL-8 condicional si se documenta uso tecnológico. Se respeta la jornada de dos horas presenciales y dos horas de autoestudio.
