@@ -1,5 +1,17 @@
 # Aula virtual de Matemática EPJA · Tercer Año
 
+## Auditoría integral e implementación coordinada · Módulo I (noviembre de 2026)
+
+- **Alcance:** 10 encuentros de P1, matriz integrada de 29 contenidos y matriz curricular de 37 jornadas, libro oficial de Matemática Módulo I (pp. impresas 36–59), catálogo de CE-MAT1–7/IL-1–21 y banco de actividades existente.
+- **Documento auditable entregado al docente:** `Auditoria_Holistica_Modulo_I_EPJA_2026-2027.xlsx`, con seis hojas: resumen, correspondencia de diez encuentros, trazabilidad de 40 apartados/subtemas (incluido E1), hallazgos y reservas, QA funcional y listado de 252 preguntas originales de E2–E10 con sus IDs y destrezas.
+- **Implementación:** `laboratorios-contenidos-m1.js` incorpora en los encuentros 2–10 un desarrollo adicional de 36 conceptos y **36 actividades breves de comprensión**, una por cada uno de sus cuatro subtemas; presentan opciones, explicación, error y posibilidad de corregir sin puntuación. Las 12 prácticas y las 16 preguntas de evaluación de cada encuentro se conservan, al igual que los registros previos.
+- **Interacción y posición:** `subnavegacion-m1.js` sitúa los laboratorios existentes en el subtema que les corresponde, en lugar de separarlos en una pestaña aislada de exploración; el nuevo script se carga después y complementa la comprensión dentro de cada subtema. Se completó la interacción de los selectores de polinomios E2 y clasificación E3, la comparación de factores E8 y de proveedores E10.
+- **Correspondencia didáctica:** concepto/procedimiento C/P de la matriz → explicación → laboratorio y comprobación → ejemplos resueltos → IDs de prácticas y evaluación por destrezas. Los vínculos práctica/indicador son **propuestas de auditoría**, no acreditación de competencias ni correspondencia oficial de C1–C4.
+- **Factorización:** M1.A01 sigue siendo ampliación propuesta y **no** tiene capítulo específico del PDF. No convertir en calificación oficial.
+- **Pruebas efectivamente realizadas:** pruebas con Chromium en páginas de ensayo para encuentros 2–10; 36/36 actividades montadas, 36/36 comprobaciones de acierto, 36/36 de respuesta errónea y 36/36 reintentos; controles E2/E3/E8/E10 comprobados; nueve vistas móviles de 375 px sin desbordamientos; cero excepciones JavaScript. También se comprobaron los archivos por sintaxis.
+- **Pendiente de certificación final:** prueba del recorrido integrado desde el enlace público (incluyendo el Encuentro 1 y el cambio entre todas las pestañas), prueba en dispositivos reales, observación con participantes y validación de las asociaciones CE/IL del registro oficial. Las pruebas de componentes por sí solas no equivalen a la validación integral de producción.
+- **Sin cambios:** estructura aprobada de 37 fechas, diagnóstico independiente, portada, evaluaciones oficiales no automatizadas, claves locales de progresos y el acceso a los cuatro módulos.
+
 ## Ampliación de contenidos y ejemplos interactivos · Módulo I
 
 - **Encuentro 1:** se añaden ejemplos contextualizados de pago por horas y factura de agua, sin alterar la práctica, evaluación ni clave de progreso aprobadas.
