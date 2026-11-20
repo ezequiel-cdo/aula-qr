@@ -1,5 +1,16 @@
 # Aula virtual de Matemática EPJA · Tercer Año
 
+## Módulo II · Encuentro 3: ecuaciones lineales II, fracciones y paréntesis (noviembre 2026)
+
+- **Matriz aprobada:** P2-E03, sábado 21/11/2026, contenido M2.03; CE-MAT1/IL-3 principales, IL-4 complementario, IL-8/IL-18 condicionales. Dos horas presenciales y dos horas de autoestudio.
+- **Libro oficial:** Matemática del Módulo II, pp. impresas 42–43; trabajo directo sobre la p. 43 (incógnita en ambos miembros, fracción simple, fracciones de distintos denominadores y equivalencia Celsius/Fahrenheit). La distributiva con paréntesis constituye ampliación didáctica original, acorde con la secuencia aprobada.
+- **Archivo:** `modulo2-encuentro3.js`, con registro local `epja_modulo2_encuentro3_v1`, independiente de E1/E2 y M1.
+- **Cinco pestañas:** recuperación del despeje del E2; cuatro subtemas con laboratorio manipulable y microcomprobación; siete ejemplos razonados; 12 actividades de práctica con pistas y 120 minutos de autoestudio; evaluación formativa con 16 preguntas distribuidas en B1–B4 y niveles Reconoce, Aplica, Analiza y Transfiere.
+- **Conceptos trabajados:** propiedades de igualdad, distributiva con signo, incógnitas en ambos miembros, mínimo común múltiplo y multiplicación de todos los términos, sustitución de soluciones y aplicación al entorno.
+- **Evaluación:** un intento completo de 16 reactivos, historial local e informe por bloques y dificultad. Las dos evidencias escritas requieren auto/co/heteroevaluación; sin cálculo de calificaciones oficiales C1–C4.
+- **QA:** Chromium de 375 px con 5 pestañas, 4 comprobaciones, 4 laboratorios, 12 ejercicios y 16 reactivos; verificación de intento y registros independientes; siete alternancias entre E1, E2 y E3 y restauración de la guía al abrir E4. No se observaron errores JavaScript ni desbordamiento en ese ensayo. Queda pendiente una prueba con la URL pública y dispositivos reales.
+- **Estado:** E1, E2 y E3 desarrollados individualmente; E4–E10 permanecen como guías hasta su desarrollo posterior.
+
 ## Módulo II · Encuentro 2: ecuaciones lineales I, despeje (noviembre 2026)
 
 - **Matriz aprobada:** P2-E02, fecha 14/11/2026, contenido M2.03; CE-MAT1 e IL-3 principales, IL-4 complementario; IL-8/IL-18 condicionales únicamente cuando haya evidencia. Se conservan dos horas presenciales y dos de autoestudio.
