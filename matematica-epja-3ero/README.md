@@ -1,5 +1,16 @@
 # Aula virtual de Matemática EPJA · Tercer Año
 
+## Portada y recorridos independientes · revisión de noviembre 2026
+
+- **Tres accesos desde la portada:** «Entrar al Aula», «Conocer el Encuadre y Evaluación» y «Diagnóstico del Grado Anterior». La portada es la entrada inicial en cada recarga, sin imponer encuadre o diagnóstico como paso obligatorio.
+- **Retorno:** el encuadre termina en la portada; el diagnóstico dispone de «Terminar diagnóstico y volver a la portada»; el aula ofrece retorno a portada en Inicio y en la cabecera, conservando el acceso a los apartados habituales mientras se estudia.
+- **Inicio del aula:** sin CTA de diagnóstico ni encuadre; la tarjeta principal presenta **«La clase al día»** correspondiente al último sábado programado no posterior a la fecha mostrada, para estudiar o recuperar durante la semana. En semanas con receso declarado, el texto se transforma en «repasar el último encuentro» y no etiqueta una jornada anterior como clase nueva.
+- **Reinicio de P1:** botón «Volver a comenzar el Módulo I» lleva al Encuentro 1 sin eliminar resultados ni reiniciar la clave local de progreso.
+- **Mi ruta / Todos mis encuentros:** la jornada correspondiente a la semana se distingue por fondo azul suave, borde marcado y etiqueta textual «Clase de la semana». El resto mantiene sus estados habilitado/programado y el sistema no interpreta fechas anteriores como finalización.
+- **Encuadre:** la orientación describe las cinco pestañas aprobadas: ¿Qué sabemos?, Contenidos, Ejemplos, Práctica y Evaluación. La marca de lectura del encuadre se puede conservar sin forzar la navegación.
+- **Compatibilidad:** se mantienen el diagnóstico, las evaluaciones formativas y las claves de almacenamiento local. No se ha añadido cálculo oficial de calificaciones ni personalización automática.
+- **Verificación técnica:** sintaxis de cinco scripts; ausencia de duplicados de ID HTML; enlaces de inicio, diagnóstico y encuadre desacoplados; comprobación de fechas de ejemplo, resaltado y recesos. **Pendiente:** revisión funcional integral en navegador público y dispositivos participantes.
+
 ## Subnavegación pedagógica por subtemas y competencias · Módulo I
 
 - `subnavegacion-m1.js` añade un segundo nivel de navegación en **Contenidos** (subtemas), **Práctica** (destrezas) y **Evaluación** (B1-B4 y evidencias/entrega) para los diez encuentros de P1.
