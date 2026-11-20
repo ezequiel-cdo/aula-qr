@@ -24,6 +24,47 @@ function para(text){return "<p>"+esc(text)+"</p>"}
 function list(arr){return '<ol>'+arr.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ol>'}
 function frame(title,content){return '<div class="card" style="margin:10px 0"><h3>'+esc(title)+'</h3>'+content+'</div>'}
 function simpleTable(rows){return '<table><thead><tr><th>Elemento</th><th>Información</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td></tr>'}).join("")+'</tbody></table>'}
+
+function simulation(e,x){
+ var id=e.id,fmt=function(n){return Number(n.toFixed(2)).toLocaleString("es-DO")};
+ if(id==="P2-J09")return "Utilidad estimada: RD$"+fmt(40*x-300)+". Viable desde 8 unidades enteras.";
+ if(id==="P2-J10")return "2("+x+")+3="+(2*x+3)+": "+(2*x+3<=15?"cumple":"no cumple")+" la inecuación ≤15.";
+ if(id==="P3-J01")return "Para x="+x+" artículos de RD$100, y="+(12-2*x)+" artículos de RD$50 completan RD$600.";
+ if(id==="P3-J02")return "Costo para "+x+" km: RD$"+fmt(80+30*x)+".";
+ if(["P3-J03","P3-J04","P3-J07"].includes(id))return "Con precio hipotético del jugo x=RD$"+x+": primera compra requiere merienda y=RD$"+(180-2*x)+", segunda requiere y=RD$"+((210-x)/2)+". Se igualan en x=50.";
+ if(id==="P3-J05")return "Igualación: y=130-"+x+"="+(130-x)+" y y=180-2("+x+")="+(180-2*x)+". Ambas coinciden cuando x=50.";
+ if(id==="P3-J06")return "A=RD$"+(80+30*x)+"; B=RD$"+(140+20*x)+"; iguales en 6 km.";
+ if(id==="P4-J01"||id==="P4-J03")return "Para "+x+" personas, consumo hipotético: "+(80*x+40)+" litros/día.";
+ if(id==="P4-J02")return "Costo hipotético de "+x+" kWh: RD$"+(12*x)+".";
+ if(id==="P4-J04"){var vals=[120,150,130,170,160,200,140];return "Día "+x+": RD$"+vals[x-1]+". Mayor gasto: sábado (día 6)."}
+ if(id==="P4-J05")return "Plan A: RD$"+(200+50*x)+"; Plan B: RD$"+(350+25*x)+"; iguales en 6 GB.";
+ if(id==="P4-J06")return "Producción "+x+" botellas; desviación absoluta de la meta: "+Math.abs(x-100)+" botellas.";
+ if(id==="P4-J07")return "Ancho "+x+" m, largo "+(20-x)+" m, área "+(x*(20-x))+" m²; máximo en 10 m.";
+ if(id==="P4-J08")return "A los "+x+" segundos, altura simulada "+fmt(-5*x*x+20*x)+" m; altura máxima a 2 s.";
+ if(id==="P4-J09")return "A: RD$"+(120+35*x)+"; B: RD$"+(240+20*x)+"; punto común a los 8 km.";
+ if(id==="P4-J10")return "A: RD$"+(150+40*x)+"; B: RD$"+(300+25*x)+"; iguales a los 10 km.";
+ return "Selecciona un valor y comprueba los resultados del modelo.";
+}
+function simulationRange(e){
+ var id=e.id;
+ if(id==="P4-J04")return [1,7,1,"Día de la semana"];
+ if(id==="P4-J06")return [60,140,1,"Botellas producidas"];
+ if(id==="P4-J07")return [1,19,1,"Ancho (m)"];
+ if(id==="P4-J08")return [0,4,0.25,"Tiempo (s)"];
+ if(id==="P4-J02")return [0,300,10,"Consumo (kWh)"];
+ if(id==="P4-J03"||id==="P4-J01")return [1,12,1,"Personas"];
+ if(id==="P4-J05")return [0,20,1,"GB consumidos"];
+ if(id==="P2-J10")return [0,10,1,"Valor de x"];
+ if(id==="P3-J01")return [0,6,1,"Artículos de RD$100"];
+ if(["P3-J03","P3-J04","P3-J07"].includes(id))return [0,90,10,"Precio propuesto del jugo (RD$)"];
+ if(id==="P3-J05")return [0,100,10,"Valor de x"];
+ return [0,20,1,id==="P2-J09"?"Unidades vendidas":"Cantidad o distancia"];
+}
+function simulationHTML(e){
+ var spec=simulationRange(e),x=spec[0];
+ return '<label for="eir-lab"><b>'+esc(spec[3])+'</b></label><input type="range" id="eir-lab" min="'+spec[0]+'" max="'+spec[1]+'" step="'+spec[2]+'" value="'+x+'" style="width:100%;display:block;margin:15px 0"><output id="eir-lab-out" aria-live="polite">'+esc(simulation(e,x))+'</output><p class="small muted">Mueve el control y comprueba si la interpretación es coherente con la situación.</p>';
+}
+
 function render(){
  if(!selected||root.hidden)return;
  var e=selected,s=load(e.id); step=Number.isInteger(s.step)?s.step:0;
@@ -42,16 +83,16 @@ function render(){
   frame("Atención a los ritmos",para("Apoyo: tabla parcialmente completa y calculadora. Profundización: compara un segundo modelo y justifica las restricciones del dominio."));
  }else if(step===3){
   var attempt=s.responses||{};
-  h=frame("Práctica de resolución",para("Responde y comprueba; la retroalimentación explica cada procedimiento.")+
+  h=frame("Explorador interactivo del modelo",simulationHTML(e))+frame("Práctica de resolución",para("Responde y comprueba; la retroalimentación explica cada procedimiento.")+
   e.detalle.q.map(function(q,i){var answer=attempt[i];return '<fieldset style="border:1px solid #dce3ef;border-radius:10px;margin:12px 0;padding:12px"><legend><strong>'+(i+1)+'. '+esc(q[0])+'</strong></legend>'+
    q[1].map(function(op,j){return '<label style="display:block;padding:7px"><input type="radio" name="eir-q-'+i+'" data-eir-q="'+i+'" value="'+j+'" '+(answer===j?'checked ':'')+'/> '+esc(op)+'</label>'}).join("")+
    (answer===undefined?'':'<p class="small"><b>'+(answer===q[2]?'Correcto. ':'Por revisar. ')+'</b>'+esc(q[3])+'</p>')+'</fieldset>'}).join("")+
   '<p><strong>Completadas:</strong> '+Object.keys(attempt).length+'/'+e.detalle.q.length+'. Registra también los cálculos en tu cuaderno.</p>')+
-  frame("Autoestudio · 120 minutos",para(e.autoestudio)+simpleTable([["30 minutos","Repaso y organización de información"],["50 minutos","Resolución, tabla y representación"],["40 minutos","Conclusiones, revisión y autoevaluación"]]));
+  frame("Mi procedimiento",'<label for="eir-work"><b>Explica tus cálculos y justifica tu respuesta</b></label><textarea id="eir-work" rows="4" style="display:block;width:100%;padding:10px;margin-top:9px">'+esc(s.work||"")+'</textarea>')+frame("Autoestudio · 120 minutos",para(e.autoestudio)+simpleTable([["30 minutos","Repaso y organización de información"],["50 minutos","Resolución, tabla y representación"],["40 minutos","Conclusiones, revisión y autoevaluación"]]));
  }else{
   var selections=s.responses||{},points=e.detalle.q.filter(function(q,i){return selections[i]===q[2]}).length;
   h=frame("Informe formativo de práctica",para("Respuestas correctas: "+points+"/"+e.detalle.q.length+". Este resultado no equivale a una calificación oficial ni sustituye la evaluación de competencias por período."))+
-   frame("Evidencia e instrumentos",simpleTable([["Producto",e.evidencia],["Autoevaluación","Reconozco mis logros, dificultades y plan de mejora."],["Coevaluación","Contrasto resultados y argumentos con mis compañeros."],["Heteroevaluación","El docente observa modelo, procedimientos, representación y comunicación."],["Recuperación","Corrijo el procedimiento y entrego una nueva evidencia."]]))+
+   frame("Evidencia e instrumentos",simpleTable([["Producto",e.evidencia],["Procedimiento registrado",s.work||"Por completar"],["Autoevaluación","Reconozco mis logros, dificultades y plan de mejora."],["Coevaluación","Contrasto resultados y argumentos con mis compañeros."],["Heteroevaluación","El docente observa modelo, procedimientos, representación y comunicación."],["Recuperación","Corrijo el procedimiento y entrego una nueva evidencia."]]))+
    frame("Rúbrica formativa",simpleTable([["Inicial","No identifica el modelo ni justifica el procedimiento."],["En desarrollo","Resuelve parcialmente con apoyo y mejora la representación."],["Logrado","Modela, calcula, representa e interpreta correctamente."],["Avanzado","Compara modelos, valida supuestos y comunica decisiones razonadas."]]))+
    frame("Reflexión y portafolio",'<label for="eir-note"><b>¿Qué aprendiste y qué necesitas practicar?</b></label><textarea id="eir-note" rows="4" style="display:block;width:100%;padding:10px;margin:10px 0">'+esc(s.note||"")+'</textarea><p class="small muted">La reflexión y las evidencias se guardan en este navegador. Exporta o transcribe tu trabajo para entregarlo al docente.</p><button id="eir-copy" type="button" class="secondary">Copiar evidencia</button>');
  }
@@ -60,10 +101,11 @@ function render(){
  document.getElementById("eir-next").textContent=step===4?"Volver al inicio":"Siguiente paso";
  root.querySelectorAll("[data-eir-step]").forEach(function(b){b.onclick=function(){nav(Number(b.dataset.eirStep))}});
  root.querySelectorAll("[data-eir-q]").forEach(function(b){b.onchange=function(){var current=load(e.id);current.responses=current.responses||{};current.responses[Number(b.dataset.eirQ)]=Number(b.value);save(e.id,current);render()}});
+ var simulatorInput=document.getElementById("eir-lab");if(step===3&&simulatorInput){simulatorInput.oninput=function(){document.getElementById("eir-lab-out").textContent=simulation(e,Number(simulatorInput.value))}};var work=document.getElementById("eir-work");if(step===3&&work){work.oninput=function(){var current=load(e.id);current.work=work.value;save(e.id,current)}};
  var note=document.getElementById("eir-note");
  if(note)note.oninput=function(){var current=load(e.id);current.note=note.value;save(e.id,current)};
  var copy=document.getElementById("eir-copy");
- if(copy)copy.onclick=function(){var st=load(e.id);var exportText=[e.id,e.titulo,e.evidencia,e.detalle.formula,"Reflexión: "+(st.note||"")].join("\n");if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(exportText).then(function(){copy.textContent="Copiado"},function(){copy.textContent="Copia no disponible"})}else{copy.textContent="Utiliza copiar/pegar en el navegador"}};
+ if(copy)copy.onclick=function(){var st=load(e.id);var exportText=[e.id,e.titulo,e.evidencia,e.detalle.formula,"Procedimiento: "+(st.work||""),"Reflexión: "+(st.note||"")].join("\n");if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(exportText).then(function(){copy.textContent="Copiado"},function(){copy.textContent="Copia no disponible"})}else{copy.textContent="Utiliza copiar/pegar en el navegador"}};
 }
 function nav(n){if(!selected)return;var s=load(selected.id);s.step=Math.max(0,Math.min(4,n));save(selected.id,s);render();root.scrollIntoView({block:"start"})}
 document.getElementById("eir-prev").onclick=function(){nav(step-1)};
