@@ -1,5 +1,21 @@
 # Aula virtual de Matemática EPJA · Tercer Año
 
+## Ampliación de contenidos y ejemplos interactivos · Módulo I
+
+- **Encuentro 1:** se añaden ejemplos contextualizados de pago por horas y factura de agua, sin alterar la práctica, evaluación ni clave de progreso aprobadas.
+- **Encuentro 2:** laboratorio de anatomía algebraica para coeficiente con signo, término, variable, exponente, término independiente, grado y semejanza. Se añade selector de polinomios para observar sus componentes. Se amplían los ejemplos de costos, recibos y producción.
+- **Encuentro 3:** clasificador exploratorio por cantidad de términos y grado, y nuevos ejemplos de inventario y comparación de expresiones ordenadas.
+- **Encuentro 4:** exploración de polinomio nulo, constante, mónico y raíz, junto al evaluador numérico. Se añaden ejemplos de raíz y costo fijo.
+- **Encuentro 5:** control deslizante de coeficientes para observar la suma de términos semejantes; ejemplos de presupuestos y comprobación por sustitución.
+- **Encuentro 6:** modelo de área/distributiva con variable ajustable; ejemplos de terrenos y lotes de producción.
+- **Encuentro 7:** demostración de división larga en cinco pasos: ordenar, dividir, multiplicar, restar y repetir/verificar; ejemplos de cociente y resto en reparto.
+- **Encuentro 8:** se amplían ejemplos de factor común y se presenta la distributiva inversa con tres casos resueltos. Se conserva como ampliación M1.A01 pendiente de validación curricular.
+- **Encuentro 9:** laboratorio de caja sin tapa con ajuste simultáneo del volumen y dimensiones; se amplían contextos de cartón y presupuesto familiar.
+- **Encuentro 10:** se añaden casos comparativos de proveedores y verificación de identidades mediante sustitución y distributiva.
+- **Ejemplos:** E2–E10 pasan de dos a cuatro ejemplos desarrollados. No se aumentó el número de preguntas de práctica ni de evaluación.
+- **Límite de la revisión:** las ampliaciones son contenido didáctico original y contextualizaciones; no sustituyen ni se presentan como transcripción literal de las actividades del libro. Deben contrastarse con las páginas impresas y, en el caso de M1.A01, con la decisión curricular correspondiente.
+- **Verificación técnica:** sintaxis de los cinco archivos del aula (incluida la navegación y actividades de E1), conteo de 4 ejemplos por encuentro E2–E10 y presencia de laboratorios de anatomía, clasificación, polinomios especiales, suma, multiplicación, división y cajas. Queda pendiente validación pedagógica y funcional en navegador/dispositivo real con participantes.
+
 ## Portada y recorridos independientes · revisión de noviembre 2026
 
 - **Tres accesos desde la portada:** «Entrar al Aula», «Conocer el Encuadre y Evaluación» y «Diagnóstico del Grado Anterior». La portada es la entrada inicial en cada recarga, sin imponer encuadre o diagnóstico como paso obligatorio.
