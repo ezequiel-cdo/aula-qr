@@ -75,9 +75,15 @@
       const concepts=[...root.querySelectorAll(':scope > .m1-concept:not(details)')];if(!concepts.length)return;
       const defs=window.EPJA_M1_LECCIONES?.[n]?.concepts||[];
       const groups=concepts.map((c,i)=>({name:defs[i]?.[0]||('Subtema '+(i+1)),elements:[c]}));
-      // El laboratorio / las notas finales son complementos del ultimo subtema; la lectura siempre queda visible.
-      const last=concepts.at(-1),extra=[];let cursor=last.nextElementSibling;while(cursor){extra.push(cursor);cursor=cursor.nextElementSibling}if(extra.length)groups.push({name:'Exploración y referencias',elements:extra});
-      createTabs(root,concepts[0],groups,key,'Estudia cada subtema del encuentro por separado; consulta primero la lectura indicada.');
+      // El laboratorio de comprensión acompaña al subtema correspondiente.
+      // La sección de referencias conserva solamente los vínculos curriculares.
+      const oldLab=root.querySelector(':scope > .m1-mini');
+      const align={2:1,3:0,4:3,5:0,6:1,7:2,8:0,9:0,10:3};
+      if(oldLab)concepts[Math.min(3,align[n]??0)].appendChild(oldLab);
+      const last=concepts.at(-1),extra=[];let cursor=last.nextElementSibling;
+      while(cursor){const next=cursor.nextElementSibling;extra.push(cursor);cursor=next}
+      if(extra.length)groups.push({name:'Referencias y notas de estudio',elements:extra});
+      createTabs(root,concepts[0],groups,key,'Explora cada subtema con sus explicaciones, representaciones y actividades de comprensión.');
     }else if(step===4){
       const tasks=[...root.querySelectorAll(':scope > article.m1-practice[data-qid]')];if(tasks.length!==12)return;
       const bank=window.EPJA_M1_PREGUNTAS?.[n]?.practice||[];
