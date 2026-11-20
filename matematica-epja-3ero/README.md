@@ -1,5 +1,15 @@
 # Aula virtual de Matemática EPJA · Tercer Año
 
+## Módulo II · Encuentro 6: verificación de ecuaciones cuadráticas (12/12/2026)
+
+- **Matriz aprobada:** P2-E06, contenido M2.04, CE-MAT3/IL-7 principales, IL-18 complementario e IL-8 condicional si existe evidencia del uso de tecnología; 120 minutos presenciales y 120 minutos de autoestudio.
+- **Libro oficial:** Matemática del Módulo II, páginas impresas **44–45**. Se trabajan los casos de factorización y fórmula general, las actividades de `3x²+10x−8=0` y `25x²−20x+4=0`, la elección de métodos y la comprobación por sustitución. Las parcelas y trayectorias son ampliaciones originales contextualizadas; la introducción formal de números imaginarios queda reservada al siguiente contenido previsto.
+- **Archivo:** `modulo2-encuentro6.js`, clave de almacenamiento local `epja_modulo2_encuentro6_v1`, individual e independiente de E1–E5 y del Módulo I.
+- **Cinco pestañas:** ¿Qué sabemos? (recupera fórmula y discriminante); Contenidos (cuatro mini secciones y laboratorios de elección de método, verificador de raíces, dominio de parcela y errores de razonamiento); Ejemplos (siete problemas resueltos y comprobados); Práctica (12 actividades, pistas, reintentos y autoestudio 30+50+40 min); Evaluación (16 reactivos distribuidos en cuatro bloques y cuatro dificultades, explicaciones abiertas e informe por bloque).
+- **Alcance evaluativo:** bloques B1–B4 orientativos; no se automatizan calificaciones oficiales C1–C4 ni se considera que una respuesta objetiva certifique toda una competencia. Autoevaluación, coevaluación y heteroevaluación se apoyan en evidencias escritas que requieren valoración del facilitador.
+- **Verificación:** 5 pestañas, 4 preguntas de comprensión, 12 cambios en laboratorios, 7 ejemplos, 12 ejercicios de práctica, 16 reactivos con bloqueo de entrega incompleta, persistencia e independencia de registro local; comprobados en Chromium de 375 px mediante una página de ensayo, sin errores JavaScript ni desbordamiento. Queda pendiente verificación integral desde la URL pública y dispositivos de participantes.
+- **Estado:** P2-E01 a P2-E06 implementados individualmente; P2-E07 a P2-E10 pendientes de desarrollo didáctico, aún disponibles como guías documentales.
+
 ## Módulo II · Encuentro 5: fórmula general y discriminante (05/12/2026)
 
 - **Matriz aprobada:** P2-E05, contenido M2.04, CE-MAT3 e IL-7 principales, IL-18 complementario e IL-8 condicional si existe evidencia de uso tecnológico; dos horas presenciales y dos de autoestudio.
