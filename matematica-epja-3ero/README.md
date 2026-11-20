@@ -1,5 +1,16 @@
 # Aula virtual de Matemática EPJA · Tercer Año
 
+## Módulo II · Encuentro 2: ecuaciones lineales I, despeje (noviembre 2026)
+
+- **Matriz aprobada:** P2-E02, fecha 14/11/2026, contenido M2.03; CE-MAT1 e IL-3 principales, IL-4 complementario; IL-8/IL-18 condicionales únicamente cuando haya evidencia. Se conservan dos horas presenciales y dos de autoestudio.
+- **Libro oficial:** Matemática, Módulo II, páginas impresas **42–43** (PDF páginas 15–16). Las explicaciones y problemas incluyen la ecuación 5x−3=12 (p. 42), actividades −4x+1=21 y 5x−6=34 (p. 43) y verificaciones. Los temas con fracciones, paréntesis e incógnitas en ambos miembros se referencian, pero se profundizan en el Encuentro 3 según la matriz.
+- **Archivo:** `modulo2-encuentro2.js` agrega una lección independiente a P2-E02 y un registro formativo en «Mis registros», con clave local `epja_modulo2_encuentro2_v1`.
+- **Cinco pestañas:** «¿Qué sabemos?» recupera igualdad y equivalencia del E1; «Contenidos» presenta cuatro subtemas y laboratorios (comprobación por sustitución, operaciones en ambos miembros, detección de un despeje incorrecto y factura laboral); «Ejemplos» ofrece seis casos resueltos; «Práctica» tiene 12 actividades por cuatro destrezas, pistas, reintentos y autoestudio de 30+50+40 minutos; «Evaluación» incluye 16 reactivos nuevos en cuatro agrupaciones y cuatro niveles, además de dos justificaciones escritas.
+- **Evaluación:** los agrupamientos B1–B4 y las categorías de dificultad constituyen evidencias **formativas**; no se calculan notas oficiales. Autoevaluación, coevaluación y heteroevaluación docente requieren valorar las explicaciones abiertas.
+- **Conservación:** no se alteran el diagnóstico, las diez lecciones del Módulo I, ni la clave `epja_modulo2_encuentro1_v1` del encuentro anterior. Se evitó que la pantalla genérica se mostrara al navegar entre E1, E2 y otro módulo.
+- **Pruebas realizadas:** sintaxis JavaScript; prueba en Chromium con 5 pestañas, 4 subtemas, 4 laboratorios, 12 prácticas, 16 reactivos, entrega e historial de intento simulado; vista móvil de 375 píxeles sin desbordamiento y sin errores JavaScript. Además, cuatro alternancias E1↔E2, con restauración de la guía al abrir otro período. **Pendiente:** comprobación integral en URL pública con móviles reales.
+- **Estado:** P2-E01 y P2-E02 desarrollados individualmente. P2-E03 a P2-E10 continúan como guías con referencias curriculares hasta desarrollo posterior.
+
 ## Módulo II · Encuentro 1: lección interactiva individual (noviembre 2026)
 
 - **Fuentes revisadas:** libro del MINERD, Tercer Año, Módulo II, Matemática, páginas impresas **38–41** (PDF pp. 11–14), y matriz aprobada de 37 encuentros: M2.01 + M2.02; CE-MAT1/IL-3 principales, IL-4 complementario. No se adelanta el estudio sistemático de las ecuaciones lineales del Encuentro 2.
