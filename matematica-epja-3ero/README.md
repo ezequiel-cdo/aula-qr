@@ -1,5 +1,16 @@
 # Aula virtual de Matemática EPJA · Tercer Año
 
+## Módulo II · Encuentro 8: inecuaciones de primer grado (16/01/2027)
+
+- **Matriz aprobada:** P2-E08, contenido M2.06, concepto C14 y procedimiento P15; CE-MAT2 e IL-4 principales; IL-18 condicional. Evidencia prevista: rectas numéricas y restricciones justificadas. 120 minutos presenciales y 120 de autoestudio.
+- **Libro oficial:** Matemática del Módulo II, páginas impresas **48–49**. Se respetan la definición de desigualdad e inecuación, comparación de reales, propiedades aditiva y multiplicativa, inversión del sentido al multiplicar por negativo y actividad de comprobación. Los contextos de presupuesto, consumo y trabajo son ejemplos didácticos originales.
+- **Archivo:** `modulo2-encuentro8.js`, clave local `epja_modulo2_encuentro8_v1`, aislada de los registros de E1–E7 y del Módulo I.
+- **Cinco pestañas:** ¿Qué sabemos? recupera ecuaciones y operaciones con signos; Contenidos contiene cuatro subtemas (desigualdad/inecuación, propiedad aditiva, multiplicación/división por negativo, solución y recta numérica) y cuatro laboratorios; Ejemplos contiene siete situaciones resueltas; Práctica tiene 12 reactivos en cuatro destrezas con pistas y 120 minutos de autoestudio; Evaluación tiene 16 reactivos en B1–B4 y cuatro niveles, más evidencias abiertas e informe.
+- **Contextualización:** restricciones de presupuesto con cantidades enteras no negativas, límite de consumo y horas de trabajo. Se distingue el conjunto real solución de las restricciones discretas del contexto.
+- **Precisión matemática:** dividir o multiplicar por negativo invierte la desigualdad; por positivo la conserva. Multiplicar por cero no es una operación equivalente reversible: ambos miembros se igualan y se pierde información, por eso el laboratorio lo advierte. Para el presupuesto RD$2,500 a RD$180 por paquete, el máximo entero es 13.
+- **QA realizado en esta sesión:** lectura directa de las páginas impresas 48–49 del PDF oficial, comprobación de correspondencia M2.06/C14/P15/CE-MAT2/IL-4, validación sintáctica de los archivos JavaScript principales y revisión de las respuestas y transformaciones algebraicas incluidas en el banco. No se dispuso de un navegador automatizado en esta ejecución; la prueba de interacción real en la URL pública y dispositivos participantes queda expresamente pendiente.
+- **Estado:** P2-E01 a P2-E08 cuentan con lecciones individuales; P2-E09 y P2-E10 continúan como guías curriculares.
+
 ## Módulo II · Encuentro 7: número imaginario y naturaleza de las soluciones (09/01/2027)
 
 - **Matriz aprobada:** P2-E07, contenido M2.05, concepto C16, procedimientos P21, P22 y P23; CE-MAT3 e IL-9 principales, IL-7 condicional. Evidencia: tabla de potencias de i y análisis de raíces. 120 minutos presenciales y 120 de autoestudio.
