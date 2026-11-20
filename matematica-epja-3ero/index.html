@@ -20,6 +20,18 @@ button:disabled{opacity:.55;cursor:not-allowed}button.block{width:100%;text-alig
 .progress{height:11px;border-radius:15px;background:#e4e9f2;overflow:hidden}.progress>span{height:100%;display:block;background:#2e8a77}
 .route{display:grid;gap:12px}.route article{padding:17px;border:1px solid #dce3ef;border-radius:12px;background:white}
 .route article.active{border-left:6px solid #eb008b}
+.route article.class-week{border:2px solid #244b92!important;border-left:7px solid #244b92!important;background:#edf4ff!important;box-shadow:0 6px 22px #224a8517}
+.class-week-label{display:inline-block;color:#153e78;background:#d3e4ff;padding:5px 9px;border-radius:18px;font-size:.79rem;font-weight:800;margin:8px 0}
+.home-class-cta{display:block;width:100%;padding:17px 20px;font-size:1.1rem;line-height:1.25;background:#163e89;border:2px solid #b8d7ff;box-shadow:0 5px 12px #122b4e29}
+.home-class-cta:hover{background:#11336f}
+.cover-actions{display:grid;gap:11px;margin-top:17px}
+.cover-actions button{min-height:55px;text-align:left;padding:13px 16px}
+.cover-actions button:first-child{background:#1e438c;color:#fff}
+.home-return{margin:23px 0 8px}
+header .home-header-back{background:#eff4ff;color:#193b80;padding:8px 11px;font-size:.82rem;white-space:nowrap}
+header .home-header-back:hover{background:#dce7ff}
+body[data-area="portada"] nav,body[data-area="encuadre"] nav,body[data-area="diagnostico"] nav{display:none}
+
 .row{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
 nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:5px;background:#fff;border-top:1px solid #cbd5e6;padding:8px;z-index:5}
 nav button{background:transparent;color:#40506a;font-size:.84rem;border-radius:9px;min-width:80px;padding:9px 12px}
@@ -39,37 +51,37 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
 @media(max-width:650px){.grid{grid-template-columns:1fr}main{padding:14px 12px 92px}.card{padding:16px}nav button{min-width:0;flex:1;padding:9px 3px;font-size:.77rem}}
 @media print{nav,button,.testdate{display:none!important}body{background:#fff}main{padding:0}}
 </style></head><body>
-<header><div><strong>Aula Virtual de Matemática</strong><small>EPJA · 3.er año · Segundo Ciclo · 2026–2027</small></div><span class="brand">3.er AÑO</span></header>
+<header><div><strong>Aula Virtual de Matemática</strong><small>EPJA · 3.er año · Segundo Ciclo · 2026–2027</small></div><button type="button" class="home-header-back" data-go="portada">⌂ Portada</button></header>
 <main>
 <section id="portada">
  <div class="cover"><img src="portada-grado.svg" width="620" height="540" alt="3.er Año, Segundo Ciclo, Nivel Secundario de Educación de Personas Jóvenes y Adultas" style="width:100%;max-width:620px;height:auto;display:block;margin:auto"></div>
- <div class="card cover-intro"><p class="eyebrow">AULA VIRTUAL · MATEMÁTICA</p><h1>Aprendemos y avanzamos juntos</h1><p>3.er Año · Segundo Ciclo · Año escolar 2026–2027</p><button id="coverStart" class="block">Entrar al aula →</button><p><button class="secondary block" data-go="encuadre">Conocer el encuadre y la evaluación</button></p></div>
+ <div class="card cover-intro"><p class="eyebrow">AULA VIRTUAL · MATEMÁTICA</p><h1>Aprendemos y avanzamos juntos</h1><p>3.er Año · Segundo Ciclo · Año escolar 2026–2027</p><div class="cover-actions"><button id="coverStart" class="block">1 · Entrar al Aula →</button><button class="secondary block" data-go="encuadre">2 · Conocer el Encuadre y Evaluación →</button><button class="secondary block" data-go="diagnostico">3 · Diagnóstico del Grado Anterior →</button></div></div>
  <p class="small muted">Matemática · Tercer Año del Segundo Ciclo EPJA · Año escolar 2026–2027.</p>
 </section>
 <section id="encuadre" hidden>
  <p class="eyebrow">Orientaciones generales · Antes del Módulo I</p><h1>Conoce cómo funciona tu aula</h1>
  <p class="muted">Aquí conocerás la ruta anual, las formas de aprender, cómo se evaluarán tus actividades y cómo conservar tus evidencias.</p>
  <div class="card"><h3>1 · Nuestro programa</h3><p>Matemática de Tercer Año, Segundo Ciclo EPJA. Año escolar 2026–2027: cuatro períodos y cuatro módulos, con 37 sábados hábiles previstos según el calendario propuesto.</p><p>Los módulos se habilitan progresivamente. Puedes recuperar encuentros anteriores sin iniciar sesión.</p></div>
- <div class="card"><h3>2 · Cómo aprenderemos</h3><p>En cada encuentro encontrarás cinco pasos: recordar, comprender, resolver un problema, practicar por cuenta propia y comprobar aprendizajes. La matemática se trabajará mediante problemas de la familia, el trabajo y la comunidad.</p></div>
+ <div class="card"><h3>2 · Cómo aprenderemos</h3><p>En cada encuentro encontrarás cinco pestañas: ¿Qué sabemos?, Contenidos, Ejemplos, Práctica y Evaluación. Dentro de ellas estudiarás por subtemas, practicarás por destrezas y comprobarás los aprendizajes mediante bloques de competencias. La matemática se trabajará con problemas de la familia, el trabajo y la comunidad.</p></div>
  <div class="card"><h3>3 · Cómo seremos evaluados</h3><table><thead><tr><th>Momento</th><th>Propósito</th></tr></thead><tbody><tr><td>Inicio</td><td>Diagnóstico de saberes previos, sin calificación</td></tr><tr><td>Durante el módulo</td><td>Prácticas formativas y evidencias de trabajo</td></tr><tr><td>Cierre del módulo</td><td>Simulación de práctica por bloques de competencias</td></tr><tr><td>Valoración docente</td><td>Revisión integral de evidencias para el registro oficial</td></tr><tr><td>Recuperación</td><td>Refuerzo de aprendizajes que necesitan mejora</td></tr></tbody></table></div>
  <div class="card"><h3>4 · Competencias, criterios y niveles de desempeño</h3><p>La evaluación se organiza en cuatro bloques. Cada bloque reúne aspectos específicos de las competencias y sus indicadores de logro; solo se valoran los contenidos efectivamente trabajados.</p><div class="criteria-grid"><div><b>C1 · Comunicar</b><p>Comprender, interpretar y expresar ideas matemáticas.</p></div><div><b>C2 · Razonar y resolver</b><p>Comparar procedimientos, resolver y justificar soluciones.</p></div><div><b>C3 · Aplicar al entorno</b><p>Interpretar problemas comunitarios y proponer decisiones.</p></div><div><b>C4 · Integrar y analizar</b><p>Aplicar conocimientos y herramientas a problemas diversos.</p></div></div><h3 style="margin-top:18px">Progresión pedagógica</h3><div class="levels"><span><b>1</b> Reconoce</span><span><b>2</b> Aplica</span><span><b>3</b> Analiza</span><span><b>4</b> Transfiere y justifica</span></div><p class="small muted">Estos cuatro niveles son criterios orientativos de las actividades, no una escala automática ni una declaración de logro oficial. La asociación precisa de CE-MAT4 a CE-MAT7 en los bloques C3 y C4 requiere confirmación por la discrepancia documental detectada.</p></div>
  <div class="card"><h3>5 · Tus prácticas y evidencias</h3><p>Realiza tus actividades, consulta tus resultados y revisa las recomendaciones para seguir mejorando.</p><p>Te recomendamos utilizar habitualmente el mismo dispositivo para continuar tu trabajo y conservar tus avances. En <b>Mis registros</b> encontrarás el historial de tus prácticas y la opción de guardar una copia.</p></div>
- <div class="card"><h3>Acuerdo de orientación</h3><label class="checkline"><input type="checkbox" id="understood"> He leído las orientaciones generales del aula y sé dónde consultarlas de nuevo.</label><button class="block" id="finishIntro">Ir a Mi aula →</button></div>
+ <div class="card"><h3>Acuerdo de orientación</h3><label class="checkline"><input type="checkbox" id="understood"> He leído las orientaciones generales del aula y sé dónde consultarlas de nuevo.</label><button class="block" id="finishIntro">Terminar encuadre y volver a la portada →</button></div>
 </section>
 <section id="inicio" hidden>
- <p class="eyebrow">Mi aula · Aprende a tu ritmo</p><h1>Aprende a tu ritmo. Continúa desde aquí.</h1>
- <div class="card" style="border-left:5px solid #d30078"><p class="eyebrow">Antes del Módulo I · Diagnóstico del grado</p><h3>Descubre lo que ya sabes</h3><p>Repasa números, operaciones, signos, fracciones, potencias, raíces y jerarquía. Realiza una prueba inicial y descubre qué contenidos te conviene reforzar.</p><button type="button" class="block" data-go="diagnostico">Comenzar diagnóstico del grado →</button></div>
- <div class="card hero"><div class="row"><div><small>PERÍODO SEGÚN CALENDARIO</small><h2 id="currentPeriod">Cargando…</h2><p class="muted" id="periodDates"></p></div><span class="pill" id="currentStatus">—</span></div>
- <button type="button" id="continue">Continuar mi aprendizaje →</button></div>
- <div class="card" style="border-left:5px solid #2b8976"><p class="eyebrow">Lección interactiva · Módulo I</p><h3>Aprende a utilizar letras y números en situaciones reales</h3><p>Comienza con un ejemplo de reparaciones, aprende a construir expresiones algebraicas, resuelve un problema y comprueba tus respuestas.</p><button type="button" id="startLessonPilot" class="block">Comenzar a aprender →</button></div>
- <div class="grid"><div class="card"><h3>📅 Mi ruta</h3><p>Consulta los cuatro períodos y los encuentros disponibles.</p><button class="secondary block" data-go="ruta">Ver mi calendario</button></div>
- <div class="card"><h3>↶ Recuperación de encuentros</h3><p>Vuelve a los contenidos y actividades de encuentros anteriores, sin identificarte.</p><button class="secondary block" data-go="recuperacion">Recuperar encuentros</button></div></div>
- <div class="card"><h3>Orientaciones y evaluaciones</h3><p>Consulta el encuadre, los criterios de evaluación y las prácticas de cada período.</p><div class="row"><button class="secondary" data-go="encuadre">Ver encuadre</button><button class="secondary" data-go="evaluaciones">Ver evaluaciones</button></div></div>
+ <p class="eyebrow">Mi aula · Aprende a tu ritmo</p><h1>Aprende a tu ritmo</h1>
+ <p class="muted">Aquí encontrarás la clase que corresponde al calendario, tus encuentros y los contenidos que deseas repasar.</p>
+ <div class="card hero"><div class="row"><div><small>LA CLASE AL DÍA · SEGÚN CALENDARIO</small><h2 id="currentPeriod">Cargando…</h2><p id="periodDates"></p><p id="todayLessonCaption" style="color:#e6efff"></p></div><span class="pill" id="currentStatus">—</span></div>
+ <button type="button" id="continue" class="home-class-cta">La clase al día →</button></div>
+ <div class="grid"><div class="card"><h3>Mi ruta de aprendizaje</h3><p>Consulta los cuatro períodos, el calendario y todos los encuentros disponibles para recuperar o estudiar.</p><button class="secondary block" data-go="ruta">Ver calendario y encuentros →</button></div>
+ <div class="card"><h3>Recuperación de encuentros</h3><p>Repasa los conocimientos y vuelve a practicar encuentros anteriores a tu ritmo.</p><button class="secondary block" data-go="recuperacion">Recuperar encuentros →</button></div></div>
+ <div class="card" style="border-left:5px solid #2b8976"><p class="eyebrow">Repaso desde el principio</p><h3>Volver a comenzar el Módulo I</h3><p>Regresa al Encuentro 1 para repasar las expresiones algebraicas. Tus avances y resultados guardados no se borrarán.</p><button type="button" id="startLessonPilot" class="secondary block">Volver a comenzar el Módulo I →</button></div>
+ <div class="home-return"><button type="button" class="secondary" data-go="portada">← Volver a la portada</button></div>
 </section>
 <section id="ruta" hidden>
  <p class="eyebrow">Mi recorrido anual</p><h1>Cuatro períodos, una sola ruta</h1>
  <div class="card testdate"><label for="dateTest">Probar navegación con otra fecha (solo demostración)</label><input id="dateTest" type="date" min="2026-08-29" max="2027-06-30"><button id="resetDate" class="secondary">Usar fecha de hoy</button><p class="muted small">Este control solo cambia la vista del calendario; no altera marcas horarias ni resultados guardados.</p></div>
- <div class="card" style="border-left:5px solid #d30078"><h3>Antes de iniciar el primer módulo</h3><p>Explora tus conocimientos previos de Matemática, realiza el diagnóstico inicial y practica los temas que necesites fortalecer.</p><button class="secondary" data-go="diagnostico">Ir al diagnóstico del grado →</button></div><div id="periodCards" class="route"></div><div class="card"><h3>Libro de Matemática · Módulo I</h3><p>Recurso de estudio para los encuentros del primer período. Cada encuentro indica sus páginas específicas.</p><a href="modulo1-matematica.pdf" target="_blank" rel="noopener" style="font-weight:750;color:#1e438c">Abrir libro completo (PDF, 24 páginas) ↗</a></div>
+ <div id="periodCards" class="route"></div><div class="card"><h3>Libro de Matemática · Módulo I</h3><p>Recurso de estudio para los encuentros del primer período. Cada encuentro indica sus páginas específicas.</p><a href="modulo1-matematica.pdf" target="_blank" rel="noopener" style="font-weight:750;color:#1e438c">Abrir libro completo (PDF, 24 páginas) ↗</a></div>
  <div class="card"><h3>Catálogo de contenidos del año</h3><p class="muted small">Consulta los temas programados de los cuatro módulos, sus conceptos y procedimientos asociados.</p>
  <button class="secondary" type="button" data-go="catalogo">Ver los 29 contenidos →</button></div>
  <div class="card" style="margin-top:17px"><h3>Cierre anual · Después del cuarto módulo</h3><p>Al finalizar P4 podrás consultar aquí tu balance de simulaciones y los contenidos que necesitas reforzar.</p><button class="secondary" data-go="cierre">Consultar el cierre anual →</button></div>
@@ -172,9 +184,23 @@ const introKey="epja_matematica_encuadre_v1";const readIntro=()=>{try{return loc
 function encounterData(i,n){const e=getEncounter(i,n);return e?[e.titulo,e.objetivo,e.presencial,e.evidencia]:["Encuentro pendiente","Contenido no disponible","La jornada no se encuentra en la matriz",""];}
 function datesFor(p){return curriculum.encuentros.filter(e=>e.periodo===p.id).map(e=>e.fecha)}
 function actualPeriod(){const ix=periods.findIndex(p=>shownDate>=p.start&&shownDate<=p.end);if(ix>=0)return ix;if(shownDate<periods[0].start)return 0;const prev=periods.findLastIndex(p=>p.start<=shownDate);return Math.max(0,prev)}
-function go(id){if(id==="catalogo")drawCatalog();if(id==="recuperacion")drawRecovery();if(id==="evaluaciones")drawEvaluations();if(id==="registros")drawRecords();if(id==="cierre")drawClosure();document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);document.querySelectorAll("nav [data-go]").forEach(b=>b.setAttribute("aria-current",b.dataset.go===id?"page":"false"));window.scrollTo(0,0);if(id==="avances")drawAdvances()}
+function go(id){document.body.dataset.area=id;if(id==="catalogo")drawCatalog();if(id==="recuperacion")drawRecovery();if(id==="evaluaciones")drawEvaluations();if(id==="registros")drawRecords();if(id==="cierre")drawClosure();document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);document.querySelectorAll("nav [data-go]").forEach(b=>b.setAttribute("aria-current",b.dataset.go===id?"page":"false"));window.scrollTo(0,0);if(id==="avances")drawAdvances()}
+function scheduledEncounter(){
+ let chosen=null;for(let i=0;i<periods.length;i++)for(let n=0;n<datesFor(periods[i]).length;n++){const date=datesFor(periods[i])[n];if(date<=shownDate&&(!chosen||date>chosen.fecha))chosen={period:i,number:n,fecha:date}}
+ return chosen;
+}
+function isRecessWeek(){const t=scheduledEncounter();if(!t)return false;return excluded.has(shownDate)||excluded.has(new Date(shownDate+"T12:00:00").toISOString().slice(0,10))}
 function render(){currentIndex=actualPeriod();const p=periods[currentIndex];$("currentPeriod").textContent=p.id+" · "+p.mod;$("periodDates").textContent=fmt(p.start)+" — "+fmt(p.end);
  const badge=$("currentStatus");badge.textContent=shownDate<p.start?"Próximamente":shownDate>p.end?"Disponible para repasar":"Período activo";badge.className="pill "+(shownDate<p.start?"lock":"live");
+ const actual=scheduledEncounter(),caption=$("todayLessonCaption"),goClass=$("continue");
+ if(actual){
+  const e=getEncounter(actual.period,actual.number);
+  caption.textContent="Encuentro "+(actual.number+1)+" · "+e.titulo+" · sábado "+fmt(actual.fecha)+". "+(actual.period===0?"Lección interactiva disponible.":"Guía curricular disponible; lección interactiva en desarrollo.");
+  goClass.disabled=false;goClass.textContent="La clase al día · Encuentro "+(actual.number+1)+" →";
+ }else{
+  caption.textContent="Las clases todavía no han comenzado según el calendario.";
+  goClass.disabled=true;goClass.textContent="La clase al día · Próximamente";
+ }
  $("dateTest").value=shownDate;
  $("periodCards").innerHTML=periods.map((x,i)=>{const dates=datesFor(x),open=dates.filter(d=>d<=shownDate).length,status=shownDate<x.start?"Programado":shownDate>x.end?"Para repasar":"Disponible";return '<article class="'+(i===currentIndex?'active':'')+'"><div class="row"><h3>'+x.id+' · '+x.mod+'</h3><span class="pill '+(shownDate<x.start?'lock':'live')+'">'+status+'</span></div><p>'+x.topic+'</p><p class="muted small">'+fmt(x.start)+' a '+fmt(x.end)+' · '+open+'/'+dates.length+' encuentros habilitados por fecha</p><div class="progress"><span style="width:'+(open/dates.length*100)+'%"></span></div>'+(shownDate>=x.start?'<p><button type="button" class="secondary" data-open="'+i+'">Ver encuentros →</button></p>':'')+'</article>'}).join("");
  document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>openPeriod(Number(b.dataset.open)));
@@ -214,7 +240,10 @@ function drawRecovery(){const selector=$("recPeriod"),old=selector.value||"0";se
 }
 function openPeriod(i){selectedPeriod=i;const p=periods[i],ds=datesFor(p);$("listPeriod").textContent=p.id+" · "+p.mod;$("listSummary").textContent=p.topic+" · "+ds.length+" encuentros programados. Selecciona cualquiera que ya esté habilitado.";
 $("encounterCards").innerHTML=(i===0?'<article><h3>Tu libro del Módulo I</h3><p>El libro completo está disponible para estudiar y repasar. Encontrarás la lectura específica en cada encuentro.</p><a href="modulo1-matematica.pdf" target="_blank" rel="noopener">Abrir el libro de Matemática · Módulo I ↗</a></article>':'')+ds.map((d,n)=>{const item=encounterData(i,n),book=i===0?window.EPJA_MODULO1?.[n]:null,ready=d<=shownDate,hasAttempt=i===0&&n===0&&state.attempts.some(x=>x.activity==="P1-C1-T1-DEMO");const status=ready?(i===0?"Lección interactiva":"Guía y referencias"):"Programado";return '<article><div class="row"><h3>Encuentro '+(n+1)+' · '+item[0]+'</h3><span class="pill '+(ready?'live':'lock')+'">'+status+'</span></div><p class="small muted">Sábado '+fmt(d)+'</p>'+(book?'<p class="small"><b>Libro Módulo I:</b> páginas '+book.paginas+'</p>':'')+'<p>'+item[1]+'</p><p class="small"><b>'+(i===0?"En esta lección aprenderás":"Trabajo previsto")+ ':</b> '+(i===0&&n===0?"a representar ingresos y gastos con letras y números.":item[3])+'</p>'+(ready?'<button class="secondary" data-enc="'+n+'">'+(i===0?'Comenzar lección interactiva →':'Ver guía y referencias →')+'</button>':'<p class="small muted">Se habilitará en la fecha programada.</p>')+'</article>'}).join("");
-$("encounterCards").querySelectorAll("[data-enc]").forEach(b=>b.onclick=()=>openEncounter(i,true,Number(b.dataset.enc)));go("lista")}
+$("encounterCards").querySelectorAll("[data-enc]").forEach(b=>b.onclick=()=>openEncounter(i,true,Number(b.dataset.enc)));
+ const current=scheduledEncounter();
+ if(current&&current.period===i){const b=$("encounterCards").querySelector('[data-enc="'+current.number+'"]');if(b){const card=b.closest("article");card.classList.add("class-week");const status=card.querySelector(".pill");if(status){status.textContent="Clase de la semana";status.classList.add("live")}const label=document.createElement("p");label.className="class-week-label";label.textContent="Esta es la clase correspondiente al calendario";card.insertBefore(label,b)}}
+ go("lista")}
 function openEncounter(i,navigate=true,n=null){
  const p=periods[i],dates=datesFor(p),available=dates.filter(d=>d<=shownDate),number=n===null?Math.max(1,available.length):n+1;
  const r=getEncounter(i,number-1);if(!r)throw new Error("Jornada no encontrada");
@@ -258,17 +287,17 @@ $("backToList").onclick=()=>openPeriod(selectedPeriod);
 function drawAdvances(){$("attemptCount").textContent=state.attempts.length;const last=state.attempts.at(-1);$("lastScore").textContent=last?(last.correct?"100":"0")+"/100":"—";
  $("history").innerHTML=state.attempts.length?'<table><thead><tr><th>Intento</th><th>Hora local</th><th class="num">Resultado</th></tr></thead><tbody>'+state.attempts.slice().reverse().map((a,i)=>'<tr><td>'+(state.attempts.length-i)+'</td><td>'+new Date(a.localTime).toLocaleString("es-DO")+'</td><td class="num">'+(a.correct?"100":"0")+'</td></tr>').join("")+'</tbody></table>':"<p>Aún no has realizado intentos.</p>"}
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
-$("coverStart").onclick=()=>go(readIntro()?"inicio":"encuadre");
-$("finishIntro").onclick=()=>{if($("understood").checked)saveIntro();go("diagnostico")};
+$("coverStart").onclick=()=>go("inicio");
+$("finishIntro").onclick=()=>{if($("understood").checked)saveIntro();go("portada")};
 $("exportRecords").onclick=()=>$("export").click();
 
 $("recPeriod").addEventListener("change",drawRecovery);
-$("continue").onclick=()=>openEncounter(currentIndex,true);
+$("continue").onclick=()=>{const x=scheduledEncounter();if(x)openEncounter(x.period,true,x.number)};
 $("startLessonPilot").onclick=()=>openEncounter(0,true,0);
 $("dateTest").addEventListener("change",e=>{if(e.target.value){shownDate=e.target.value;render()}});
 $("resetDate").onclick=()=>{shownDate=isoToday();render()};
 $("demoForm").onsubmit=e=>{e.preventDefault();const checked=document.querySelector('input[name="ans"]:checked');if(!checked){alert("Selecciona una respuesta antes de entregar.");return}const correct=checked.value==="1";const entry={activity:"P1-C1-T1-DEMO",localTime:new Date().toISOString(),correct,answer:checked.value,serverReceivedAt:null,status:"local_no_enviado"};state.attempts.push(entry);try{localStorage.setItem(key,JSON.stringify(state))}catch(e){}
  $("feedback").hidden=false;$("feedback").innerHTML='<div class="notice"><p><strong>'+(correct?'Respuesta correcta.':'Respuesta para revisar.')+'</strong> La expresión es <strong>180s</strong>, porque el pago por servicio se multiplica por la cantidad de servicios.</p><p>Resultado de esta única pregunta: <b>'+(correct?'100':'0')+'/100</b>. Es un ejercicio demostrativo, no una calificación de competencia.</p><button type="button" id="seeAdvances" class="secondary">Ver intento registrado</button></div>';$("seeAdvances").onclick=()=>go("avances")};
 $("export").onclick=()=>{const blob=new Blob([JSON.stringify({exportedLocalAt:new Date().toISOString(),records:state.attempts,notice:"Registro local sin verificación de servidor"},null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="epja-registro-local.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
-render();go(readIntro()?"inicio":"portada");
+render();go("portada");
 </script><script src="diagnostico-grado.js"></script><script src="evaluacion-p1.js"></script><script src="motor-p1.js"></script><script src="actividades-e1.js"></script><script src="encuentro1.js"></script><script src="modulo1-lecciones.js"></script><script src="alineacion-ui.js"></script><script src="subnavegacion-m1.js"></script></body></html>
