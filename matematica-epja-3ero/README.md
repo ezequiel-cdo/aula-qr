@@ -1,5 +1,16 @@
 # Aula virtual de Matemática EPJA · Tercer Año
 
+## Módulo II · Encuentro 1: lección interactiva individual (noviembre 2026)
+
+- **Fuentes revisadas:** libro del MINERD, Tercer Año, Módulo II, Matemática, páginas impresas **38–41** (PDF pp. 11–14), y matriz aprobada de 37 encuentros: M2.01 + M2.02; CE-MAT1/IL-3 principales, IL-4 complementario. No se adelanta el estudio sistemático de las ecuaciones lineales del Encuentro 2.
+- **Archivo:** `modulo2-encuentro1.js`, cargado después de los recursos del Módulo I. Accesible desde el calendario y la lista P2 como **Lección interactiva**, exclusivamente en P2-E01.
+- **Cinco pestañas:** ¿Qué sabemos? (expresiones algebraicas de P1); Contenidos (cuatro mini secciones: equilibrio, tipos de igualdades, ecuación/identidad, ecuaciones equivalentes); Ejemplos (cinco explicaciones contextualizadas); Práctica (12 ejercicios en cuatro destrezas con pistas y correcciones, más 120 minutos de autoestudio); Evaluación (16 reactivos, cuatro bloques y cuatro niveles, dos evidencias escritas abiertas, informe y revisión posterior de respuestas).
+- **Exploraciones:** balanza con variable, sustitución de dos variables, clasificación de igualdad y comparación de transformaciones equivalentes. Se requiere distinguir una **identidad** de una **ecuación**, y comprobar soluciones sin limitarse a elegir una respuesta.
+- **Persistencia:** clave local `epja_modulo2_encuentro1_v1`; los registros de diagnóstico y Módulo I no se reemplazan. Se muestran resultados orientativos en Mis registros; las evidencias escritas requieren evaluación docente.
+- **Evaluación responsable:** B1–B4 son grupos didácticos y no se calcula automáticamente el registro oficial C1–C4. No se han subido los PDF de P2–P4 a GitHub por las restricciones de reproducción del MINERD; se indican las páginas del libro y el enlace a la biblioteca oficial.
+- **QA:** se realizó una prueba de comportamiento con Chromium para los cinco pasos, cuatro mini secciones, doce ejercicios, dieciséis reactivos, cálculo de informe, persistencia simulada y retorno entre pantallas, a ancho 375 px. Sin errores JavaScript ni desbordamiento en ese escenario. Falta revisar el recorrido desde la URL pública completa y en dispositivos del grupo.
+- **Estado de P2:** este encuentro está desarrollado; los nueve siguientes permanecen como guías documentales hasta completar su desarrollo **uno por uno** y validarlos pedagógicamente.
+
 ## Auditoría integral e implementación coordinada · Módulo I (noviembre de 2026)
 
 - **Alcance:** 10 encuentros de P1, matriz integrada de 29 contenidos y matriz curricular de 37 jornadas, libro oficial de Matemática Módulo I (pp. impresas 36–59), catálogo de CE-MAT1–7/IL-1–21 y banco de actividades existente.
