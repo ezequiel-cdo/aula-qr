@@ -189,14 +189,14 @@ function scheduledEncounter(){
  let chosen=null;for(let i=0;i<periods.length;i++)for(let n=0;n<datesFor(periods[i]).length;n++){const date=datesFor(periods[i])[n];if(date<=shownDate&&(!chosen||date>chosen.fecha))chosen={period:i,number:n,fecha:date}}
  return chosen;
 }
-function isRecessWeek(){const t=scheduledEncounter();if(!t)return false;return excluded.has(shownDate)||excluded.has(new Date(shownDate+"T12:00:00").toISOString().slice(0,10))}
+function isRecessWeek(){const day=new Date(shownDate+"T12:00:00Z");const backwards=(day.getUTCDay()+1)%7;day.setUTCDate(day.getUTCDate()-backwards);return excluded.has(day.toISOString().slice(0,10))}
 function render(){currentIndex=actualPeriod();const p=periods[currentIndex];$("currentPeriod").textContent=p.id+" · "+p.mod;$("periodDates").textContent=fmt(p.start)+" — "+fmt(p.end);
  const badge=$("currentStatus");badge.textContent=shownDate<p.start?"Próximamente":shownDate>p.end?"Disponible para repasar":"Período activo";badge.className="pill "+(shownDate<p.start?"lock":"live");
  const actual=scheduledEncounter(),caption=$("todayLessonCaption"),goClass=$("continue");
  if(actual){
   const e=getEncounter(actual.period,actual.number);
-  caption.textContent="Encuentro "+(actual.number+1)+" · "+e.titulo+" · sábado "+fmt(actual.fecha)+". "+(actual.period===0?"Lección interactiva disponible.":"Guía curricular disponible; lección interactiva en desarrollo.");
-  goClass.disabled=false;goClass.textContent="La clase al día · Encuentro "+(actual.number+1)+" →";
+  caption.textContent=(isRecessWeek()?"Semana de receso: puedes recuperar la última clase. ":"")+"Encuentro "+(actual.number+1)+" · "+e.titulo+" · sábado "+fmt(actual.fecha)+". "+(actual.period===0?"Lección interactiva disponible.":"Guía curricular disponible; lección interactiva en desarrollo.");
+  goClass.disabled=false;goClass.textContent=(isRecessWeek()?"La clase al día · Repasar encuentro ":"La clase al día · Encuentro ")+(actual.number+1)+" →";
  }else{
   caption.textContent="Las clases todavía no han comenzado según el calendario.";
   goClass.disabled=true;goClass.textContent="La clase al día · Próximamente";
@@ -242,7 +242,7 @@ function openPeriod(i){selectedPeriod=i;const p=periods[i],ds=datesFor(p);$("lis
 $("encounterCards").innerHTML=(i===0?'<article><h3>Tu libro del Módulo I</h3><p>El libro completo está disponible para estudiar y repasar. Encontrarás la lectura específica en cada encuentro.</p><a href="modulo1-matematica.pdf" target="_blank" rel="noopener">Abrir el libro de Matemática · Módulo I ↗</a></article>':'')+ds.map((d,n)=>{const item=encounterData(i,n),book=i===0?window.EPJA_MODULO1?.[n]:null,ready=d<=shownDate,hasAttempt=i===0&&n===0&&state.attempts.some(x=>x.activity==="P1-C1-T1-DEMO");const status=ready?(i===0?"Lección interactiva":"Guía y referencias"):"Programado";return '<article><div class="row"><h3>Encuentro '+(n+1)+' · '+item[0]+'</h3><span class="pill '+(ready?'live':'lock')+'">'+status+'</span></div><p class="small muted">Sábado '+fmt(d)+'</p>'+(book?'<p class="small"><b>Libro Módulo I:</b> páginas '+book.paginas+'</p>':'')+'<p>'+item[1]+'</p><p class="small"><b>'+(i===0?"En esta lección aprenderás":"Trabajo previsto")+ ':</b> '+(i===0&&n===0?"a representar ingresos y gastos con letras y números.":item[3])+'</p>'+(ready?'<button class="secondary" data-enc="'+n+'">'+(i===0?'Comenzar lección interactiva →':'Ver guía y referencias →')+'</button>':'<p class="small muted">Se habilitará en la fecha programada.</p>')+'</article>'}).join("");
 $("encounterCards").querySelectorAll("[data-enc]").forEach(b=>b.onclick=()=>openEncounter(i,true,Number(b.dataset.enc)));
  const current=scheduledEncounter();
- if(current&&current.period===i){const b=$("encounterCards").querySelector('[data-enc="'+current.number+'"]');if(b){const card=b.closest("article");card.classList.add("class-week");const status=card.querySelector(".pill");if(status){status.textContent="Clase de la semana";status.classList.add("live")}const label=document.createElement("p");label.className="class-week-label";label.textContent="Esta es la clase correspondiente al calendario";card.insertBefore(label,b)}}
+ if(current&&current.period===i&&!isRecessWeek()){const b=$("encounterCards").querySelector('[data-enc="'+current.number+'"]');if(b){const card=b.closest("article");card.classList.add("class-week");const status=card.querySelector(".pill");if(status){status.textContent="Clase de la semana";status.classList.add("live")}const label=document.createElement("p");label.className="class-week-label";label.textContent="Esta es la clase correspondiente al calendario";card.insertBefore(label,b)}}
  go("lista")}
 function openEncounter(i,navigate=true,n=null){
  const p=periods[i],dates=datesFor(p),available=dates.filter(d=>d<=shownDate),number=n===null?Math.max(1,available.length):n+1;
