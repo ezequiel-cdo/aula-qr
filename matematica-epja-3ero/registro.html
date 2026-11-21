@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Registro de participantes · Aula QR EPJA (piloto)</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#192e54;background:#eff3fb}*{box-sizing:border-box}body{margin:0}
+header{background:#1e3876;color:white;padding:16px max(18px,calc((100vw - 1060px)/2));display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+header a{color:#fff;text-decoration:none;border:1px solid #afc5fb;padding:9px 12px;border-radius:9px}
+main{max-width:720px;margin:24px auto 70px;padding:0 16px}.card{background:white;border:1px solid #d8e1ef;border-radius:16px;padding:25px;box-shadow:0 6px 20px #23396709}
+h1{font-size:clamp(1.4rem,4vw,2rem);margin:0 0 8px}p{line-height:1.5}.muted{color:#5a6780}.warning{border-left:5px solid #d18a19;background:#fff8eb;border-radius:8px;padding:12px;margin:15px 0 22px}
+label{display:block;font-weight:720;margin:14px 0 6px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}input,select{display:block;width:100%;border:1px solid #adbdd2;border-radius:9px;padding:12px;font:inherit;background:#fff;color:#192e54}
+input:focus,select:focus,button:focus-visible{outline:3px solid #f4a42a;outline-offset:2px}
+button{font:inherit;font-weight:700;border:0;border-radius:9px;padding:12px 18px;background:#1e438c;color:white;cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}
+.help{font-size:.85rem;color:#52647b}.lookup{position:relative}.results{position:absolute;top:100%;left:0;right:0;border:1px solid #bac7d9;border-radius:0 0 10px 10px;background:white;z-index:3;box-shadow:0 8px 20px #23406b20;max-height:230px;overflow-y:auto}
+.results[hidden],.selected[hidden],#review[hidden]{display:none}.result{width:100%;border-radius:0;text-align:left;color:#192e54;background:white;border-bottom:1px solid #e8edf5}.result:hover,.result:focus{background:#e8efff}
+.selected{padding:10px;margin-top:10px;background:#e6f6ed;border-radius:9px;color:#155a36}
+.actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}.review{background:#f1f5fd;padding:15px;border-radius:9px;margin-top:18px}#status{min-height:1.5em;font-weight:650}
+@media(max-width:550px){.grid{grid-template-columns:1fr}.card{padding:18px}}
+</style>
+</head>
+<body>
+<header><strong>Aula QR · Matemática EPJA</strong><a href="index.html">← Volver al aula</a></header>
+<main><div class="card">
+<p class="muted">Piloto de identificación · Año escolar 2026–2027</p>
+<h1>Confirma tu matrícula</h1>
+<p>Selecciona el curso y la sección, y comienza a escribir un nombre para probar el autocompletado.</p>
+<div class="warning"><strong>Demostración, sin registro real.</strong> Solo usamos identidades inventadas. No escribas tu nombre real, teléfono ni documento. Todavía no hay conexión con el Registro Maestro ni autorización de acceso.</div>
+<div class="grid"><div><label for="year">Año escolar</label><select id="year"><option value="2026-2027">2026–2027 (vigente)</option></select></div><div><label for="course">Curso</label><select id="course"><option>Tercero</option><option>Cuarto</option></select></div></div>
+<label for="section">Sección</label><select id="section"></select>
+<label for="name">Nombre y apellidos (ficticios)</label>
+<div class="lookup"><input id="name" placeholder="Escribe al menos tres letras" maxlength="100" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="results" aria-expanded="false"><div class="results" id="results" role="listbox" hidden></div></div>
+<p class="help">Admite tildes omitidas, iniciales, abreviaciones y errores leves. Las sugerencias se limitan al curso y sección seleccionados.</p>
+<div class="selected" id="selected" hidden></div>
+<label for="phone">Teléfono ficticio (opcional para la demostración)</label><input id="phone" inputmode="tel" placeholder="809 000 0000" maxlength="18">
+<p class="help">Nunca mostramos teléfonos de la matrícula. La futura activación exigirá verificación individual.</p>
+<div class="actions"><button id="reviewBtn" type="button">Revisar demostración</button></div>
+<p role="status" aria-live="polite" id="status"></p>
+<div id="review" class="review" hidden></div>
+</div></main>
+<script>
+(function(){
+"use strict";
+var demo=[
+{id:"D001",course:"Tercero",section:"A",name:"María Elena Pérez Gómez",aliases:["Maria E Perez","Ma Elena Perez"]},
+{id:"D002",course:"Tercero",section:"A",name:"José Alberto Rodríguez Díaz",aliases:["Jose A Rodriguez","Alberto Rodriguez"]},
+{id:"D003",course:"Tercero",section:"A",name:"Ana Lucía Fernández Cruz",aliases:["Ana L Fernandez","Lucia Fernandez"]},
+{id:"D004",course:"Tercero",section:"B",name:"Carlos Manuel Castillo Ruiz",aliases:["Carlos M Castillo"]},
+{id:"D005",course:"Tercero",section:"B",name:"Rosa Isabel Méndez Soto",aliases:["Rosa Mendez"]},
+{id:"D006",course:"Cuarto",section:"A",name:"Luis Miguel Herrera Santos",aliases:["Luis M Herrera"]},
+{id:"D007",course:"Cuarto",section:"C",name:"Carmen Teresa Núñez Peña",aliases:["Carmen Nunez"]},
+{id:"D008",course:"Cuarto",section:"C",name:"Pedro Antonio Valdez López",aliases:["Pedro A Valdez"]}
+];
+var sections={Tercero:["A","B"],Cuarto:["A","C"]};
+var el=function(id){return document.getElementById(id)}, selected=null, candidates=[];
+function norm(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim()}
+function dist(a,b){if(Math.abs(a.length-b.length)>1)return 99;var prev=Array.from({length:b.length+1},function(_,i){return i});for(var i=1;i<=a.length;i++){var now=[i];for(var j=1;j<=b.length;j++)now[j]=Math.min(now[j-1]+1,prev[j]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=now}return prev[b.length]}
+function score(q,r){var terms=q.split(" ").filter(Boolean),variants=[r.name].concat(r.aliases).map(norm),best=0;variants.forEach(function(v){var words=v.split(" ");if(v===q)best=Math.max(best,100);if(v.startsWith(q))best=Math.max(best,90);if(v.includes(q))best=Math.max(best,75);var hits=terms.map(function(t){if(words.includes(t))return 25;if(words.some(function(w){return w.startsWith(t)}))return 19;if(t.length>=4&&words.some(function(w){return dist(t,w)<=1}))return 12;return 0});if(hits.length&&hits.every(Boolean))best=Math.max(best,hits.reduce(function(a,b){return a+b},5))});return best}
+function close(){el("results").hidden=true;el("results").replaceChildren();el("name").setAttribute("aria-expanded","false")}
+function reset(){selected=null;el("name").value="";el("selected").hidden=true;el("review").hidden=true;el("status").textContent="";close()}
+function choose(rec){selected=rec;el("name").value=rec.name;el("selected").textContent="Nombre ficticio seleccionado: "+rec.name;el("selected").hidden=false;el("status").textContent="";close()}
+function setSections(){var list=sections[el("course").value];el("section").replaceChildren();list.forEach(function(s){var option=document.createElement("option");option.value=s;option.textContent=s;el("section").append(option)});reset()}
+function search(){selected=null;el("selected").hidden=true;el("review").hidden=true;close();var q=norm(el("name").value);if(q.length<3)return;candidates=demo.filter(function(x){return x.course===el("course").value&&x.section===el("section").value}).map(function(x){return {rec:x,rank:score(q,x)}}).filter(function(x){return x.rank>=12}).sort(function(a,b){return b.rank-a.rank}).slice(0,5).map(function(x){return x.rec});el("results").hidden=false;el("name").setAttribute("aria-expanded","true");if(!candidates.length){var p=document.createElement("p");p.className="help";p.style.padding="10px";p.textContent="No hay coincidencias ficticias en este curso y sección.";el("results").append(p)}candidates.forEach(function(rec){var b=document.createElement("button");b.type="button";b.className="result";b.setAttribute("role","option");b.textContent=rec.name;b.addEventListener("click",function(){choose(rec)});el("results").append(b)})}
+el("course").addEventListener("change",setSections);el("section").addEventListener("change",reset);el("name").addEventListener("input",search);
+el("name").addEventListener("keydown",function(e){if(e.key==="Escape")close();if(e.key==="Enter"&&!el("results").hidden&&candidates.length){e.preventDefault();choose(candidates[0])}});
+document.addEventListener("click",function(e){if(!e.target.closest(".lookup"))close()});
+el("reviewBtn").addEventListener("click",function(){if(!selected||el("name").value!==selected.name){el("status").textContent="Selecciona un nombre de la lista ficticia antes de continuar.";return}el("status").textContent="Demostración completada: no se han enviado ni guardado datos.";el("review").replaceChildren();var p=document.createElement("p");p.textContent="Año: "+el("year").value+" · Curso: "+selected.course+" · Sección: "+selected.section+" · Nombre ficticio: "+selected.name;el("review").append(p);var note=document.createElement("p");note.textContent="La validación institucional y el acceso al aula todavía están pendientes de un servicio seguro.";el("review").append(note);el("review").hidden=false});
+setSections();
+})();
+</script>
+</body></html>
