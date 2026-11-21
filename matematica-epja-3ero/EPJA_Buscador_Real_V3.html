@@ -1,0 +1,54 @@
+<!doctype html><html lang="es"><head><base target="_top"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Identificación del participante · Aula QR</title><style>
+*{box-sizing:border-box}body{font:16px system-ui,Arial,sans-serif;color:#1e3155;background:#eff3fb;padding:0;margin:0}
+header{background:#1e3876;color:white;padding:18px max(16px,calc((100vw - 760px)/2))}
+main{max-width:740px;margin:24px auto 60px;padding:0 16px}.card{background:#fff;border:1px solid #dce4ef;border-radius:14px;padding:24px}
+label{font-weight:700;display:block;margin:15px 0 6px}select,input{width:100%;padding:12px;border:1px solid #a9b6cd;border-radius:8px;font:inherit;background:white;color:inherit}
+button{display:block;text-align:left;background:#eef4ff;color:#193b7c;border:1px solid #cad7ed;border-radius:8px;padding:11px;margin:7px 0;width:100%;cursor:pointer;font:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #f5a52d;outline-offset:2px}
+.note{background:#eef6ff;border-left:4px solid #32799b;padding:11px;border-radius:5px;font-size:14px}
+.small{font-size:13px;color:#56647c}.ok{background:#e7f6ec;padding:12px;border-radius:7px}h1{font-size:clamp(1.5rem,4vw,2rem);margin:4px 0 12px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}#results{margin-top:10px}#results[hidden],#selected[hidden]{display:none}
+@media(max-width:520px){.row{grid-template-columns:1fr}.card{padding:17px}}
+</style></head><body><header><strong>Aula QR · Matemática EPJA</strong></header><main><div class="card">
+<h1>Identificación del participante</h1>
+<p class="note">Selecciona año, curso y sección. Luego escribe tres letras de tu nombre para encontrarlo en el Registro Maestro. Esta es una identificación declarada; la confirmación por teléfono se incorporará posteriormente.</p>
+<label for="year">Año escolar</label><select id="year"></select>
+<div class="row"><div><label for="course">Curso</label><select id="course"></select></div><div><label for="section">Sección</label><select id="section"></select></div></div>
+<label for="name">Nombre del participante</label><input id="name" autocomplete="off" placeholder="Escribe al menos tres letras" maxlength="80" aria-controls="results">
+<p class="small" id="message" role="status" aria-live="polite">Cargando cursos autorizados…</p>
+<div id="results" hidden></div><div id="selected" hidden class="ok"></div>
+<p class="small">La selección no concede acceso a calificaciones, teléfonos ni otros datos personales.</p>
+</div></main><script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);let contexts=[],counter=0,timer=null;
+function unique(arr){return [...new Set(arr)]}
+function options(id,vals){$(id).replaceChildren();vals.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;$(id).append(o)})}
+function reset(){clearTimeout(timer);counter++;$('results').hidden=true;$('results').replaceChildren();$('selected').hidden=true}
+function updateCourses(){options('course',unique(contexts.filter(x=>x.anio===$('year').value).map(x=>x.curso)));updateSections()}
+function updateSections(){options('section',unique(contexts.filter(x=>x.anio===$('year').value&&x.curso===$('course').value).map(x=>x.seccion)));reset();$('name').value='';$('message').textContent='Escribe al menos tres letras.'}
+function search(){reset();const query=$('name').value.trim(),req=++counter;
+ if(query.length<3){$('message').textContent='Escribe al menos tres letras.';return}
+ $('message').textContent='Buscando dentro de la sección seleccionada…';
+ timer=setTimeout(()=>google.script.run.withSuccessHandler(rows=>{
+  if(req!==counter)return;
+  $('results').replaceChildren();$('results').hidden=false;
+  if(!rows.length){$('message').textContent='Sin coincidencias; comprueba la escritura o consulta al docente.';return}
+  $('message').textContent=rows.length+' coincidencia(s) mostrada(s).';
+  rows.forEach(r=>{const b=document.createElement('button');b.type='button';b.textContent=r.nombre;
+   b.addEventListener('click',()=>{
+    reset();$('name').value=r.nombre;
+    $('selected').textContent='Te has identificado como: '+r.nombre+' · '+$('year').value+' · '+$('course').value+' · '+$('section').value+'. Identificación declarada; pendiente de confirmación futura.';
+    $('selected').hidden=false;$('message').textContent='Nombre seleccionado correctamente.';
+   });$('results').append(b)})
+ }).withFailureHandler(err=>{if(req===counter)$('message').textContent='No se pudo consultar: '+(err&&err.message||'error')})
+ .epjaV3BuscarNombresPublico($('year').value,$('course').value,$('section').value,query),280)}
+$('year').addEventListener('change',updateCourses);
+$('course').addEventListener('change',updateSections);
+$('section').addEventListener('change',()=>{reset();$('name').value='';$('message').textContent='Escribe al menos tres letras.'});
+$('name').addEventListener('input',search);
+google.script.run.withSuccessHandler(rows=>{contexts=rows||[];options('year',unique(contexts.map(x=>x.anio)));updateCourses();$('message').textContent=contexts.length?'Escribe al menos tres letras.':'No hay grupos disponibles.'})
+.withFailureHandler(err=>{$('message').textContent='No se pudo leer el Registro Maestro: '+(err&&err.message||'error')}).epjaV3ContextosPublicos();
+})();
+</script></body></html>
