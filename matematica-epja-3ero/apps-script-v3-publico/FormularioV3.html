@@ -34,7 +34,7 @@ function search(){clear();const query=$('name').value.trim(),req=++counter;if(qu
  $('message').textContent='Revisa que este sea tu nombre antes de continuar.'});$('results').append(b)})
  }).withFailureHandler(()=>{if(req===counter)$('message').textContent='No se pudo consultar el Registro Maestro. Vuelve a intentarlo.'})
  .epjaPublicoBuscarNombres($('year').value,$('course').value,$('section').value,query),280)}
-$('year').addEventListener('change',courses);$('course').addEventListener('change',sections);$('section').addEventListener('change',sections);$('name').addEventListener('input',search);
+$('year').addEventListener('change',courses);$('course').addEventListener('change',sections);$('section').addEventListener('change',()=>{clear();$('name').value='';$('message').textContent='Escribe al menos tres letras.'});$('name').addEventListener('input',search);
 $('continue').addEventListener('click',()=>{if(!selected)return;$('selected').textContent='Nombre identificado de forma declarada: '+selected.nombre+'. Curso '+selected.curso+', sección '+selected.seccion+'. Puedes continuar explorando los materiales del Aula QR. Las calificaciones personales siguen sin estar habilitadas.';$('message').textContent='Identificación declarada completada. No se verificó identidad ni se creó acceso.'});
 google.script.run.withSuccessHandler(rows=>{contexts=rows||[];if(!contexts.length){$('message').textContent='No hay cursos disponibles.';return}options('year',unique(contexts.map(x=>x.anio)));courses()}).withFailureHandler(()=>$('message').textContent='Error al cargar cursos. Contacta al docente.').epjaPublicoContextos();
 })();
