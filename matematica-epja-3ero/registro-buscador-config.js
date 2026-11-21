@@ -1,2 +1,2 @@
-/* URL /exec de la implementación web del V3 EXISTENTE (tras desactivar V4 y revisar funciones públicas V1/V2). */
-window.EPJA_BUSCADOR_V3_URL = "";
+/* Aplicación web de SOLO LECTURA V3, probada sin cuenta Google desde Microsoft Edge. */
+window.EPJA_BUSCADOR_V3_URL = "https://script.google.com/macros/s/AKfycbxMsZAR6ZSpbarcc7VsjTq5dl50wkhlXsMSWTc9YCI1E4DJrNVhdzDQj8goHEtAPA/exec";
