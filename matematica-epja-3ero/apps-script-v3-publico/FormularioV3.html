@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es"><head><base target="_top"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Identificación · Aula QR EPJA</title>
+<style>*{box-sizing:border-box}body{font:16px system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#1e3155;background:#eff3fb;margin:0}header{background:#173b61;color:white;padding:16px max(18px,calc((100vw - 820px)/2));font-weight:750}main{max-width:720px;margin:28px auto;padding:0 16px}.card{background:white;border:1px solid #dce4ef;border-radius:16px;padding:24px;box-shadow:0 8px 24px #163b610c}h1{font-size:clamp(1.5rem,4vw,2rem);margin:6px 0}p{line-height:1.5}label{font-weight:700;display:block;margin:16px 0 6px}select,input{width:100%;padding:12px;border:1px solid #a9b6cd;border-radius:9px;font:inherit;background:white;color:#1e3155}button{display:block;text-align:left;background:#eef4ff;color:#193b7c;border:1px solid #cad7ed;border-radius:8px;padding:12px;margin:7px 0;width:100%;font:inherit;cursor:pointer}button:hover{background:#dcecff}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #f4a42a;outline-offset:2px}.note{background:#eaf5ff;border-left:4px solid #277699;padding:12px;border-radius:7px;font-size:.92rem}.small{font-size:.85rem;color:#56647c}.ok{background:#e7f6ec;padding:12px;border-radius:9px;margin-top:12px}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}#results{margin-top:10px}#results[hidden],#selected[hidden]{display:none}.status{min-height:1.5rem}.start{display:inline-block;width:auto;background:#1e438c;color:#fff;border:0;font-weight:750;text-align:center;margin-top:12px}.start:disabled{opacity:.55;cursor:not-allowed}@media(max-width:520px){.row{grid-template-columns:1fr}.card{padding:18px}}</style>
+</head><body><header>Aula QR · Matemática EPJA</header><main><div class="card">
+<p class="small">Registro Maestro · Año escolar vigente</p><h1>Identificación del participante</h1>
+<p>Selecciona tu curso y sección. Escribe parte de tu nombre para encontrar tu matrícula. No tienes que escribir tildes.</p>
+<p class="note"><b>Identificación inicial.</b> Elegir un nombre no demuestra todavía que eres su titular. La comprobación por teléfono se incorporará más adelante. No aparecen teléfonos ni documentos nacionales.</p>
+<label for="year">Año escolar</label><select id="year" aria-label="Año escolar"></select>
+<div class="row"><div><label for="course">Curso</label><select id="course"></select></div><div><label for="section">Sección</label><select id="section"></select></div></div>
+<label for="name">Nombre y apellidos</label><input id="name" autocomplete="off" placeholder="Escribe al menos tres letras" maxlength="80" aria-controls="results" aria-expanded="false" role="combobox" aria-autocomplete="list">
+<p class="small status" id="message" role="status" aria-live="polite">Cargando cursos y secciones…</p>
+<div id="results" role="listbox" hidden></div><div id="selected" hidden class="ok"></div>
+<button id="continue" class="start" type="button" disabled>Identificarme y continuar →</button>
+<p class="small">La selección funciona en esta sesión del navegador; no activa una cuenta ni da acceso a calificaciones.</p>
+</div></main>
+<script>
+(function(){'use strict';
+const $=id=>document.getElementById(id);
+let contexts=[],counter=0,timer=null,selected=null;
+const unique=arr=>[...new Set(arr)];
+function options(id,vals){$(id).replaceChildren();vals.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;$(id).append(o)})}
+function clear(){clearTimeout(timer);counter++;selected=null;$('continue').disabled=true;$('selected').hidden=true;$('results').hidden=true;$('results').replaceChildren();$('name').setAttribute('aria-expanded','false')}
+function courses(){options('course',unique(contexts.filter(x=>x.anio===$('year').value).map(x=>x.curso)));sections()}
+function sections(){options('section',unique(contexts.filter(x=>x.anio===$('year').value&&x.curso===$('course').value).map(x=>x.seccion)));clear();$('name').value='';$('message').textContent='Escribe al menos tres letras.'}
+function search(){clear();const query=$('name').value.trim(),req=++counter;if(query.length<3){$('message').textContent='Escribe al menos tres letras.';return}
+ $('message').textContent='Buscando dentro de la sección seleccionada…';timer=setTimeout(()=>google.script.run
+ .withSuccessHandler(rows=>{if(req!==counter)return;$('results').replaceChildren();$('results').hidden=false;$('name').setAttribute('aria-expanded','true');
+ if(!rows.length){$('message').textContent='No hay coincidencias. Comprueba la escritura o consulta al docente.';return}
+ $('message').textContent=rows.length+' coincidencia(s) mostrada(s).';
+ rows.forEach(r=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','option');b.textContent=r.nombre;b.addEventListener('click',()=>{
+ selected={nombre:r.nombre,anio:$('year').value,curso:$('course').value,seccion:$('section').value};
+ $('name').value=r.nombre;$('selected').textContent='Has seleccionado: '+r.nombre+' · '+selected.curso+' '+selected.seccion;
+ $('selected').hidden=false;$('results').hidden=true;$('name').setAttribute('aria-expanded','false');$('continue').disabled=false;
+ $('message').textContent='Revisa que este sea tu nombre antes de continuar.'});$('results').append(b)})
+ }).withFailureHandler(()=>{if(req===counter)$('message').textContent='No se pudo consultar el Registro Maestro. Vuelve a intentarlo.'})
+ .epjaPublicoBuscarNombres($('year').value,$('course').value,$('section').value,query),280)}
+$('year').addEventListener('change',courses);$('course').addEventListener('change',sections);$('section').addEventListener('change',sections);$('name').addEventListener('input',search);
+$('continue').addEventListener('click',()=>{if(!selected)return;$('selected').textContent='Nombre identificado de forma declarada: '+selected.nombre+'. Curso '+selected.curso+', sección '+selected.seccion+'. Puedes continuar explorando los materiales del Aula QR. Las calificaciones personales siguen sin estar habilitadas.';$('message').textContent='Identificación declarada completada. No se verificó identidad ni se creó acceso.'});
+google.script.run.withSuccessHandler(rows=>{contexts=rows||[];if(!contexts.length){$('message').textContent='No hay cursos disponibles.';return}options('year',unique(contexts.map(x=>x.anio)));courses()}).withFailureHandler(()=>$('message').textContent='Error al cargar cursos. Contacta al docente.').epjaPublicoContextos();
+})();
+</script></body></html>
