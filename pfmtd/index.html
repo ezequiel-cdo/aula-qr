@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PFMTTD | Encuadre e inicio de sesión v1.5.1 · AulaQR</title>
+<title>PFMTTD | Encuadre e inicio de sesión v1.5.3 · AulaQR</title>
 <!-- Objeto: encuadre público PFMTTD; versión 1.0.1-github; fecha 2026-11-15.
 Estado: prototipo en revisión. Nuevo: se retira el recurso independiente AulaQR; permanecen construcción conceptual y práctica formativa. La franja 15:00–16:00 requiere armonización del RT-03. Diagnóstico previo en proceso de armonización curricular.
 Correcciones: elimina avisos superados. Sólo proyecta propuestas aprobadas; lista nominal autorizada publicada.
@@ -127,7 +127,7 @@ footer{display:none}
 #modalBody .recall-reveal{border-left:5px solid #17914a;background:#eaf7f0;padding:13px 16px;border-radius:8px;margin-top:12px}
 @media(max-width:820px){#sesion .pf-brand{margin:4% 4% 0}#sesion .pf-brand .pf-pill{white-space:normal}#sesion .pf-kicker{margin:4% 4% 0}#sesion h1{margin:2% 4%}#sesion>.lead{margin:0 4%}#sesion .pf-session-cards{margin:5% 4%;grid-template-columns:1fr}#sesion .pf-session-note{margin:5% 4%}#modalBody .recall-prompts{grid-template-columns:1fr}}
 
-/* Etapa 3: desarrollo de la sesión, v1.5.1 */
+/* Etapa 3: desarrollo de la sesión, v1.5.3 */
 #desarrollo{background:linear-gradient(132deg,#f4f8ff,#fff 70%)}
 #desarrollo:before{content:"";position:absolute;left:0;top:0;bottom:0;width:1%;background:linear-gradient(#1136ad 0 70%,#fff 70% 72%,#ef8d15 72%)}
 #desarrollo .pf-brand{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4.1% 7% 0}
@@ -155,7 +155,7 @@ footer{display:none}
 #modalBody .concept-check{border-left:5px solid #18914c;background:#eaf7ef;padding:13px 18px;border-radius:8px;margin-top:14px}
 @media(max-width:820px){#desarrollo .pf-brand{margin:4% 4% 0}#desarrollo .pf-brand .pf-pill{white-space:normal}#desarrollo .pf-kicker{margin:4% 4% 0}#desarrollo h1{margin:2% 4%}#desarrollo>.lead{margin:0 4%}#desarrollo .pf-session-cards{margin:5% 4%;grid-template-columns:1fr}#desarrollo .pf-session-note{margin:5% 4%}}
 
-/* v1.5.1: pantalla única por comunidad, contraste y tipografía amplia */
+/* v1.5.3: pantalla única por comunidad, contraste y tipografía amplia */
 .lab-draw-dialog{width:min(1060px,96vw);max-height:92vh;padding:clamp(1rem,2.5vw,2rem)}
 .lab-fixed-legend{font-size:clamp(.95rem,1.55vw,1.16rem);border-bottom:1px solid #cbd8eb;padding:.7rem 0;line-height:1.4}
 .lab-progress{font-weight:800;font-size:clamp(1.1rem,1.7vw,1.3rem);color:#50617a;margin:1rem 0 .4rem}
@@ -185,7 +185,7 @@ footer{display:none}
 .evocation-nav button{min-height:44px}
 .evocation-feedback[hidden]{display:none}
 
-/* v1.5.1 — ficha de pilares legible en proyección, práctica formativa breve */
+/* v1.5.3 — ficha de pilares legible en proyección, práctica formativa breve */
 .maturity-path{display:flex;justify-content:center;flex-wrap:wrap;gap:.35rem;border-radius:9px;background:#eaf0ff;color:#143aa4;font-weight:800;font-size:clamp(.86rem,1.35vw,1.08rem);padding:.75rem;margin:.8rem 0}
 .maturity-path span{color:#e78209}
 .maturity-tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:8px;margin:.85rem 0}
@@ -228,11 +228,11 @@ footer{display:none}
 #cierre-curso .pf-session-note{margin:2.5% 5%;padding:14px 17px;border-left:5px solid #e78209;background:#fff;border-radius:9px}
 @media(max-width:820px){#cierre-curso .pf-session-cards{grid-template-columns:1fr}#cierre-curso .pf-session-card{min-height:115px}}
 
-/* v1.5.1: las marcas horarias son privadas del RT-03, nunca de la proyección. */
+/* v1.5.3: las marcas horarias son privadas del RT-03, nunca de la proyección. */
 #cierre-sesion .time,#cierre-curso .time{display:none!important}
 #cierre-sesion [data-internal-time],#cierre-curso [data-internal-time]{display:none!important}
 
-/* Semáforo temporal discreto v1.5.1: no muestra tiempos ni leyendas públicas. */
+/* Semáforo temporal discreto v1.5.3: no muestra tiempos ni leyendas públicas. */
 #panel.silent-stage,#sesion.silent-stage,#desarrollo.silent-stage,#cierre-sesion.silent-stage,#cierre-curso.silent-stage{position:relative}
 #panel.silent-stage::before,#sesion.silent-stage::before,#desarrollo.silent-stage::before,#cierre-sesion.silent-stage::before,#cierre-curso.silent-stage::before{
  content:"";position:absolute;top:0;left:0;height:2px;width:var(--silent-stage-progress,0%);background:#6281cb;opacity:.32;pointer-events:none;border-radius:16px}
@@ -247,21 +247,6 @@ footer{display:none}
 
 /* Etiquetas temporales: restringidas al guion y temporizador interno. */
 #sesion .time,#desarrollo .time{display:none!important}
-
-/* v1.5.1: encuadre progresivo, sin secuencia visible ni cronómetro público */
-#panel .pf-encuadre-welcome{margin:clamp(3rem,9vh,7rem) auto 0;max-width:760px;padding:clamp(1rem,3vw,2rem);text-align:center}
-#panel .pf-encuadre-welcome p{font-size:clamp(1.1rem,1.8vw,1.5rem);color:#344763;line-height:1.5}
-#panel #encuadre-comenzar{font-size:clamp(1.1rem,1.6vw,1.35rem);padding:1.1rem 2rem;margin-top:1.25rem;text-align:center}
-#modal .pf-sequence-actions{display:flex;gap:.7rem;justify-content:space-between;flex-wrap:wrap;border-top:1px solid #dce5f3;margin-top:1.8rem;padding-top:1.1rem}
-#modal .pf-sequence-actions button{min-height:46px}
-#modal .pf-sequence-actions button[hidden]{display:none}
-#modal[data-silent-status="active"]{box-shadow:0 0 0 3px #22864b66,0 15px 60px #12294b4b}
-#modal[data-silent-status="on-time"]{box-shadow:0 0 0 3px #2850bb66,0 15px 60px #12294b4b}
-#modal[data-silent-status="late"]{box-shadow:0 0 0 3px #d5914370,0 15px 60px #12294b4b}
-#encuadreGuideDialog{width:min(760px,94vw)}
-#encuadreGuideDialog .pf-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}
-#encuadreGuideDialog .pf-guide-grid button{min-height:50px;font-size:1rem;text-align:left}
-@media(max-width:600px){#encuadreGuideDialog .pf-guide-grid{grid-template-columns:1fr}#modal .pf-sequence-actions{flex-direction:column}}
 
 /* Jerarquía curricular visible: programa → módulo → RA1.1; sin marcas horarias. */
 #modalBody .pf-competency{background:#edf3ff;border-left:5px solid #1643b0;border-radius:10px;padding:clamp(.9rem,1.6vw,1.3rem);margin:14px 0}
@@ -286,10 +271,17 @@ footer{display:none}
 <p class="pf-kicker">BIENVENIDOS A NUESTRA EXPERIENCIA</p>
 <h1>Comencemos juntos</h1>
 <p class="lead">Un espacio para conocernos, construir confianza y aprender desde nuestra experiencia.</p>
-<div class="pf-encuadre-welcome">
-<p>Tu experiencia, tus ideas y tu participación hacen posible este aprendizaje.</p>
-<button type="button" id="encuadre-comenzar">Comenzar nuestra experiencia →</button>
-</div>
+<div class="grid">
+<div class="card"><button data-modal="bienvenida">♫ Bienvenida<small>Color Esperanza y motivación</small></button></div>
+<div class="card"><button data-modal="facilitador">👤 El facilitador<small>Conozcamos a Ezequiel</small></button></div>
+<div class="card"><button data-modal="participantes">🎤 Nos presentamos<small>Nombre y actividad productiva</small></button></div>
+<div class="card"><button data-modal="integracion">💬 Integración<small>Tecnología en nuestro trabajo</small></button></div>
+<div class="card"><button data-modal="comunidades">◉ Comunidades<small>Ruleta y equipos de aprendizaje</small></button></div>
+<div class="card"><button data-modal="acuerdos">🤝 Nuestros acuerdos<small>Construyamos la convivencia</small></button></div>
+<div class="card"><button data-modal="programa">▤ Nuestro programa<small>Competencia, módulos y metodología</small></button></div>
+<div class="card"><button data-modal="tema">💡 Tema y aprendizaje<small>Conceptos, RA y compromiso</small></button></div>
+<div class="card"><button data-modal="expectativas">✦ Expectativas<small>Lo que esperamos lograr</small></button></div>
+</div><div class="pf-participation"><strong>Un espacio para participar</strong> con o sin teléfono. Los recursos se abren y regresan a esta pantalla.</div>
 </section>
 <section id="sesion" class="screen" hidden>
 <div class="pf-brand"><div><strong>PFMTTD</strong><span class="pf-word"> / Formación por competencias</span></div><span class="pf-pill">INICIO DE SESIÓN</span></div>
@@ -343,7 +335,7 @@ footer{display:none}
 </main>
 <div class="pf-bottom"><button id="backSlide" type="button">← Anterior</button><span id="slideCounter">1 / 6</span><button id="nextSlide" type="button">Siguiente →</button><span class="pf-minitext" style="position:absolute;right:14px;color:#dce8ff">Teclas ← → · F: pantalla completa</span></div>
 <dialog id="modal"><div class="head"><strong id="modalTitle"></strong><button class="secondary" id="close">Cerrar ×</button></div><div id="modalBody"></div></dialog>
-<dialog id="encuadreGuideDialog" aria-labelledby="encuadreGuideTitle"><div class="head"><strong id="encuadreGuideTitle">Acceso a actividades del encuadre</strong><button type="button" id="encuadreGuideClose" class="secondary">Cerrar ×</button></div><p>Selecciona un recurso para recuperar el momento que necesitas. La presentación conserva el tiempo transcurrido.</p><div class="pf-guide-grid" id="encuadreGuideList"></div></dialog>
+
 <dialog id="labDrawDialog" aria-labelledby="labDrawHeading" class="lab-draw-dialog">
 <div class="head"><strong id="labDrawHeading">Sorteo de perspectivas de negocio</strong><button type="button" class="secondary" id="lab-draw-close">Volver a la actividad ×</button></div>
 <p class="lab-fixed-legend"><strong>COMUNIDAD</strong> = equipo de aprendizaje. <strong>PERSPECTIVA</strong> = situación de negocio. <strong>No cambian los integrantes.</strong></p>
@@ -457,44 +449,10 @@ const silentClock=(()=>{
  return {start,elapsed,resource,section,paint,closeResource,exportLog};
 })();
 
-const encuadreSequence=[
- {id:'bienvenida',name:'Bienvenida'},
- {id:'facilitador',name:'El facilitador'},
- {id:'participantes',name:'Nos presentamos'},
- {id:'integracion',name:'Integración'},
- {id:'comunidades',name:'Comunidades'},
- {id:'acuerdos',name:'Nuestros acuerdos'},
- {id:'programa',name:'Nuestro programa'},
- {id:'tema',name:'Tema y aprendizaje'},
- {id:'expectativas',name:'Expectativas'}
-];
-let encuadreCurrent=0;
-const encuadreGuide=document.getElementById('encuadreGuideDialog');
-const encuadreGuideList=document.getElementById('encuadreGuideList');
-const openEncadreGuide=()=>{
- if(slideIndex()!==1)return;
- encuadreGuideList.replaceChildren();
- encuadreSequence.forEach((item,i)=>{
-  const btn=document.createElement('button');btn.type='button';btn.className='secondary';btn.textContent=item.name;
-  btn.onclick=()=>{encuadreGuide.close();openModal(item.id)};
-  encuadreGuideList.append(btn);
- });
- encuadreGuide.showModal();
-};
-document.getElementById('encuadreGuideClose').onclick=()=>encuadreGuide.close();
-document.getElementById('encuadre-comenzar').onclick=()=>openModal(encuadreSequence[encuadreCurrent].id);
-document.addEventListener('keydown',e=>{
- if((e.key.toLowerCase()==='g'&&!e.ctrlKey&&!e.altKey&&!e.metaKey)|| (e.altKey&&e.shiftKey&&e.key.toLowerCase()==='g')){
-  if(e.target instanceof HTMLElement&&['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName))return;
-  if(slideIndex()!==1)return;
-  e.preventDefault();openEncadreGuide();
- }
-});
-
 const SECTIONS=['portada','panel','sesion','desarrollo','cierre-sesion','cierre-curso'];
 function slideIndex(){return SECTIONS.findIndex(id=>!document.getElementById(id).hidden)}
 function showSlide(index){const n=Math.max(0,Math.min(SECTIONS.length-1,index));SECTIONS.forEach((id,i)=>document.getElementById(id).hidden=(i!==n));updateSlideBar();silentClock.section(SECTIONS[n]);silentClock.paint()}
-function showPanel(){silentClock.start();encuadreCurrent=0;showSlide(1);openModal(encuadreSequence[0].id)}
+function showPanel(){silentClock.start();showSlide(1)}
 function showCover(){showSlide(0)}
 function updateSlideBar(){const n=slideIndex();document.getElementById('slideCounter').textContent=(n+1)+' / '+SECTIONS.length;document.getElementById('backSlide').disabled=(n<=0);document.getElementById('nextSlide').disabled=(n>=SECTIONS.length-1)}
 document.getElementById('backSlide').onclick=()=>showSlide(slideIndex()-1);
@@ -505,27 +463,7 @@ const dlg=document.querySelector('#modal'), title=document.querySelector('#modal
 document.querySelector('#close').onclick=()=>{silentClock.closeResource();dlg.close()};
 dlg.addEventListener('close',()=>{silentClock.closeResource();delete dlg.dataset.silentStatus});
 document.querySelectorAll('[data-modal]').forEach(b=>b.onclick=()=>openModal(b.dataset.modal));
-function openModal(id){
- const c=views[id];if(!c)return;
- silentClock.resource(id);title.textContent=c[0];body.innerHTML=c[1]();
- if(!dlg.open)dlg.showModal();
- if(c[2])c[2]();
- const at=encuadreSequence.findIndex(x=>x.id===id);
- if(at!==-1){encuadreCurrent=at;addEncadreNavigation();}
- silentClock.paint();
-}
-function addEncadreNavigation(){
- const controls=document.createElement('div');controls.className='pf-sequence-actions';
- const prev=document.createElement('button'),next=document.createElement('button');
- prev.type='button';prev.className='secondary';prev.textContent='← Anterior';prev.disabled=encuadreCurrent===0;
- next.type='button';next.textContent=encuadreCurrent===encuadreSequence.length-1?'Terminar encuadre':'Continuar →';
- controls.append(prev,next);body.append(controls);
- prev.onclick=()=>{if(encuadreCurrent>0)openModal(encuadreSequence[encuadreCurrent-1].id)};
- next.onclick=()=>{
-  if(encuadreCurrent===encuadreSequence.length-1){silentClock.closeResource();dlg.close();return}
-  openModal(encuadreSequence[encuadreCurrent+1].id);
- };
-}
+function openModal(id){const c=views[id];if(!c)return;silentClock.resource(id);title.textContent=c[0];body.innerHTML=c[1]();if(!dlg.open)dlg.showModal();if(c[2])c[2]();silentClock.paint()}
 
 const esc=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 
