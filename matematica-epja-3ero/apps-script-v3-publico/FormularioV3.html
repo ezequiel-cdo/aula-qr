@@ -12,7 +12,7 @@
 <div id="results" role="listbox" hidden></div><div id="selected" hidden class="ok"></div>
 <a id="continue" class="start" target="_top" href="https://ezequiel-cdo.github.io/aula-qr/prepara-canastica/" hidden>Continuar como: participante →</a>
 <p><a class="back" target="_top" href="https://ezequiel-cdo.github.io/aula-qr/prepara-canastica/">← Volver a la portada institucional</a></p>
-<p class="small">Esta es una identificación declarada para orientar hacia el aula. No acredita identidad ni permite acceder a notas o datos privados.</p>
+<p class="small">Tu nombre, curso y sección se mostrarán dentro del aula durante esta pestaña para ayudarte a reconocer el espacio correcto. Esta identificación es declarada, no autoriza calificaciones ni datos privados.</p>
 </div></main>
 <script>
 (function(){'use strict';
@@ -41,7 +41,12 @@ function search(){clear();const query=$('name').value.trim(),req=++counter;if(qu
        $('selected').textContent='Has seleccionado: '+info.nombre+' · '+info.curso+' · sección '+info.seccion;
        $('selected').hidden=false;
        $('continue').textContent='Continuar como: '+info.nombre+' →';
-       $('continue').href=info.destino;
+       // Transferencia de identificación declarada hacia GitHub Pages.
+       // No incluye ID_Estudiante, UUID ni matrícula. El aula elimina el hash
+       // inmediatamente y conserva el contexto solo en esta pestaña.
+       const declaracion={v:1,nombre:info.nombre,anio:info.anio,
+         curso:info.curso,seccion:info.seccion};
+       $('continue').href=info.destino+'#epja='+encodeURIComponent(JSON.stringify(declaracion));
        $('continue').hidden=false;
        $('message').textContent='Revisa el nombre antes de continuar.';
      })
