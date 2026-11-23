@@ -10,8 +10,8 @@
 <label for="name">Nombre y apellidos</label><input id="name" autocomplete="off" placeholder="Escribe al menos tres letras" maxlength="80" aria-controls="results" aria-expanded="false" role="combobox" aria-autocomplete="list">
 <p class="small status" id="message" role="status" aria-live="polite">Cargando cursos y secciones…</p>
 <div id="results" role="listbox" hidden></div><div id="selected" hidden class="ok"></div>
-<a id="continue" class="start" target="_top" href="https://ezequiel-cdo.github.io/aula-qr/matematica-epja-3ero/" hidden>Identificarme y continuar →</a>
-<p><a class="back" target="_top" href="https://ezequiel-cdo.github.io/aula-qr/matematica-epja-3ero/">← Volver a la portada del Aula QR</a></p>
+<a id="continue" class="start" target="_top" href="https://ezequiel-cdo.github.io/aula-qr/matematica-epja-3ero/" hidden>Continuar como: participante →</a>
+<p><a class="back" target="_top" href="https://ezequiel-cdo.github.io/aula-qr/prepara-canastica/">← Volver a la portada institucional</a></p>
 <p class="small">La selección funciona en esta sesión del navegador; no activa una cuenta ni da acceso a calificaciones.</p>
 </div></main>
 <script>
@@ -30,8 +30,11 @@ function search(){clear();const query=$('name').value.trim(),req=++counter;if(qu
  $('message').textContent=rows.length+' coincidencia(s) mostrada(s).';
  rows.forEach(r=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','option');b.textContent=r.nombre;b.addEventListener('click',()=>{
  selected={nombre:r.nombre,anio:$('year').value,curso:$('course').value,seccion:$('section').value};
- $('name').value=r.nombre;$('selected').textContent='Has seleccionado: '+r.nombre+' · '+selected.curso+' '+selected.seccion;
- $('selected').hidden=false;$('results').hidden=true;$('name').setAttribute('aria-expanded','false');$('continue').hidden=false;
+ $('name').value=r.nombre;$('selected').textContent='Has seleccionado: '+r.nombre+' · '+selected.curso+' · sección '+selected.seccion;
+ $('selected').hidden=false;$('results').hidden=true;$('name').setAttribute('aria-expanded','false');
+ const destinos={'Tercero':'https://ezequiel-cdo.github.io/aula-qr/matematica-epja-3ero/','Cuarto':'https://ezequiel-cdo.github.io/aula-qr/matematica-epja-4to/'};
+ const destino=destinos[selected.curso];
+ if(destino){$('continue').textContent='Continuar como: '+selected.nombre+' →';$('continue').href=destino;$('continue').hidden=false;}else{$('message').textContent='Este curso aún no tiene un aula asignada. Consulta al docente.';}
  $('message').textContent='Revisa que este sea tu nombre antes de continuar.'});$('results').append(b)})
  }).withFailureHandler(()=>{if(req===counter)$('message').textContent='No se pudo consultar el Registro Maestro. Vuelve a intentarlo.'})
  .epjaPublicoBuscarNombres($('year').value,$('course').value,$('section').value,query),280)}
