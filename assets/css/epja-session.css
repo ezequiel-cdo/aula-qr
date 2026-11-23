@@ -10,12 +10,12 @@ body.epja-identity-loading main{display:none}
 .epja-identity-change{font-size:.85rem}
 
 /* La identificación válida forma una sola unidad visual centrada con el grado. */
-#portada .cover:has(> .epja-identity-embedded),
-.hero .graphic:has(> .epja-identity-embedded){
+#portada .cover.epja-grade-with-identity,
+.hero .graphic.epja-grade-with-identity{
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
 }
 #portada .cover:has(> .epja-identity-embedded) > img,
-.hero .graphic:has(> .epja-identity-embedded) > img{
+.hero .graphic.epja-grade-with-identity > img{
   display:block;width:100%;height:auto;object-fit:contain;
 }
 .epja-identity.epja-identity-embedded{
