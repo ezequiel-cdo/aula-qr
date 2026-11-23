@@ -17,6 +17,14 @@ h1{font-size:clamp(1.8rem,4.5vw,3rem);line-height:1.13;margin:12px 0 18px}h2{fon
 .card p{font-size:.91rem;margin-bottom:0}
 footer{text-align:center;font-size:.85rem;color:#577086;padding:25px 18px}
 @media(max-width:650px){.hero{grid-template-columns:1fr;padding:25px;gap:9px;text-align:center}.logo{max-width:165px}.cards{grid-template-columns:1fr}.cta{width:100%}}
+
+.grade-section{margin-top:26px}.grade-section h2{margin:0 0 12px}.grade-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.grade-link{display:block;text-decoration:none;color:#213b59;background:#fff;border-radius:14px;border:1px solid #d5e2ee;padding:14px;transition:transform .15s}
+.grade-link:hover{transform:translateY(-2px)}.grade-link img{display:block;width:100%;aspect-ratio:1.1;object-fit:contain;margin-bottom:8px}
+.grade-link .gradenum{font-weight:850;font-size:2rem;display:flex;align-items:center;justify-content:center;aspect-ratio:1.1;margin-bottom:8px;border-radius:10px;background:#f4f7fc}
+.grade-link strong,.grade-link small{display:block}.grade-link small{margin-top:4px;color:#54677d;line-height:1.35;font-size:.73rem}
+@media(max-width:740px){.grade-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:490px){.grade-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style></head>
 <body><header><strong>PREPARA CANÁSTICA · SABATINO 2014</strong><span>Educación de Personas Jóvenes y Adultas</span></header>
 <main><section class="hero">
@@ -38,6 +46,15 @@ footer{text-align:center;font-size:.85rem;color:#577086;padding:25px 18px}
 <article class="card"><span class="num">1</span><h2>Elige tu grupo</h2><p>Selecciona el año escolar, curso y sección donde estás matriculado.</p></article>
 <article class="card"><span class="num">2</span><h2>Encuentra tu nombre</h2><p>Escribe las primeras letras y selecciona tu coincidencia en el Registro Maestro.</p></article>
 <article class="card"><span class="num">3</span><h2>Entra al aula</h2><p>Continúa hacia el espacio correspondiente a tu curso para consultar sus recursos.</p></article>
-</section></main>
+</section><section class="grade-section" aria-label="Rutas de las aulas por año">
+<h2>Aulas por año</h2>
+<p>Las rutas están organizadas para los cinco años. Para entrar como participante, utiliza primero el botón de identificación institucional. Las aulas en preparación aún no tienen actividades publicadas.</p>
+<div class="grade-list">
+<a class="grade-link" href="../matematica-epja-1ero/"><img src="../assets/grados/1erGrado.png" onerror="this.hidden=true;this.nextElementSibling.hidden=false" alt="Primer Año"><span class="gradenum" hidden>1.º</span><strong>Primer Año</strong><small>Primer Ciclo · En preparación</small></a>
+<a class="grade-link" href="../matematica-epja-2do/"><img src="../assets/grados/2doGrado.png" onerror="this.hidden=true;this.nextElementSibling.hidden=false" alt="Segundo Año"><span class="gradenum" hidden>2.º</span><strong>Segundo Año</strong><small>Primer Ciclo · En preparación</small></a>
+<a class="grade-link" href="../matematica-epja-3ero/"><img src="../assets/grados/3erGrado.png" onerror="this.hidden=true;this.nextElementSibling.hidden=false" alt="Tercer Año"><span class="gradenum" hidden>3.º</span><strong>Tercer Año</strong><small>Segundo Ciclo · Aula existente</small></a>
+<a class="grade-link" href="../matematica-epja-4to/"><img src="../assets/grados/4toGrado.png" onerror="this.hidden=true;this.nextElementSibling.hidden=false" alt="Cuarto Año"><span class="gradenum" hidden>4.º</span><strong>Cuarto Año</strong><small>Segundo Ciclo · En preparación</small></a>
+<a class="grade-link" href="../matematica-epja-5to/"><img src="../assets/grados/5toGrado.png" onerror="this.hidden=true;this.nextElementSibling.hidden=false" alt="Quinto Año"><span class="gradenum" hidden>5.º</span><strong>Quinto Año</strong><small>Segundo Ciclo · En preparación</small></a>
+</div></section></main>
 <footer>Prepara Canástica Sabatino 2014 · Aula QR EPJA · Identificación declarada, pendiente de verificación definitiva</footer>
 </body></html>
