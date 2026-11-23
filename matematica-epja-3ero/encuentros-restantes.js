@@ -12,8 +12,8 @@ var root=document.createElement("section");root.id="epja-integracion-restante";r
 root.className="card";root.setAttribute("aria-label","Lección interactiva");
 root.innerHTML='<div id="eir-head"></div><div id="eir-steps" style="display:flex;flex-wrap:wrap;gap:7px;margin:12px 0"></div><div id="eir-body" aria-live="polite"></div><div style="display:flex;justify-content:space-between;gap:8px;margin-top:12px"><button type="button" class="secondary" id="eir-prev">Anterior</button><button type="button" id="eir-next">Siguiente paso</button></div>';
 document.getElementById("encuentro").appendChild(root);
-var panel=document.createElement("div");panel.id="eir-alineacion";panel.className="card";panel.hidden=true;
-document.getElementById("encuentro").appendChild(panel);
+// La ficha CE/IL y sus evidencias permanecen en EPJA_37 / estructura-37.js.
+// No se inyecta una tabla administrativa en la vista de aprendizaje del participante.
 var selected=null, step=0;
 var drafts={},notes={};
 function esc(s){return String(s===undefined?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
@@ -114,9 +114,7 @@ var prior=openEncounter;
 openEncounter=function(i,navigate,n){prior(i,navigate,n);var number=n===null||n===undefined?null:n+1;if(number===null){var m=document.getElementById("encEyebrow").textContent.match(/Encuentro\s+(\d+)/);number=m?Number(m[1]):null}
  var id="P"+(i+1)+"-J"+String(number).padStart(2,"0"),e=byId[id];
  selected=e||null;root.hidden=!e;
- var current=(window.EPJA_37&&window.EPJA_37.encuentros||[]).find(function(v){return v.id===id});
- panel.hidden=!current;
- if(current){panel.innerHTML='<h3>Ficha curricular y registro de evidencias</h3>'+simpleTable([["Jornada",current.id],["Competencia",current.competencias],["Indicador principal",current.ilPrincipal],["Indicadores complementarios",current.ilComplementarios||"No especificados"],["Indicadores condicionados",current.ilCondicionales||"No especificados"],["Evidencia",current.evidencia],["Tiempo presencial",current.minPresencial+" minutos"],["Autoestudio del encuentro",current.minAutoestudio+" minutos"],["Actores de evaluación",current.actores]])+'<p class="small muted">Alineación según estructura-37.js. Este seguimiento didáctico no sustituye los reportes P1–P4 ni el registro de calificaciones por competencias del MINERD.</p>'}
+ // Matriz curricular conservada en window.EPJA_37; no renderizar ficha docente aquí.
  if(e){var old=document.getElementById("encPractice");old.innerHTML='<p><strong>Lección interactiva incorporada.</strong> Utiliza los cinco pasos siguientes. La práctica incluye retroalimentación.</p>';render()}
 };
 window.EPJA_INTEGRACION_RESTANTE={ids:DATA.map(function(e){return e.id}),verify:function(){return {count:DATA.length,activities:DATA.reduce(function(n,e){return n+e.detalle.q.length},0),missing:DATA.filter(function(e){return !e.detalle||!e.ilPrincipal||!e.evidencia||e.minPresencial!==120||e.minAutoestudio!==120}).map(function(e){return e.id})}}};
