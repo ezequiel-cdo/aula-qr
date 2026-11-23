@@ -25,6 +25,7 @@ footer{text-align:center;font-size:.85rem;color:#577086;padding:25px 18px}
 .grade-link strong,.grade-link small{display:block}.grade-link small{margin-top:4px;color:#54677d;line-height:1.35;font-size:.73rem}
 @media(max-width:740px){.grade-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:490px){.grade-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.active-participant{font-size:.91rem;color:#174d42;font-weight:700;background:#eaf7f0;border:1px solid #c5dfd0;border-radius:10px;padding:12px;margin:12px 0 0}.active-participant[hidden],#change-participant[hidden]{display:none}#change-participant a{color:#1a4e85;font-weight:700;font-size:.87rem}
 </style></head>
 <body><header><strong>PREPARA CANÁSTICA · SABATINO 2014</strong><span>Educación de Personas Jóvenes y Adultas</span></header>
 <main><section class="hero">
@@ -38,8 +39,8 @@ footer{text-align:center;font-size:.85rem;color:#577086;padding:25px 18px}
 <text x="150" y="261" text-anchor="middle" font-size="12" fill="#23435b">SABATINO 2014 · EPJA</text>
 </svg>
 <div><div class="kicker">Bienvenidos al centro</div><h1>Tu aprendizaje continúa en el Aula QR</h1>
-<p>Un espacio para participantes de Tercero y Cuarto del Segundo Ciclo. Identifícate en el Registro Maestro y continúa al aula que corresponde a tu curso.</p>
-<a class="cta" href="https://script.google.com/macros/s/AKfycbxMsZAR6ZSpbarcc7VsjTq5dl50wkhIXsMSWTc9YCI1E4DJrNVhdzDQj8goHEtAPA/exec">Ingresar al Aula QR →</a>
+<p>Un espacio de Matemática para los cinco años de EPJA. Identifícate en el Registro Maestro Institucional y continúa al aula que corresponde a tu matrícula.</p>
+<a id="institutional-access" class="cta" href="https://script.google.com/macros/s/AKfycbxMsZAR6ZSpbarcc7VsjTq5dl50wkhIXsMSWTc9YCI1E4DJrNVhdzDQj8goHEtAPA/exec">Identificarme para entrar al Aula QR →</a><p id="active-participant" class="active-participant" hidden></p><p id="change-participant" hidden><a href="https://script.google.com/macros/s/AKfycbxMsZAR6ZSpbarcc7VsjTq5dl50wkhIXsMSWTc9YCI1E4DJrNVhdzDQj8goHEtAPA/exec">Cambiar participante</a></p>
 <p style="font-size:.84rem">Año escolar 2026–2027 · Sin códigos · Identificación inicial por nombre</p>
 </div></section>
 <section class="cards" aria-label="Cómo ingresar">
@@ -48,7 +49,29 @@ footer{text-align:center;font-size:.85rem;color:#577086;padding:25px 18px}
 <article class="card"><span class="num">3</span><h2>Entra al aula</h2><p>Continúa hacia el espacio correspondiente a tu curso para consultar sus recursos.</p></article>
 </section><section class="grade-section" aria-label="Oferta académica del centro">
 <h2>Nuestra oferta educativa</h2>
-<p>Prepara Canástica ofrece cinco años de Educación Secundaria para Personas Jóvenes y Adultas. Estos emblemas presentan la oferta del centro; no permiten ingresar directamente a un aula. Para entrar, utiliza «Ingresar al Aula QR» e identifícate primero.</p>
+<p>Prepara Canástica ofrece cinco años de Educación Secundaria para Personas Jóvenes y Adultas. Estos emblemas presentan la oferta del centro; no permiten ingresar directamente a un aula. Para entrar, utiliza el botón de acceso institucional. Si ya elegiste tu nombre en esta pestaña, el botón indicará tu curso.</p>
 <div class="grade-list"><article class="grade-link" aria-label="Primer Año, Primer Ciclo" style="--grado:#ee1c25"><div class="grade-media"><img src="../assets/grados/1erGrado.png" onerror="this.hidden=true;this.nextElementSibling.hidden=false" alt="Primer Año" loading="lazy"><span class="gradenum" hidden>1.º</span></div><strong>Primer Año</strong><small>Primer Ciclo</small></article><article class="grade-link" aria-label="Segundo Año, Primer Ciclo" style="--grado:#28a647"><div class="grade-media"><img src="../assets/grados/2doGrado.png" onerror="this.hidden=true;this.nextElementSibling.hidden=false" alt="Segundo Año" loading="lazy"><span class="gradenum" hidden>2.º</span></div><strong>Segundo Año</strong><small>Primer Ciclo</small></article><article class="grade-link" aria-label="Tercer Año, Segundo Ciclo" style="--grado:#ef008b"><div class="grade-media"><img src="../assets/grados/3erGrado.png" onerror="this.hidden=true;this.nextElementSibling.hidden=false" alt="Tercer Año" loading="lazy"><span class="gradenum" hidden>3.º</span></div><strong>Tercer Año</strong><small>Segundo Ciclo</small></article><article class="grade-link" aria-label="Cuarto Año, Segundo Ciclo" style="--grado:#50ace3"><div class="grade-media"><img src="../assets/grados/4toGrado.png" onerror="this.hidden=true;this.nextElementSibling.hidden=false" alt="Cuarto Año" loading="lazy"><span class="gradenum" hidden>4.º</span></div><strong>Cuarto Año</strong><small>Segundo Ciclo</small></article><article class="grade-link" aria-label="Quinto Año, Segundo Ciclo" style="--grado:#ff8c15"><div class="grade-media"><img src="../assets/grados/5toGrado.png" onerror="this.hidden=true;this.nextElementSibling.hidden=false" alt="Quinto Año" loading="lazy"><span class="gradenum" hidden>5.º</span></div><strong>Quinto Año</strong><small>Segundo Ciclo</small></article></div><p class="grade-disclaimer">Acceso a las aulas: únicamente después de la identificación del participante en la entrada institucional.</p></section></main>
 <footer>Prepara Canástica Sabatino 2014 · Aula QR EPJA · Identificación declarada, pendiente de verificación definitiva</footer>
-</body></html>
+<script>
+(function(){
+ 'use strict';
+ const KEY='epja_identificacion_declarada_v1';
+ const courses={Primero:'1ero',Segundo:'2do',Tercero:'3ero',Cuarto:'4to',Quinto:'5to'};
+ const action=document.getElementById('institutional-access');
+ const caption=document.getElementById('active-participant');
+ const change=document.getElementById('change-participant');
+ // La identificación es declarada y se conserva solamente en esta pestaña.
+ let participant=null;
+ try{participant=JSON.parse(sessionStorage.getItem(KEY)||'null')}catch(_){}
+ if(!participant||participant.v!==1||!Object.prototype.hasOwnProperty.call(courses,participant.curso)||
+    typeof participant.nombre!=='string'||!participant.nombre.trim()||
+    typeof participant.seccion!=='string'||!participant.seccion.trim()||
+    !/^20[0-9]{2}-20[0-9]{2}$/.test(String(participant.anio||'')))return;
+ action.href='../matematica-epja-'+courses[participant.curso]+'/';
+ action.textContent='Entrar al Aula QR de '+participant.curso+' Año →';
+ caption.textContent='Participante seleccionado: '+participant.nombre+' · '+participant.curso+
+   ' · sección '+participant.seccion+' · '+participant.anio;
+ caption.hidden=false;
+ change.hidden=false;
+})();
+</script></body></html>
