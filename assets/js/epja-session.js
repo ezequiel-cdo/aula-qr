@@ -81,6 +81,7 @@
      const emblema=document.querySelector('#portada .cover, .hero .graphic');
      if(emblema){
        b.classList.add('epja-identity-embedded');
+       emblema.classList.add('epja-grade-with-identity');
        emblema.appendChild(b);
      }else{
        header.insertAdjacentElement('afterend',b);
