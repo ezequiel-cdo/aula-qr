@@ -1,0 +1,10 @@
+/* Franja de identificación en las portadas de las cinco aulas. */
+body.epja-identity-loading main{display:none}
+.epja-identity{box-sizing:border-box;background:#e8f5f0;color:#143c31;border-bottom:2px solid #96cbbb;padding:15px max(18px,calc((100vw - 980px)/2));font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.epja-identity strong{display:block;font-size:1.02rem}
+.epja-identity p{margin:4px 0 0}
+.epja-identity-meta{font-weight:600;font-size:.91rem}
+.epja-identity-detail{font-size:.75rem;color:#4e6862}
+.epja-identity-warning{background:#fff2d9;color:#654610;border-color:#e5b85e}
+.epja-identity-action,.epja-identity-change{display:inline-block;margin:8px 0 0;color:inherit;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.epja-identity-change{font-size:.85rem}
