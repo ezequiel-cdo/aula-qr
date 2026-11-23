@@ -1,4 +1,4 @@
-/* Franja de identificación en las portadas de las cinco aulas. */
+/* Identificación integrada bajo el emblema de las cinco aulas; avisos de acceso arriba. */
 body.epja-identity-loading main{display:none}
 .epja-identity{box-sizing:border-box;background:#e8f5f0;color:#143c31;border-bottom:2px solid #96cbbb;padding:15px max(18px,calc((100vw - 980px)/2));font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
 .epja-identity strong{display:block;font-size:1.02rem}
@@ -8,3 +8,27 @@ body.epja-identity-loading main{display:none}
 .epja-identity-warning{background:#fff2d9;color:#654610;border-color:#e5b85e}
 .epja-identity-action,.epja-identity-change{display:inline-block;margin:8px 0 0;color:inherit;font-weight:800;text-decoration:underline;text-underline-offset:3px}
 .epja-identity-change{font-size:.85rem}
+
+/* La identificación válida forma una sola unidad visual centrada con el grado. */
+#portada .cover.epja-grade-with-identity,
+.hero .graphic.epja-grade-with-identity{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+}
+#portada .cover:has(> .epja-identity-embedded) > img,
+.hero .graphic.epja-grade-with-identity > img{
+  display:block;width:100%;height:auto;object-fit:contain;
+}
+.epja-identity.epja-identity-embedded{
+  box-sizing:border-box;align-self:center;width:min(100%,440px);max-width:100%;
+  padding:15px 18px;margin:0 auto 6px;
+  background:#edf8f4;border:1px solid #b5d9ca;border-radius:13px;
+  color:#153e33;text-align:center;box-shadow:none;
+  font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+.epja-identity-embedded strong{font-size:1rem;overflow-wrap:anywhere}
+.epja-identity-embedded .epja-identity-meta{font-size:.88rem}
+.epja-identity-embedded .epja-identity-detail{font-size:.76rem}
+.epja-identity-embedded .epja-identity-change{display:inline-block;margin-top:8px}
+@media(max-width:680px){
+  .epja-identity.epja-identity-embedded{padding:12px 13px;font-size:14px}
+}

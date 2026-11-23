@@ -75,7 +75,20 @@
      addLink(b,'Cambiar participante',ROOT+'prepara-canastica/','epja-identity-change');
      main.hidden=false;
    }
-   header.insertAdjacentElement('afterend',b);
+   // Identificación correcta: bajo el emblema de grado, dentro de la portada.
+   // Avisos por ausencia de identificación o curso incorrecto: visibles arriba.
+   if(participant&&participant.curso===cursoEsperado){
+     const emblema=document.querySelector('#portada .cover, .hero .graphic');
+     if(emblema){
+       b.classList.add('epja-identity-embedded');
+       emblema.classList.add('epja-grade-with-identity');
+       emblema.appendChild(b);
+     }else{
+       header.insertAdjacentElement('afterend',b);
+     }
+   }else{
+     header.insertAdjacentElement('afterend',b);
+   }
    document.body.classList.remove('epja-identity-loading');
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',display,{once:true});
