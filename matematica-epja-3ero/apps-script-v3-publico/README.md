@@ -54,3 +54,23 @@ La prueba del archivo fuente **no prueba todavía la conectividad al Google Shee
 - No se generan matrículas ni se escriben datos en el libro institucional.
 - Los controles de confirmación y navegación usan **CacheService (10 minutos)**, no guardan contactos ni el ID técnico en el navegador.
 - Los cinco enlaces de curso son destinos de aprendizaje, no permisos de acceso. Si en el futuro requieren autorización, deberá añadirse verificación real de identidad.
+
+## Continuidad de identificación declarada en las aulas
+
+- El formulario **actualizado** muestra la leyenda **«Ensayo V3 con continuidad de identificación»**. Si el encabezado sigue diciendo «Registro Maestro · Año escolar vigente», se está abriendo **una implementación antigua** y puede seguir enviando Cuarto al aula de Tercero.
+- Al seleccionar un participante, Apps Script comprueba los tres identificadores en servidor y devuelve solo nombre, año, curso, sección y URL del aula.
+- Al pulsar «Continuar como: ...», esos datos mínimos se transfieren en el fragmento de navegación a GitHub Pages, que los guarda en **sessionStorage** y borra el fragmento de la barra de direcciones.
+- Cada portada de curso utiliza `assets/js/epja-session.js` para mostrar el nombre y el grupo declarados. Si el curso de la sesión no coincide con el del aula, oculta el contenido principal y ofrece ir al aula correspondiente.
+- La comprobación en el navegador **no es autenticación** y no evita que un usuario técnicamente capacitado manipule la sesión. No usarla para autorizar calificaciones, historial, datos privados o acciones personales.
+- La información declarada se conserva por pestaña del navegador y se pierde al cerrar esa pestaña. Al volver desde el enlace institucional a la identificación puede elegirse otra matrícula.
+- En producción el Aula QR actual aún utiliza su implementación pública anterior; se debe probar primero el ensayo actualizado y no confundir el GitHub HTML con el código que está desplegado en Google Apps Script.
+
+### Pruebas de aceptación de navegación
+
+1. En `Implementar → Probar implementaciones`, abrir la URL `/dev` con permiso de edición. Debe verse el texto «Ensayo V3 con continuidad de identificación».
+2. Elegir **Cuarto A** y una coincidencia real. El botón `Continuar como` debe abrir **`matematica-epja-4to/`** y mostrar «Identificado como» con curso Cuarto.
+3. Desde esa pestaña visitar manualmente **`matematica-epja-3ero/`**: debe aparecer aviso de incompatibilidad y un enlace de vuelta a Cuarto, sin mostrar el contenido de Tercero.
+4. Elegir **Tercero A** y repetir: debe abrir `matematica-epja-3ero/` y mostrar la franja con el nombre y sección.
+5. Probar «Volver a la portada institucional» desde el formulario y la portada de Tercero.
+6. Abrir directamente una portada de curso desde una pestaña nueva sin haber seleccionado ningún nombre: debe solicitar identificación y ocultar el contenido principal.
+7. Tras completar `/dev`, publicar **una implementación separada de ensayo `/exec`**, comprobar Edge anónimo y Chrome Invitado antes de modificar `Publicación abierta`. `/dev` no está disponible para visitantes anónimos.
