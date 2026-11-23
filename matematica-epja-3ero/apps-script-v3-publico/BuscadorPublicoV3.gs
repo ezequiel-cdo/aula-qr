@@ -1,26 +1,36 @@
 /**
- * Aula QR EPJA · V3 público de SOLO LECTURA.
- * PROYECTO APPS SCRIPT INDEPENDIENTE. No pegar en Apps Script administrativo.
- * No crea hojas, no escribe celdas, no consulta teléfonos ni documentos.
- * Usa el Registro Maestro existente en Google Sheets.
- * Riesgo aceptado para esta etapa: nombres consultables mediante búsqueda pública.
+ * Aula QR · Buscador público V3, fuente institucional EPJA (2026-2027).
+ * SOLO LECTURA. Proyecto Apps Script público independiente.
+ * Fuente exclusiva: Registro_Maestro_Institucional_EPJA_V1 / Vista_AulaQR.
+ * NO consulta hojas administrativas, teléfonos, historial ni fuente manual de 167.
+ * Selección de nombre = identificación declarada; NO autenticación ni acceso a notas.
+ *
+ * IMPORTANTE: el ID de Google Sheets procede del enlace mostrado por el centro;
+ * verificarlo en la barra de direcciones antes de activar una nueva implementación.
  */
-const EPJA_PUBLICO = Object.freeze({
-  SHEET_ID: '1KEOTGdMHVAPC8vhAPp6EeleZfdPoWbVjq0TwwUm1XDY',
-  MATRICULAS: 'Matriculas_2026_2027',
-  PERSONAS: 'Personas',
-  ALIAS: 'Alias_Nombres',
-  MAX: 5
+const EPJA_PUBLICO=Object.freeze({
+  SHEET_ID:'1rS8wZJx5x28mbBEj2MnQ9UXdLzof2eB1-7bnANO-slo',
+  VISTA:'Vista_AulaQR',
+  MAX:5,
+  CACHE_SECONDS:600,
+  DESTINOS:Object.freeze({
+    Primero:'https://ezequiel-cdo.github.io/aula-qr/matematica-epja-1ero/',
+    Segundo:'https://ezequiel-cdo.github.io/aula-qr/matematica-epja-2do/',
+    Tercero:'https://ezequiel-cdo.github.io/aula-qr/matematica-epja-3ero/',
+    Cuarto:'https://ezequiel-cdo.github.io/aula-qr/matematica-epja-4to/',
+    Quinto:'https://ezequiel-cdo.github.io/aula-qr/matematica-epja-5to/'
+  })
 });
-function epjaPublicoLeer_(nombre, obligatorias) {
-  const h=SpreadsheetApp.openById(EPJA_PUBLICO.SHEET_ID).getSheetByName(nombre);
-  if(!h)throw new Error('Falta hoja: '+nombre);
-  const data=h.getDataRange().getDisplayValues();
-  if(!data.length)throw new Error('Faltan encabezados: '+nombre);
-  const cols=data[0].map(x=>String(x||'').trim());
-  obligatorias.forEach(x=>{if(!cols.includes(x))throw new Error('Falta campo '+x)});
-  return data.slice(1).map(row=>Object.fromEntries(cols.map((col,i)=>[col,String(row[i]||'').trim()])))
-    .filter(row=>Object.values(row).some(Boolean));
+function epjaPublicoLeerVista_(){
+  const hoja=SpreadsheetApp.openById(EPJA_PUBLICO.SHEET_ID).getSheetByName(EPJA_PUBLICO.VISTA);
+  if(!hoja)throw new Error('Falta la hoja institucional Vista_AulaQR');
+  const datos=hoja.getDataRange().getDisplayValues();
+  if(!datos.length)throw new Error('Vista_AulaQR no contiene encabezados');
+  const campos=datos[0].map(v=>String(v||'').trim());
+  const requeridos=['ID_Interno','Ano_Escolar','Curso','Seccion','Nombre_Mostrar','ID_Matricula'];
+  requeridos.forEach(c=>{if(!campos.includes(c))throw new Error('Falta columna '+c)});
+  return datos.slice(1).map(row=>Object.fromEntries(requeridos.map(c=>[c,String(row[campos.indexOf(c)]||'').trim()])))
+    .filter(r=>requeridos.every(c=>r[c]));
 }
 function epjaPublicoNormalizar_(x) {
   return String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
@@ -50,37 +60,60 @@ function epjaPublicoPuntuacion_(consulta,variantes) {
   });
   return mejor;
 }
-function epjaPublicoContextos() {
-  const filas=epjaPublicoLeer_(EPJA_PUBLICO.MATRICULAS,['persona_id_interno','anio_escolar','curso','seccion']);
-  const m=new Map();
-  filas.forEach(x=>{if(x.anio_escolar&&x.curso&&x.seccion)
-    m.set([x.anio_escolar,x.curso,x.seccion].join('|'),
-      {anio:x.anio_escolar,curso:x.curso,seccion:x.seccion})});
-  return [...m.values()].sort((a,b)=>
-    [a.anio,a.curso,a.seccion].join('|').localeCompare([b.anio,b.curso,b.seccion].join('|'),'es'));
+
+function epjaPublicoContextos(){
+  const mapa=new Map();
+  epjaPublicoLeerVista_().forEach(r=>{
+    if(!EPJA_PUBLICO.DESTINOS[r.Curso])return;
+    const k=[r.Ano_Escolar,r.Curso,r.Seccion].join('|');
+    mapa.set(k,{anio:r.Ano_Escolar,curso:r.Curso,seccion:r.Seccion});
+  });
+  const orden=['Primero','Segundo','Tercero','Cuarto','Quinto'];
+  return Array.from(mapa.values()).sort((a,b)=>b.anio.localeCompare(a.anio,'es')
+    ||orden.indexOf(a.curso)-orden.indexOf(b.curso)
+    ||a.seccion.localeCompare(b.seccion,'es'));
 }
-function epjaPublicoBuscarNombres(anio,curso,seccion,texto) {
+function epjaPublicoBuscarNombres(anio,curso,seccion,texto){
   const q=epjaPublicoNormalizar_(texto);
-  if(q.length<3||q.length>80)return [];
-  const contextos=epjaPublicoContextos();
-  if(!contextos.some(x=>x.anio===anio&&x.curso===curso&&x.seccion===seccion))return [];
-  const matriculas=epjaPublicoLeer_(EPJA_PUBLICO.MATRICULAS,['persona_id_interno','anio_escolar','curso','seccion']);
-  const ids=new Set(matriculas.filter(m=>m.anio_escolar===anio&&m.curso===curso&&m.seccion===seccion)
-    .map(m=>m.persona_id_interno).filter(Boolean));
-  const personas=epjaPublicoLeer_(EPJA_PUBLICO.PERSONAS,['persona_id_interno','nombre_completo_origen']);
-  const alias=epjaPublicoLeer_(EPJA_PUBLICO.ALIAS,['persona_id_interno','alias_validado','estado']);
-  const aliasMap=new Map();
-  alias.forEach(a=>{if(String(a.estado).toUpperCase()!=='VALIDADO'||!ids.has(a.persona_id_interno))return;
-    if(!aliasMap.has(a.persona_id_interno))aliasMap.set(a.persona_id_interno,[]);
-    aliasMap.get(a.persona_id_interno).push(a.alias_validado)});
-  return personas.filter(p=>ids.has(p.persona_id_interno)).map(p=>({
-    p,score:epjaPublicoPuntuacion_(q,[p.nombre_completo_origen].concat(aliasMap.get(p.persona_id_interno)||[]))
-  })).filter(x=>x.score>=12)
-    .sort((a,b)=>b.score-a.score||a.p.nombre_completo_origen.localeCompare(b.p.nombre_completo_origen,'es'))
-    .slice(0,EPJA_PUBLICO.MAX).map(x=>({nombre:x.p.nombre_completo_origen}));
+  if(q.length<3||q.length>80||!EPJA_PUBLICO.DESTINOS[curso])return [];
+  const filas=epjaPublicoLeerVista_().filter(r=>r.Ano_Escolar===anio&&r.Curso===curso&&r.Seccion===seccion);
+  const lista=filas.map(r=>({r,score:epjaPublicoPuntuacion_(q,[r.Nombre_Mostrar])}))
+    .filter(x=>x.score>=12)
+    .sort((a,b)=>b.score-a.score||a.r.Nombre_Mostrar.localeCompare(b.r.Nombre_Mostrar,'es'))
+    .slice(0,EPJA_PUBLICO.MAX);
+  const cache=CacheService.getScriptCache();
+  return lista.map(x=>{
+    const token=Utilities.getUuid();
+    // El navegador solo recibe un token efímero; ambos IDs permanecen en servidor.
+    cache.put('epja-v3:'+token,JSON.stringify({
+      idInterno:x.r.ID_Interno,idMatricula:x.r.ID_Matricula,
+      anio:x.r.Ano_Escolar,curso:x.r.Curso,seccion:x.r.Seccion,nombre:x.r.Nombre_Mostrar
+    }),EPJA_PUBLICO.CACHE_SECONDS);
+    return {nombre:x.r.Nombre_Mostrar,token:token};
+  });
 }
-function doGet() {
+function epjaPublicoConfirmarSeleccion(token){
+  if(!/^[0-9a-f-]{36}$/i.test(String(token||'')))throw new Error('Selección no válida');
+  const contenido=CacheService.getScriptCache().get('epja-v3:'+token);
+  if(!contenido)throw new Error('Selección vencida: vuelve a buscar tu nombre');
+  const r=JSON.parse(contenido);
+  if(!EPJA_PUBLICO.DESTINOS[r.curso])throw new Error('Curso sin aula configurada');
+  return {nombre:r.nombre,anio:r.anio,curso:r.curso,seccion:r.seccion,
+    destino:EPJA_PUBLICO.DESTINOS[r.curso]};
+}
+function epjaPublicoPruebaInstitucional_(){
+  // Ejecutar manualmente desde el editor (no exponer en el HTML).
+  const filas=epjaPublicoLeerVista_();
+  const ids=new Set(filas.map(r=>r.ID_Interno));
+  const matriculas=new Set(filas.map(r=>r.ID_Matricula));
+  if(ids.size!==filas.length||matriculas.size!==filas.length)
+    throw new Error('Identificadores internos o matrículas duplicados');
+  const grupos=epjaPublicoContextos();
+  Logger.log('Fuente institucional: '+filas.length+' matrículas, '+grupos.length+' grupos');
+  Logger.log(JSON.stringify(grupos));
+  return {matriculas:filas.length,grupos:grupos.length};
+}
+function doGet(){
   return HtmlService.createHtmlOutputFromFile('FormularioV3')
-    .setTitle('Aula QR · Identificación del participante')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    .setTitle('Aula QR · Identificación del participante');
 }
