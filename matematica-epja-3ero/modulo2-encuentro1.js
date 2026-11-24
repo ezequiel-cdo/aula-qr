@@ -185,7 +185,7 @@ const m2FormulaLatex=[
  '8+4=12',
  '3x+2y=16',
  String.raw`x-9=3\quad\mid\quad 2(x+3)=2x+6`,
- String.raw`4x-5=1\iff 4x=6\`
+ String.raw`4x-5=1\iff 4x=6`
 ];
 let m2MathLoading=false;
 function drawM2Formula(){
