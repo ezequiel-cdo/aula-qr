@@ -80,6 +80,11 @@
       const oldLab=root.querySelector(':scope > .m1-mini');
       const align={2:1,3:0,4:3,5:0,6:1,7:2,8:0,9:0,10:3};
       if(oldLab)concepts[Math.min(3,align[n]??0)].appendChild(oldLab);
+      // En P1-J02 cada explorador pertenece a su propio subtema, no a un panel suelto.
+      if(n===2){
+        const labs=[...root.querySelectorAll(':scope > .m1-poly-explorer')];
+        labs.slice(0,4).forEach((lab,i)=>concepts[Math.min(i,concepts.length-1)].appendChild(lab));
+      }
       const last=concepts.at(-1),extra=[];let cursor=last.nextElementSibling;
       while(cursor){const next=cursor.nextElementSibling;extra.push(cursor);cursor=next}
       if(extra.length)groups.push({name:'Referencias y notas de estudio',elements:extra});
@@ -93,8 +98,9 @@
         const name=skills.slice(0,2).join(' y ')+(skills.length>2?'…':'');
         groups.push({name:name||('Destreza '+(i+1)),elements:subset});
       }
-      const stud=[...root.children].find(el=>el.matches('h3')&&el.textContent.startsWith('Autoestudio:'));
-      if(stud){const rest=[];let el=stud;while(el){rest.push(el);el=el.nextElementSibling}groups.push({name:'Autoestudio · 120 min',elements:rest})}
+      const stud=n===2?root.querySelector(':scope > section.m1-poly-explorer'):null;
+      const oldStud=stud||[...root.children].find(el=>el.matches('h3')&&el.textContent.startsWith('Autoestudio:'));
+      if(oldStud){const rest=[];let el=oldStud;while(el){rest.push(el);el=el.nextElementSibling}groups.push({name:'Autoestudio · 120 min',elements:rest})}
       const getProgress=gr=>gr.map(g=>{const articles=g.elements.filter(el=>el.matches('article.m1-practice[data-qid]'));if(!articles.length)return 'Producción escrita';const completed=articles.filter(a=>a.querySelector('button[data-check]')?.textContent.includes('Volver a comprobar')||a.querySelector('.m1-feedback.m1-good')).length;return completed+'/'+articles.length+' logradas'});
       createTabs(root,tasks[0],groups,key,'Elige la destreza que deseas practicar. Recibirás pistas y retroalimentación.',getProgress);
     }else if(step===5){
