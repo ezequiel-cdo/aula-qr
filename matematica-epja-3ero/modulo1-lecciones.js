@@ -297,9 +297,55 @@ function wireJ04Explorers(){
  loadJ04Math();
 }
 
+
+let j05KatexLoading=false;
+function typesetJ05(){
+ if(active!==5||typeof window.katex==='undefined')return;
+ root.querySelectorAll('[data-j05-latex]').forEach(el=>{
+  try{window.katex.render(el.dataset.j05Latex,el,{throwOnError:false,displayMode:true,output:'htmlAndMathml'})}catch(_){}
+ });
+}
+function loadJ05Math(){
+ if(active!==5)return;
+ if(window.katex){typesetJ05();return}
+ if(j05KatexLoading)return;j05KatexLoading=true;
+ const css=document.createElement('link');css.rel='stylesheet';css.href='https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css';document.head.appendChild(css);
+ const js=document.createElement('script');js.src='https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.js';js.async=true;
+ js.onload=typesetJ05;js.onerror=()=>{j05KatexLoading=false};document.head.appendChild(js);
+}
+function wireJ05Explorers(){
+ root.querySelectorAll('[data-j05-like]').forEach(b=>b.onclick=()=>{
+  const msgs={square:'Sí: 3x² + x² = 4x²; ambas expresiones tienen la misma parte literal x².',
+   linear:'Sí: 2x − 5x = −3x; comparten la misma variable y exponente.',
+   wrong:'No: x² y x tienen exponentes diferentes, así que no son semejantes.'};
+  $('j05LikeInfo').textContent=msgs[b.dataset.j05Like];
+ });
+ const add=$('j05Add');if(add)add.onchange=()=>{
+  const msgs=['Correcto: A+B=(3+1)x²+(2−5)x+(4+1)=4x²−3x+5.',
+   'No se suman los exponentes: los exponentes solo determinan qué términos son semejantes.',
+   'También hay que combinar los coeficientes de los términos con x² y x.'];
+  $('j05AddInfo').textContent=msgs[Number(add.value)];
+ };
+ root.querySelectorAll('[data-j05-sub]').forEach(b=>b.onclick=()=>{
+  $('j05SubInfo').textContent=b.dataset.j05Sub==='correcto'?
+   'Correcto: A−B=(3x²+2x+4)−(x²−5x+1)=3x²+2x+4−x²+5x−1=2x²+7x+3.':
+   'Revisa: el signo menos delante del paréntesis afecta a todos los términos de B(x).';
+ });
+ const slider=$('m1Slider');if(slider){
+  const update=()=>{
+   const x=Number(slider.value),a=3*x*x+2*x+4,b=x*x-5*x+1,sum=a+b,expanded=4*x*x-3*x+5;
+   $('m1Output').textContent=x;
+   $('m1Equation').textContent='Para x='+x+': A(x)='+a+', B(x)='+b+
+      '; A(x)+B(x)='+sum+' y 4x²−3x+5='+expanded+'. Coinciden.';
+  };
+  slider.oninput=update;update();
+ }
+ loadJ05Math();
+}
+
 function wiring(){const s=session();
 if(s.step===0){$('m1Remember').oninput=e=>{s.self=e.target.value;save()}}
-if(s.step===1){if(active===2)wireJ02Explorers();if(active===4)wireJ04Explorers();document.querySelectorAll('[data-m1-part]').forEach(b=>b.onclick=()=>{const map={coeficiente:'El coeficiente es el factor numérico con su signo. En −5x³, el coeficiente es −5.',exponente:'El exponente 3 indica x·x·x.',termino:'Un término es una parte separada por suma o resta. En −5x³+2x²−7x+9 hay cuatro términos.',constante:'El 9 es el término independiente: no contiene variable.',grado:'El grado del polinomio es 3, el mayor exponente con coeficiente no nulo.',semejantes:'Los términos semejantes tienen la misma variable y los mismos exponentes.'};$('m1Explainer').textContent=map[b.dataset.m1Part]});const slide=$('m1Slider');if(slide)slide.oninput=()=>{const x=Number(slide.value);$('m1Output').textContent=x;if(active===4)$('m1Equation').textContent='P('+x+') = '+(x*x+6*x+9);if(active===5)$('m1Equation').textContent='A(x)=3x+4; B(x)='+x+'x+1; A+B='+(3+x)+'x+5';if(active===6)$('m1Equation').textContent='A('+x+') = '+((x+3)*(x+2))+' m²';if(active===9){$('m1Equation').textContent='V('+x+') = '+(x*(30-2*x)*(20-2*x))+' cm³';$('m1BoxDims').textContent='Base: '+(30-2*x)+' × '+(20-2*x)+' cm; altura: '+x+' cm.'}}}
+if(s.step===1){if(active===2)wireJ02Explorers();if(active===4)wireJ04Explorers();if(active===5)wireJ05Explorers();document.querySelectorAll('[data-m1-part]').forEach(b=>b.onclick=()=>{const map={coeficiente:'El coeficiente es el factor numérico con su signo. En −5x³, el coeficiente es −5.',exponente:'El exponente 3 indica x·x·x.',termino:'Un término es una parte separada por suma o resta. En −5x³+2x²−7x+9 hay cuatro términos.',constante:'El 9 es el término independiente: no contiene variable.',grado:'El grado del polinomio es 3, el mayor exponente con coeficiente no nulo.',semejantes:'Los términos semejantes tienen la misma variable y los mismos exponentes.'};$('m1Explainer').textContent=map[b.dataset.m1Part]});const slide=$('m1Slider');if(slide)slide.oninput=()=>{const x=Number(slide.value);$('m1Output').textContent=x;if(active===4)$('m1Equation').textContent='P('+x+') = '+(x*x+6*x+9);if(active===5){const a=3*x*x+2*x+4,b=x*x-5*x+1;$('m1Equation').textContent='A('+x+')='+a+', B('+x+')='+b+', suma='+(a+b);}if(active===6)$('m1Equation').textContent='A('+x+') = '+((x+3)*(x+2))+' m²';if(active===9){$('m1Equation').textContent='V('+x+') = '+(x*(30-2*x)*(20-2*x))+' cm³';$('m1BoxDims').textContent='Base: '+(30-2*x)+' × '+(20-2*x)+' cm; altura: '+x+' cm.'}}}
 document.querySelectorAll('[data-m1-special]').forEach(b=>b.onclick=()=>{$('m1SpecialInfo').textContent=({nulo:'El polinomio nulo es 0 y no tiene grado definido.',constante:'Un polinomio constante no nulo tiene grado 0.',monico:'Un polinomio mónico tiene coeficiente principal 1.',raiz:'Una raíz a cumple P(a)=0.'})[b.dataset.m1Special]});const cp=$('m1ClassPick');if(cp)cp.onchange=()=>{const v=cp.value,n=v==='0'?0:(v.match(/[+−-]/g)||[]).length+1,ex=[...v.matchAll(/x(?:\^(\d+)|([²³⁴]))?/g)].map(m=>Number(m[1]||({'²':2,'³':3,'⁴':4}[m[2]]||1)));$('m1ClassInfo').textContent=(n===1?'monomio':n===2?'binomio':n===3?'trinomio':n===0?'polinomio nulo':n+' términos')+' · grado '+(v==='0'?'no definido':Math.max(0,...ex))};const dn=$('m1DivNext');let ds=0;const steps=[['Ordena','Dividendo x²+5x+6; divisor x+2.'],['Divide','x² ÷ x = x. Primer término del cociente: x.'],['Multiplica','x(x+2)=x²+2x.'],['Resta','(x²+5x+6)−(x²+2x)=3x+6.'],['Verifica','3x÷x=3. Cociente x+3; resto 0.']];const show=()=>{$('m1DivStep').textContent='Paso '+(ds+1)+' de 5 · '+steps[ds][0];$('m1DivText').textContent=steps[ds][1];$('m1DivMath').textContent=steps[ds][1]};if(dn)dn.onclick=()=>{ds=(ds+1)%5;show()};const dr=$('m1DivReset');if(dr)dr.onclick=()=>{ds=0;show()};if(s.step===3){B[active].practice.forEach((q,i)=>{document.querySelectorAll('input[name="p_'+active+'_'+i+'"]').forEach(input=>input.onchange=e=>{const rec=s.practice[q.id]||{};rec.selected=Number(e.target.value);s.practice[q.id]=rec;save()})});document.querySelectorAll('[data-hint]').forEach(b=>b.onclick=()=>{const i=Number(b.dataset.hint),q=B[active].practice[i],rec=s.practice[q.id]||{};if(active===2||active===4){
  rec.hintLevel=Math.min(3,(rec.hintLevel||0)+1);
  const graduated=[
