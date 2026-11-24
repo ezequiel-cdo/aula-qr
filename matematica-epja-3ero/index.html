@@ -63,7 +63,7 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
 #portada .course-landing .epja-identity-embedded{width:min(100%,440px)}
 @media(max-width:690px){#portada .course-landing{grid-template-columns:1fr}#portada .course-landing .cover{padding:22px 18px 10px}#portada .course-landing .cover-intro{padding:23px 20px}}
 </style><link rel="stylesheet" href="../assets/css/epja-session.css"></head><body class="epja-identity-loading">
-<header><div><strong>Aula Virtual de Matemática</strong><small>EPJA · 3.er año · Segundo Ciclo · 2026–2027</small></div><div class="header-actions"><span class="brand">3.er AÑO</span><a class="home-header-back" href="../prepara-canastica/" aria-label="Volver a la portada institucional de Prepara Canástica">⌂ Portada institucional</a></div></header>
+<header><div><strong>Aula Virtual de Matemática</strong><small>EPJA · 3.er año · Segundo Ciclo · 2026–2027</small></div><div class="header-actions"><span class="brand">3.er AÑO</span><a id="courseHeaderBack" class="home-header-back" href="../prepara-canastica/" aria-label="Volver a la portada institucional de Prepara Canástica">⌂ Portada institucional</a></div></header>
 <main>
 <section id="portada">
  <div class="course-landing">
@@ -217,7 +217,15 @@ const introKey="epja_matematica_encuadre_v1";const readIntro=()=>{try{return loc
 function encounterData(i,n){const e=getEncounter(i,n);return e?[e.titulo,e.objetivo,e.presencial,e.evidencia]:["Encuentro pendiente","Contenido no disponible","La jornada no se encuentra en la matriz",""];}
 function datesFor(p){return curriculum.encuentros.filter(e=>e.periodo===p.id).map(e=>e.fecha)}
 function actualPeriod(){const ix=periods.findIndex(p=>shownDate>=p.start&&shownDate<=p.end);if(ix>=0)return ix;if(shownDate<periods[0].start)return 0;const prev=periods.findLastIndex(p=>p.start<=shownDate);return Math.max(0,prev)}
-function go(id){document.body.dataset.area=id;if(id==="catalogo")drawCatalog();if(id==="recuperacion")drawRecovery();if(id==="evaluaciones")drawEvaluations();if(id==="registros")drawRecords();if(id==="cierre")drawClosure();document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);document.querySelectorAll("nav [data-go]").forEach(b=>b.setAttribute("aria-current",b.dataset.go===id?"page":"false"));window.scrollTo(0,0);if(id==="avances")drawAdvances()}
+function go(id){document.body.dataset.area=id;
+ const topBack=document.getElementById("courseHeaderBack");
+ if(topBack){
+   const onCourseHome=id==="portada";
+   topBack.href=onCourseHome?"../prepara-canastica/":"./";
+   topBack.textContent=onCourseHome?"⌂ Portada institucional":"← Portada del curso";
+   topBack.setAttribute("aria-label",onCourseHome?"Volver a la portada institucional de Prepara Canástica":"Volver a la portada del aula de Tercer Año");
+ }
+ if(id==="catalogo")drawCatalog();if(id==="recuperacion")drawRecovery();if(id==="evaluaciones")drawEvaluations();if(id==="registros")drawRecords();if(id==="cierre")drawClosure();document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);document.querySelectorAll("nav [data-go]").forEach(b=>b.setAttribute("aria-current",b.dataset.go===id?"page":"false"));window.scrollTo(0,0);if(id==="avances")drawAdvances()}
 function scheduledEncounter(){
  let chosen=null;for(let i=0;i<periods.length;i++)for(let n=0;n<datesFor(periods[i]).length;n++){const date=datesFor(periods[i])[n];if(date<=shownDate&&(!chosen||date>chosen.fecha))chosen={period:i,number:n,fecha:date}}
  return chosen;
