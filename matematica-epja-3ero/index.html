@@ -78,7 +78,7 @@ table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1
    <div class="cover-actions">
     <button id="coverStart" class="block">1 · Explorar el aula (modo demostración) →</button>
     <button class="secondary block" data-go="encuadre">2 · Conocer el Encuadre y Evaluación →</button>
-    <button class="secondary block" data-go="diagnostico">3 · Diagnóstico del Grado Anterior →</button>
+    <button class="secondary block" data-go="diagnostico">3 · Diagnóstico inicial · 28 preguntas →</button>
    </div>
   </div>
  </div>
@@ -320,8 +320,7 @@ function openEncounter(i,navigate=true,n=null){
  const del=$("encDeliverables");del.replaceChildren();
  const addDeliverable=(label,value)=>{if(!value)return;const p=document.createElement("p"),bold=document.createElement("b");bold.textContent=label+": ";p.appendChild(bold);p.appendChild(document.createTextNode(value));del.appendChild(p)};
  addDeliverable("Evidencia prevista",r.evidencia);addDeliverable("Evaluación",r.evaluacion);addDeliverable("Participación",r.actores);
- $("encPractice").innerHTML=(i===0&&number===1)?'<button type="button" id="encTryDemo">Abrir pregunta de demostración →</button>':'<p class="muted small">La práctica interactiva específica de este encuentro está en elaboración.</p>';
- const demo=$("encTryDemo");if(demo)demo.onclick=()=>go("practica");
+ $("encPractice").innerHTML=(i===0&&number===1)?'<p class="muted small">La práctica y la evaluación formativa de este encuentro están integradas en su lección interactiva.</p>':'<p class="muted small">La práctica interactiva específica de este encuentro está en elaboración.</p>';
  if(navigate)go("encuentro");
 }
 $("backToList").onclick=()=>openPeriod(selectedPeriod);
