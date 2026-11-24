@@ -90,7 +90,22 @@ function j02GuidedExamples(){
  '<p><b>Tu turno:</b> cambia un valor, calcula de nuevo y explica cómo comprobarías tu resultado.</p></details>').join('')+'</div>';
 }
 
-function examples(){const d=L[active];if(active===2)return `<span class="m1-kicker">Paso 3 · Ejemplos</span><h3>Modelamos y comprobamos</h3>${j02GuidedExamples()}<p class="m1-help">Complementa tu trabajo con las páginas 40–41.</p>`;return `<span class="m1-kicker">Paso 3 · Ejemplos</span><h3>Observa cómo se resuelven los problemas</h3><p>Lee el problema, identifica los datos y explica qué operación se eligió antes de resolverlo por tu cuenta.</p>${d.examples.map(([title,body],i)=>`<div class="m1-example"><h4>Ejemplo ${i+1}: ${$esc(title)}</h4><p>${$esc(body)}</p></div>`).join('')}<div class="m1-reading"><b>Tu turno:</b> escribe en el cuaderno otro ejemplo con datos distintos y comprueba que la regla funciona. Si puedes, compara tu procedimiento con el de un compañero.</div><p>${pages()}</p>`}
+
+function j04GuidedExamples(){
+ const items=[
+  ['Costo fijo en un negocio','C(x)=80','Un comerciante paga una cuota fija de RD$80, aunque atienda distintos números de clientes.',
+   ['Identifica el término independiente: 80.','No aparece x: es un polinomio constante distinto de cero.','Su grado es 0.','Comprueba: C(0)=80 y C(5)=80.']],
+  ['Área y búsqueda de una raíz','A(x)=x^2+6x+9','Para representar el área de una región rectangular se utiliza un modelo de área expresado como polinomio.',
+   ['Identifica los términos x², 6x y 9.','El coeficiente principal es 1: el polinomio es mónico.','Factoriza: x²+6x+9=(x+3)².','Comprueba P(−3)=0. Matemáticamente es una raíz; una medida física negativa no representa una longitud posible.']]
+ ];
+ return '<div class="m1-poly-explorer"><h4>Ejemplos del entorno, resueltos paso a paso</h4>'+
+ items.map((e,i)=>'<details class="m1-guided-study" '+(i===0?'open':'')+'><summary>Ejemplo '+(i+1)+' · '+$esc(e[0])+'</summary>'+
+ '<p>'+$esc(e[2])+'</p><div class="m1-math" data-j04-latex="'+$esc(e[1])+'">'+$esc(e[1])+'</div>'+
+ '<ol>'+e[3].map(step=>'<li>'+$esc(step)+'</li>').join('')+'</ol>'+
+ '<p><b>Tu turno:</b> comprueba otro valor y explica tu procedimiento.</p></details>').join('')+'</div>';
+}
+
+function examples(){const d=L[active];if(active===4)return `<span class="m1-kicker">Paso 3 · Ejemplos</span><h3>Modelamos, clasificamos y comprobamos</h3>${j04GuidedExamples()}<p class="m1-help">Relaciona los ejemplos con las páginas 44–45 del libro.</p>`;if(active===2)return `<span class="m1-kicker">Paso 3 · Ejemplos</span><h3>Modelamos y comprobamos</h3>${j02GuidedExamples()}<p class="m1-help">Complementa tu trabajo con las páginas 40–41.</p>`;return `<span class="m1-kicker">Paso 3 · Ejemplos</span><h3>Observa cómo se resuelven los problemas</h3><p>Lee el problema, identifica los datos y explica qué operación se eligió antes de resolverlo por tu cuenta.</p>${d.examples.map(([title,body],i)=>`<div class="m1-example"><h4>Ejemplo ${i+1}: ${$esc(title)}</h4><p>${$esc(body)}</p></div>`).join('')}<div class="m1-reading"><b>Tu turno:</b> escribe en el cuaderno otro ejemplo con datos distintos y comprueba que la regla funciona. Si puedes, compara tu procedimiento con el de un compañero.</div><p>${pages()}</p>`}
 function options(q,key,chosen){return `<div class="m1-opts" role="group" aria-label="Opciones de respuesta">${q.options.map((o,j)=>`<label><input type="radio" name="${key}" value="${j}" ${chosen===j?'checked':''}>${$esc(o)}</label>`).join('')}</div>`}
 const J02_STUDY=[{"title":"1 · Identifico los elementos","min":30,"prompt":"Revisa la página 40. Descompón 5x²−4x+1 en términos e indica sus coeficientes, variable y grado.","guide":"Polinomio: 5x² − 4x + 1.\nTérminos: __.\nCoeficientes: __.\nVariable: __.\nGrado: __.\nComprobación: __."},{"title":"2 · Creo y compruebo mi modelo","min":50,"prompt":"Construye un polinomio de tres términos, grado 2 y término independiente 5. Comprueba su valor para x=2.","guide":"Mi polinomio: P(x)=__.\nTérminos: __.\nCoeficientes: __.\nGrado: __.\nP(2)=__.\nJustificación: __."},{"title":"3 · Comparo y reflexiono","min":40,"prompt":"Explica por qué 3x² y 3x no son términos semejantes. Corrige una confusión y comenta tu razonamiento con otra persona cuando sea posible.","guide":"3x² y 3x no son semejantes porque __.\nUn error que corregí: __.\nEstrategia que usé: __.\nComprobación o comparación: __.\nNecesito reforzar: __."}];
 function j02StudyHTML(){
@@ -186,9 +201,51 @@ function wireJ02Explorers(){
  loadJ02Math();
 }
 
+
+let j04MathLoading=false;
+function typesetJ04(){
+ if(active!==4||!window.katex)return;
+ root.querySelectorAll('[data-j04-latex]').forEach(el=>{
+  try{window.katex.render(el.dataset.j04Latex,el,{throwOnError:false,displayMode:true,output:'htmlAndMathml'})}catch(_){}
+ });
+}
+function loadJ04Math(){
+ if(active!==4)return;
+ if(window.katex){typesetJ04();return}
+ if(j04MathLoading)return;
+ j04MathLoading=true;
+ const style=document.createElement('link');style.rel='stylesheet';style.href='https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css';document.head.appendChild(style);
+ const script=document.createElement('script');script.src='https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.js';script.async=true;
+ script.onload=typesetJ04;script.onerror=()=>{j04MathLoading=false};document.head.appendChild(script);
+}
+function wireJ04Explorers(){
+ root.querySelectorAll('[data-j04-null]').forEach(btn=>btn.onclick=()=>{
+  $('j04NullInfo').textContent=btn.dataset.j04Null==='none'?
+   'Correcto: el polinomio nulo no tiene grado definido.':
+   'El grado cero corresponde a una constante distinta de cero; el polinomio nulo no tiene grado definido.';
+ });
+ const xInput=$('j04ConstantX');
+ if(xInput){const update=()=>{
+  const x=Number(xInput.value);$('j04ConstantXValue').textContent=x;
+  $('j04ConstantInfo').textContent='C('+x+')=80, sin importar x. La constante no nula tiene grado 0.';
+ };xInput.oninput=update;update();}
+ const monic=$('j04Monic');
+ if(monic){const update=()=>{
+  const values=[
+   {math:'x^2+3x+2',text:'x² + 3x + 2',note:'El coeficiente principal es 1. Es mónico de grado 2.'},
+   {math:'2x^2+3x+2',text:'2x² + 3x + 2',note:'El coeficiente principal es 2. No es mónico.'},
+   {math:'x^3-4',text:'x³ − 4',note:'El coeficiente principal es 1. Es mónico de grado 3.'}
+  ];
+  const selected=values[Number(monic.value)],el=$('j04MonicMath');
+  el.textContent=selected.text;el.dataset.j04Latex=selected.math;
+  $('j04MonicInfo').textContent=selected.note;typesetJ04();
+ };monic.onchange=update;update();}
+ loadJ04Math();
+}
+
 function wiring(){const s=session();
 if(s.step===0){$('m1Remember').oninput=e=>{s.self=e.target.value;save()}}
-if(s.step===1){if(active===2)wireJ02Explorers();document.querySelectorAll('[data-m1-part]').forEach(b=>b.onclick=()=>{const map={coeficiente:'El coeficiente es el factor numérico con su signo. En −5x³, el coeficiente es −5.',exponente:'El exponente 3 indica x·x·x.',termino:'Un término es una parte separada por suma o resta. En −5x³+2x²−7x+9 hay cuatro términos.',constante:'El 9 es el término independiente: no contiene variable.',grado:'El grado del polinomio es 3, el mayor exponente con coeficiente no nulo.',semejantes:'Los términos semejantes tienen la misma variable y los mismos exponentes.'};$('m1Explainer').textContent=map[b.dataset.m1Part]});const slide=$('m1Slider');if(slide)slide.oninput=()=>{const x=Number(slide.value);$('m1Output').textContent=x;if(active===4)$('m1Equation').textContent='P('+x+') = '+(x*x+6*x+9);if(active===5)$('m1Equation').textContent='A(x)=3x+4; B(x)='+x+'x+1; A+B='+(3+x)+'x+5';if(active===6)$('m1Equation').textContent='A('+x+') = '+((x+3)*(x+2))+' m²';if(active===9){$('m1Equation').textContent='V('+x+') = '+(x*(30-2*x)*(20-2*x))+' cm³';$('m1BoxDims').textContent='Base: '+(30-2*x)+' × '+(20-2*x)+' cm; altura: '+x+' cm.'}}}
+if(s.step===1){if(active===2)wireJ02Explorers();if(active===4)wireJ04Explorers();document.querySelectorAll('[data-m1-part]').forEach(b=>b.onclick=()=>{const map={coeficiente:'El coeficiente es el factor numérico con su signo. En −5x³, el coeficiente es −5.',exponente:'El exponente 3 indica x·x·x.',termino:'Un término es una parte separada por suma o resta. En −5x³+2x²−7x+9 hay cuatro términos.',constante:'El 9 es el término independiente: no contiene variable.',grado:'El grado del polinomio es 3, el mayor exponente con coeficiente no nulo.',semejantes:'Los términos semejantes tienen la misma variable y los mismos exponentes.'};$('m1Explainer').textContent=map[b.dataset.m1Part]});const slide=$('m1Slider');if(slide)slide.oninput=()=>{const x=Number(slide.value);$('m1Output').textContent=x;if(active===4)$('m1Equation').textContent='P('+x+') = '+(x*x+6*x+9);if(active===5)$('m1Equation').textContent='A(x)=3x+4; B(x)='+x+'x+1; A+B='+(3+x)+'x+5';if(active===6)$('m1Equation').textContent='A('+x+') = '+((x+3)*(x+2))+' m²';if(active===9){$('m1Equation').textContent='V('+x+') = '+(x*(30-2*x)*(20-2*x))+' cm³';$('m1BoxDims').textContent='Base: '+(30-2*x)+' × '+(20-2*x)+' cm; altura: '+x+' cm.'}}}
 document.querySelectorAll('[data-m1-special]').forEach(b=>b.onclick=()=>{$('m1SpecialInfo').textContent=({nulo:'El polinomio nulo es 0 y no tiene grado definido.',constante:'Un polinomio constante no nulo tiene grado 0.',monico:'Un polinomio mónico tiene coeficiente principal 1.',raiz:'Una raíz a cumple P(a)=0.'})[b.dataset.m1Special]});const cp=$('m1ClassPick');if(cp)cp.onchange=()=>{const v=cp.value,n=v==='0'?0:(v.match(/[+−-]/g)||[]).length+1,ex=[...v.matchAll(/x(?:\^(\d+)|([²³⁴]))?/g)].map(m=>Number(m[1]||({'²':2,'³':3,'⁴':4}[m[2]]||1)));$('m1ClassInfo').textContent=(n===1?'monomio':n===2?'binomio':n===3?'trinomio':n===0?'polinomio nulo':n+' términos')+' · grado '+(v==='0'?'no definido':Math.max(0,...ex))};const dn=$('m1DivNext');let ds=0;const steps=[['Ordena','Dividendo x²+5x+6; divisor x+2.'],['Divide','x² ÷ x = x. Primer término del cociente: x.'],['Multiplica','x(x+2)=x²+2x.'],['Resta','(x²+5x+6)−(x²+2x)=3x+6.'],['Verifica','3x÷x=3. Cociente x+3; resto 0.']];const show=()=>{$('m1DivStep').textContent='Paso '+(ds+1)+' de 5 · '+steps[ds][0];$('m1DivText').textContent=steps[ds][1];$('m1DivMath').textContent=steps[ds][1]};if(dn)dn.onclick=()=>{ds=(ds+1)%5;show()};const dr=$('m1DivReset');if(dr)dr.onclick=()=>{ds=0;show()};if(s.step===3){B[active].practice.forEach((q,i)=>{document.querySelectorAll('input[name="p_'+active+'_'+i+'"]').forEach(input=>input.onchange=e=>{const rec=s.practice[q.id]||{};rec.selected=Number(e.target.value);s.practice[q.id]=rec;save()})});document.querySelectorAll('[data-hint]').forEach(b=>b.onclick=()=>{const i=Number(b.dataset.hint),q=B[active].practice[i],rec=s.practice[q.id]||{};if(active===2){
  rec.hintLevel=Math.min(3,(rec.hintLevel||0)+1);
  const graduated=[
@@ -202,7 +259,7 @@ document.querySelectorAll('[data-m1-special]').forEach(b=>b.onclick=()=>{$('m1Sp
 if(s.step===4){B[active].evaluation.forEach(q=>{document.querySelectorAll('input[name="e_'+active+'_'+q.id+'"]').forEach(inp=>inp.onchange=e=>{s.evalDraft[q.id]=Number(e.target.value);save()})});[0,1].forEach(i=>{$('m1Proof'+i).oninput=e=>{s.openProof[i]=e.target.value;save()}});$('m1Submit').onclick=()=>{const qs=B[active].evaluation,missing=qs.filter(q=>!Number.isInteger(s.evalDraft[q.id])).length;if(missing){$('m1EvalMessage').hidden=false;$('m1EvalMessage').textContent='Todavía faltan '+missing+' respuestas. Completa las 16 preguntas para recibir el informe.';return}const ans={...s.evalDraft},score=qs.filter(q=>ans[q.id]===q.answer).length;const attempt={date:new Date().toISOString(),score,total:16,answers:ans,proof:s.openProof.slice(),formative:true};s.evalAttempts.push(attempt);s.evalDraft={};save();draw();root.querySelector('#m1EvalMessage').hidden=false;root.querySelector('#m1EvalMessage').textContent='Evaluación guardada. Consulta el informe de resultados debajo.'};const clear=$('m1ClearEval');if(clear)clear.onclick=()=>{s.evalDraft={};save();draw()}}
 }
 function navigate(i){const s=session();s.step=Math.max(0,Math.min(4,i));s.visited[s.step]=true;save();draw();root.scrollIntoView({block:'start'})}
-function draw(){if(root.hidden)return;const s=session();header();$('m1Tabs').innerHTML=STAGES.map((label,i)=>`<button type="button" data-m1-stage="${i}" class="${s.visited[i]?'visited':''}" aria-current="${s.step===i?'step':'false'}">${i+1}. ${label}</button>`).join('');$('m1Tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>navigate(Number(b.dataset.m1Stage)));$('m1Prev').disabled=s.step===0;$('m1Next').textContent=s.step===4?'Volver al inicio ↺':'Siguiente paso →';$('m1Body').innerHTML=[intro,contents,examples,practice,evalPage][s.step]();wiring();if(active===2&&s.step===2)loadJ02Math()}
+function draw(){if(root.hidden)return;const s=session();header();$('m1Tabs').innerHTML=STAGES.map((label,i)=>`<button type="button" data-m1-stage="${i}" class="${s.visited[i]?'visited':''}" aria-current="${s.step===i?'step':'false'}">${i+1}. ${label}</button>`).join('');$('m1Tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>navigate(Number(b.dataset.m1Stage)));$('m1Prev').disabled=s.step===0;$('m1Next').textContent=s.step===4?'Volver al inicio ↺':'Siguiente paso →';$('m1Body').innerHTML=[intro,contents,examples,practice,evalPage][s.step]();wiring();if(active===2&&s.step===2)loadJ02Math();if(active===4&&s.step===2)loadJ04Math()}
 $('m1Prev').onclick=()=>navigate(session().step-1);$('m1Next').onclick=()=>navigate(session().step===4?0:session().step+1);
 const oldRecords=drawRecords;drawRecords=function(){oldRecords();load();const box=document.createElement('div');box.className='card';const title=document.createElement('h3');title.textContent='Aprendizajes del Módulo I · Encuentros 2–10';box.appendChild(title);const txt=document.createElement('p');txt.className='small muted';txt.textContent='Las prácticas y evaluaciones formativas se conservan en este navegador, sin asignación automática de calificaciones oficiales.';box.appendChild(txt);for(let n=2;n<=10;n++){const o=state[n];if(!o)continue;const p=document.createElement('p');p.className='small';const pc=B[n].practice.filter(q=>o.practice?.[q.id]?.correct).length,ev=o.evalAttempts?.at(-1);p.textContent='Encuentro '+n+': práctica '+pc+'/12; '+(ev?'última evaluación '+ev.score+'/16':'sin evaluación entregada');box.appendChild(p)}$('recordsHistory').prepend(box)};
 window.EPJA_M1_PILOTO={open:n=>openEncounter(0,true,n-1),verify:()=>({lessons:Object.keys(L).length,practice:Object.values(B).reduce((a,x)=>a+x.practice.length,0),evaluation:Object.values(B).reduce((a,x)=>a+x.evaluation.length,0),blocks:BLOCKS.length,levels:LEVELS.length}),snapshot:()=>state};
