@@ -54,8 +54,10 @@ const blocks=[
  ['Aplica','¿Cuál ecuación es equivalente a x−6=4?',['x=10','x=−2','x=4'],0,'Sumar 6 a ambos miembros da x=10.'],
  ['Analiza','Al multiplicar por 3 ambos miembros de 2x=8, obtenemos:',['6x=24','6x=8','2x=24'],0,'Se multiplica cada lado por el mismo número no nulo.'],
  ['Transfiere','Dos grupos obtienen 4x=12 y x=3 a partir del mismo problema. ¿Cuál juicio es válido?',['Son equivalentes; ambas tienen solución 3','La primera no es una ecuación','No pueden representar el mismo problema'],0,'Al dividir ambos miembros por 4 se obtiene x=3.']]}];
-const initial=()=>({stage:0,topic:0,practiceGroup:0,evalBlock:0,recall:'',prResponses:{},prAttempts:{},prHints:{},understanding:{},evalDraft:{},evalAttempts:[],proof:['',''],selfStudy:['','',''],visited:[true,false,false,false,false]});
+const initial=()=>({stage:0,topic:0,practiceGroup:0,evalBlock:0,recall:'',prResponses:{},prAttempts:{},prHints:{},understanding:{},evalDraft:{},evalAttempts:[],proof:['',''],selfStudy:['','',''],studyDone:[false,false,false],visited:[true,false,false,false,false]});
 let state=initial();try{const parsed=JSON.parse(localStorage.getItem(KEY)||'null');if(parsed&&typeof parsed==='object')state={...initial(),...parsed}}catch(e){}
+if(!Array.isArray(state.selfStudy))state.selfStudy=['','',''];
+if(!Array.isArray(state.studyDone))state.studyDone=[false,false,false];
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}};
 const escape=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const opts=(q,name,saved)=>q.options.map((opt,i)=>`<label class="m2-choice"><input type="radio" name="${name}" value="${i}" ${saved===i?'checked':''}><span>${escape(opt)}</span></label>`).join('');
@@ -77,7 +79,12 @@ function initStyles(){const st=document.createElement('style');st.textContent=`
 .m2-action{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}.m2-action button{min-height:42px}
 .m2-bar{height:9px;border-radius:7px;background:#dce5f3;overflow:hidden}.m2-bar span{display:block;height:100%;background:#2b8574}
 .m2-table{width:100%;border-collapse:collapse}.m2-table th,.m2-table td{border-bottom:1px solid #dae4f0;padding:9px;text-align:left}
-.m2-card textarea{display:block;width:100%;min-height:96px;margin:9px 0 12px;padding:11px;border:1px solid #abbfdc;border-radius:8px;font:inherit;box-sizing:border-box}
+.m2-card textarea{display:block;width:100%;min-height:125px;margin:9px 0 12px;padding:11px;border:1px solid #abbfdc;border-radius:8px;font:inherit;box-sizing:border-box}
+.m2-study{margin-top:18px}.m2-study-head{background:#eaf4ff;border:1px solid #bdd2e9;border-radius:12px;padding:18px}.m2-study-head h4{font-size:1.15rem;margin:9px 0}
+.m2-study-task{background:white;border:1px solid #ccd9e8;border-radius:11px;padding:14px 17px;margin:12px 0}
+.m2-study-task summary{cursor:pointer;font-weight:700;color:#173c75;line-height:1.55}
+.m2-study-task[open] summary{padding-bottom:9px;border-bottom:1px solid #d9e1ea;margin-bottom:11px}
+.m2-study-check{display:inline-flex!important;align-items:center;gap:8px;font-weight:600!important;margin:0!important}.m2-study-check input{width:19px;height:19px;accent-color:#2c7562}
 .m2-controls{display:flex;gap:10px;margin-top:13px}.m2-controls button{flex:1}
 .m2-badge{font-size:.78rem;font-weight:750;background:#dce9ff;color:#1d4780;padding:6px 9px;border-radius:20px}
 .m2-muted{color:#536783;font-size:.87rem}.m2-question{border:1px solid #d5dfed;padding:15px;border-radius:10px;margin:13px 0}
@@ -93,7 +100,81 @@ if(i===2)return `<div class="m2-lab"><h4>Explorador: ecuación o identidad</h4><
 return `<div class="m2-lab"><h4>Transformaciones equivalentes: paso a paso</h4><p>Partimos de <b>4x−5=1</b>. Selecciona una transformación reversible.</p><div class="m2-action"><button data-m2-transform="add" type="button" class="secondary">Sumar 5 a ambos lados</button><button data-m2-transform="mult" type="button" class="secondary">Multiplicar ambos lados por 4</button><button data-m2-transform="invalid" type="button" class="secondary">Sumar 5 solo a un lado</button></div><p id="m2transformResult" class="m2-feedback" aria-live="polite">Selecciona una acción para comprobar si conserva las soluciones.</p></div>`}
 function contents(){const t=topics[state.topic],record=state.understanding[state.topic]||{};return `<span class="m2-badge">Paso 2 · Contenidos</span><h3>Igualdades, ecuaciones e identidades</h3><p class="m2-muted">Libro oficial del Módulo II: páginas impresas 38–41. Trabaja los conceptos en orden y compruébalos.</p>${nav('topic',topics,state.topic)}<div class="m2-lesson"><p><b>Subtema ${state.topic+1} · ${escape(t.title)}</b> · página ${t.page}</p><h3>${escape(t.heading)}</h3><p>${escape(t.desc)}</p><div class="m2-math">${escape(t.formula)}</div><p><b>Recuerda:</b> ${escape(t.tip)}</p></div>${interactiveLab(state.topic)}${question(['Comprueba que comprendiste','',t.q,t.options], 'm2under',state.topic,record.choice,record.feedback)}<p class="m2-muted">Estas comprobaciones permiten aprender y corregir, no forman parte de la calificación del encuentro.</p>`}
 function examplesPage(){return `<span class="m2-badge">Paso 3 · Ejemplos</span><h3>Analiza cinco situaciones resueltas</h3><p>Relaciona cada caso con los subtemas del libro. Observa qué se compara, qué significa la incógnita y cómo se comprueba la igualdad.</p>${examples.map((x,i)=>`<article class="m2-lesson"><h4>Ejemplo ${i+1} · ${escape(x[0])}</h4><p>${escape(x[1])}</p></article>`).join('')}<div class="m2-lab"><b>Reflexiona:</b> ¿en cuál ejemplo se verifica una solución y en cuál se justifica una identidad general? Explica la diferencia antes de pasar a la práctica.</div>`}
-function practice(){const g=state.practiceGroup,pr=questionsPractice.slice(3*g,3*g+3),titles=['Clasificar igualdades','Sustituir y comprobar','Ecuaciones e identidades','Transformaciones equivalentes'],correct=questionsPractice.filter((q,i)=>state.prAttempts[i]?.correct).length;return `<span class="m2-badge">Paso 4 · Práctica</span><h3>Desarrolla destrezas con pistas y correcciones</h3><p>12 actividades basadas en las páginas 38–41, adaptadas a situaciones nuevas. Puedes repetir cada una.</p><b>Destrezas logradas: ${correct} de 12</b><div class="m2-bar"><span style="width:${correct*100/12}%"></span></div>${nav('practice',titles,g)}<h4>${titles[g]}</h4>${pr.map((q,j)=>{const k=g*3+j;return question(q,'m2pr',k,state.prResponses[k],state.prAttempts[k]?.feedback)}).join('')}<div class="m2-lesson"><h4>Autoestudio autónomo · 120 minutos</h4><p><b>30 minutos:</b> repasa y clasifica las igualdades de las páginas 38–39. <b>50 minutos:</b> comprueba soluciones y construye igualdades equivalentes a partir de las páginas 40–41. <b>40 minutos:</b> redacta y explica tu procedimiento, revisa errores y realiza autoevaluación.</p>${['Cuadro de igualdades numéricas y algebraicas','Ejemplo de ecuación e identidad con comprobación','Mi reflexión: errores, estrategias y próximos pasos'].map((x,i)=>`<label for="m2study${i}"><b>${x}</b></label><textarea id="m2study${i}" data-m2-study="${i}" placeholder="Escribe aquí tu evidencia para conservarla...">${escape(state.selfStudy[i]||'')}</textarea>`).join('')}</div>`}
+
+const studyTasks=[{"title":"1 · Reconozco y clasifico","minutes":30,"lead":"Repasa las páginas 38–39, clasifica una igualdad numérica y otra algebraica y comprueba cada afirmación.","evidence":"Cuadro de igualdades numéricas y algebraicas","guide":"Igualdad numérica: 7 + 5 = 12. Compruebo: 12 = 12, verdadera.\nIgualdad algebraica: 3x + 2y = 16.\nElijo x = __ e y = __; sustituyo: __ = __.\nMi conclusión: __."},{"title":"2 · Construyo y compruebo","minutes":50,"lead":"Consulta las páginas 40–41. Comprueba la solución de x−9=3 y justifica la identidad 2(x+3)=2x+6.","evidence":"Ecuación, identidad y comprobación","guide":"Ecuación: x − 9 = 3.\nSumo 9 a ambos lados: x = __.\nCompruebo: __ − 9 = 3.\nIdentidad: 2(x + 3) = 2x + 6.\nPor distributiva: 2·x + 2·3 = 2x + 6.\nDiferencia: __."},{"title":"3 · Explico y mejoro","minutes":40,"lead":"Revisa una respuesta que hayas corregido. Explica qué aprendiste y compara con otra estrategia cuando sea posible.","evidence":"Reflexión y autoevaluación","guide":"Al principio creía que __.\nDespués de comprobar comprendí que __.\nMi duda principal fue __.\nUna estrategia distinta que valoré fue __.\nPara mejorar practicaré __."}];
+function guidedStudy(){
+ var completed=state.studyDone.filter(Boolean).length;
+ var html='<section class="m2-study" aria-label="Guía de autoestudio de 120 minutos">'+
+ '<div class="m2-study-head"><span class="m2-badge">Autoestudio guiado · 120 minutos</span>'+
+ '<h4>Explora, comprueba y construye tu evidencia</h4>'+
+ '<p>Completa una actividad a la vez. Las guías te orientan, pero debes escribir tus propios resultados y explicaciones.</p>'+
+ '<p class="m2-muted">Revisadas: <b id="m2studyProgress">'+completed+' de 3</b>. El trabajo se conserva solo en este navegador; no se entrega automáticamente.</p></div>';
+ studyTasks.forEach(function(task,i){
+  html+='<details class="m2-study-task" '+(i===0?'open':'')+'><summary><b>'+
+   escape(task.title)+'</b> · '+task.minutes+' minutos '+(state.studyDone[i]?'✓':'')+'</summary>'+
+   '<p>'+escape(task.lead)+'</p><p><b>Evidencia:</b> '+escape(task.evidence)+'</p>'+
+   '<label for="m2study'+i+'">'+escape(task.evidence)+'</label>'+
+   '<textarea id="m2study'+i+'" data-m2-study="'+i+'" rows="6" placeholder="Describe tu procedimiento y comprueba los resultados.">'+escape(state.selfStudy[i]||'')+'</textarea>'+
+   '<div class="m2-action"><button type="button" class="secondary" data-m2-starter="'+i+'">Insertar una guía para empezar</button>'+
+   '<label class="m2-study-check"><input type="checkbox" data-m2-done="'+i+'" '+(state.studyDone[i]?'checked':'')+'> Revisé esta actividad</label></div>'+
+   '<p class="m2-muted">No marques como revisado un trabajo con espacios pendientes o sin comprobación.</p></details>';
+ });
+ html+='<div class="m2-lab"><h4>Mi portafolio del encuentro</h4>'+
+ '<p>Reúne el trabajo de las tres actividades y el avance de las prácticas. Revisa el borrador antes de compartirlo con la maestra.</p>'+
+ '<button type="button" id="m2portfolio">Copiar mi evidencia</button>'+
+ '<p class="m2-muted" id="m2portfolioFeedback" role="status" aria-live="polite"></p>'+
+ '<p class="m2-muted"><b>Autoevaluación:</b> revisa tu proceso. <b>Coevaluación:</b> conversa tus resultados con otra persona cuando sea posible. <b>Heteroevaluación:</b> entrega tu evidencia por el medio indicado por la maestra.</p>'+
+ '</div></section>';
+ return html;
+}
+function portfolioText(){
+ var count=questionsPractice.filter(function(q,i){return state.prAttempts[i]&&state.prAttempts[i].correct}).length;
+ return ['Matemática EPJA · Tercero · Módulo II · Encuentro 1',
+ 'Borrador de autoestudio; no es una entrega oficial',
+ 'Prácticas comprobadas correctamente: '+count+' de 12'].concat(studyTasks.map(function(t,i){
+ return '\n'+t.evidence+' ['+(state.studyDone[i]?'revisado':'en proceso')+']\n'+(state.selfStudy[i]||'[sin redactar]');
+ })).join('\n');
+}
+function bindGuidedStudy(){
+ root.querySelectorAll('[data-m2-starter]').forEach(function(button){
+  button.onclick=function(){
+   var i=Number(button.dataset.m2Starter),box=id('m2study'+i);
+   if(box.value.trim()&&!window.confirm('Ya hay texto escrito. ¿Quieres reemplazarlo por la guía?'))return;
+   box.value=studyTasks[i].guide;state.selfStudy[i]=box.value;state.studyDone[i]=false;
+   var check=root.querySelector('[data-m2-done="'+i+'"]');if(check)check.checked=false;
+   id('m2studyProgress').textContent=state.studyDone.filter(Boolean).length+' de 3';
+   save();box.focus();
+  };
+ });
+ root.querySelectorAll('[data-m2-study]').forEach(function(field){
+  field.oninput=function(){
+   var i=Number(field.dataset.m2Study);state.selfStudy[i]=field.value;state.studyDone[i]=false;
+   var check=root.querySelector('[data-m2-done="'+i+'"]');if(check)check.checked=false;
+   id('m2studyProgress').textContent=state.studyDone.filter(Boolean).length+' de 3';save();
+  };
+ });
+ root.querySelectorAll('[data-m2-done]').forEach(function(checkbox){
+  checkbox.onchange=function(){
+   var i=Number(checkbox.dataset.m2Done);
+   if(checkbox.checked&&(!String(state.selfStudy[i]||'').trim()||String(state.selfStudy[i]).includes('__'))){
+    checkbox.checked=false;
+    id('m2portfolioFeedback').textContent='Completa tu evidencia y los espacios pendientes antes de marcarla como revisada.';
+    return;
+   }
+   state.studyDone[i]=checkbox.checked;save();
+   id('m2studyProgress').textContent=state.studyDone.filter(Boolean).length+' de 3';
+  };
+ });
+ var copy=id('m2portfolio');if(copy)copy.onclick=function(){
+  var output=id('m2portfolioFeedback');
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+   navigator.clipboard.writeText(portfolioText()).then(function(){output.textContent='Borrador copiado. Revísalo y entrégalo por el canal indicado.';},
+    function(){output.textContent='No se pudo copiar. Conserva y copia manualmente las evidencias.';});
+  }else{output.textContent='La copia automática no está disponible en este navegador.';}
+ };
+}
+
+function practice(){const g=state.practiceGroup,pr=questionsPractice.slice(3*g,3*g+3),titles=['Clasificar igualdades','Sustituir y comprobar','Ecuaciones e identidades','Transformaciones equivalentes'],correct=questionsPractice.filter((q,i)=>state.prAttempts[i]?.correct).length;return `<span class="m2-badge">Paso 4 · Práctica</span><h3>Desarrolla destrezas con pistas y correcciones</h3><p>12 actividades basadas en las páginas 38–41, adaptadas a situaciones nuevas. Puedes repetir cada una.</p><b>Destrezas logradas: ${correct} de 12</b><div class="m2-bar"><span style="width:${correct*100/12}%"></span></div>${nav('practice',titles,g)}<h4>${titles[g]}</h4>${pr.map((q,j)=>{const k=g*3+j;return question(q,'m2pr',k,state.prResponses[k],state.prAttempts[k]?.feedback)}).join('')}${guidedStudy()}`}
 function assessment(){const b=blocks[state.evalBlock],latest=state.evalAttempts.at(-1);return `<span class="m2-badge">Paso 5 · Evaluación formativa</span><h3>Comprobación por bloques y dificultad</h3><p>16 situaciones nuevas en cuatro agrupaciones pedagógicas. No se muestra la corrección de estas respuestas hasta entregar el intento. No constituye una calificación oficial.</p><p><b>IL-3 principal:</b> justificar la validez de argumentos con ecuaciones de primer grado. <b>IL-4 complementario:</b> razonar la validez de ideas matemáticas.</p>${nav('eval',blocks.map(x=>x.name),state.evalBlock)}<h4>${escape(b.name)}</h4><p class="m2-muted">${escape(b.desc)}</p>${b.items.map((q,j)=>{const k=state.evalBlock*4+j;return `<article class="m2-question"><small>Nivel ${j+1} · ${escape(q[0])}</small><h4>${escape(q[1])}</h4>${opts({options:q[2]},'m2eval_'+k,state.evalDraft[k])}</article>`}).join('')}<p class="m2-muted">Respondidas: ${Object.keys(state.evalDraft).filter(k=>Number.isInteger(state.evalDraft[k])).length} de 16. Las respuestas se guardan mientras trabajas.</p>${state.evalBlock===3?`<div class="m2-lesson"><h4>Evidencias escritas para el facilitador</h4><label for="m2proof0">Explica por qué 2(x+3)=2x+6 es una identidad y x−9=3 es una ecuación.</label><textarea id="m2proof0" data-m2-proof="0">${escape(state.proof[0]||'')}</textarea><label for="m2proof1">Dos participantes transformaron 4x−5=1 de manera distinta. ¿Cómo comprobarías si sus ecuaciones son equivalentes? Justifica tu criterio y respeta la estrategia alternativa.</label><textarea id="m2proof1" data-m2-proof="1">${escape(state.proof[1]||'')}</textarea><p class="m2-muted">Estas respuestas requieren autoevaluación, coevaluación y heteroevaluación; no reciben puntuación automática.</p></div><div class="m2-action"><button type="button" id="m2submit">Entregar evaluación completa</button><button type="button" class="secondary" id="m2clear">Borrar respuestas no entregadas</button></div><div id="m2evalMsg" class="m2-feedback" hidden></div>`:''}${latest?report(latest):''}`}
 function report(attempt){let scores=blocks.map((b,i)=>b.items.reduce((count,q,j)=>count+(attempt.answers[i*4+j]===q[3]?1:0),0));const levels=['Reconoce','Aplica','Analiza','Transfiere'];const levelScore=levels.map((_,j)=>blocks.reduce((sum,b,i)=>sum+(attempt.answers[i*4+j]===b.items[j][3]?1:0),0));return `<details class="m2-lesson" open><summary><b>Último intento: ${attempt.score} de 16 respuestas correctas</b></summary><p>Resultado formativo objetivo. Las evidencias escritas todavía requieren valoración docente.</p><table class="m2-table"><thead><tr><th>Bloque</th><th>Aciertos</th></tr></thead><tbody>${scores.map((x,i)=>`<tr><td>${escape(blocks[i].name)}</td><td>${x}/4</td></tr>`).join('')}</tbody></table><p><b>Por dificultad:</b> ${levels.map((l,i)=>`${l}: ${levelScore[i]}/4`).join(' · ')}</p><details><summary>Revisar las respuestas y explicaciones</summary>${blocks.map((b,i)=>`<h4>${escape(b.name)}</h4>${b.items.map((q,j)=>`<p><b>${escape(q[1])}</b><br>Tu respuesta: ${escape(q[2][attempt.answers[i*4+j]]||'Sin responder')} · Correcta: ${escape(q[2][q[3]])}<br><span class="m2-muted">${escape(q[4])}</span></p>`).join('')}`).join('')}</details><p class="m2-muted">Los bloques y los niveles son categorías de seguimiento pedagógico, no equivalen a la calificación oficial C1–C4. La interpretación de competencias requiere otras evidencias.</p></details>`}
 const host=id('encuentro'),root=document.createElement('div');root.id='m2e1';root.hidden=true;root.innerHTML='<div class="m2-hero" id="m2hero"></div><p class="m2-muted">Tus respuestas se conservan en este navegador.</p><div class="m2-stage-nav" id="m2nav"></div><section class="m2-card" id="m2body" aria-live="polite"></section><div class="m2-controls"><button type="button" class="secondary" id="m2prev">← Paso anterior</button><button type="button" id="m2next">Siguiente paso →</button></div><p class="m2-muted">2 horas presenciales + 2 horas de autoestudio. Tiempos orientativos.</p>';
@@ -106,7 +187,7 @@ function bind(){root.querySelectorAll('[data-m2-stage]').forEach(b=>b.onclick=()
 root.querySelectorAll('[data-m2-select]').forEach(b=>b.onclick=()=>{const [name,n]=b.dataset.m2Select.split(':');if(name==='topic')state.topic=Number(n);if(name==='practice')state.practiceGroup=Number(n);if(name==='eval')state.evalBlock=Number(n);save();draw()});
 if(state.stage===0){id('m2recall').oninput=e=>{state.recall=e.target.value;save()}}
 if(state.stage===1){const t=state.topic,k=String(t);const radios=root.querySelectorAll('input[name="m2under_'+t+'"]');radios.forEach(r=>r.onchange=()=>{const rec=state.understanding[k]||{};rec.choice=Number(r.value);state.understanding[k]=rec;save()});const check=root.querySelector('[data-m2-check]');if(check)check.onclick=()=>{let r=state.understanding[k]||{};if(!Number.isInteger(r.choice)){r.feedback='Selecciona una respuesta.'}else r.feedback=r.choice===topics[t].a?'¡Correcto! '+topics[t].why:'Revisa la explicación: '+topics[t].why+' Puedes intentarlo otra vez.';state.understanding[k]=r;save();const div=id('m2feedback_'+t);div.hidden=false;div.className='m2-feedback '+(r.choice===topics[t].a?'ok':'bad');div.textContent=r.feedback};const hint=root.querySelector('[data-m2-hint]');if(hint)hint.onclick=()=>{const div=id('m2feedback_'+t);div.hidden=false;div.textContent='Pista: '+topics[t].tip};wireLabs(t)}
-if(state.stage===3){const g=state.practiceGroup;questionsPractice.slice(g*3,g*3+3).forEach((q,j)=>{const k=g*3+j;root.querySelectorAll('input[name="m2pr_'+k+'"]')?.forEach(r=>r.onchange=()=>{state.prResponses[k]=Number(r.value);save()});const hint=root.querySelector('[data-m2-hint="'+k+'"]');if(hint)hint.onclick=()=>{const div=id('m2feedback_'+k);div.hidden=false;div.textContent='Pista: '+q[4]};const check=root.querySelector('[data-m2-check="'+k+'"]');if(check)check.onclick=()=>{const choice=state.prResponses[k];const prior=state.prAttempts[k]||{attempts:0};if(!Number.isInteger(choice)){prior.feedback='Selecciona una respuesta.'}else{prior.attempts++;prior.correct=choice===q[4];prior.feedback=prior.correct?'¡Correcto! '+q[5]:'Revisa: '+q[5]+' Puedes elegir otra opción.'}state.prAttempts[k]=prior;save();const d=id('m2feedback_'+k);d.hidden=false;d.className='m2-feedback '+(prior.correct?'ok':'bad');d.textContent=prior.feedback;id('m2body').querySelector('.m2-bar span').style.width=(questionsPractice.filter((_,i)=>state.prAttempts[i]?.correct).length*100/12)+'%'}});root.querySelectorAll('[data-m2-study]').forEach(el=>el.oninput=()=>{state.selfStudy[Number(el.dataset.m2Study)]=el.value;save()})}
+if(state.stage===3){const g=state.practiceGroup;questionsPractice.slice(g*3,g*3+3).forEach((q,j)=>{const k=g*3+j;root.querySelectorAll('input[name="m2pr_'+k+'"]')?.forEach(r=>r.onchange=()=>{state.prResponses[k]=Number(r.value);save()});const hint=root.querySelector('[data-m2-hint="'+k+'"]');if(hint)hint.onclick=()=>{const div=id('m2feedback_'+k);div.hidden=false;div.textContent='Pista: '+q[4]};const check=root.querySelector('[data-m2-check="'+k+'"]');if(check)check.onclick=()=>{const choice=state.prResponses[k];const prior=state.prAttempts[k]||{attempts:0};if(!Number.isInteger(choice)){prior.feedback='Selecciona una respuesta.'}else{prior.attempts++;prior.correct=choice===q[4];prior.feedback=prior.correct?'¡Correcto! '+q[5]:'Revisa: '+q[5]+' Puedes elegir otra opción.'}state.prAttempts[k]=prior;save();const d=id('m2feedback_'+k);d.hidden=false;d.className='m2-feedback '+(prior.correct?'ok':'bad');d.textContent=prior.feedback;id('m2body').querySelector('.m2-bar span').style.width=(questionsPractice.filter((_,i)=>state.prAttempts[i]?.correct).length*100/12)+'%'}});bindGuidedStudy()}
 if(state.stage===4){const g=state.evalBlock;root.querySelectorAll('input[name^="m2eval_"]').forEach(inp=>inp.onchange=()=>{state.evalDraft[Number(inp.name.replace('m2eval_',''))]=Number(inp.value);save()});root.querySelectorAll('[data-m2-proof]').forEach(x=>x.oninput=()=>{state.proof[Number(x.dataset.m2Proof)]=x.value;save()});const sub=id('m2submit');if(sub)sub.onclick=()=>{const missing=Array.from({length:16},(_,i)=>i).filter(i=>!Number.isInteger(state.evalDraft[i]));const msg=id('m2evalMsg');if(missing.length){msg.hidden=false;msg.textContent='Faltan '+missing.length+' respuestas. Visita los cuatro bloques y completa las preguntas antes de entregar.';return}let score=0;blocks.forEach((block,i)=>block.items.forEach((q,j)=>{if(state.evalDraft[i*4+j]===q[3])score++}));state.evalAttempts.push({date:new Date().toISOString(),score,answers:{...state.evalDraft},proof:state.proof.slice()});state.evalDraft={};save();draw()};const clear=id('m2clear');if(clear)clear.onclick=()=>{state.evalDraft={};save();draw()}}
 }
 function wireLabs(t){if(t===0){id('m2balance').oninput=()=>{const n=Number(id('m2balance').value);id('m2balanceVal').textContent=n;id('m2left').textContent=10+n;const equal=n===4;id('m2balanceFeedback').textContent='10+'+n+'='+(10+n)+' kg y el otro lado tiene 14 kg. '+(equal?'La igualdad es verdadera: balanza equilibrada.':(10+n<14?'El lado izquierdo tiene menos masa.':'El lado izquierdo tiene más masa.'));id('m2beam').setAttribute('stroke',equal?'#278369':'#b87928')}}
