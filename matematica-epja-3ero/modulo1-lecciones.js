@@ -27,11 +27,39 @@ const host=$('encuentro'),root=document.createElement('div');root.id='modulo1Pil
 root.innerHTML='<div class="m1-hero" id="m1Hero"></div><p class="muted small" id="m1Saved" aria-live="polite">Tu trabajo se conserva en este navegador.</p><div class="m1-tabs" id="m1Tabs" role="group" aria-label="Pasos de aprendizaje del encuentro"></div><section id="m1Body" class="m1-panel" aria-live="polite"></section><div class="m1-controls"><button type="button" class="secondary" id="m1Prev">← Paso anterior</button><button type="button" id="m1Next">Siguiente paso →</button></div><p class="muted small">2 horas presenciales y 2 horas de autoestudio. Los tiempos indicados son orientativos.</p>';
 const back=host.querySelector('#backToList');back.closest('p').before(root);
 const oldCards=[...host.querySelectorAll(':scope > .card')];
+const unifiedStyle=document.createElement('style');
+unifiedStyle.textContent=`
+#encuentro.p1-m1-unified > .card,
+#encuentro.p1-m1-unified > #encEyebrow,
+#encuentro.p1-m1-unified > #encTitle{display:none!important}
+#encuentro.p1-m1-unified #modulo1Pilot:not([hidden]){display:block}
+#encuentro.p1-m1-unified #modulo1Pilot[hidden]{display:none!important}
+.m1-poly-explorer{background:#eef5ff;border:1px solid #bed1ea;border-radius:11px;margin:13px 0;padding:15px}
+.m1-poly-explorer select,.m1-poly-explorer input[type=range]{max-width:100%;width:100%;margin:8px 0;accent-color:#24558b}
+.m1-math{overflow-x:auto;padding:12px;background:#fff;border:1px solid #d5e2f0;border-radius:10px;text-align:center;font-size:1.1rem}
+.m1-poly-explorer output{font-weight:750}
+.m1-guided-study{background:#f7faff;border:1px solid #cbdceb;border-radius:12px;padding:14px;margin:14px 0}
+.m1-guided-study summary{cursor:pointer;font-weight:750;color:#244581}
+.m1-guided-study .m1-field{min-height:120px}
+.m1-study-action{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:10px 0}
+.m1-study-action label{display:inline-flex;align-items:center;gap:7px;font-weight:650}
+.m1-study-action input{width:18px;height:18px;accent-color:#246b58}
+`;
+document.head.appendChild(unifiedStyle);
 load();
 const prevOpen=openEncounter;
-openEncounter=function(i,navigate=true,n=null){prevOpen(i,navigate,n);const isM1=i===0 && !$('encEyebrow').textContent.includes('Encuentro 1 de');root.hidden=!isM1;oldCards.forEach(c=>{if(isM1)c.hidden=true});if(!isM1)return;const m=$('encEyebrow').textContent.match(/Encuentro (\d+) de/);active=m?Number(m[1]):2;session();draw()};
+openEncounter=function(i,navigate=true,n=null){
+ prevOpen(i,navigate,n);
+ const isM1=i===0 && !$('encEyebrow').textContent.includes('Encuentro 1 de');
+ host.classList.toggle('p1-m1-unified',isM1);
+ root.hidden=!isM1;
+ oldCards.forEach(c=>{c.hidden=isM1;c.setAttribute('aria-hidden',isM1?'true':'false')});
+ if(!isM1)return;
+ const m=$('encEyebrow').textContent.match(/Encuentro (\d+) de/);
+ active=m?Number(m[1]):2;session();draw();
+};
 function pages(){const map=window.EPJA_MODULO1[active-1],parts=map.lecturas||[];if(!parts.length)return '<p class="m1-help"><b>Ampliación:</b> no existe una sección específica de factorización en el libro. Repasa, si lo necesitas, la propiedad distributiva de las páginas 46–49.</p>';return parts.map(([a,b])=>`<a target="_blank" rel="noopener" href="modulo1-matematica.pdf#page=${a-35}">Páginas ${a}–${b} ↗</a>`).join(' · ')}
-function header(){const d=L[active],c=window.EPJA_37.encuentros[active-1],a=window.EPJA_MODULO1[active-1];$('m1Hero').innerHTML=`<span class="pill">P1 · Encuentro ${active} de 10</span><h2>${$esc(d.title)}</h2><p>${$esc(d.goal)}</p><p class="m1-help" style="color:#dce8fa">Fecha: ${$esc(c.fecha)} · ${$esc(a.paginas)} · 120 min presenciales + 120 min autoestudio</p>`}
+function header(){const d=L[active],c=window.EPJA_37.encuentros[active-1],a=window.EPJA_MODULO1[active-1];$('m1Hero').innerHTML=`<span class="pill">P1 · Encuentro ${active} de 10</span><h2>${$esc(d.title)}</h2><p>${$esc(d.goal)}</p><p class="m1-help" style="color:#dce8fa">Fecha: ${$esc(c.fecha)} · Libro oficial: ${$esc(a.paginas)} · 120 min presenciales + 120 min autoestudio</p><details class="m1-reading" style="color:#243c66"><summary>Ver competencias, indicadores y evidencias</summary><p>${$esc(d.evidence)}</p><p>Competencia: CE-MAT1 · Indicador de referencia: IL-1. Evaluación formativa, sin calificación oficial.</p></details>`}
 function intro(){const d=L[active];return `<span class="m1-kicker">Paso 1 · ¿Qué sabemos?</span><h3>Conectemos con lo aprendido anteriormente</h3><p>${$esc(d.prior)}</p><div class="m1-example"><b>Recuerda:</b> identifica qué regla matemática usaste en el encuentro anterior y describe una situación de tu comunidad donde te sirva.</div><label for="m1Remember"><b>Escribe o explica con tus palabras</b></label><textarea id="m1Remember" class="m1-field" rows="4" placeholder="Una idea que recuerdo y cómo puedo aplicarla...">${$esc(session().self)}</textarea><p class="m1-help">Esta recuperación orienta el nuevo tema y no constituye una calificación.</p>`}
 function specialTool(){
 if(active===2)return '<div class="m1-mini"><h4>Laboratorio de anatomía algebraica</h4><p>Selecciona cada parte de −5x³ + 2x² − 7x + 9. Observa cómo el signo, coeficiente, variable y exponente forman cada término.</p><div class="m1-buttons"><button class="secondary" data-m1-part="coeficiente">−5</button><button class="secondary" data-m1-part="exponente">x³</button><button class="secondary" data-m1-part="termino">2x²</button><button class="secondary" data-m1-part="constante">9</button><button class="secondary" data-m1-part="grado">Grado</button><button class="secondary" data-m1-part="semejantes">Semejantes</button></div><p id="m1Explainer" aria-live="polite">Selecciona un componente para explorarlo.</p><label for="m1PolyPick">Cambia el polinomio</label><select id="m1PolyPick" class="m1-field"><option value="4x²−3x+7">4x² − 3x + 7</option><option value="−5x³+2x²−7x+9">−5x³ + 2x² − 7x + 9</option><option value="6x²+6x">6x² + 6x</option></select><p id="m1PolyInfo">Identifica términos, coeficientes y grado.</p></div>';
