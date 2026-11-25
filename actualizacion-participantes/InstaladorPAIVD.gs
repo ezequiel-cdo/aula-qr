@@ -1,5 +1,5 @@
 /**
- * PAIVD - instalador de esquema v1.0.0.
+ * PAIVD - instalador de esquema v1.0.1.
  * SOLO en proyecto privado independiente, nunca en app web pública.
  * Configurar PAIVD_TARGET_ID en Script Properties (ID del libro de ensayo).
  * No modifica datos existentes. Aplicación no transaccional; respaldo previo.
@@ -89,7 +89,22 @@ function paivdPlan_(ss){
     vistas.add(v.ID_Matricula);
   });
   mat.forEach(m=>{if(String(m.Estado||'').toLowerCase()==='inscrito'&&['Primero','Segundo','Tercero','Cuarto','Quinto'].includes(m.Curso)&&!vistas.has(m.ID_Matricula))err('Matricula inscrita ausente de Vista_AulaQR');});
-  ['Contactos','Datos_Reservados','Historial_Academico','Historial_Original','Actualizaciones','Perfil_Digital','Verificacion_Identidad','Auditoria_Cambios'].forEach(n=>filas(n).forEach(r=>vinculo(n,r)));
+  ['Contactos','Datos_Reservados','Historial_Academico','Historial_Original','Perfil_Digital','Verificacion_Identidad','Auditoria_Cambios'].forEach(n=>filas(n).forEach(r=>vinculo(n,r)));
+  // Desde PAIVD 0.4 la bandeja admite declaraciones sin asignación oficial.
+  filas('Actualizaciones').forEach(r=>{
+    if(r.ID_Interno||r.ID_Estudiante||r.ID_Matricula){
+      vinculo('Actualizaciones',r);
+      const m=mat.get(r.ID_Matricula);
+      if(!m||m.ID_Interno!==r.ID_Interno||m.ID_Estudiante!==r.ID_Estudiante)err('Actualizaciones: matrícula incoherente');
+      return;
+    }
+    try{
+      const d=JSON.parse(r.Datos_Propuestos_JSON).identificacion;
+      if(r.Version_Esquema!=='0.4'||!['PENDIENTE','PENDIENTE_ASIGNACION','EN_REVISION','OBSERVADA','RECHAZADA'].includes(r.Estado)||!d||d.tipo!=='DECLARADA_NO_VERIFICADA'||!Array.isArray(d.candidatos)||!d.candidatos.length)throw Error('declaración inválida');
+      if(new Set(d.candidatos.map(x=>x.ID_Matricula)).size!==d.candidatos.length)throw Error('candidatos duplicados');
+      d.candidatos.forEach(x=>{vinculo('Actualizaciones (candidato)',x);const m=mat.get(x.ID_Matricula);if(!m||m.ID_Interno!==x.ID_Interno||m.ID_Estudiante!==x.ID_Estudiante)err('Actualizaciones: candidato incoherente');});
+    }catch(e){err('Actualizaciones: declaración no asignada inválida');}
+  });
   const unica=(n,k)=>{const s=new Set();filas(n).forEach(r=>{if(!r[k]||s.has(r[k]))err(n+': clave vacía o duplicada '+k);s.add(r[k]);});return s;};
   ['Datos_Reservados','Historial_Original'].forEach(n=>{const s=unica(n,'ID_Interno');if(s.size!==est.size)err(n+': cobertura de estudiantes incompleta');});
   [['Contactos','ID_Contacto'],['Historial_Academico','ID_Historial'],['Actualizaciones','ID_Solicitud'],['Perfil_Digital','ID_Interno'],['Verificacion_Identidad','ID_Verificacion'],['Auditoria_Cambios','ID_Evento']].forEach(([n,k])=>unica(n,k));
@@ -119,11 +134,11 @@ function paivdPlan_(ss){
     else if(old.Tabla!==n||old.Campo!==c||old.Tipo!==row[2]||old['Regla / finalidad']!==row[3])err('Diccionario: definición previa distinta para '+n+'.'+c);
   }));
   const snapshot=Object.fromEntries(Object.entries(tablas).map(([n,t])=>[n,t?{head:t.head,rows:t.rows}:null]));
-  const huella=paivdHash_({version:'1.0.0',id:ss.getId(),snapshot,cambios,dictAdd});
+  const huella=paivdHash_({version:'1.0.1',id:ss.getId(),snapshot,cambios,dictAdd});
   return {errores,cambios,dictAdd,counts,huella};
 }
 function paivdMostrar_(p){
-  console.log(JSON.stringify({version:'1.0.0',errores:p.errores,conteos:p.counts,cambios:p.cambios,filasDiccionarioNuevas:p.dictAdd.length,huella:p.huella},null,2));
+  console.log(JSON.stringify({version:'1.0.1',errores:p.errores,conteos:p.counts,cambios:p.cambios,filasDiccionarioNuevas:p.dictAdd.length,huella:p.huella},null,2));
 }
 function PAIVD_Diagnosticar(){
   paivdMostrar_(paivdPlan_(paivdLibro_()));
