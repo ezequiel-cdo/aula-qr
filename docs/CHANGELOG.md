@@ -16,3 +16,6 @@ El responsable ejecutó PAIVD_Aplicar y PAIVD_Diagnosticar: ambas salidas report
 
 ## Backend PAIVD 0.1 — ensayo
 Código y formulario de ensayo, emisión privada, generador ficticio y guía de pruebas. Sin despliegue ni ejecución funcional. No aprobación, fotografía ni verificación telefónica; revisión de seguridad pendiente.
+
+## PAIVD 0.2 — alcance institucional
+Filtros opcionales y dinámicos, búsqueda por nombre en matrículas inscritas de cinco cursos, ubicación académica en coincidencias, diagnóstico visible de carga y reintento, etapas de contactos visibles. Emisión administrativa compatible con cualquier matrícula vigente. Se mantienen credenciales y captura pendiente de revisión; no se ejecutaron pruebas de esta versión ni se publicó.
