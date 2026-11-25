@@ -18,3 +18,6 @@ El instalador usa bloqueo de script, no bloquea ediciones externas ni ofrece tra
 
 ## Reglas confirmadas del diccionario original
 ID_Contacto UUID4 solo cuando exista contacto verificado; las declaraciones sin comprobar permanecen en Actualizaciones. Teléfono puede repetirse entre personas. Verificacion conserva Pendiente / Validado / Desactualizado. Los nombres de origen se conservan hasta corrección documental autorizada. Fecha_Nac y Declaracion_Original nunca se exponen a V3. El diagnóstico reportado por el responsable dio cero errores, 6 operaciones y 51 definiciones previstas. Aplicación y diagnóstico posterior reportados sin errores; 15 hojas, 74 definiciones, cero cambios pendientes. Confirmar destino de ensayo y permisos antes de cualquier paso de producción.
+
+## Backend de ensayo 0.1
+Consultar [guía de prueba restringida](PRUEBA_BACKEND.md). Código separado en backend/ y admin/; no publicar ni usar datos reales. No modifica el buscador V3.
