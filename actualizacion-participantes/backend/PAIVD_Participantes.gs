@@ -1,11 +1,11 @@
 /**
- * PAIVD v0.4 - recepción de solicitudes. Solo ensayo con datos ficticios.
+ * PAIVD v0.5 - recepción de solicitudes. Solo ensayo con datos ficticios.
  * Proyecto PARTICIPANTES: instalar este archivo y PAIVD_Registro.gs.
  * No instalar funciones administrativas en este proyecto.
  * Propiedades privadas: PAIVD_TARGET_ID, PAIVD_ENSAYO=SI,
  * PAIVD_SECRETO (64 hex aleatorios). Sin credenciales para declaraciones.
  */
-const PAIVD_V_='0.4';
+const PAIVD_V_='0.5';
 function paivdProp_(key){const v=PropertiesService.getScriptProperties().getProperty(key);if(!v)throw Error('Configuración incompleta');return v;}
 function paivdLibro_(){if(paivdProp_('PAIVD_ENSAYO')!=='SI')throw Error('Solo ensayo');const ss=SpreadsheetApp.openById(paivdProp_('PAIVD_TARGET_ID'));if(ss.getName()!=='PAIVD_ENSAYO_FICTICIO')throw Error('Solo libro ficticio');return ss;}
 function paivdSecret_(){const s=paivdProp_('PAIVD_SECRETO');if(!/^[a-f0-9]{64}$/i.test(s))throw Error('Configuración incompleta');return s;}
@@ -61,7 +61,7 @@ function paivdDeclarar(seleccion,confirmado){
     const refs=paivdGrupoActual_(selection.refs),first=refs[0];
     // Reintento de la misma selección conserva el identificador de solicitud.
     if(selection.declaracion)return selection.declaracion;
-    const session=paivdStore_('decl04:',{refs,sol:Utilities.getUuid(),exp:Date.now()+1800000},1800);
+    const session=paivdStore_('decl05:',{refs,sol:Utilities.getUuid(),exp:Date.now()+1800000},1800);
     const result={session,datos:{nombre:first.n,anio:first.a,curso:first.c,seccion:first.s},homonimos:refs.length};
     selection.declaracion=result;
     paivdCache_().put('sel:'+paivdDigest_(seleccion),JSON.stringify(selection),600);
@@ -70,31 +70,30 @@ function paivdDeclarar(seleccion,confirmado){
 }
 function paivdTexto_(v,max,required=false){if(typeof v!=='string')throw Error('Campo no válido');const s=v.trim();if(s.length>max||(required&&!s)||/[\x00-\x08\x0b\x0c\x0e-\x1f]/.test(s))throw Error('Revisa los campos del formulario');return s;}
 function paivdEnum_(v,opts){if(!opts.includes(v))throw Error('Selecciona una opción válida');return v;}
-function paivdTel_(v){let s=paivdTexto_(v,30).replace(/[ ()-]/g,'');if(s.startsWith('+1'))s=s.slice(2);else if(s.length===11&&s[0]==='1')s=s.slice(1);if(!/^(809|829|849)[2-9]\d{6}$/.test(s))throw Error('Usa un teléfono dominicano de 10 dígitos');return '+1'+s;}
+function paivdTel_(v){
+  const s=paivdTexto_(v,14,true);
+  if(!/^\((809|829|849)\) [2-9]\d{2}-\d{4}$/.test(s))throw Error('Usa el formato (809) 555-0101 con un código de área dominicano válido.');
+  return '+1'+s.replace(/\D/g,'');
+}
 function paivdContacto_(x,tipo){if(!x||typeof x!=='object'||Array.isArray(x))throw Error('Contacto no válido');const relacion=paivdEnum_(x.relacion,['PROPIO','COMPARTIDO','FAMILIAR','OTRO']);if(tipo==='EMERGENCIA'&&relacion==='PROPIO')throw Error('Indica otra persona para emergencia');return {tipo,telefono:paivdTel_(x.telefono),titular:paivdTexto_(x.titular,120,relacion!=='PROPIO'),relacion,whatsapp:paivdEnum_(x.whatsapp,['SI','NO','NO_SABE'])};}
 function paivdValidar_(p){
   if(!p||typeof p!=='object'||Array.isArray(p))throw Error('Solicitud no válida');
   const confirmacion=paivdEnum_(p.confirmacion,['CORRECTOS','CORREGIR']);
   const correccion=paivdTexto_(p.correccion,600,confirmacion==='CORREGIR');
   if(confirmacion==='CORRECTOS'&&correccion)throw Error('Revisa la confirmación');
-  if(typeof p.sinTelefonoPropio!=='boolean'||p.consentimiento!==true)throw Error('Confirma la declaración y el aviso de privacidad');
+  if(p.consentimiento!==true)throw Error('Confirma la declaración y el aviso de privacidad');
   const contactos=[];
-  if(p.principal)contactos.push(paivdContacto_(p.principal,'PRINCIPAL'));
+  if(!p.principal)throw Error('Indica un teléfono principal propio, compartido o de otra persona.');
+  contactos.push(paivdContacto_(p.principal,'PRINCIPAL'));
   if(p.alternativo)contactos.push(paivdContacto_(p.alternativo,'ALTERNATIVO'));
   if(p.emergencia)contactos.push(paivdContacto_(p.emergencia,'EMERGENCIA'));
-  if(!p.sinTelefonoPropio&&!contactos.some(c=>c.tipo!=='EMERGENCIA'&&c.relacion==='PROPIO'))throw Error('Indica tu teléfono propio o marca que no dispones de uno');
-  if(p.sinTelefonoPropio&&contactos.some(c=>c.tipo!=='EMERGENCIA'&&c.relacion==='PROPIO'))throw Error('Revisa la titularidad');
-  if(contactos.some(c=>c.tipo==='ALTERNATIVO')&&!contactos.some(c=>c.tipo==='PRINCIPAL'))throw Error('Indica primero el contacto principal');
   const pers=contactos.filter(c=>c.tipo!=='EMERGENCIA');
   if(new Set(pers.map(c=>c.telefono)).size!==pers.length)throw Error('Los teléfonos principal y alternativo deben ser distintos');
-  const correo=paivdTexto_(p.correo,160);if(correo&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo))throw Error('Correo no válido');
-  const perfil={dispositivo:paivdEnum_(p.dispositivo,['CELULAR','TABLETA','COMPUTADORA','NINGUNO']),titularidad:paivdEnum_(p.titularidad,['PROPIO','COMPARTIDO','PRESTADO','NO_APLICA']),conectividad:paivdEnum_(p.conectividad,['SIEMPRE','ALGUNAS_VECES','NO']),dificultades:paivdEnum_(p.dificultades,['SI','NO','ALGUNAS_VECES'])};
-  if((perfil.dispositivo==='NINGUNO')!==(perfil.titularidad==='NO_APLICA'))throw Error('Revisa el dispositivo y su titularidad');
-  return {confirmacion,correccion,contactos,sinTelefonoPropio:p.sinTelefonoPropio,municipio:paivdTexto_(p.municipio,100,true),sector:paivdTexto_(p.sector,120,true),correo,perfil,consentimiento:true,avisoVersion:'ENSAYO-0.4'};
+  return {confirmacion,correccion,contactos,municipio:paivdTexto_(p.municipio,100,true),sector:paivdTexto_(p.sector,120,true),consentimiento:true,avisoVersion:'ENSAYO-0.5'};
 }
 function paivdEnviar(session,payload){
   return paivdLock_(()=>{
-    const s=paivdReadToken_('decl04:',session);if(Date.now()>=s.exp)throw Error('Sesión vencida. Vuelve a buscar tu nombre.');
+    const s=paivdReadToken_('decl05:',session);if(Date.now()>=s.exp)throw Error('Sesión vencida. Vuelve a buscar tu nombre.');
     const refs=paivdGrupoActual_(s.refs),first=refs[0],data=paivdValidar_(payload);
     const h=paivdTable_(paivdLibro_(),'Actualizaciones',PAIVD_SOL_HEAD_),rows=paivdRows_(h);
     if(rows.some(r=>r[0]===s.sol))return {ok:true,referencia:s.sol,estado:'RECIBIDA'};
