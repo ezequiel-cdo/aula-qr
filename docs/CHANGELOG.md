@@ -22,3 +22,6 @@ Filtros opcionales y dinámicos, búsqueda por nombre en matrículas inscritas d
 
 ## PAIVD 0.3 — autocompletado y homónimos
 Autocompletado con espera de 350 ms, descarte de respuestas obsoletas, fichas visuales y selección marcada. Agrupación por nombre exacto y ubicación; credencial resuelve matrícula dentro del grupo. Ampliador ficticio añade nueve registros sin sustituir los dos anteriores. Capturas 0.2 confirman búsqueda parcial y carga de filtros. No se ejecutó 0.3 en Apps Script.
+
+## PAIVD 0.4 — identificación declarada
+Por decisión del responsable, retirar credenciales de la captura inicial. Confirmación explícita, sesión de recepción independiente, solicitudes sin IDs oficiales asignados, candidatos en JSON, revisión posterior. No leer ni consumir credenciales, ni registrar identidad verificada. Se ajusta instalador 1.0.1 para validar nuevas solicitudes sin asignación sin cambiar columnas. Código guardado; pruebas Apps Script pendientes.
