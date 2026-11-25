@@ -7,3 +7,6 @@ Se incorporan encabezados y conteos de las 11 hojas, obtenidos del informe ejecu
 
 ## Instalador PAIVD v1.0.0
 Código privado de instalación con simulación, integridad referencial, aprobación por huella, ampliación idempotente y verificación de valores visibles. Se revisó estructura del archivo en GitHub; sin ejecución en Apps Script ni cambios en el maestro. Las reglas y permisos requieren revisión manual.
+
+## 2026-11-25 — diagnóstico PAIVD ejecutado por responsable
+Se recibió resultado de PAIVD_RevisarDiccionario (23 reglas) y PAIVD_Diagnosticar v1.0.0: cero errores, 6 operaciones de esquema, 51 definiciones nuevas previstas. Se documentan reglas relevantes. Aplicación, confirmación del destino de ensayo, permisos y verificación posterior pendientes. No almacenar huella específica del libro en repositorio público.
