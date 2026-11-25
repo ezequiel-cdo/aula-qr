@@ -19,3 +19,6 @@ La documentación pedagógica se conserva en cada aula. No declarar pruebas o de
 
 - [x] Programar núcleo de ensayo PAIVD 0.1: reutilización V3, emisión privada, sesión y solicitudes pendientes, formulario y generador ficticio.
 - [ ] Ejecutar pruebas restringidas /dev según actualizacion-participantes/PRUEBA_BACKEND.md; no publicar ni usar datos reales.
+
+- [x] Adaptar PAIVD 0.2 a búsqueda institucional con año, curso y sección opcionales y etapas visibles.
+- [ ] Comprobar carga de filtros y búsqueda sin filtros en /dev; probar cinco cursos con datos ficticios. La captura 0.1 mostró sección vacía; causa exacta aún no determinada.
