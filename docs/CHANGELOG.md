@@ -13,3 +13,6 @@ Se recibió resultado de PAIVD_RevisarDiccionario (23 reglas) y PAIVD_Diagnostic
 
 ## 2026-11-25 — instalación PAIVD reportada
 El responsable ejecutó PAIVD_Aplicar y PAIVD_Diagnosticar: ambas salidas reportan 15 hojas, 74 definiciones, 424 estudiantes y matrículas, 1102 registros históricos, cero errores y cero cambios pendientes; huellas posteriores coinciden. El instalador informó conservación de valores visibles originales. No se verificaron directamente destino, permisos, fórmulas ni despliegue. No publicar huellas del archivo.
+
+## Backend PAIVD 0.1 — ensayo
+Código y formulario de ensayo, emisión privada, generador ficticio y guía de pruebas. Sin despliegue ni ejecución funcional. No aprobación, fotografía ni verificación telefónica; revisión de seguridad pendiente.
