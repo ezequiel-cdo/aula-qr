@@ -1,11 +1,11 @@
 /**
- * PAIVD v0.1 - recepción de solicitudes. Solo ensayo con datos ficticios.
+ * PAIVD v0.2 - recepción de solicitudes. Solo ensayo con datos ficticios.
  * Proyecto PARTICIPANTES: instalar este archivo y PAIVD_Registro.gs.
  * No instalar funciones administrativas en este proyecto.
  * Propiedades privadas: PAIVD_TARGET_ID, PAIVD_ENSAYO=SI,
  * PAIVD_CREDENCIALES_ID (libro privado auxiliar), PAIVD_SECRETO (64 hex aleatorios).
  */
-const PAIVD_V_='0.1';
+const PAIVD_V_='0.2';
 function paivdProp_(key){const v=PropertiesService.getScriptProperties().getProperty(key);if(!v)throw Error('Configuración incompleta');return v;}
 function paivdLibro_(){if(paivdProp_('PAIVD_ENSAYO')!=='SI')throw Error('Solo ensayo');return SpreadsheetApp.openById(paivdProp_('PAIVD_TARGET_ID'));}
 function paivdCred_(){return SpreadsheetApp.openById(paivdProp_('PAIVD_CREDENCIALES_ID'));}
@@ -20,20 +20,24 @@ const PAIVD_SOL_HEAD_=['ID_Solicitud','ID_Interno','ID_Estudiante','ID_Matricula
 const PAIVD_VER_HEAD_=['ID_Verificacion','ID_Interno','ID_Estudiante','ID_Matricula','Metodo','Resultado','Fecha_Verificacion','Responsable'];
 function paivdRows_(h){return h.getLastRow()>1?h.getRange(2,1,h.getLastRow()-1,h.getLastColumn()).getDisplayValues():[];}
 function paivdCache_(){return CacheService.getScriptCache();}
-function paivdPiloto_(){return epjaPublicoRegistroValidado_().filas.filter(r=>r.Curso==='Tercero'&&r.Ano_Escolar==='2026-2027');}
+function paivdPiloto_(){return epjaPublicoRegistroValidado_().filas;}
 function paivdRef_(r){return {i:r.ID_Interno,e:r.ID_Estudiante,m:r.ID_Matricula,n:r.Nombre_Mostrar,a:r.Ano_Escolar,c:r.Curso,s:r.Seccion};}
 function paivdActual_(ref){const r=paivdPiloto_().find(x=>x.ID_Matricula===ref.m);if(!r||JSON.stringify(paivdRef_(r))!==JSON.stringify(ref))throw Error('La matrícula cambió. Contacta al docente.');return r;}
 function paivdPublica_(r){return {nombre:r.Nombre_Mostrar,anio:r.Ano_Escolar,curso:r.Curso,seccion:r.Seccion};}
 function paivdReadToken_(prefix,t){if(typeof t!=='string'||! /^[a-f0-9]{64}$/.test(t))throw Error('Sesión no válida');const raw=paivdCache_().get(prefix+paivdDigest_(t));if(!raw)throw Error('Sesión vencida. Contacta al docente si necesitas otra credencial.');return JSON.parse(raw);}
 function paivdStore_(prefix,data,seconds){const t=paivdToken_();paivdCache_().put(prefix+paivdDigest_(t),JSON.stringify(data),seconds);return t;}
 function paivdLimit_(key,max,windowMs){const p=PropertiesService.getScriptProperties(),now=Date.now();let a;try{a=JSON.parse(p.getProperty(key)||'null');}catch(e){a=null;}if(!a||a.until<=now)a={n:0,until:now+windowMs};if(a.n>=max)throw Error('Límite temporal alcanzado. Intenta más tarde.');a.n++;p.setProperty(key,JSON.stringify(a));}
-function paivdContextos(){return [...new Set(paivdPiloto_().map(r=>r.Seccion))].sort().map(seccion=>({anio:'2026-2027',curso:'Tercero',seccion}));}
+function paivdContextos(){
+  const m=new Map();
+  paivdPiloto_().forEach(r=>{const k=JSON.stringify([r.Ano_Escolar,r.Curso,r.Seccion]);m.set(k,{anio:r.Ano_Escolar,curso:r.Curso,seccion:r.Seccion});});
+  return [...m.values()].sort((a,b)=>b.anio.localeCompare(a.anio)||a.curso.localeCompare(b.curso,'es')||a.seccion.localeCompare(b.seccion,'es'));
+}
 function paivdBuscar(anio,curso,seccion,texto){
-  if(typeof texto!=='string'||texto.length>80||typeof seccion!=='string'||seccion.length>30||anio!=='2026-2027'||curso!=='Tercero')return [];
+  if([anio,curso,seccion,texto].some(x=>typeof x!=='string'||x.length>80))return [];
   const q=epjaPublicoNormalizar_(texto);if(q.length<3)return [];
-  // El buscador no autentica. Cuota global de ensayo para reducir abuso; no elimina enumeración.
   paivdLock_(()=>paivdLimit_('PAIVD_BUSQUEDAS',300,600000));
-  return paivdPiloto_().filter(r=>r.Seccion===seccion).map(r=>({r,score:epjaPublicoPuntuacion_(q,[r.Nombre_Mostrar])})).filter(x=>x.score>=12).sort((a,b)=>b.score-a.score||a.r.Nombre_Mostrar.localeCompare(b.r.Nombre_Mostrar,'es')).slice(0,5).map(x=>({nombre:x.r.Nombre_Mostrar,token:paivdStore_('sel:',paivdRef_(x.r),600)}));
+  const lista=paivdPiloto_().filter(r=>(!anio||r.Ano_Escolar===anio)&&(!curso||r.Curso===curso)&&(!seccion||r.Seccion===seccion)).map(r=>({r,score:epjaPublicoPuntuacion_(q,[r.Nombre_Mostrar])})).filter(x=>x.score>=12).sort((a,b)=>b.score-a.score||a.r.Nombre_Mostrar.localeCompare(b.r.Nombre_Mostrar,'es'));
+  return lista.slice(0,5).map(x=>({...paivdPublica_(x.r),token:paivdStore_('sel:',paivdRef_(x.r),600)}));
 }
 function paivdVerificar(seleccion,codigo){
   return paivdLock_(()=>{
@@ -76,7 +80,7 @@ function paivdValidar_(p){
   const correo=paivdTexto_(p.correo,160);if(correo&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo))throw Error('Correo no válido');
   const perfil={dispositivo:paivdEnum_(p.dispositivo,['CELULAR','TABLETA','COMPUTADORA','NINGUNO']),titularidad:paivdEnum_(p.titularidad,['PROPIO','COMPARTIDO','PRESTADO','NO_APLICA']),conectividad:paivdEnum_(p.conectividad,['SIEMPRE','ALGUNAS_VECES','NO']),dificultades:paivdEnum_(p.dificultades,['SI','NO','ALGUNAS_VECES'])};
   if((perfil.dispositivo==='NINGUNO')!==(perfil.titularidad==='NO_APLICA'))throw Error('Revisa el dispositivo y su titularidad');
-  return {confirmacion,correccion,contactos,sinTelefonoPropio:p.sinTelefonoPropio,municipio:paivdTexto_(p.municipio,100,true),sector:paivdTexto_(p.sector,120,true),correo,perfil,consentimiento:true,avisoVersion:'ENSAYO-0.1'};
+  return {confirmacion,correccion,contactos,sinTelefonoPropio:p.sinTelefonoPropio,municipio:paivdTexto_(p.municipio,100,true),sector:paivdTexto_(p.sector,120,true),correo,perfil,consentimiento:true,avisoVersion:'ENSAYO-0.2'};
 }
 function paivdEnviar(session,payload){
   return paivdLock_(()=>{
