@@ -21,3 +21,6 @@ ID_Contacto UUID4 solo cuando exista contacto verificado; las declaraciones sin 
 
 ## Backend de ensayo 0.1
 Consultar [guía de prueba restringida](PRUEBA_BACKEND.md). Código separado en backend/ y admin/; no publicar ni usar datos reales. No modifica el buscador V3.
+
+## Decisión 0.4 — flujo declarativo (prevalece sobre la propuesta anterior)
+No exigir credencial individual para recibir información. Confirmación personal no autentica. Mantener candidatos privados en JSON de Actualizaciones; tres IDs oficiales vacíos hasta revisión, incluso para candidato único. No consultar información privada, no registrar identidad validada ni modificar maestro. Actualizar instalador a 1.0.1 para diagnósticos posteriores en esquemas completos. Ver PRUEBA_BACKEND.md. Solo ensayo restringido con datos ficticios; credenciales conservadas para futuras funciones autenticadas.
