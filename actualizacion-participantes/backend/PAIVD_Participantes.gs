@@ -1,30 +1,26 @@
 /**
- * PAIVD v0.3 - recepción de solicitudes. Solo ensayo con datos ficticios.
+ * PAIVD v0.4 - recepción de solicitudes. Solo ensayo con datos ficticios.
  * Proyecto PARTICIPANTES: instalar este archivo y PAIVD_Registro.gs.
  * No instalar funciones administrativas en este proyecto.
  * Propiedades privadas: PAIVD_TARGET_ID, PAIVD_ENSAYO=SI,
- * PAIVD_CREDENCIALES_ID (libro privado auxiliar), PAIVD_SECRETO (64 hex aleatorios).
+ * PAIVD_SECRETO (64 hex aleatorios). Sin credenciales para declaraciones.
  */
-const PAIVD_V_='0.3';
+const PAIVD_V_='0.4';
 function paivdProp_(key){const v=PropertiesService.getScriptProperties().getProperty(key);if(!v)throw Error('Configuración incompleta');return v;}
-function paivdLibro_(){if(paivdProp_('PAIVD_ENSAYO')!=='SI')throw Error('Solo ensayo');return SpreadsheetApp.openById(paivdProp_('PAIVD_TARGET_ID'));}
-function paivdCred_(){return SpreadsheetApp.openById(paivdProp_('PAIVD_CREDENCIALES_ID'));}
+function paivdLibro_(){if(paivdProp_('PAIVD_ENSAYO')!=='SI')throw Error('Solo ensayo');const ss=SpreadsheetApp.openById(paivdProp_('PAIVD_TARGET_ID'));if(ss.getName()!=='PAIVD_ENSAYO_FICTICIO')throw Error('Solo libro ficticio');return ss;}
 function paivdSecret_(){const s=paivdProp_('PAIVD_SECRETO');if(!/^[a-f0-9]{64}$/i.test(s))throw Error('Configuración incompleta');return s;}
 function paivdDigest_(s){return Utilities.computeHmacSha256Signature(s,paivdSecret_()).map(b=>('0'+(b&255).toString(16)).slice(-2)).join('');}
 function paivdToken_(){return Utilities.getUuid().replace(/-/g,'')+Utilities.getUuid().replace(/-/g,'');}
-function paivdEqual_(a,b){if(typeof a!=='string'||typeof b!=='string'||a.length!==b.length)return false;let d=0;for(let i=0;i<a.length;i++)d|=a.charCodeAt(i)^b.charCodeAt(i);return d===0;}
 function paivdLock_(fn){const l=LockService.getScriptLock();l.waitLock(15000);try{return fn();}finally{l.releaseLock();}}
 function paivdTable_(ss,name,head){const h=ss.getSheetByName(name);if(!h||h.getLastColumn()!==head.length||h.getRange(1,1,1,head.length).getDisplayValues()[0].some((v,i)=>v!==head[i]))throw Error('Esquema incompatible');return h;}
-const PAIVD_CRED_HEAD_=['ID_Matricula','Hash_Codigo','Expira_MS','Estado','Responsable','Fecha_Emision'];
 const PAIVD_SOL_HEAD_=['ID_Solicitud','ID_Interno','ID_Estudiante','ID_Matricula','Fecha_Solicitud','Estado','Datos_Propuestos_JSON','Version_Esquema','Fecha_Revision','Responsable_Revision','Observaciones_Revision'];
-const PAIVD_VER_HEAD_=['ID_Verificacion','ID_Interno','ID_Estudiante','ID_Matricula','Metodo','Resultado','Fecha_Verificacion','Responsable'];
 function paivdRows_(h){return h.getLastRow()>1?h.getRange(2,1,h.getLastRow()-1,h.getLastColumn()).getDisplayValues():[];}
 function paivdCache_(){return CacheService.getScriptCache();}
 function paivdPiloto_(){return epjaPublicoRegistroValidado_().filas;}
 function paivdRef_(r){return {i:r.ID_Interno,e:r.ID_Estudiante,m:r.ID_Matricula,n:r.Nombre_Mostrar,a:r.Ano_Escolar,c:r.Curso,s:r.Seccion};}
 function paivdActual_(ref){const r=paivdPiloto_().find(x=>x.ID_Matricula===ref.m);if(!r||JSON.stringify(paivdRef_(r))!==JSON.stringify(ref))throw Error('La matrícula cambió. Contacta al docente.');return r;}
 function paivdPublica_(r){return {nombre:r.Nombre_Mostrar,anio:r.Ano_Escolar,curso:r.Curso,seccion:r.Seccion};}
-function paivdReadToken_(prefix,t){if(typeof t!=='string'||! /^[a-f0-9]{64}$/.test(t))throw Error('Sesión no válida');const raw=paivdCache_().get(prefix+paivdDigest_(t));if(!raw)throw Error('Sesión vencida. Contacta al docente si necesitas otra credencial.');return JSON.parse(raw);}
+function paivdReadToken_(prefix,t){if(typeof t!=='string'||! /^[a-f0-9]{64}$/.test(t))throw Error('Sesión no válida');const raw=paivdCache_().get(prefix+paivdDigest_(t));if(!raw)throw Error('Sesión vencida. Vuelve a buscar tu nombre.');return JSON.parse(raw);}
 function paivdStore_(prefix,data,seconds){const t=paivdToken_();paivdCache_().put(prefix+paivdDigest_(t),JSON.stringify(data),seconds);return t;}
 function paivdLimit_(key,max,windowMs){const p=PropertiesService.getScriptProperties(),now=Date.now();let a;try{a=JSON.parse(p.getProperty(key)||'null');}catch(e){a=null;}if(!a||a.until<=now)a={n:0,until:now+windowMs};if(a.n>=max)throw Error('Límite temporal alcanzado. Intenta más tarde.');a.n++;p.setProperty(key,JSON.stringify(a));}
 function paivdContextos(){
@@ -48,27 +44,28 @@ function paivdAgrupar_(lista){
  });
  return [...grupos.values()].slice(0,5);
 }
-function paivdVerificar(seleccion,codigo){
+// La selección solo autoriza enviar una declaración, nunca leer información privada.
+function paivdGrupoActual_(refs){
+  if(!Array.isArray(refs)||!refs.length)throw Error('Vuelve a buscar tu nombre');
+  const first=refs[0];
+  const actuales=paivdPiloto_().filter(r=>r.Nombre_Mostrar===first.n&&r.Ano_Escolar===first.a&&r.Curso===first.c&&r.Seccion===first.s).map(paivdRef_);
+  const canon=arr=>JSON.stringify(arr.slice().sort((x,y)=>x.m.localeCompare(y.m)));
+  if(canon(actuales)!==canon(refs))throw Error('La selección cambió. Busca tu nombre nuevamente.');
+  return actuales;
+}
+function paivdDeclarar(seleccion,confirmado){
+  if(confirmado!==true)throw Error('Confirma tu selección');
   return paivdLock_(()=>{
     const selection=paivdReadToken_('sel:',seleccion);
-    if(!Array.isArray(selection.refs)||!selection.refs.length)throw Error('Vuelve a buscar tu nombre');
-    paivdLimit_('PAIVD_INTENTOS_GLOBAL',100,900000);
-    // Limitar cada matrícula candidata: agrupar no permite eludir el límite individual.
-    selection.refs.forEach(ref=>paivdLimit_('PAIVD_INT_'+paivdDigest_(ref.m),5,900000));
-    if(typeof codigo!=='string'||!/^[a-f0-9]{64}$/i.test(codigo.trim()))throw Error('Credencial no válida');
-    const h=paivdTable_(paivdCred_(),'Credenciales',PAIVD_CRED_HEAD_);
-    const rows=paivdRows_(h),digest=paivdDigest_('codigo:'+codigo.trim().toLowerCase());
-    const refs=new Map(selection.refs.map(ref=>[ref.m,ref]));
-    const matches=rows.map((v,i)=>({v,i})).filter(x=>refs.has(x.v[0])&&x.v[3]==='EMITIDA'&&Number(x.v[2])>Date.now()&&paivdEqual_(x.v[1],digest));
-    if(matches.length!==1)throw Error('Credencial no válida o vencida');
-    const x=matches[0],ref=refs.get(x.v[0]),r=paivdActual_(ref);
-    const ss=paivdLibro_(),log=paivdTable_(ss,'Verificacion_Identidad',PAIVD_VER_HEAD_);
-    // Consumir antes de otorgar acceso. Ante un fallo posterior se requiere nueva emisión.
-    h.getRange(x.i+2,4).setValue('CONSUMIDA');SpreadsheetApp.flush();
-    log.appendRow([Utilities.getUuid(),ref.i,ref.e,ref.m,'CREDENCIAL_DOCENTE','VALIDADA',new Date().toISOString(),x.v[4]]);
-    const session=paivdStore_('ses:',{ref,sol:Utilities.getUuid(),exp:Date.now()+1800000},1800);
-    paivdCache_().remove('sel:'+paivdDigest_(seleccion));
-    return {session,datos:paivdPublica_(r)};
+    paivdLimit_('PAIVD_DECLARACIONES_GLOBAL',120,900000);
+    const refs=paivdGrupoActual_(selection.refs),first=refs[0];
+    // Reintento de la misma selección conserva el identificador de solicitud.
+    if(selection.declaracion)return selection.declaracion;
+    const session=paivdStore_('decl04:',{refs,sol:Utilities.getUuid(),exp:Date.now()+1800000},1800);
+    const result={session,datos:{nombre:first.n,anio:first.a,curso:first.c,seccion:first.s},homonimos:refs.length};
+    selection.declaracion=result;
+    paivdCache_().put('sel:'+paivdDigest_(seleccion),JSON.stringify(selection),600);
+    return result;
   });
 }
 function paivdTexto_(v,max,required=false){if(typeof v!=='string')throw Error('Campo no válido');const s=v.trim();if(s.length>max||(required&&!s)||/[\x00-\x08\x0b\x0c\x0e-\x1f]/.test(s))throw Error('Revisa los campos del formulario');return s;}
@@ -93,21 +90,22 @@ function paivdValidar_(p){
   const correo=paivdTexto_(p.correo,160);if(correo&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo))throw Error('Correo no válido');
   const perfil={dispositivo:paivdEnum_(p.dispositivo,['CELULAR','TABLETA','COMPUTADORA','NINGUNO']),titularidad:paivdEnum_(p.titularidad,['PROPIO','COMPARTIDO','PRESTADO','NO_APLICA']),conectividad:paivdEnum_(p.conectividad,['SIEMPRE','ALGUNAS_VECES','NO']),dificultades:paivdEnum_(p.dificultades,['SI','NO','ALGUNAS_VECES'])};
   if((perfil.dispositivo==='NINGUNO')!==(perfil.titularidad==='NO_APLICA'))throw Error('Revisa el dispositivo y su titularidad');
-  return {confirmacion,correccion,contactos,sinTelefonoPropio:p.sinTelefonoPropio,municipio:paivdTexto_(p.municipio,100,true),sector:paivdTexto_(p.sector,120,true),correo,perfil,consentimiento:true,avisoVersion:'ENSAYO-0.3'};
+  return {confirmacion,correccion,contactos,sinTelefonoPropio:p.sinTelefonoPropio,municipio:paivdTexto_(p.municipio,100,true),sector:paivdTexto_(p.sector,120,true),correo,perfil,consentimiento:true,avisoVersion:'ENSAYO-0.4'};
 }
 function paivdEnviar(session,payload){
   return paivdLock_(()=>{
-    const s=paivdReadToken_('ses:',session);if(Date.now()>=s.exp)throw Error('Sesión vencida');paivdActual_(s.ref);
-    const data=paivdValidar_(payload), h=paivdTable_(paivdLibro_(),'Actualizaciones',PAIVD_SOL_HEAD_),rows=paivdRows_(h);
-    const existing=rows.find(r=>r[0]===s.sol);
-    if(existing)return {ok:true,referencia:s.sol,estado:existing[5]};
-    if(rows.some(r=>r[2]===s.ref.e&&['PENDIENTE','EN_REVISION','OBSERVADA'].includes(r[5])))throw Error('Ya hay una solicitud abierta. Contacta al docente.');
-    // JSON starts with "{", not a formula prefix; IDs derive only from validated server rows.
-    const safe=v=>/^[=+\-@]/.test(String(v))?"'"+v:v;
-    h.appendRow([s.sol,safe(s.ref.i),safe(s.ref.e),safe(s.ref.m),new Date().toISOString(),'PENDIENTE',JSON.stringify(data),PAIVD_V_,'','','']);
+    const s=paivdReadToken_('decl04:',session);if(Date.now()>=s.exp)throw Error('Sesión vencida. Vuelve a buscar tu nombre.');
+    const refs=paivdGrupoActual_(s.refs),first=refs[0],data=paivdValidar_(payload);
+    const h=paivdTable_(paivdLibro_(),'Actualizaciones',PAIVD_SOL_HEAD_),rows=paivdRows_(h);
+    if(rows.some(r=>r[0]===s.sol))return {ok:true,referencia:s.sol,estado:'RECIBIDA'};
+    paivdLimit_('PAIVD_ENVIOS_GLOBAL',120,900000);
+    // No bloquear a la persona legítima por una declaración de terceros.
+    // Toda declaración queda sin asignación oficial, incluso con candidato único.
+    data.identificacion={tipo:'DECLARADA_NO_VERIFICADA',nombre:first.n,anio:first.a,curso:first.c,seccion:first.s,candidatos:refs.map(r=>({ID_Interno:r.i,ID_Estudiante:r.e,ID_Matricula:r.m}))};
+    const estado=refs.length>1?'PENDIENTE_ASIGNACION':'PENDIENTE';
+    h.appendRow([s.sol,'','','',new Date().toISOString(),estado,JSON.stringify(data),PAIVD_V_,'','','']);
     SpreadsheetApp.flush();
-    // Mantener sesión hasta caducidad para recuperar el comprobante si se pierde respuesta.
-    return {ok:true,referencia:s.sol,estado:'PENDIENTE'};
+    return {ok:true,referencia:s.sol,estado:'RECIBIDA'};
   });
 }
 function doGet(){return HtmlService.createHtmlOutputFromFile('FormularioPAIVD').setTitle('PAIVD · Ensayo institucional');}
