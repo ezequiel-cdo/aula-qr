@@ -11,3 +11,6 @@ La documentación pedagógica se conserva en cada aula. No declarar pruebas o de
 
 - [x] Crear instalador de esquema PAIVD en rama de continuidad.
 - [ ] Ejecutar diagnóstico y ensayo en copia privada; revisar reglas y permisos antes de aplicar.
+
+- [x] Recibir diagnóstico PAIVD v1.0.0 ejecutado por responsable: cero errores, 6 operaciones y 51 definiciones propuestas; revisar 23 reglas originales.
+- [ ] Confirmar que el destino es copia privada, revisar respaldo y permisos, aplicar y comprobar segunda ejecución sin cambios. No se ha aplicado el instalador.
