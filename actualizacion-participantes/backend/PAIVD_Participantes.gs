@@ -1,11 +1,11 @@
 /**
- * PAIVD v0.2 - recepción de solicitudes. Solo ensayo con datos ficticios.
+ * PAIVD v0.3 - recepción de solicitudes. Solo ensayo con datos ficticios.
  * Proyecto PARTICIPANTES: instalar este archivo y PAIVD_Registro.gs.
  * No instalar funciones administrativas en este proyecto.
  * Propiedades privadas: PAIVD_TARGET_ID, PAIVD_ENSAYO=SI,
  * PAIVD_CREDENCIALES_ID (libro privado auxiliar), PAIVD_SECRETO (64 hex aleatorios).
  */
-const PAIVD_V_='0.2';
+const PAIVD_V_='0.3';
 function paivdProp_(key){const v=PropertiesService.getScriptProperties().getProperty(key);if(!v)throw Error('Configuración incompleta');return v;}
 function paivdLibro_(){if(paivdProp_('PAIVD_ENSAYO')!=='SI')throw Error('Solo ensayo');return SpreadsheetApp.openById(paivdProp_('PAIVD_TARGET_ID'));}
 function paivdCred_(){return SpreadsheetApp.openById(paivdProp_('PAIVD_CREDENCIALES_ID'));}
@@ -37,19 +37,32 @@ function paivdBuscar(anio,curso,seccion,texto){
   const q=epjaPublicoNormalizar_(texto);if(q.length<3)return [];
   paivdLock_(()=>paivdLimit_('PAIVD_BUSQUEDAS',300,600000));
   const lista=paivdPiloto_().filter(r=>(!anio||r.Ano_Escolar===anio)&&(!curso||r.Curso===curso)&&(!seccion||r.Seccion===seccion)).map(r=>({r,score:epjaPublicoPuntuacion_(q,[r.Nombre_Mostrar])})).filter(x=>x.score>=12).sort((a,b)=>b.score-a.score||a.r.Nombre_Mostrar.localeCompare(b.r.Nombre_Mostrar,'es'));
-  return lista.slice(0,5).map(x=>({...paivdPublica_(x.r),token:paivdStore_('sel:',paivdRef_(x.r),600)}));
+  return paivdAgrupar_(lista).map(x=>({...paivdPublica_(x.r),homonimos:x.refs.length,token:paivdStore_('sel:',{refs:x.refs},600)}));
+}
+function paivdAgrupar_(lista){
+ const grupos=new Map();
+ lista.forEach(({r})=>{
+   const k=JSON.stringify([r.Nombre_Mostrar,r.Ano_Escolar,r.Curso,r.Seccion]);
+   if(!grupos.has(k))grupos.set(k,{r,refs:[]});
+   grupos.get(k).refs.push(paivdRef_(r));
+ });
+ return [...grupos.values()].slice(0,5);
 }
 function paivdVerificar(seleccion,codigo){
   return paivdLock_(()=>{
-    const ref=paivdReadToken_('sel:',seleccion);
+    const selection=paivdReadToken_('sel:',seleccion);
+    if(!Array.isArray(selection.refs)||!selection.refs.length)throw Error('Vuelve a buscar tu nombre');
     paivdLimit_('PAIVD_INTENTOS_GLOBAL',100,900000);
-    paivdLimit_('PAIVD_INT_'+paivdDigest_(ref.m),5,900000);
+    // Limitar cada matrícula candidata: agrupar no permite eludir el límite individual.
+    selection.refs.forEach(ref=>paivdLimit_('PAIVD_INT_'+paivdDigest_(ref.m),5,900000));
     if(typeof codigo!=='string'||!/^[a-f0-9]{64}$/i.test(codigo.trim()))throw Error('Credencial no válida');
-    const r=paivdActual_(ref), h=paivdTable_(paivdCred_(),'Credenciales',PAIVD_CRED_HEAD_);
-    const rows=paivdRows_(h), digest=paivdDigest_('codigo:'+codigo.trim().toLowerCase());
-    const matches=rows.map((v,i)=>({v,i})).filter(x=>x.v[0]===ref.m&&x.v[3]==='EMITIDA'&&Number(x.v[2])>Date.now()&&paivdEqual_(x.v[1],digest));
+    const h=paivdTable_(paivdCred_(),'Credenciales',PAIVD_CRED_HEAD_);
+    const rows=paivdRows_(h),digest=paivdDigest_('codigo:'+codigo.trim().toLowerCase());
+    const refs=new Map(selection.refs.map(ref=>[ref.m,ref]));
+    const matches=rows.map((v,i)=>({v,i})).filter(x=>refs.has(x.v[0])&&x.v[3]==='EMITIDA'&&Number(x.v[2])>Date.now()&&paivdEqual_(x.v[1],digest));
     if(matches.length!==1)throw Error('Credencial no válida o vencida');
-    const x=matches[0], ss=paivdLibro_(), log=paivdTable_(ss,'Verificacion_Identidad',PAIVD_VER_HEAD_);
+    const x=matches[0],ref=refs.get(x.v[0]),r=paivdActual_(ref);
+    const ss=paivdLibro_(),log=paivdTable_(ss,'Verificacion_Identidad',PAIVD_VER_HEAD_);
     // Consumir antes de otorgar acceso. Ante un fallo posterior se requiere nueva emisión.
     h.getRange(x.i+2,4).setValue('CONSUMIDA');SpreadsheetApp.flush();
     log.appendRow([Utilities.getUuid(),ref.i,ref.e,ref.m,'CREDENCIAL_DOCENTE','VALIDADA',new Date().toISOString(),x.v[4]]);
@@ -80,7 +93,7 @@ function paivdValidar_(p){
   const correo=paivdTexto_(p.correo,160);if(correo&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo))throw Error('Correo no válido');
   const perfil={dispositivo:paivdEnum_(p.dispositivo,['CELULAR','TABLETA','COMPUTADORA','NINGUNO']),titularidad:paivdEnum_(p.titularidad,['PROPIO','COMPARTIDO','PRESTADO','NO_APLICA']),conectividad:paivdEnum_(p.conectividad,['SIEMPRE','ALGUNAS_VECES','NO']),dificultades:paivdEnum_(p.dificultades,['SI','NO','ALGUNAS_VECES'])};
   if((perfil.dispositivo==='NINGUNO')!==(perfil.titularidad==='NO_APLICA'))throw Error('Revisa el dispositivo y su titularidad');
-  return {confirmacion,correccion,contactos,sinTelefonoPropio:p.sinTelefonoPropio,municipio:paivdTexto_(p.municipio,100,true),sector:paivdTexto_(p.sector,120,true),correo,perfil,consentimiento:true,avisoVersion:'ENSAYO-0.2'};
+  return {confirmacion,correccion,contactos,sinTelefonoPropio:p.sinTelefonoPropio,municipio:paivdTexto_(p.municipio,100,true),sector:paivdTexto_(p.sector,120,true),correo,perfil,consentimiento:true,avisoVersion:'ENSAYO-0.3'};
 }
 function paivdEnviar(session,payload){
   return paivdLock_(()=>{
