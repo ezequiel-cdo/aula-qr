@@ -4,3 +4,6 @@ Se incorporan AGENTS.md y documentación central de contexto, arquitectura, dicc
 
 ## 2026-11-25 — Auditoría institucional
 Se incorporan encabezados y conteos de las 11 hojas, obtenidos del informe ejecutado por el responsable. Se documenta propuesta de actualización de participantes, pendiente de aprobación y pruebas. Sin cambios operativos ni datos personales.
+
+## Instalador PAIVD v1.0.0
+Código privado de instalación con simulación, integridad referencial, aprobación por huella, ampliación idempotente y verificación de valores visibles. Se revisó estructura del archivo en GitHub; sin ejecución en Apps Script ni cambios en el maestro. Las reglas y permisos requieren revisión manual.
