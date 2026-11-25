@@ -1,5 +1,5 @@
 /**
- * PAIVD - instalador de esquema v1.0.1.
+ * PAIVD - instalador de esquema v1.0.2.
  * SOLO en proyecto privado independiente, nunca en app web pública.
  * Configurar PAIVD_TARGET_ID en Script Properties (ID del libro de ensayo).
  * No modifica datos existentes. Aplicación no transaccional; respaldo previo.
@@ -100,7 +100,7 @@ function paivdPlan_(ss){
     }
     try{
       const d=JSON.parse(r.Datos_Propuestos_JSON).identificacion;
-      if(r.Version_Esquema!=='0.4'||!['PENDIENTE','PENDIENTE_ASIGNACION','EN_REVISION','OBSERVADA','RECHAZADA'].includes(r.Estado)||!d||d.tipo!=='DECLARADA_NO_VERIFICADA'||!Array.isArray(d.candidatos)||!d.candidatos.length)throw Error('declaración inválida');
+      if(!['0.4','0.5'].includes(r.Version_Esquema)||!['PENDIENTE','PENDIENTE_ASIGNACION','EN_REVISION','OBSERVADA','RECHAZADA'].includes(r.Estado)||!d||d.tipo!=='DECLARADA_NO_VERIFICADA'||!Array.isArray(d.candidatos)||!d.candidatos.length)throw Error('declaración inválida');
       if(new Set(d.candidatos.map(x=>x.ID_Matricula)).size!==d.candidatos.length)throw Error('candidatos duplicados');
       d.candidatos.forEach(x=>{vinculo('Actualizaciones (candidato)',x);const m=mat.get(x.ID_Matricula);if(!m||m.ID_Interno!==x.ID_Interno||m.ID_Estudiante!==x.ID_Estudiante)err('Actualizaciones: candidato incoherente');});
     }catch(e){err('Actualizaciones: declaración no asignada inválida');}
@@ -134,11 +134,11 @@ function paivdPlan_(ss){
     else if(old.Tabla!==n||old.Campo!==c||old.Tipo!==row[2]||old['Regla / finalidad']!==row[3])err('Diccionario: definición previa distinta para '+n+'.'+c);
   }));
   const snapshot=Object.fromEntries(Object.entries(tablas).map(([n,t])=>[n,t?{head:t.head,rows:t.rows}:null]));
-  const huella=paivdHash_({version:'1.0.1',id:ss.getId(),snapshot,cambios,dictAdd});
+  const huella=paivdHash_({version:'1.0.2',id:ss.getId(),snapshot,cambios,dictAdd});
   return {errores,cambios,dictAdd,counts,huella};
 }
 function paivdMostrar_(p){
-  console.log(JSON.stringify({version:'1.0.1',errores:p.errores,conteos:p.counts,cambios:p.cambios,filasDiccionarioNuevas:p.dictAdd.length,huella:p.huella},null,2));
+  console.log(JSON.stringify({version:'1.0.2',errores:p.errores,conteos:p.counts,cambios:p.cambios,filasDiccionarioNuevas:p.dictAdd.length,huella:p.huella},null,2));
 }
 function PAIVD_Diagnosticar(){
   paivdMostrar_(paivdPlan_(paivdLibro_()));
