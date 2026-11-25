@@ -30,3 +30,6 @@ La documentación pedagógica se conserva en cada aula. No declarar pruebas o de
 - [x] Captura del responsable confirma carga de filtros, autocompletado/ficha agrupada y selección en 0.3.
 - [x] Decisión aprobada: retirar credencial del flujo declarativo; programar PAIVD 0.4 e instalador 1.0.1 compatible con solicitudes sin asignación.
 - [ ] Probar 0.4 en /dev, envío único, homónimos, reintentos, no exposición privada, no cambios oficiales y diagnóstico compatible. Administración y producción pendientes.
+
+## PAIVD 0.5 — captura mínima
+Por observaciones del responsable: eliminar casilla sin teléfono propio, correo y acceso digital de interfaz y payload; conservar esquema institucional. Teléfono principal obligatorio (puede ser compartido o de tercero), alternativo y emergencia opcionales. Máscara (xxx) xxx-xxxx, 809/829/849, validación cliente y servidor; almacenamiento normalizado +1. Si no dispone de ningún número de contacto, requerirá asistencia docente. No implica verificación efectiva de teléfono. Actualizar PAIVD_Participantes.gs y FormularioPAIVD.html conjuntamente; instalador 1.0.2 admite declaraciones 0.4/0.5 sin migrar columnas. No ejecutar Aplicar. Probar en /dev con datos ficticios, teléfono incompleto, código de área inválido, número compartido y envío sin correo/perfil. Sin ejecución en Apps Script ni despliegue.
