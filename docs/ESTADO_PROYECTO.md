@@ -8,3 +8,6 @@ Repositorio: cinco aulas, portada institucional, V3 anterior y V3 institucional,
 - [ ] Probar con datos ficticios: homónimos, caducidad, accesos indebidos, duplicados, concurrencia, consentimiento y fotos privadas.
 - [ ] Validar en móvil y cuenta institucional antes de publicar.
 La documentación pedagógica se conserva en cada aula. No declarar pruebas o despliegues que no se realizaron.
+
+- [x] Crear instalador de esquema PAIVD en rama de continuidad.
+- [ ] Ejecutar diagnóstico y ensayo en copia privada; revisar reglas y permisos antes de aplicar.
