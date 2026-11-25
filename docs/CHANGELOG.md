@@ -19,3 +19,6 @@ Código y formulario de ensayo, emisión privada, generador ficticio y guía de 
 
 ## PAIVD 0.2 — alcance institucional
 Filtros opcionales y dinámicos, búsqueda por nombre en matrículas inscritas de cinco cursos, ubicación académica en coincidencias, diagnóstico visible de carga y reintento, etapas de contactos visibles. Emisión administrativa compatible con cualquier matrícula vigente. Se mantienen credenciales y captura pendiente de revisión; no se ejecutaron pruebas de esta versión ni se publicó.
+
+## PAIVD 0.3 — autocompletado y homónimos
+Autocompletado con espera de 350 ms, descarte de respuestas obsoletas, fichas visuales y selección marcada. Agrupación por nombre exacto y ubicación; credencial resuelve matrícula dentro del grupo. Ampliador ficticio añade nueve registros sin sustituir los dos anteriores. Capturas 0.2 confirman búsqueda parcial y carga de filtros. No se ejecutó 0.3 en Apps Script.
