@@ -22,3 +22,7 @@ La documentación pedagógica se conserva en cada aula. No declarar pruebas o de
 
 - [x] Adaptar PAIVD 0.2 a búsqueda institucional con año, curso y sección opcionales y etapas visibles.
 - [ ] Comprobar carga de filtros y búsqueda sin filtros en /dev; probar cinco cursos con datos ficticios. La captura 0.1 mostró sección vacía; causa exacta aún no determinada.
+
+- [x] Capturas del responsable confirman carga de filtros y búsqueda parcial sin tilde en 0.2, con dos homónimos ficticios de Tercero A. Error Solo ensayo resuelto mediante configuración.
+- [x] Programar 0.3: autocompletado 350 ms, fichas, agrupación de homónimos exactos y ampliador ficticio a cinco cursos.
+- [ ] Ejecutar ampliación y pruebas funcionales 0.3 en /dev; no usar datos reales.
