@@ -10,3 +10,6 @@ Código privado de instalación con simulación, integridad referencial, aprobac
 
 ## 2026-11-25 — diagnóstico PAIVD ejecutado por responsable
 Se recibió resultado de PAIVD_RevisarDiccionario (23 reglas) y PAIVD_Diagnosticar v1.0.0: cero errores, 6 operaciones de esquema, 51 definiciones nuevas previstas. Se documentan reglas relevantes. Aplicación, confirmación del destino de ensayo, permisos y verificación posterior pendientes. No almacenar huella específica del libro en repositorio público.
+
+## 2026-11-25 — instalación PAIVD reportada
+El responsable ejecutó PAIVD_Aplicar y PAIVD_Diagnosticar: ambas salidas reportan 15 hojas, 74 definiciones, 424 estudiantes y matrículas, 1102 registros históricos, cero errores y cero cambios pendientes; huellas posteriores coinciden. El instalador informó conservación de valores visibles originales. No se verificaron directamente destino, permisos, fórmulas ni despliegue. No publicar huellas del archivo.
