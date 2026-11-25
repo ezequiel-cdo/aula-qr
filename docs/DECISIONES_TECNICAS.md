@@ -1,0 +1,5 @@
+# Decisiones técnicas
+## 2026-11-24 — continuidad e identificación
+Aprobado en conversación: repositorio como referencia técnica persistente; maestro institucional único; preservar IDs; reutilizar V3; módulo separado de actualización para cinco cursos con piloto Tercero; revisión docente antes de aplicar cambios; fotografía opcional en Drive privado; no alterar producción durante ensayo.
+La selección por nombre y el token V3 no autentican. Los cuatro dígitos del teléfono solo sirven como comprobación complementaria de bajo riesgo después de verificar el número; nunca para acceso privado. Separar declaración de WhatsApp, comprobación de contacto y verificación de identidad. El paquete piloto genérico anterior queda desaconsejado para instalación.
+Pendiente de decidir tras verificar el esquema: mecanismo concreto de credenciales, caducidad, retención, permisos, estructura de solicitudes e historial, flujo de aprobación y recuperación. No asumir que V4 anterior está desplegado. Las decisiones nuevas requieren registrar alcance, fecha y evidencia.
