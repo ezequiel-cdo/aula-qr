@@ -26,3 +26,7 @@ La documentación pedagógica se conserva en cada aula. No declarar pruebas o de
 - [x] Capturas del responsable confirman carga de filtros y búsqueda parcial sin tilde en 0.2, con dos homónimos ficticios de Tercero A. Error Solo ensayo resuelto mediante configuración.
 - [x] Programar 0.3: autocompletado 350 ms, fichas, agrupación de homónimos exactos y ampliador ficticio a cinco cursos.
 - [ ] Ejecutar ampliación y pruebas funcionales 0.3 en /dev; no usar datos reales.
+
+- [x] Captura del responsable confirma carga de filtros, autocompletado/ficha agrupada y selección en 0.3.
+- [x] Decisión aprobada: retirar credencial del flujo declarativo; programar PAIVD 0.4 e instalador 1.0.1 compatible con solicitudes sin asignación.
+- [ ] Probar 0.4 en /dev, envío único, homónimos, reintentos, no exposición privada, no cambios oficiales y diagnóstico compatible. Administración y producción pendientes.
