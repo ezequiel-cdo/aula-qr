@@ -16,3 +16,6 @@ La documentación pedagógica se conserva en cada aula. No declarar pruebas o de
 - [x] Recibir diagnóstico PAIVD v1.0.0 ejecutado por responsable: cero errores, 6 operaciones y 51 definiciones propuestas; revisar 23 reglas originales.
 - [x] Aplicación y diagnóstico posterior reportados: 15 hojas, 74 definiciones, cero errores, cero cambios pendientes; valores visibles originales conservados según instalador.
 - [ ] Confirmar independientemente destino de ensayo, permisos y comportamiento de V3 antes de producción.
+
+- [x] Programar núcleo de ensayo PAIVD 0.1: reutilización V3, emisión privada, sesión y solicitudes pendientes, formulario y generador ficticio.
+- [ ] Ejecutar pruebas restringidas /dev según actualizacion-participantes/PRUEBA_BACKEND.md; no publicar ni usar datos reales.
