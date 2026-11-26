@@ -1,4 +1,4 @@
-/** PAIVD 0.8 alpha. Private administrative web app. Requires advanced Sheets service. */
+/** PAIVD 0.8.1 alpha. Private administrative web app. Requires advanced Sheets service. */
 const PA8_HEADERS={
  Actualizaciones:'ID_Solicitud|ID_Interno|ID_Estudiante|ID_Matricula|Fecha_Solicitud|Estado|Datos_Propuestos_JSON|Version_Esquema|Fecha_Revision|Responsable_Revision|Observaciones_Revision',
  Contactos:'ID_Contacto|ID_Interno|ID_Estudiante|Tipo_Contacto|Telefono|Titular|Relacion|Es_Principal|Verificacion|Fecha_Verificacion|Fuente|Observaciones|Tiene_WhatsApp|WhatsApp_Verificado|Fecha_Verificacion_WhatsApp|Estado_Contacto|Fecha_Registro|Fecha_Actualizacion|Metodo_Verificacion',
@@ -41,7 +41,7 @@ function pa8Candidate_(ss,i,id){
 }
 function PA8_Listar(){
  const {ss,mode}=pa8Access_(),t=pa8Table_(ss,'Actualizaciones');
- return {modo:mode,solicitudes:t.rows.filter(x=>x.d.ID_Solicitud).map(x=>({id:x.d.ID_Solicitud,fecha:x.d.Fecha_Solicitud,estado:x.d.Estado,version:x.d.Version_Esquema}))};
+ return {version:'0.8.1',modo:mode,escritura:mode==='ENSAYO'&&PropertiesService.getScriptProperties().getProperty('PAIVD_ADMIN08_ESCRITURA')==='SI',solicitudes:t.rows.filter(x=>x.d.ID_Solicitud).map(x=>{let i={};try{i=JSON.parse(x.d.Datos_Propuestos_JSON).identificacion||{};}catch(e){}return {id:x.d.ID_Solicitud,fecha:x.d.Fecha_Solicitud,estado:x.d.Estado,version:x.d.Version_Esquema,nombre:i.nombre||'',curso:i.curso||'',seccion:i.seccion||'',anio:i.anio||''};})};
 }
 function PA8_Detalle(id){
  const {ss,mode}=pa8Access_(),{j,i}=pa8Request_(ss,id,mode);
@@ -54,7 +54,7 @@ function PA8_Decidir(input){
  const lock=LockService.getScriptLock();lock.waitLock(15000);
  try{
  const {ss,a,p,mode}=pa8Access_();
- if(p.getProperty('PAIVD_ADMIN08_ESCRITURA')!=='SI')throw Error('Escritura no autorizada');
+ if(mode!=='ENSAYO'||p.getProperty('PAIVD_ADMIN08_ESCRITURA')!=='SI')throw Error('Escritura no autorizada');
  if(typeof Sheets==='undefined')throw Error('Habilitar servicio avanzado Google Sheets');
  const {t,r,j,i}=pa8Request_(ss,input.id,mode),note=pa8Text_(input.nota,500),now=new Date().toISOString(),op=input.accion;
  if(!note||!['APROBADA','RECHAZADA','OBSERVADA'].includes(op))throw Error('Decisión u observación inválida');
@@ -89,4 +89,23 @@ function PA8_Decidir(input){
  return {estado:op,modo:mode};
  }finally{lock.releaseLock();}
 }
-function doGet(){pa8Access_();return HtmlService.createHtmlOutputFromFile('PAIVD_Revision08').setTitle('PAIVD Administración 0.8');}
+function doGet(){pa8Access_();return HtmlService.createHtmlOutputFromFile('PAIVD_Revision08').setTitle('PAIVD Administración 0.8.1');}
+
+/** Private directory: only active, verified contacts linked to approved requests. */
+function PA8_Directorio(f){
+ const {ss}=pa8Access_();f=f||{};
+ const anio=pa8Text_(f.anio||'',20),curso=pa8Text_(f.curso||'',20),seccion=pa8Text_(f.seccion||'',20);
+ const est=pa8Table_(ss,'Estudiantes',['ID_Interno','ID_Estudiante','Apellidos_Nombres']),mat=pa8Table_(ss,'Matriculas',['ID_Interno','ID_Estudiante','ID_Matricula','Ano_Escolar','Curso','Seccion','Estado']),ct=pa8Table_(ss,'Contactos'),dr=pa8Table_(ss,'Datos_Reservados'),sol=pa8Table_(ss,'Actualizaciones');
+ const active=mat.rows.map(x=>x.d).filter(m=>m.Estado.toLowerCase()==='inscrito'&&['Primero','Segundo','Tercero','Cuarto','Quinto'].includes(m.Curso));
+ const contextos=[...new Map(active.map(m=>[JSON.stringify([m.Ano_Escolar,m.Curso,m.Seccion]),{anio:m.Ano_Escolar,curso:m.Curso,seccion:m.Seccion}])).values()];
+ const aprobadas=new Map(sol.rows.filter(x=>x.d.Estado==='APROBADA').map(x=>[x.d.ID_Solicitud,x.d]));
+ const rows=active.filter(m=>(!anio||m.Ano_Escolar===anio)&&(!curso||m.Curso===curso)&&(!seccion||m.Seccion===seccion)).map(m=>{
+ const e=pa8One_(est,'ID_Interno',m.ID_Interno).d;if(e.ID_Estudiante!==m.ID_Estudiante)throw Error('Vínculo académico inválido');
+ const contactos=ct.rows.map(x=>x.d).filter(c=>{const a=aprobadas.get(c.Observaciones);return a&&a.ID_Interno===m.ID_Interno&&a.ID_Estudiante===m.ID_Estudiante&&c.ID_Interno===m.ID_Interno&&c.ID_Estudiante===m.ID_Estudiante&&c.Estado_Contacto==='ACTIVO'&&c.Verificacion==='Validado'&&c.Fecha_Verificacion&&c.Fuente==='PAIVD';}).map(c=>({tipo:c.Tipo_Contacto,telefono:c.Telefono,titular:c.Titular,relacion:c.Relacion,whatsapp:c.Tiene_WhatsApp,whatsappVerificado:c.WhatsApp_Verificado}));
+ const r=pa8One_(dr,'ID_Interno',m.ID_Interno).d;if(r.ID_Estudiante!==m.ID_Estudiante)throw Error('Vínculo reservado inválido');
+ const actualizado=[...aprobadas.values()].some(a=>a.ID_Interno===m.ID_Interno&&a.ID_Estudiante===m.ID_Estudiante);
+ return {nombre:e.Apellidos_Nombres,anio:m.Ano_Escolar,curso:m.Curso,seccion:m.Seccion,contactos,municipio:actualizado?r.Municipio_Residencia:'',sector:actualizado?r.Sector_Residencia:'',actualizado};
+ }).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
+ return {contextos,filas:rows,total:rows.length,conContacto:rows.filter(r=>r.contactos.some(c=>c.tipo==='PRINCIPAL')).length,actualizados:rows.filter(r=>r.actualizado).length};
+}
+function PA8_Diagnostico(){const l=PA8_Listar(),d=PA8_Directorio({});console.log(JSON.stringify({version:l.version,modo:l.modo,escritura:l.escritura,solicitudes:l.solicitudes.length,matriculas:d.total,contextos:d.contextos.length,conContacto:d.conContacto,actualizados:d.actualizados}));}
