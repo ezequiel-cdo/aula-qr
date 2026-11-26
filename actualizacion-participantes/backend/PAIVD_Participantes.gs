@@ -1,11 +1,11 @@
 /**
- * PAIVD v0.5 - recepción de solicitudes. Solo ensayo con datos ficticios.
+ * PAIVD v0.6 - recepción de solicitudes. Solo ensayo con datos ficticios.
  * Proyecto PARTICIPANTES: instalar este archivo y PAIVD_Registro.gs.
  * No instalar funciones administrativas en este proyecto.
  * Propiedades privadas: PAIVD_TARGET_ID, PAIVD_ENSAYO=SI,
  * PAIVD_SECRETO (64 hex aleatorios). Sin credenciales para declaraciones.
  */
-const PAIVD_V_='0.5';
+const PAIVD_V_='0.6';
 function paivdProp_(key){const v=PropertiesService.getScriptProperties().getProperty(key);if(!v)throw Error('Configuración incompleta');return v;}
 function paivdLibro_(){if(paivdProp_('PAIVD_ENSAYO')!=='SI')throw Error('Solo ensayo');const ss=SpreadsheetApp.openById(paivdProp_('PAIVD_TARGET_ID'));if(ss.getName()!=='PAIVD_ENSAYO_FICTICIO')throw Error('Solo libro ficticio');return ss;}
 function paivdSecret_(){const s=paivdProp_('PAIVD_SECRETO');if(!/^[a-f0-9]{64}$/i.test(s))throw Error('Configuración incompleta');return s;}
@@ -23,6 +23,7 @@ function paivdPublica_(r){return {nombre:r.Nombre_Mostrar,anio:r.Ano_Escolar,cur
 function paivdReadToken_(prefix,t){if(typeof t!=='string'||! /^[a-f0-9]{64}$/.test(t))throw Error('Sesión no válida');const raw=paivdCache_().get(prefix+paivdDigest_(t));if(!raw)throw Error('Sesión vencida. Vuelve a buscar tu nombre.');return JSON.parse(raw);}
 function paivdStore_(prefix,data,seconds){const t=paivdToken_();paivdCache_().put(prefix+paivdDigest_(t),JSON.stringify(data),seconds);return t;}
 function paivdLimit_(key,max,windowMs){const p=PropertiesService.getScriptProperties(),now=Date.now();let a;try{a=JSON.parse(p.getProperty(key)||'null');}catch(e){a=null;}if(!a||a.until<=now)a={n:0,until:now+windowMs};if(a.n>=max)throw Error('Límite temporal alcanzado. Intenta más tarde.');a.n++;p.setProperty(key,JSON.stringify(a));}
+function paivdVersion(){return {version:PAIVD_V_};}
 function paivdContextos(){
   const m=new Map();
   paivdPiloto_().forEach(r=>{const k=JSON.stringify([r.Ano_Escolar,r.Curso,r.Seccion]);m.set(k,{anio:r.Ano_Escolar,curso:r.Curso,seccion:r.Seccion});});
@@ -33,7 +34,7 @@ function paivdBuscar(anio,curso,seccion,texto){
   const q=epjaPublicoNormalizar_(texto);if(q.length<3)return [];
   paivdLock_(()=>paivdLimit_('PAIVD_BUSQUEDAS',300,600000));
   const lista=paivdPiloto_().filter(r=>(!anio||r.Ano_Escolar===anio)&&(!curso||r.Curso===curso)&&(!seccion||r.Seccion===seccion)).map(r=>({r,score:epjaPublicoPuntuacion_(q,[r.Nombre_Mostrar])})).filter(x=>x.score>=12).sort((a,b)=>b.score-a.score||a.r.Nombre_Mostrar.localeCompare(b.r.Nombre_Mostrar,'es'));
-  return paivdAgrupar_(lista).map(x=>({...paivdPublica_(x.r),homonimos:x.refs.length,token:paivdStore_('sel:',{refs:x.refs},600)}));
+  return paivdAgrupar_(lista).map(x=>({...paivdPublica_(x.r),homonimos:x.refs.length,token:paivdStore_('sel06:',{refs:x.refs},600)}));
 }
 function paivdAgrupar_(lista){
  const grupos=new Map();
@@ -56,15 +57,15 @@ function paivdGrupoActual_(refs){
 function paivdDeclarar(seleccion,confirmado){
   if(confirmado!==true)throw Error('Confirma tu selección');
   return paivdLock_(()=>{
-    const selection=paivdReadToken_('sel:',seleccion);
+    const selection=paivdReadToken_('sel06:',seleccion);
     paivdLimit_('PAIVD_DECLARACIONES_GLOBAL',120,900000);
     const refs=paivdGrupoActual_(selection.refs),first=refs[0];
     // Reintento de la misma selección conserva el identificador de solicitud.
     if(selection.declaracion)return selection.declaracion;
-    const session=paivdStore_('decl05:',{refs,sol:Utilities.getUuid(),exp:Date.now()+1800000},1800);
+    const session=paivdStore_('decl06:',{refs,sol:Utilities.getUuid(),exp:Date.now()+1800000},1800);
     const result={session,datos:{nombre:first.n,anio:first.a,curso:first.c,seccion:first.s},homonimos:refs.length};
     selection.declaracion=result;
-    paivdCache_().put('sel:'+paivdDigest_(seleccion),JSON.stringify(selection),600);
+    paivdCache_().put('sel06:'+paivdDigest_(seleccion),JSON.stringify(selection),600);
     return result;
   });
 }
@@ -75,7 +76,8 @@ function paivdTel_(v){
   if(!/^\((809|829|849)\) [2-9]\d{2}-\d{4}$/.test(s))throw Error('Usa el formato (809) 555-0101 con un código de área dominicano válido.');
   return '+1'+s.replace(/\D/g,'');
 }
-function paivdContacto_(x,tipo){if(!x||typeof x!=='object'||Array.isArray(x))throw Error('Contacto no válido');const relacion=paivdEnum_(x.relacion,['PROPIO','COMPARTIDO','FAMILIAR','OTRO']);if(tipo==='EMERGENCIA'&&relacion==='PROPIO')throw Error('Indica otra persona para emergencia');return {tipo,telefono:paivdTel_(x.telefono),titular:paivdTexto_(x.titular,120,relacion!=='PROPIO'),relacion,whatsapp:paivdEnum_(x.whatsapp,['SI','NO','NO_SABE'])};}
+function paivdTelCampo_(v,tipo){try{return paivdTel_(v)}catch(e){throw Error('Teléfono '+({PRINCIPAL:'principal',ALTERNATIVO:'alternativo',EMERGENCIA:'de emergencia'}[tipo])+': introduce 10 dígitos válidos (809, 829 o 849).')}}
+function paivdContacto_(x,tipo){if(!x||typeof x!=='object'||Array.isArray(x))throw Error('Contacto no válido');const relacion=paivdEnum_(x.relacion,['PROPIO','COMPARTIDO','FAMILIAR','OTRO']);if(tipo==='EMERGENCIA'&&relacion==='PROPIO')throw Error('Indica otra persona para emergencia');return {tipo,telefono:paivdTelCampo_(x.telefono,tipo),titular:paivdTexto_(x.titular,120,relacion!=='PROPIO'),relacion,whatsapp:paivdEnum_(x.whatsapp,['SI','NO','NO_SABE'])};}
 function paivdValidar_(p){
   if(!p||typeof p!=='object'||Array.isArray(p))throw Error('Solicitud no válida');
   const confirmacion=paivdEnum_(p.confirmacion,['CORRECTOS','CORREGIR']);
@@ -89,14 +91,14 @@ function paivdValidar_(p){
   if(p.emergencia)contactos.push(paivdContacto_(p.emergencia,'EMERGENCIA'));
   const pers=contactos.filter(c=>c.tipo!=='EMERGENCIA');
   if(new Set(pers.map(c=>c.telefono)).size!==pers.length)throw Error('Los teléfonos principal y alternativo deben ser distintos');
-  return {confirmacion,correccion,contactos,municipio:paivdTexto_(p.municipio,100,true),sector:paivdTexto_(p.sector,120,true),consentimiento:true,avisoVersion:'ENSAYO-0.5'};
+  return {confirmacion,correccion,contactos,municipio:paivdTexto_(p.municipio,100,true),sector:paivdTexto_(p.sector,120,true),consentimiento:true,avisoVersion:'ENSAYO-0.6'};
 }
 function paivdEnviar(session,payload){
   return paivdLock_(()=>{
-    const s=paivdReadToken_('decl05:',session);if(Date.now()>=s.exp)throw Error('Sesión vencida. Vuelve a buscar tu nombre.');
-    const refs=paivdGrupoActual_(s.refs),first=refs[0],data=paivdValidar_(payload);
+    const s=paivdReadToken_('decl06:',session);if(Date.now()>=s.exp)throw Error('Sesión vencida. Vuelve a buscar tu nombre.');
     const h=paivdTable_(paivdLibro_(),'Actualizaciones',PAIVD_SOL_HEAD_),rows=paivdRows_(h);
     if(rows.some(r=>r[0]===s.sol))return {ok:true,referencia:s.sol,estado:'RECIBIDA'};
+    const refs=paivdGrupoActual_(s.refs),first=refs[0],data=paivdValidar_(payload);
     paivdLimit_('PAIVD_ENVIOS_GLOBAL',120,900000);
     // No bloquear a la persona legítima por una declaración de terceros.
     // Toda declaración queda sin asignación oficial, incluso con candidato único.
