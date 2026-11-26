@@ -56,8 +56,8 @@ function PA8_Decidir(input){
  const {ss,a,p,mode}=pa8Access_();
  if(mode!=='ENSAYO'||p.getProperty('PAIVD_ADMIN08_ESCRITURA')!=='SI')throw Error('Escritura no autorizada');
  if(typeof Sheets==='undefined')throw Error('Habilitar servicio avanzado Google Sheets');
- const {t,r,j,i}=pa8Request_(ss,input.id,mode),note=pa8Text_(input.nota,500),now=new Date().toISOString(),op=input.accion;
- if(!note||!['APROBADA','RECHAZADA','OBSERVADA'].includes(op))throw Error('Decisión u observación inválida');
+ const {t,r,j,i}=pa8Request_(ss,input.id,mode),note=pa8Text_(input.nota==null?'':input.nota,500),now=new Date().toISOString(),op=input.accion;
+ if(!['APROBADA','RECHAZADA','OBSERVADA'].includes(op))throw Error('Decisión inválida');
  const req=[],audit=pa8Table_(ss,'Auditoria_Cambios');
  if(op==='APROBADA'){
  if(input.identidad!==true||input.contactos!==true||input.metodo!=='PRESENCIAL')throw Error('Requiere verificación presencial de identidad y contactos');
