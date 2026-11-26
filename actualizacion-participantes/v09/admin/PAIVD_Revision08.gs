@@ -1,4 +1,4 @@
-/** PAIVD 0.9 alpha. Private administrative web app. Requires advanced Sheets service. */
+/** PAIVD 0.9.1 alpha. Private administrative web app. Requires advanced Sheets service. */
 const PA8_HEADERS={
  Actualizaciones:'ID_Solicitud|ID_Interno|ID_Estudiante|ID_Matricula|Fecha_Solicitud|Estado|Datos_Propuestos_JSON|Version_Esquema|Fecha_Revision|Responsable_Revision|Observaciones_Revision',
  Contactos:'ID_Contacto|ID_Interno|ID_Estudiante|Tipo_Contacto|Telefono|Titular|Relacion|Es_Principal|Verificacion|Fecha_Verificacion|Fuente|Observaciones|Tiene_WhatsApp|WhatsApp_Verificado|Fecha_Verificacion_WhatsApp|Estado_Contacto|Fecha_Registro|Fecha_Actualizacion|Metodo_Verificacion',
@@ -30,7 +30,7 @@ function pa8One_(t,k,v){const r=t.rows.filter(x=>x.d[k]===v);if(!v||r.length!==1
 function pa8Text_(v,max){if(typeof v!=='string'||v.length>max||/[\x00-\x1f]/.test(v))throw Error('Texto inválido');return v.trim();}
 function pa8Request_(ss,id,mode){
  const t=pa8Table_(ss,'Actualizaciones'),r=pa8One_(t,'ID_Solicitud',id),d=r.d;
- if(!['0.7','0.9'].includes(d.Version_Esquema)||!['PENDIENTE','PENDIENTE_ASIGNACION','OBSERVADA'].includes(d.Estado)||d.ID_Interno||d.ID_Estudiante||d.ID_Matricula)throw Error('Solicitud no revisable');
+ if(!['0.7','0.9','0.9.1'].includes(d.Version_Esquema)||!['PENDIENTE','PENDIENTE_ASIGNACION','OBSERVADA'].includes(d.Estado)||d.ID_Interno||d.ID_Estudiante||d.ID_Matricula)throw Error('Solicitud no revisable');
  const j=JSON.parse(d.Datos_Propuestos_JSON),i=j.identificacion;
  if(!i||i.tipo!=='DECLARADA_NO_VERIFICADA'||!Array.isArray(i.candidatos)||!i.candidatos.length||j.consentimiento!==true||j.entorno!==(mode==='REAL'?'INSTITUCIONAL_RESTRINGIDO':'FICTICIO'))throw Error('Declaración inválida');
  return {t,r,j,i};
@@ -44,7 +44,7 @@ function pa8Candidate_(ss,i,id){
 }
 function PA8_Listar(){
  const {ss,mode}=pa8Access_(),t=pa8Table_(ss,'Actualizaciones');
- return {version:'0.9',modo:mode,escritura:pa8CanWrite_(mode,PropertiesService.getScriptProperties()),solicitudes:t.rows.filter(x=>x.d.ID_Solicitud).map(x=>{let i={};try{i=JSON.parse(x.d.Datos_Propuestos_JSON).identificacion||{};}catch(e){}return {id:x.d.ID_Solicitud,fecha:x.d.Fecha_Solicitud,estado:x.d.Estado,version:x.d.Version_Esquema,nombre:i.nombre||'',curso:i.curso||'',seccion:i.seccion||'',anio:i.anio||''};})};
+ return {version:'0.9.1',modo:mode,escritura:pa8CanWrite_(mode,PropertiesService.getScriptProperties()),solicitudes:t.rows.filter(x=>x.d.ID_Solicitud).map(x=>{let i={};try{i=JSON.parse(x.d.Datos_Propuestos_JSON).identificacion||{};}catch(e){}return {id:x.d.ID_Solicitud,fecha:x.d.Fecha_Solicitud,estado:x.d.Estado,version:x.d.Version_Esquema,nombre:i.nombre||'',curso:i.curso||'',seccion:i.seccion||'',anio:i.anio||''};})};
 }
 function pa8Cell_(v){return {userEnteredValue:{stringValue:String(v)}};}
 function pa8Write_(t,row,col,vals){return {updateCells:{start:{sheetId:t.h.getSheetId(),rowIndex:row,columnIndex:col},rows:[{values:vals.map(pa8Cell_)}],fields:'userEnteredValue'}};}
@@ -67,7 +67,7 @@ function pa8Decidir_(input){
  const {m,e}=pa8Candidate_(ss,i,input.candidato),ii=m.ID_Interno,ie=m.ID_Estudiante;
  const ct=pa8Table_(ss,'Contactos'),dr=pa8Table_(ss,'Datos_Reservados'),rr=pa8One_(dr,'ID_Interno',ii);
  if(rr.d.ID_Estudiante!==ie)throw Error('Vínculo reservado inválido');
- if(ct.rows.some(x=>x.d.ID_Interno===ii||x.d.ID_Estudiante===ie))throw Error('Contactos existentes: conciliación manual requerida en esta versión');
+ const prev=pa91Contactos_(ct,ii,ie,t);
  const municipal=pa8Text_(j.municipio,100),sector=pa8Text_(j.sector,120);
  if(!municipal||!sector)throw Error('Residencia incompleta');
  if(!Array.isArray(j.contactos)||!j.contactos.length||j.contactos.length>3||j.contactos.filter(x=>x.tipo==='PRINCIPAL').length!==1||new Set(j.contactos.map(x=>x.tipo)).size!==j.contactos.length)throw Error('Contactos inválidos');
@@ -76,10 +76,14 @@ function pa8Decidir_(input){
  if(!['PRINCIPAL','ALTERNATIVO','EMERGENCIA'].includes(c.tipo)||!/^\+1(?:809|829|849)[2-9]\d{6}$/.test(c.telefono)||!['PROPIO','COMPARTIDO','FAMILIAR','OTRO'].includes(c.relacion)||!['SI','NO','NO_SABE'].includes(c.whatsapp)||(c.tipo==='EMERGENCIA'&&c.relacion==='PROPIO'))throw Error('Contacto inválido');
  const titular=pa8Text_(c.titular,120);if(c.relacion!=='PROPIO'&&!titular)throw Error('Titular requerido');
  if(seen.has(c.telefono))throw Error('Teléfono duplicado en solicitud');seen.add(c.telefono);
- req.push(pa8Append_(ct,[Utilities.getUuid(),ii,ie,c.tipo,c.telefono,titular||e.Apellidos_Nombres,c.relacion,c.tipo==='PRINCIPAL'?'SI':'NO','Validado',now,'PAIVD',input.id,c.whatsapp,'','', 'ACTIVO',now,now,'PRESENCIAL']));
- req.push(pa8Append_(audit,[Utilities.getUuid(),input.id,ii,ie,now,a,'Contactos',c.tipo,'CREAR','Contacto verificado; WhatsApp no verificado']));
+ const old=prev.find(x=>x.d.Tipo_Contacto===c.tipo&&x.d.Telefono===c.telefono&&x.d.Relacion===c.relacion&&x.d.Titular===(titular||e.Apellidos_Nombres));
+ if(old){req.push(pa8Write_(ct,old.row,7,[c.tipo==='PRINCIPAL'?'SI':'NO','Validado',now,'PAIVD',input.id,c.whatsapp,old.d.Tiene_WhatsApp===c.whatsapp?old.d.WhatsApp_Verificado:'',old.d.Tiene_WhatsApp===c.whatsapp?old.d.Fecha_Verificacion_WhatsApp:'','ACTIVO',old.d.Fecha_Registro,now,'PRESENCIAL']));}
+ else req.push(pa8Append_(ct,[Utilities.getUuid(),ii,ie,c.tipo,c.telefono,titular||e.Apellidos_Nombres,c.relacion,c.tipo==='PRINCIPAL'?'SI':'NO','Validado',now,'PAIVD',input.id,c.whatsapp,'','', 'ACTIVO',now,now,'PRESENCIAL']));
+ if(old)old.reutilizado=true;
+ req.push(pa8Append_(audit,[Utilities.getUuid(),input.id,ii,ie,now,a,'Contactos',c.tipo,old?'REVALIDAR':'CREAR','Contacto verificado; WhatsApp según verificación previa si procede']));
  });
- if(r.d.Version_Esquema==='0.9'){const evidence=pa9Evidence_(j,input.id);if(evidence){if(input.foto!==true||rr.d.Foto_Drive_ID)throw Error('Cotejo fotográfico requerido o fotografía vigente');fotoPlan=pa9Plan_(evidence,e,ie);req.push(pa8Write_(dr,rr.row,8,[evidence.getId(),j.foto.fecha,'SI',j.foto.fecha]));req.push(pa8Append_(audit,[Utilities.getUuid(),input.id,ii,ie,now,a,'Datos_Reservados','Foto_Drive_ID','VINCULAR','Evidencia fotográfica cotejada']));}else if(input.foto!==true)throw Error('Confirme verificación presencial asistida');}
+ prev.filter(x=>!x.reutilizado&&j.contactos.some(c=>c.tipo===x.d.Tipo_Contacto)).forEach(x=>{req.push(pa8Write_(ct,x.row,7,['NO','Desactualizado']),pa8Write_(ct,x.row,15,['INACTIVO',x.d.Fecha_Registro,now]));req.push(pa8Append_(audit,[Utilities.getUuid(),input.id,ii,ie,now,a,'Contactos',x.d.Tipo_Contacto,'DESACTIVAR','Sustituido por contacto autorizado']));});
+ if(['0.9','0.9.1'].includes(r.d.Version_Esquema)){const evidence=j.foto&&j.foto.modo==='EXISTENTE'?null:pa9Evidence_(j,input.id);if(j.foto&&j.foto.modo==='EXISTENTE')pa91FotoOficial_(rr.d,j.foto.id);if(evidence){if(input.foto!==true||rr.d.Foto_Drive_ID)throw Error('Cotejo fotográfico requerido o fotografía vigente');fotoPlan=pa9Plan_(evidence,e,ie);req.push(pa8Write_(dr,rr.row,8,[evidence.getId(),j.foto.fecha,'SI',j.foto.fecha]));req.push(pa8Append_(audit,[Utilities.getUuid(),input.id,ii,ie,now,a,'Datos_Reservados','Foto_Drive_ID','VINCULAR','Evidencia fotográfica cotejada']));}else if(input.foto!==true)throw Error('Confirme verificación presencial asistida');}
  req.push(pa8Write_(dr,rr.row,5,[municipal,sector]),pa8Write_(dr,rr.row,12,[now]));
  req.push(pa8Append_(audit,[Utilities.getUuid(),input.id,ii,ie,now,a,'Datos_Reservados','Municipio_Residencia|Sector_Residencia','ACTUALIZAR','Cambio autorizado; valores no duplicados en auditoría']));
  req.push(pa8Append_(pa8Table_(ss,'Verificacion_Identidad'),[Utilities.getUuid(),ii,ie,m.ID_Matricula,'PRESENCIAL','VERIFICADA',now,a]));
@@ -93,7 +97,7 @@ function pa8Decidir_(input){
  return {estado:op,modo:mode};
  }finally{lock.releaseLock();}
 }
-function doGet(){pa8Access_();return HtmlService.createHtmlOutputFromFile('PAIVD_Revision08').setTitle('PAIVD Administración 0.9');}
+function doGet(){pa8Access_();return HtmlService.createHtmlOutputFromFile('PAIVD_Revision08').setTitle('PAIVD Administración 0.9.1');}
 
 /** Private directory: only active, verified contacts linked to approved requests. */
 function PA8_Directorio(f){
@@ -127,7 +131,7 @@ function PA8_Cotejo(){
  try{
  const j=JSON.parse(d.Datos_Propuestos_JSON),i=j.identificacion||{};
  Object.assign(base,{nombre:i.nombre||'',anio:i.anio||'',curso:i.curso||'',seccion:i.seccion||'',municipio:j.municipio||'',sector:j.sector||'',contactos:Array.isArray(j.contactos)?j.contactos.map(c=>({tipo:c.tipo,telefono:c.telefono,titular:c.titular,relacion:c.relacion,whatsapp:c.whatsapp})):[]});
- if(counts.get(d.ID_Solicitud)!==1||!['0.7','0.9'].includes(d.Version_Esquema)||d.ID_Interno||d.ID_Estudiante||d.ID_Matricula||j.consentimiento!==true||i.tipo!=='DECLARADA_NO_VERIFICADA'||j.entorno!==(mode==='REAL'?'INSTITUCIONAL_RESTRINGIDO':'FICTICIO'))throw Error('Declaración o referencia incompatible');
+ if(counts.get(d.ID_Solicitud)!==1||!['0.7','0.9','0.9.1'].includes(d.Version_Esquema)||d.ID_Interno||d.ID_Estudiante||d.ID_Matricula||j.consentimiento!==true||i.tipo!=='DECLARADA_NO_VERIFICADA'||j.entorno!==(mode==='REAL'?'INSTITUCIONAL_RESTRINGIDO':'FICTICIO'))throw Error('Declaración o referencia incompatible');
  if(!Array.isArray(i.candidatos)||!i.candidatos.length)throw Error('Declaración sin candidatos');
  base.rechazable=true;
  if(i.candidatos.length!==1||d.Estado==='PENDIENTE_ASIGNACION')throw Error('Identidad ambigua: corregir en Sheets');
@@ -137,11 +141,11 @@ function PA8_Cotejo(){
  const rr=pa8One_(dr,'ID_Interno',m.ID_Interno).d;if(rr.ID_Estudiante!==m.ID_Estudiante)throw Error('Vínculo reservado inválido');
  Object.assign(base,{candidato:m.ID_Matricula,oficial:e.ID_Estudiante,nombre:e.Apellidos_Nombres,actualMunicipio:rr.Municipio_Residencia,actualSector:rr.Sector_Residencia});
  base.fotoModo=d.Version_Esquema==='0.7'?'LEGADO':(j.foto||{}).modo;
- if(d.Version_Esquema==='0.9'){const evidence=pa9Evidence_(j,d.ID_Solicitud);if(evidence){base.fotoDisponible=true;if(rr.Foto_Drive_ID)throw Error('Fotografía vigente: sustitución manual requerida');}}
- if(ct.rows.some(y=>y.d.ID_Interno===m.ID_Interno||y.d.ID_Estudiante===m.ID_Estudiante))throw Error('Contactos existentes: conciliar en Sheets');
+ if(['0.9','0.9.1'].includes(d.Version_Esquema)){const evidence=j.foto&&j.foto.modo==='EXISTENTE'?pa91FotoOficial_(rr,j.foto.id):pa9Evidence_(j,d.ID_Solicitud);if(evidence){base.fotoDisponible=true;if(rr.Foto_Drive_ID&&j.foto.modo!=='EXISTENTE')throw Error('Fotografía vigente: sustitución manual requerida');}}
+ const prev=pa91Contactos_(ct,m.ID_Interno,m.ID_Estudiante,t);base.contactosActuales=prev.map(x=>({tipo:x.d.Tipo_Contacto,telefono:x.d.Telefono,relacion:x.d.Relacion,titular:x.d.Titular,whatsapp:x.d.Tiene_WhatsApp}));
  if(!pa8Text_(j.municipio,100)||!pa8Text_(j.sector,120)||!Array.isArray(j.contactos)||!j.contactos.length||j.contactos.length>3||j.contactos.filter(c=>c.tipo==='PRINCIPAL').length!==1||new Set(j.contactos.map(c=>c.tipo)).size!==j.contactos.length)throw Error('Residencia o contactos incompletos');
  const seen=new Set();j.contactos.forEach(c=>{if(!['PRINCIPAL','ALTERNATIVO','EMERGENCIA'].includes(c.tipo)||!/^\+1(?:809|829|849)[2-9]\d{6}$/.test(c.telefono)||!['PROPIO','COMPARTIDO','FAMILIAR','OTRO'].includes(c.relacion)||!['SI','NO','NO_SABE'].includes(c.whatsapp)||(c.tipo==='EMERGENCIA'&&c.relacion==='PROPIO')||(!pa8Text_(c.titular,120)&&c.relacion!=='PROPIO')||seen.has(c.telefono))throw Error('Contacto inválido');seen.add(c.telefono)});
- base.huellaCotejo=Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,JSON.stringify([base.huella,m.ID_Interno,m.ID_Estudiante,m.ID_Matricula,e.Apellidos_Nombres,rr.Municipio_Residencia,rr.Sector_Residencia,rr.Fecha_Actualizacion,rr.Foto_Drive_ID]),Utilities.Charset.UTF_8).map(b=>('0'+(b&255).toString(16)).slice(-2)).join('');
+ base.huellaCotejo=Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,JSON.stringify([base.huella,m.ID_Interno,m.ID_Estudiante,m.ID_Matricula,e.Apellidos_Nombres,rr.Municipio_Residencia,rr.Sector_Residencia,rr.Fecha_Actualizacion,rr.Foto_Drive_ID,prev.map(x=>x.d)]),Utilities.Charset.UTF_8).map(b=>('0'+(b&255).toString(16)).slice(-2)).join('');
  if(!/^[a-f0-9]{64}$/.test(base.huellaCotejo))throw Error('No se pudo generar la huella del cotejo');
  base.apto=true;
  }catch(e){base.apto=false;delete base.huellaCotejo;base.motivo=e.message||'Revisión manual requerida'}
@@ -149,7 +153,7 @@ function PA8_Cotejo(){
  });
  const byCandidate=new Map();filas.filter(x=>x.apto).forEach(x=>byCandidate.set(x.candidato,(byCandidate.get(x.candidato)||0)+1));
  filas.forEach(x=>{if(x.apto&&byCandidate.get(x.candidato)>1){x.apto=false;x.motivo='Varias solicitudes del mismo participante: conciliar en Sheets'}});
- return {version:'0.9',modo:mode,escritura:pa8CanWrite_(mode,p),hoja:ss.getUrl()+'#gid='+t.h.getSheetId(),filas};
+ return {version:'0.9.1',modo:mode,escritura:pa8CanWrite_(mode,p),hoja:ss.getUrl()+'#gid='+t.h.getSheetId(),filas};
 }
 function PA8_DecidirLote(input){
  const {mode,p}=pa8Access_();
@@ -197,7 +201,20 @@ function pa9Plan_(file,e,ie){
 }
 function PA9_VerFoto(id){
  const {ss,mode}=pa8Access_(),{r,j}=pa8Request_(ss,id,mode);
- if(r.d.Version_Esquema!=='0.9')throw Error('Solicitud anterior sin fotografía');
- const f=pa9Evidence_(j,id);if(!f)throw Error('Verificación presencial asistida');
+ if(!['0.9','0.9.1'].includes(r.d.Version_Esquema))throw Error('Solicitud anterior sin fotografía');
+ let f;if(j.foto&&j.foto.modo==='EXISTENTE'){if(j.identificacion.candidatos.length!==1)throw Error('Identidad ambigua');const {m}=pa8Candidate_(ss,j.identificacion,j.identificacion.candidatos[0].ID_Matricula);const rr=pa8One_(pa8Table_(ss,'Datos_Reservados'),'ID_Interno',m.ID_Interno).d;if(rr.ID_Estudiante!==m.ID_Estudiante)throw Error('Vínculo reservado inválido');f=pa91FotoOficial_(rr,j.foto.id);}else f=pa9Evidence_(j,id);if(!f)throw Error('Verificación presencial asistida');
  return 'data:image/jpeg;base64,'+Utilities.base64Encode(f.getBlob().getBytes());
+}
+
+function pa91FotoOficial_(rr,id){
+ if(!id||rr.Foto_Drive_ID!==id||rr.Consentimiento_Foto!=='SI'||!rr.Fecha_Fotografia||!rr.Fecha_Consentimiento_Foto)throw Error('Fotografía vigente cambió');
+ const folder=pa9Folder_('PAIVD_FOTOS_PARTICIPANTES_ID','PARTICIPANTES'),f=DriveApp.getFileById(id),parents=f.getParents();let match=false;while(parents.hasNext())if(parents.next().getId()===folder.getId())match=true;
+ if(!match||f.isTrashed()||f.getMimeType()!=='image/jpeg'||f.getSize()>300000||f.getSharingAccess()!==DriveApp.Access.PRIVATE)throw Error('Fotografía vigente requiere revisión en Drive');return f;
+}
+function pa91Contactos_(ct,ii,ie,t){
+ const rows=ct.rows.filter(x=>x.d.ID_Interno===ii||x.d.ID_Estudiante===ie);
+ if(rows.some(x=>x.d.ID_Interno!==ii||x.d.ID_Estudiante!==ie||!['ACTIVO','INACTIVO'].includes(x.d.Estado_Contacto)))throw Error('Contactos requieren conciliación en Sheets');
+ const active=rows.filter(x=>x.d.Estado_Contacto==='ACTIVO');
+ if(new Set(active.map(x=>x.d.Tipo_Contacto)).size!==active.length||active.some(x=>!['PRINCIPAL','ALTERNATIVO','EMERGENCIA'].includes(x.d.Tipo_Contacto)||x.d.Verificacion!=='Validado'||x.d.Fuente!=='PAIVD'||!t.rows.some(y=>y.d.ID_Solicitud===x.d.Observaciones&&y.d.Estado==='APROBADA'&&y.d.ID_Interno===ii&&y.d.ID_Estudiante===ie)))throw Error('Contactos requieren conciliación en Sheets');
+ return active;
 }
