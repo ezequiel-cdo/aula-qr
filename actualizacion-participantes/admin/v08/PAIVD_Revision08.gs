@@ -11,7 +11,7 @@ function pa8Access_(){
  if(!a||a!==Session.getEffectiveUser().getEmail().toLowerCase()||a!==(p.getProperty('PAIVD_ADMIN_EMAIL')||'').trim().toLowerCase())throw Error('No autorizado');
  const id=p.getProperty('PAIVD_TARGET_ID'),mode=p.getProperty('PAIVD_ADMIN08_MODO');
  const ss=SpreadsheetApp.openById(id);
- if(mode==='ENSAYO'){if(ss.getName()!=='Registro_Maestro_Institucional_EPJA_ENSAYO_PAIVD')throw Error('Destino de ensayo inválido');}
+ if(mode==='ENSAYO'){if(ss.getName()!=='PAIVD_ENSAYO_FICTICIO')throw Error('Destino de ensayo inválido');}
  else if(mode==='REAL'){if(ss.getName()!=='Registro_Maestro_Institucional_EPJA_V1'||id!==p.getProperty('PAIVD_REAL_ID_CONFIRMADO'))throw Error('Destino real inválido');}
  else throw Error('Modo administrativo no configurado');
  return {ss,a,p,mode};
@@ -25,11 +25,11 @@ function pa8Table_(ss,n,required){
 }
 function pa8One_(t,k,v){const r=t.rows.filter(x=>x.d[k]===v);if(!v||r.length!==1)throw Error('Identificación no única: '+k);return r[0];}
 function pa8Text_(v,max){if(typeof v!=='string'||v.length>max||/[\x00-\x1f]/.test(v))throw Error('Texto inválido');return v.trim();}
-function pa8Request_(ss,id){
+function pa8Request_(ss,id,mode){
  const t=pa8Table_(ss,'Actualizaciones'),r=pa8One_(t,'ID_Solicitud',id),d=r.d;
  if(d.Version_Esquema!=='0.7'||!['PENDIENTE','PENDIENTE_ASIGNACION','OBSERVADA'].includes(d.Estado)||d.ID_Interno||d.ID_Estudiante||d.ID_Matricula)throw Error('Solicitud no revisable');
  const j=JSON.parse(d.Datos_Propuestos_JSON),i=j.identificacion;
- if(!i||i.tipo!=='DECLARADA_NO_VERIFICADA'||!Array.isArray(i.candidatos)||!i.candidatos.length||j.consentimiento!==true||j.entorno!=='INSTITUCIONAL_RESTRINGIDO')throw Error('Declaración inválida');
+ if(!i||i.tipo!=='DECLARADA_NO_VERIFICADA'||!Array.isArray(i.candidatos)||!i.candidatos.length||j.consentimiento!==true||j.entorno!==(mode==='REAL'?'INSTITUCIONAL_RESTRINGIDO':'FICTICIO'))throw Error('Declaración inválida');
  return {t,r,j,i};
 }
 function pa8Candidate_(ss,i,id){
@@ -44,7 +44,7 @@ function PA8_Listar(){
  return {modo:mode,solicitudes:t.rows.filter(x=>x.d.ID_Solicitud).map(x=>({id:x.d.ID_Solicitud,fecha:x.d.Fecha_Solicitud,estado:x.d.Estado,version:x.d.Version_Esquema}))};
 }
 function PA8_Detalle(id){
- const {ss}=pa8Access_(),{j,i}=pa8Request_(ss,id);
+ const {ss,mode}=pa8Access_(),{j,i}=pa8Request_(ss,id,mode);
  return {propuesta:j,candidatos:i.candidatos.map(c=>{const {m,e}=pa8Candidate_(ss,i,c.ID_Matricula);const r=pa8One_(pa8Table_(ss,'Datos_Reservados'),'ID_Interno',m.ID_Interno).d;return {id:m.ID_Matricula,nombre:e.Apellidos_Nombres,oficial:e.ID_Estudiante,municipio:r.Municipio_Residencia,sector:r.Sector_Residencia,contactos:pa8Table_(ss,'Contactos').rows.filter(x=>x.d.ID_Interno===m.ID_Interno).map(x=>x.d)};})};
 }
 function pa8Cell_(v){return {userEnteredValue:{stringValue:String(v)}};}
@@ -56,7 +56,7 @@ function PA8_Decidir(input){
  const {ss,a,p,mode}=pa8Access_();
  if(p.getProperty('PAIVD_ADMIN08_ESCRITURA')!=='SI')throw Error('Escritura no autorizada');
  if(typeof Sheets==='undefined')throw Error('Habilitar servicio avanzado Google Sheets');
- const {t,r,j,i}=pa8Request_(ss,input.id),note=pa8Text_(input.nota,500),now=new Date().toISOString(),op=input.accion;
+ const {t,r,j,i}=pa8Request_(ss,input.id,mode),note=pa8Text_(input.nota,500),now=new Date().toISOString(),op=input.accion;
  if(!note||!['APROBADA','RECHAZADA','OBSERVADA'].includes(op))throw Error('Decisión u observación inválida');
  const req=[],audit=pa8Table_(ss,'Auditoria_Cambios');
  if(op==='APROBADA'){
