@@ -1,4 +1,4 @@
-/** PAIVD 0.8.3 alpha. Private administrative web app. Requires advanced Sheets service. */
+/** PAIVD 0.8.4 alpha. Private administrative web app. Requires advanced Sheets service. */
 const PA8_HEADERS={
  Actualizaciones:'ID_Solicitud|ID_Interno|ID_Estudiante|ID_Matricula|Fecha_Solicitud|Estado|Datos_Propuestos_JSON|Version_Esquema|Fecha_Revision|Responsable_Revision|Observaciones_Revision',
  Contactos:'ID_Contacto|ID_Interno|ID_Estudiante|Tipo_Contacto|Telefono|Titular|Relacion|Es_Principal|Verificacion|Fecha_Verificacion|Fuente|Observaciones|Tiene_WhatsApp|WhatsApp_Verificado|Fecha_Verificacion_WhatsApp|Estado_Contacto|Fecha_Registro|Fecha_Actualizacion|Metodo_Verificacion',
@@ -44,7 +44,7 @@ function pa8Candidate_(ss,i,id){
 }
 function PA8_Listar(){
  const {ss,mode}=pa8Access_(),t=pa8Table_(ss,'Actualizaciones');
- return {version:'0.8.3',modo:mode,escritura:pa8CanWrite_(mode,PropertiesService.getScriptProperties()),solicitudes:t.rows.filter(x=>x.d.ID_Solicitud).map(x=>{let i={};try{i=JSON.parse(x.d.Datos_Propuestos_JSON).identificacion||{};}catch(e){}return {id:x.d.ID_Solicitud,fecha:x.d.Fecha_Solicitud,estado:x.d.Estado,version:x.d.Version_Esquema,nombre:i.nombre||'',curso:i.curso||'',seccion:i.seccion||'',anio:i.anio||''};})};
+ return {version:'0.8.4',modo:mode,escritura:pa8CanWrite_(mode,PropertiesService.getScriptProperties()),solicitudes:t.rows.filter(x=>x.d.ID_Solicitud).map(x=>{let i={};try{i=JSON.parse(x.d.Datos_Propuestos_JSON).identificacion||{};}catch(e){}return {id:x.d.ID_Solicitud,fecha:x.d.Fecha_Solicitud,estado:x.d.Estado,version:x.d.Version_Esquema,nombre:i.nombre||'',curso:i.curso||'',seccion:i.seccion||'',anio:i.anio||''};})};
 }
 function pa8Cell_(v){return {userEnteredValue:{stringValue:String(v)}};}
 function pa8Write_(t,row,col,vals){return {updateCells:{start:{sheetId:t.h.getSheetId(),rowIndex:row,columnIndex:col},rows:[{values:vals.map(pa8Cell_)}],fields:'userEnteredValue'}};}
@@ -92,7 +92,7 @@ function pa8Decidir_(input){
  return {estado:op,modo:mode};
  }finally{lock.releaseLock();}
 }
-function doGet(){pa8Access_();return HtmlService.createHtmlOutputFromFile('PAIVD_Revision08').setTitle('PAIVD Administración 0.8.3');}
+function doGet(){pa8Access_();return HtmlService.createHtmlOutputFromFile('PAIVD_Revision08').setTitle('PAIVD Administración 0.8.4');}
 
 /** Private directory: only active, verified contacts linked to approved requests. */
 function PA8_Directorio(f){
@@ -111,7 +111,7 @@ function PA8_Directorio(f){
  }).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
  return {contextos,filas:rows,total:rows.length,conContacto:rows.filter(r=>r.contactos.some(c=>c.tipo==='PRINCIPAL')).length,actualizados:rows.filter(r=>r.actualizado).length};
 }
-function PA8_Diagnostico(){const l=PA8_Listar(),d=PA8_Directorio({});console.log(JSON.stringify({version:l.version,modo:l.modo,escritura:l.escritura,solicitudes:l.solicitudes.length,matriculas:d.total,contextos:d.contextos.length,conContacto:d.conContacto,actualizados:d.actualizados}));}
+function PA8_Diagnostico(){const l=PA8_Listar(),d=PA8_Directorio({}),c=PA8_Cotejo(),aptas=c.filas.filter(x=>x.apto);console.log(JSON.stringify({version:l.version,modo:l.modo,escritura:l.escritura,solicitudes:l.solicitudes.length,matriculas:d.total,contextos:d.contextos.length,conContacto:d.conContacto,actualizados:d.actualizados,aptas:aptas.length,aptasConHuella:aptas.filter(x=>/^[a-f0-9]{64}$/.test(x.huellaCotejo||'')).length,excepciones:c.filas.filter(x=>!x.apto).length}));}
 
 /** Cotejo masivo: no sustituye la verificación humana. */
 function pa8Fingerprint_(d){
@@ -138,22 +138,31 @@ function PA8_Cotejo(){
  if(ct.rows.some(y=>y.d.ID_Interno===m.ID_Interno||y.d.ID_Estudiante===m.ID_Estudiante))throw Error('Contactos existentes: conciliar en Sheets');
  if(!pa8Text_(j.municipio,100)||!pa8Text_(j.sector,120)||!Array.isArray(j.contactos)||!j.contactos.length||j.contactos.length>3||j.contactos.filter(c=>c.tipo==='PRINCIPAL').length!==1||new Set(j.contactos.map(c=>c.tipo)).size!==j.contactos.length)throw Error('Residencia o contactos incompletos');
  const seen=new Set();j.contactos.forEach(c=>{if(!['PRINCIPAL','ALTERNATIVO','EMERGENCIA'].includes(c.tipo)||!/^\+1(?:809|829|849)[2-9]\d{6}$/.test(c.telefono)||!['PROPIO','COMPARTIDO','FAMILIAR','OTRO'].includes(c.relacion)||!['SI','NO','NO_SABE'].includes(c.whatsapp)||(c.tipo==='EMERGENCIA'&&c.relacion==='PROPIO')||(!pa8Text_(c.titular,120)&&c.relacion!=='PROPIO')||seen.has(c.telefono))throw Error('Contacto inválido');seen.add(c.telefono)});
+ base.huellaCotejo=Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,JSON.stringify([base.huella,m.ID_Interno,m.ID_Estudiante,m.ID_Matricula,e.Apellidos_Nombres,rr.Municipio_Residencia,rr.Sector_Residencia,rr.Fecha_Actualizacion]),Utilities.Charset.UTF_8).map(b=>('0'+(b&255).toString(16)).slice(-2)).join('');
+ if(!/^[a-f0-9]{64}$/.test(base.huellaCotejo))throw Error('No se pudo generar la huella del cotejo');
  base.apto=true;
- base.huellaCotejo=Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,JSON.stringify([base.huella,m.ID_Interno,m.ID_Estudiante,m.ID_Matricula,e.Apellidos_Nombres,rr.d.Municipio_Residencia,rr.d.Sector_Residencia,rr.d.Fecha_Actualizacion]),Utilities.Charset.UTF_8).map(b=>('0'+(b&255).toString(16)).slice(-2)).join('');
- }catch(e){base.motivo=e.message||'Revisión manual requerida'}
+ }catch(e){base.apto=false;delete base.huellaCotejo;base.motivo=e.message||'Revisión manual requerida'}
  return base;
  });
  const byCandidate=new Map();filas.filter(x=>x.apto).forEach(x=>byCandidate.set(x.candidato,(byCandidate.get(x.candidato)||0)+1));
  filas.forEach(x=>{if(x.apto&&byCandidate.get(x.candidato)>1){x.apto=false;x.motivo='Varias solicitudes del mismo participante: conciliar en Sheets'}});
- return {version:'0.8.3',modo:mode,escritura:pa8CanWrite_(mode,p),hoja:ss.getUrl()+'#gid='+t.h.getSheetId(),filas};
+ return {version:'0.8.4',modo:mode,escritura:pa8CanWrite_(mode,p),hoja:ss.getUrl()+'#gid='+t.h.getSheetId(),filas};
 }
 function PA8_DecidirLote(input){
  const {mode,p}=pa8Access_();
  if(!pa8CanWrite_(mode,p))throw Error('Escritura no autorizada');
- if(!input||!['APROBADA','RECHAZADA'].includes(input.accion)||input.confirmado!==true||!Array.isArray(input.items)||!input.items.length||input.items.length>10)throw Error('Lote inválido: máximo 10 por llamada');
+ if(!input||!['APROBADA','RECHAZADA'].includes(input.accion)||input.confirmado!==true||!Array.isArray(input.items)||!input.items.length||input.items.length>10)throw Error('LOTE_INVALIDO: máximo 10 solicitudes por llamada');
  const aprobar=input.accion==='APROBADA',ids=new Set(),candidates=new Set(),hex=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
  input.items.forEach(x=>{
- if(!x||typeof x.id!=='string'||!x.id||!hex(x.huella)||ids.has(x.id)||(aprobar&&(typeof x.candidato!=='string'||!x.candidato||!hex(x.huellaCotejo)||x.identidad!==true||x.contactos!==true||candidates.has(x.candidato))))throw Error('Lote con duplicados o verificaciones incompletas');
+ if(!x||typeof x.id!=='string'||!x.id)throw Error('LOTE_INVALIDO: falta la referencia de una solicitud');
+ if(!hex(x.huella))throw Error('LOTE_INVALIDO: falta la huella de la solicitud; recargue el cotejo');
+ if(ids.has(x.id))throw Error('LOTE_INVALIDO: solicitud duplicada');
+ if(aprobar){
+ if(typeof x.candidato!=='string'||!x.candidato)throw Error('LOTE_INVALIDO: candidato no identificado');
+ if(!hex(x.huellaCotejo))throw Error('LOTE_INVALIDO: falta la huella del cotejo; recargue el cotejo');
+ if(x.identidad!==true||x.contactos!==true)throw Error('LOTE_INVALIDO: verificación de identidad o contactos incompleta');
+ if(candidates.has(x.candidato))throw Error('LOTE_INVALIDO: participante duplicado');
+ }
  ids.add(x.id);if(aprobar)candidates.add(x.candidato);
  });
  const resultados=[];
