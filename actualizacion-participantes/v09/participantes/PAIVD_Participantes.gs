@@ -1,11 +1,11 @@
 /**
- * PAIVD v0.9 - recepción de solicitudes. Ensayo ficticio o piloto institucional restringido.
+ * PAIVD v0.9.1 - recepción de solicitudes. Ensayo ficticio o piloto institucional restringido.
  * Proyecto PARTICIPANTES: instalar este archivo y PAIVD_Registro.gs.
  * No instalar funciones administrativas en este proyecto.
  * Propiedades privadas: PAIVD_TARGET_ID, PAIVD_ENSAYO=SI,
  * PAIVD_SECRETO (64 hex aleatorios). Sin credenciales para declaraciones.
  */
-const PAIVD_V_='0.9';
+const PAIVD_V_='0.9.1';
 function paivdProp_(key){const v=PropertiesService.getScriptProperties().getProperty(key);if(!v)throw Error('Configuración incompleta');return v;}
 function paivdEntorno_(){
   const modo=PropertiesService.getScriptProperties().getProperty('PAIVD_MODO')||'FICTICIO';
@@ -59,7 +59,7 @@ function paivdBuscar(anio,curso,seccion,texto){
   const q=epjaPublicoNormalizar_(texto);if(q.length<3)return [];
   paivdLock_(()=>paivdLimit_('PAIVD_BUSQUEDAS',300,600000));
   const lista=paivdPiloto_().filter(r=>(!anio||r.Ano_Escolar===anio)&&(!curso||r.Curso===curso)&&(!seccion||r.Seccion===seccion)).map(r=>({r,score:epjaPublicoPuntuacion_(q,[r.Nombre_Mostrar])})).filter(x=>x.score>=12).sort((a,b)=>b.score-a.score||a.r.Nombre_Mostrar.localeCompare(b.r.Nombre_Mostrar,'es'));
-  return paivdAgrupar_(lista).map(x=>({...paivdPublica_(x.r),homonimos:x.refs.length,token:paivdStore_('sel09:',{refs:x.refs},600)}));
+  return paivdAgrupar_(lista).map(x=>({...paivdPublica_(x.r),homonimos:x.refs.length,token:paivdStore_('sel091:',{refs:x.refs},600)}));
 }
 function paivdAgrupar_(lista){
  const grupos=new Map();
@@ -83,15 +83,15 @@ function paivdDeclarar(seleccion,confirmado){
   paivdEntorno_();
   if(confirmado!==true)throw Error('Confirma tu selección');
   return paivdLock_(()=>{
-    const selection=paivdReadToken_('sel09:',seleccion);
+    const selection=paivdReadToken_('sel091:',seleccion);
     paivdLimit_('PAIVD_DECLARACIONES_GLOBAL',120,900000);
     const refs=paivdGrupoActual_(selection.refs),first=refs[0];
     // Reintento de la misma selección conserva el identificador de solicitud.
     if(selection.declaracion)return selection.declaracion;
-    const session=paivdStore_('decl09:',{refs,sol:Utilities.getUuid(),exp:Date.now()+1800000},1800);
+    const session=paivdStore_('decl091:',{refs,sol:Utilities.getUuid(),exp:Date.now()+1800000},1800);
     const result={session,datos:{nombre:first.n,anio:first.a,curso:first.c,seccion:first.s},homonimos:refs.length};
     selection.declaracion=result;
-    paivdCache_().put('sel09:'+paivdDigest_(seleccion),JSON.stringify(selection),600);
+    paivdCache_().put('sel091:'+paivdDigest_(seleccion),JSON.stringify(selection),600);
     return result;
   });
 }
@@ -117,12 +117,12 @@ function paivdValidar_(p){
   if(p.emergencia)contactos.push(paivdContacto_(p.emergencia,'EMERGENCIA'));
   const pers=contactos.filter(c=>c.tipo!=='EMERGENCIA');
   if(new Set(pers.map(c=>c.telefono)).size!==pers.length)throw Error('Los teléfonos principal y alternativo deben ser distintos');
-  return {confirmacion,correccion,contactos,municipio:paivdTexto_(p.municipio,100,true),sector:paivdTexto_(p.sector,120,true),consentimiento:true,avisoVersion:'PAIVD-0.9'};
+  return {confirmacion,correccion,contactos,municipio:paivdTexto_(p.municipio,100,true),sector:paivdTexto_(p.sector,120,true),consentimiento:true,avisoVersion:'PAIVD-0.9.1'};
 }
 function paivdEnviar(session,payload){
   paivdEntorno_();
   return paivdLock_(()=>{
-    const s=paivdReadToken_('decl09:',session);if(Date.now()>=s.exp)throw Error('Sesión vencida. Vuelve a buscar tu nombre.');
+    const s=paivdReadToken_('decl091:',session);if(Date.now()>=s.exp)throw Error('Sesión vencida. Vuelve a buscar tu nombre.');
     const h=paivdTable_(paivdLibro_(),'Actualizaciones',PAIVD_SOL_HEAD_),rows=paivdRows_(h);
     if(rows.some(r=>r[0]===s.sol))return paivdComprobante_(h,s.sol);
     const refs=paivdGrupoActual_(s.refs),first=refs[0],data=paivdValidar_(payload);
@@ -130,7 +130,9 @@ function paivdEnviar(session,payload){
     // No bloquear a la persona legítima por una declaración de terceros.
     // Toda declaración queda sin asignación oficial, incluso con candidato único.
     data.entorno=paivdEntorno_();
-    data.foto=paivdFotoGuardar_(s.sol,payload.foto);
+    const vigente=pa91FotoVigente_(refs);
+    if(vigente){if(!payload.foto||payload.foto.modo!=='EXISTENTE')throw Error('Ya existe una fotografía institucional. Vuelve a seleccionar tu nombre.');data.foto={modo:'EXISTENTE',id:vigente.getId()};}
+    else{if(payload.foto&&payload.foto.modo==='EXISTENTE')throw Error('La fotografía vigente cambió. Consulta al centro.');data.foto=paivdFotoGuardar_(s.sol,payload.foto);}
     data.identificacion={tipo:'DECLARADA_NO_VERIFICADA',nombre:first.n,anio:first.a,curso:first.c,seccion:first.s,candidatos:refs.map(r=>({ID_Interno:r.i,ID_Estudiante:r.e,ID_Matricula:r.m}))};
     const estado=refs.length>1?'PENDIENTE_ASIGNACION':'PENDIENTE';
     h.appendRow([s.sol,'','','',new Date().toISOString(),estado,JSON.stringify(data),PAIVD_V_,'','','']);
@@ -165,4 +167,28 @@ function paivdFotoGuardar_(id,foto){
  else{file=folder.createFile(Utilities.newBlob(bytes,'image/jpeg',name));}
  if(file.getSharingAccess()!==DriveApp.Access.PRIVATE)throw Error('La evidencia no está en acceso privado');
  return {modo:'CAPTURA',consentimiento:true,id:file.getId(),sha256:hash,fecha:file.getDateCreated().toISOString(),origen:'DECLARACION_CLIENTE_NO_VERIFICADA'};
+}
+
+/** No devuelve IDs ni imágenes al buscador abierto. */
+function pa91FotoVigente_(refs){
+ if(refs.length!==1)return null;
+ const ss=paivdLibro_(),h=ss.getSheetByName('Datos_Reservados');
+ if(!h)throw Error('Falta registro reservado');
+ const v=h.getDataRange().getDisplayValues(),head=v.shift(),idx=k=>{const n=head.indexOf(k);if(n<0)throw Error('Esquema reservado incompatible');return n;};
+ const rows=v.filter(r=>r[idx('ID_Interno')]===refs[0].i);
+ if(rows.length!==1||rows[0][idx('ID_Estudiante')]!==refs[0].e)throw Error('Vínculo reservado inválido');
+ const row=rows[0],id=row[idx('Foto_Drive_ID')];if(!id)return null;
+ if(row[idx('Consentimiento_Foto')]!=='SI'||!row[idx('Fecha_Fotografia')]||!row[idx('Fecha_Consentimiento_Foto')])throw Error('Fotografía requiere revisión administrativa');
+ const folder=DriveApp.getFolderById(paivdProp_('PAIVD_FOTOS_PARTICIPANTES_ID')),f=DriveApp.getFileById(id),parents=f.getParents();let match=false;while(parents.hasNext())if(parents.next().getId()===folder.getId())match=true;
+ if(folder.getName()!=='PARTICIPANTES'||folder.getSharingAccess()!==DriveApp.Access.PRIVATE||!match||f.isTrashed()||f.getMimeType()!=='image/jpeg'||f.getSize()>300000||f.getSharingAccess()!==DriveApp.Access.PRIVATE)throw Error('Fotografía requiere revisión administrativa');
+ return f;
+}
+function paivdFotoEstado(seleccion){
+ const mode=paivdEntorno_();
+ const refs=paivdGrupoActual_(paivdReadToken_('sel091:',seleccion).refs);
+ const f=pa91FotoVigente_(refs);
+ // La vista solo se habilita con una cuenta administrativa autenticada y supervisión explícita.
+ const p=PropertiesService.getScriptProperties(),a=Session.getActiveUser().getEmail().toLowerCase();
+ const preview=mode==='INSTITUCIONAL_RESTRINGIDO'&&p.getProperty('PAIVD_FOTO_VISTA_SUPERVISADA')==='SI'&&a&&a===Session.getEffectiveUser().getEmail().toLowerCase()&&a===(p.getProperty('PAIVD_ADMIN_EMAIL')||'').trim().toLowerCase();
+ return {registrada:!!f,imagen:f&&preview?'data:image/jpeg;base64,'+Utilities.base64Encode(f.getBlob().getBytes()):''};
 }
