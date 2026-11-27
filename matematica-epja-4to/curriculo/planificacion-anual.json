@@ -1,0 +1,2092 @@
+{
+  "version": "4to-plan-2026-2027-v1",
+  "calendarioFuente": "matematica-epja-3ero/estructura-37.js",
+  "calendarioEstado": "Referencia institucional programada; no constancia de ejecución",
+  "curriculoFuente": "curriculo/matriz-curricular.csv",
+  "recesos": [
+    "2026-12-19",
+    "2026-12-26",
+    "2027-01-02",
+    "2027-02-27",
+    "2027-03-27",
+    "2027-05-01"
+  ],
+  "periodos": [
+    {
+      "id": "P1",
+      "modulo": 1,
+      "inicio": "2026-08-29",
+      "cierre": "2026-10-31",
+      "proyecto": "Medición de un espacio comunitario: goniómetro, distancias y área triangular"
+    },
+    {
+      "id": "P2",
+      "modulo": 2,
+      "inicio": "2026-11-07",
+      "cierre": "2027-01-30",
+      "proyecto": "Levantamiento de una parcela: croquis, diagonales y ángulos"
+    },
+    {
+      "id": "P3",
+      "modulo": 3,
+      "inicio": "2027-02-06",
+      "cierre": "2027-04-03",
+      "proyecto": "Diseño de un depósito de agua: capacidad, superficie y costo de material"
+    },
+    {
+      "id": "P4",
+      "modulo": 4,
+      "inicio": "2027-04-10",
+      "cierre": "2027-06-19",
+      "proyecto": "Modelado de fenómenos periódicos y triangulación de distancias"
+    }
+  ],
+  "encuentros": [
+    {
+      "id": "P1-J01",
+      "periodo": "P1",
+      "modulo": 1,
+      "jornada": 1,
+      "fecha": "2026-08-29",
+      "titulo": "Postulados, teoremas, hipótesis, tesis y corolarios",
+      "codigos": [
+        "M1-E01"
+      ],
+      "paginas": "38–39",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT2"
+      ],
+      "indicadoresPropuestos": [
+        "IL-1",
+        "IL-2",
+        "IL-6"
+      ],
+      "objetivo": "Clasificar afirmaciones y construir argumentos",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Clasificar afirmaciones y construir argumentos.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Clasificador de hipótesis y tesis"
+      ],
+      "evidencia": "Argumento geométrico escrito",
+      "evaluacion": "Diagnóstica + formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Medición de un espacio comunitario: goniómetro, distancias y área triangular",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P1-J02",
+      "periodo": "P1",
+      "modulo": 1,
+      "jornada": 2,
+      "fecha": "2026-09-05",
+      "titulo": "Triángulos: clasificación, rectas y puntos notables",
+      "codigos": [
+        "M1-E02"
+      ],
+      "paginas": "40–41",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT4",
+        "CE-MAT5"
+      ],
+      "indicadoresPropuestos": [
+        "IL-1",
+        "IL-12",
+        "IL-13"
+      ],
+      "objetivo": "Construir medianas, alturas, bisectrices y mediatrices",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Construir medianas, alturas, bisectrices y mediatrices.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Triángulo con vértices móviles"
+      ],
+      "evidencia": "Construcción con regla y compás",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Medición de un espacio comunitario: goniómetro, distancias y área triangular",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P1-J03",
+      "periodo": "P1",
+      "modulo": 1,
+      "jornada": 3,
+      "fecha": "2026-09-12",
+      "titulo": "Congruencia de triángulos",
+      "codigos": [
+        "M1-E03"
+      ],
+      "paginas": "42–43",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT2",
+        "CE-MAT6"
+      ],
+      "indicadoresPropuestos": [
+        "IL-2",
+        "IL-6",
+        "IL-16"
+      ],
+      "objetivo": "Aplicar criterios de congruencia",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Aplicar criterios de congruencia.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Superposición de triángulos"
+      ],
+      "evidencia": "Justificación de congruencia",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Medición de un espacio comunitario: goniómetro, distancias y área triangular",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P1-J04",
+      "periodo": "P1",
+      "modulo": 1,
+      "jornada": 4,
+      "fecha": "2026-09-19",
+      "titulo": "Ángulos interiores y exteriores",
+      "codigos": [
+        "M1-E04"
+      ],
+      "paginas": "44–45",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT4",
+        "CE-MAT7"
+      ],
+      "indicadoresPropuestos": [
+        "IL-2",
+        "IL-12",
+        "IL-20"
+      ],
+      "objetivo": "Calcular y justificar relaciones angulares",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Calcular y justificar relaciones angulares.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Triángulo dinámico"
+      ],
+      "evidencia": "Mediciones y demostración",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Medición de un espacio comunitario: goniómetro, distancias y área triangular",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P1-J05",
+      "periodo": "P1",
+      "modulo": 1,
+      "jornada": 5,
+      "fecha": "2026-09-26",
+      "titulo": "Triángulos isósceles y equiláteros",
+      "codigos": [
+        "M1-E05"
+      ],
+      "paginas": "46–47",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT2",
+        "CE-MAT7"
+      ],
+      "indicadoresPropuestos": [
+        "IL-2",
+        "IL-6",
+        "IL-20"
+      ],
+      "objetivo": "Resolver problemas mediante propiedades",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Resolver problemas mediante propiedades.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Simetría y ángulos variables"
+      ],
+      "evidencia": "Problema de estructura triangular",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Medición de un espacio comunitario: goniómetro, distancias y área triangular",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P1-J06",
+      "periodo": "P1",
+      "modulo": 1,
+      "jornada": 6,
+      "fecha": "2026-10-03",
+      "titulo": "Teorema de Pitágoras",
+      "codigos": [
+        "M1-E06"
+      ],
+      "paginas": "48–49",
+      "competencias": [
+        "CE-MAT4",
+        "CE-MAT5",
+        "CE-MAT7"
+      ],
+      "indicadoresPropuestos": [
+        "IL-10",
+        "IL-13",
+        "IL-20"
+      ],
+      "objetivo": "Calcular distancias en triángulos rectángulos",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Calcular distancias en triángulos rectángulos.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Cuadrados sobre los lados"
+      ],
+      "evidencia": "Medición indirecta de distancia",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Medición de un espacio comunitario: goniómetro, distancias y área triangular",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P1-J07",
+      "periodo": "P1",
+      "modulo": 1,
+      "jornada": 7,
+      "fecha": "2026-10-10",
+      "titulo": "Fórmula de Herón",
+      "codigos": [
+        "M1-E07"
+      ],
+      "paginas": "48–49",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT4",
+        "CE-MAT7"
+      ],
+      "indicadoresPropuestos": [
+        "IL-1",
+        "IL-10",
+        "IL-21"
+      ],
+      "objetivo": "Calcular áreas a partir de tres lados",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Calcular áreas a partir de tres lados.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Calculadora de área con validación triangular"
+      ],
+      "evidencia": "Plano de terreno triangular",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Medición de un espacio comunitario: goniómetro, distancias y área triangular",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P1-J08",
+      "periodo": "P1",
+      "modulo": 1,
+      "jornada": 8,
+      "fecha": "2026-10-17",
+      "titulo": "Teoremas fundamentales del triángulo",
+      "codigos": [
+        "M1-E08"
+      ],
+      "paginas": "50–51",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT2",
+        "CE-MAT7"
+      ],
+      "indicadoresPropuestos": [
+        "IL-2",
+        "IL-6",
+        "IL-21"
+      ],
+      "objetivo": "Discutir y justificar teoremas",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Discutir y justificar teoremas.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Rectas paralelas y relaciones angulares"
+      ],
+      "evidencia": "Demostración escrita",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Medición de un espacio comunitario: goniómetro, distancias y área triangular",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P1-J09",
+      "periodo": "P1",
+      "modulo": 1,
+      "jornada": 9,
+      "fecha": "2026-10-24",
+      "titulo": "Integración: medición indirecta y plano triangular",
+      "codigos": [
+        "M1-E01",
+        "M1-E02",
+        "M1-E03",
+        "M1-E04",
+        "M1-E05",
+        "M1-E06",
+        "M1-E07",
+        "M1-E08"
+      ],
+      "paginas": "52–53; repaso 38–51",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT2",
+        "CE-MAT4",
+        "CE-MAT5",
+        "CE-MAT6",
+        "CE-MAT7"
+      ],
+      "indicadoresPropuestos": [
+        "IL-1",
+        "IL-2",
+        "IL-6",
+        "IL-10",
+        "IL-12",
+        "IL-13",
+        "IL-16",
+        "IL-20",
+        "IL-21"
+      ],
+      "objetivo": "Integrar procedimientos del módulo y defender una solución contextualizada.",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: desarrollar y contrastar el proyecto en equipo.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Clasificador de hipótesis y tesis",
+        "Triángulo con vértices móviles",
+        "Superposición de triángulos",
+        "Triángulo dinámico",
+        "Simetría y ángulos variables",
+        "Cuadrados sobre los lados",
+        "Calculadora de área con validación triangular",
+        "Rectas paralelas y relaciones angulares"
+      ],
+      "evidencia": "Medición de un espacio comunitario: goniómetro, distancias y área triangular; informe y cálculos manuscritos.",
+      "evaluacion": "Integradora formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Medición de un espacio comunitario: goniómetro, distancias y área triangular",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P1-J10",
+      "periodo": "P1",
+      "modulo": 1,
+      "jornada": 10,
+      "fecha": "2026-10-31",
+      "titulo": "Cierre de módulo 1",
+      "codigos": [
+        "M1-E01",
+        "M1-E02",
+        "M1-E03",
+        "M1-E04",
+        "M1-E05",
+        "M1-E06",
+        "M1-E07",
+        "M1-E08"
+      ],
+      "paginas": "54–55; repaso 38–51",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT2",
+        "CE-MAT4",
+        "CE-MAT5",
+        "CE-MAT6",
+        "CE-MAT7"
+      ],
+      "indicadoresPropuestos": [
+        "IL-1",
+        "IL-2",
+        "IL-6",
+        "IL-10",
+        "IL-12",
+        "IL-13",
+        "IL-16",
+        "IL-20",
+        "IL-21"
+      ],
+      "objetivo": "Resolver problemas integradores y justificar procedimientos; identificar necesidades de recuperación.",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: evaluación de cierre tras recepción de evidencia; modalidad asistida si corresponde.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: revisar retroalimentación y detectar errores.",
+          "50 min: resolver actividades de recuperación o ampliación.",
+          "40 min: documentar correcciones y autoevaluación."
+        ]
+      },
+      "recursos": [
+        "Cuaderno",
+        "Evaluación contextualizada",
+        "Rúbrica docente"
+      ],
+      "evidencia": "PDF acumulado del cuaderno, evaluación de cierre y plan de mejora.",
+      "evaluacion": "Cierre de módulo y recuperación",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Medición de un espacio comunitario: goniómetro, distancias y área triangular",
+      "requierePDF": true,
+      "nota": "Habilitación inmediata solo tras recepción válida en servidor; función pendiente de implementación. Prever entrega asistida. Los indicadores se valoran únicamente según evidencias efectivas."
+    },
+    {
+      "id": "P2-J01",
+      "periodo": "P2",
+      "modulo": 2,
+      "jornada": 1,
+      "fecha": "2026-11-07",
+      "titulo": "Polígonos regulares",
+      "codigos": [
+        "M2-E01"
+      ],
+      "paginas": "38–39",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT5"
+      ],
+      "indicadoresPropuestos": [
+        "IL-1",
+        "IL-3",
+        "IL-13"
+      ],
+      "objetivo": "Clasificar por lados y ángulos",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Clasificar por lados y ángulos.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Generador de polígonos"
+      ],
+      "evidencia": "Clasificación de diseños",
+      "evaluacion": "Diagnóstica + formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Levantamiento de una parcela: croquis, diagonales y ángulos",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P2-J02",
+      "periodo": "P2",
+      "modulo": 2,
+      "jornada": 2,
+      "fecha": "2026-11-14",
+      "titulo": "Polígonos irregulares",
+      "codigos": [
+        "M2-E02"
+      ],
+      "paginas": "40–41",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT3",
+        "CE-MAT4"
+      ],
+      "indicadoresPropuestos": [
+        "IL-1",
+        "IL-7",
+        "IL-8",
+        "IL-11"
+      ],
+      "objetivo": "Identificar irregularidad en el entorno y contrastar croquis con respeto a las aportaciones de compañeros",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Identificar irregularidad en el entorno y contrastar croquis con respeto a las aportaciones de compañeros.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Editor de vértices"
+      ],
+      "evidencia": "Croquis de parcela",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Levantamiento de una parcela: croquis, diagonales y ángulos",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P2-J03",
+      "periodo": "P2",
+      "modulo": 2,
+      "jornada": 3,
+      "fecha": "2026-11-21",
+      "titulo": "Elementos de un polígono: diagonales, ángulo central y apotema",
+      "codigos": [
+        "M2-E03"
+      ],
+      "paginas": "42–43",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT2",
+        "CE-MAT7"
+      ],
+      "indicadoresPropuestos": [
+        "IL-3",
+        "IL-4",
+        "IL-19"
+      ],
+      "objetivo": "Calcular diagonales desde un vértice y totales",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Calcular diagonales desde un vértice y totales.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Generador de diagonales y apotema"
+      ],
+      "evidencia": "Tabla y deducción de fórmula",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Levantamiento de una parcela: croquis, diagonales y ángulos",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P2-J04",
+      "periodo": "P2",
+      "modulo": 2,
+      "jornada": 4,
+      "fecha": "2026-11-28",
+      "titulo": "Polígonos convexos",
+      "codigos": [
+        "M2-E04"
+      ],
+      "paginas": "44–45",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT2",
+        "CE-MAT5"
+      ],
+      "indicadoresPropuestos": [
+        "IL-2",
+        "IL-4",
+        "IL-13"
+      ],
+      "objetivo": "Clasificar por convexidad",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Clasificar por convexidad.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Prueba visual de segmentos"
+      ],
+      "evidencia": "Clasificación razonada",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Levantamiento de una parcela: croquis, diagonales y ángulos",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P2-J05",
+      "periodo": "P2",
+      "modulo": 2,
+      "jornada": 5,
+      "fecha": "2026-12-05",
+      "titulo": "Polígonos cóncavos",
+      "codigos": [
+        "M2-E05"
+      ],
+      "paginas": "46–47",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT2",
+        "CE-MAT3"
+      ],
+      "indicadoresPropuestos": [
+        "IL-2",
+        "IL-5",
+        "IL-8"
+      ],
+      "objetivo": "Identificar concavidad y comparar argumentos",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Identificar concavidad y comparar argumentos.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Vértices móviles"
+      ],
+      "evidencia": "Croquis y explicación",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Levantamiento de una parcela: croquis, diagonales y ángulos",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P2-J06",
+      "periodo": "P2",
+      "modulo": 2,
+      "jornada": 6,
+      "fecha": "2026-12-12",
+      "titulo": "Teoremas sobre ángulos internos",
+      "codigos": [
+        "M2-E06"
+      ],
+      "paginas": "48–49",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT4",
+        "CE-MAT7"
+      ],
+      "indicadoresPropuestos": [
+        "IL-2",
+        "IL-12",
+        "IL-20"
+      ],
+      "objetivo": "Demostrar suma de ángulos mediante triangulación",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Demostrar suma de ángulos mediante triangulación.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Triangulación interactiva"
+      ],
+      "evidencia": "Deducción y cálculo",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Levantamiento de una parcela: croquis, diagonales y ángulos",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P2-J07",
+      "periodo": "P2",
+      "modulo": 2,
+      "jornada": 7,
+      "fecha": "2027-01-09",
+      "titulo": "Teoremas sobre ángulos externos",
+      "codigos": [
+        "M2-E07"
+      ],
+      "paginas": "50–51",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT4",
+        "CE-MAT7"
+      ],
+      "indicadoresPropuestos": [
+        "IL-2",
+        "IL-12",
+        "IL-20"
+      ],
+      "objetivo": "Justificar suma de giros exteriores de polígonos convexos",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Justificar suma de giros exteriores de polígonos convexos.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Recorrido de giros"
+      ],
+      "evidencia": "Tabla y argumento",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Levantamiento de una parcela: croquis, diagonales y ángulos",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P2-J08",
+      "periodo": "P2",
+      "modulo": 2,
+      "jornada": 8,
+      "fecha": "2027-01-16",
+      "titulo": "Aplicación: diseño de mosaicos y giros",
+      "codigos": [
+        "M2-E03",
+        "M2-E06",
+        "M2-E07"
+      ],
+      "paginas": "42–43; 48–49; 50–51",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT2",
+        "CE-MAT4",
+        "CE-MAT7"
+      ],
+      "indicadoresPropuestos": [
+        "IL-2",
+        "IL-3",
+        "IL-4",
+        "IL-12",
+        "IL-19",
+        "IL-20"
+      ],
+      "objetivo": "Integrar procedimientos del módulo y defender una solución contextualizada.",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: aplicación guiada y contraste de procedimientos.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Generador de diagonales y apotema",
+        "Triangulación interactiva",
+        "Recorrido de giros"
+      ],
+      "evidencia": "Tabla y deducción de fórmula; Deducción y cálculo; Tabla y argumento",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Levantamiento de una parcela: croquis, diagonales y ángulos",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P2-J09",
+      "periodo": "P2",
+      "modulo": 2,
+      "jornada": 9,
+      "fecha": "2027-01-23",
+      "titulo": "Integración: levantamiento geométrico de parcela",
+      "codigos": [
+        "M2-E01",
+        "M2-E02",
+        "M2-E03",
+        "M2-E04",
+        "M2-E05",
+        "M2-E06",
+        "M2-E07"
+      ],
+      "paginas": "52–53; repaso 38–51",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT2",
+        "CE-MAT3",
+        "CE-MAT4",
+        "CE-MAT5",
+        "CE-MAT7"
+      ],
+      "indicadoresPropuestos": [
+        "IL-1",
+        "IL-2",
+        "IL-3",
+        "IL-4",
+        "IL-5",
+        "IL-7",
+        "IL-8",
+        "IL-11",
+        "IL-12",
+        "IL-13",
+        "IL-19",
+        "IL-20"
+      ],
+      "objetivo": "Integrar procedimientos del módulo y defender una solución contextualizada.",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: desarrollar y contrastar el proyecto en equipo.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Generador de polígonos",
+        "Editor de vértices",
+        "Generador de diagonales y apotema",
+        "Prueba visual de segmentos",
+        "Vértices móviles",
+        "Triangulación interactiva",
+        "Recorrido de giros"
+      ],
+      "evidencia": "Levantamiento de una parcela: croquis, diagonales y ángulos; informe y cálculos manuscritos.",
+      "evaluacion": "Integradora formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Levantamiento de una parcela: croquis, diagonales y ángulos",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P2-J10",
+      "periodo": "P2",
+      "modulo": 2,
+      "jornada": 10,
+      "fecha": "2027-01-30",
+      "titulo": "Cierre de módulo 2",
+      "codigos": [
+        "M2-E01",
+        "M2-E02",
+        "M2-E03",
+        "M2-E04",
+        "M2-E05",
+        "M2-E06",
+        "M2-E07"
+      ],
+      "paginas": "54–55; repaso 38–51",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT2",
+        "CE-MAT3",
+        "CE-MAT4",
+        "CE-MAT5",
+        "CE-MAT7"
+      ],
+      "indicadoresPropuestos": [
+        "IL-1",
+        "IL-2",
+        "IL-3",
+        "IL-4",
+        "IL-5",
+        "IL-7",
+        "IL-8",
+        "IL-11",
+        "IL-12",
+        "IL-13",
+        "IL-19",
+        "IL-20"
+      ],
+      "objetivo": "Resolver problemas integradores y justificar procedimientos; identificar necesidades de recuperación.",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: evaluación de cierre tras recepción de evidencia; modalidad asistida si corresponde.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: revisar retroalimentación y detectar errores.",
+          "50 min: resolver actividades de recuperación o ampliación.",
+          "40 min: documentar correcciones y autoevaluación."
+        ]
+      },
+      "recursos": [
+        "Cuaderno",
+        "Evaluación contextualizada",
+        "Rúbrica docente"
+      ],
+      "evidencia": "PDF acumulado del cuaderno, evaluación de cierre y plan de mejora.",
+      "evaluacion": "Cierre de módulo y recuperación",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Levantamiento de una parcela: croquis, diagonales y ángulos",
+      "requierePDF": true,
+      "nota": "Habilitación inmediata solo tras recepción válida en servidor; función pendiente de implementación. Prever entrega asistida. Los indicadores se valoran únicamente según evidencias efectivas."
+    },
+    {
+      "id": "P3-J01",
+      "periodo": "P3",
+      "modulo": 3,
+      "jornada": 1,
+      "fecha": "2027-02-06",
+      "titulo": "Áreas de polígonos",
+      "codigos": [
+        "M3-E01"
+      ],
+      "paginas": "38–39",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT3",
+        "CE-MAT4",
+        "CE-MAT5"
+      ],
+      "indicadoresPropuestos": [
+        "IL-1",
+        "IL-7",
+        "IL-10",
+        "IL-13"
+      ],
+      "objetivo": "Calcular áreas regulares e irregulares en plano cartesiano",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Calcular áreas regulares e irregulares en plano cartesiano.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Cuadrícula y descomposición"
+      ],
+      "evidencia": "Plano de superficie comunitaria",
+      "evaluacion": "Diagnóstica + formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Diseño de un depósito de agua: capacidad, superficie y costo de material",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P3-J02",
+      "periodo": "P3",
+      "modulo": 3,
+      "jornada": 2,
+      "fecha": "2027-02-13",
+      "titulo": "Superficie de conos, cilindros y esferas",
+      "codigos": [
+        "M3-E02"
+      ],
+      "paginas": "40–41",
+      "competencias": [
+        "CE-MAT3",
+        "CE-MAT4",
+        "CE-MAT5"
+      ],
+      "indicadoresPropuestos": [
+        "IL-7",
+        "IL-10",
+        "IL-13"
+      ],
+      "objetivo": "Calcular áreas de superficies",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Calcular áreas de superficies.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Desarrollo plano y simulador"
+      ],
+      "evidencia": "Estimación de material",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Diseño de un depósito de agua: capacidad, superficie y costo de material",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P3-J03",
+      "periodo": "P3",
+      "modulo": 3,
+      "jornada": 3,
+      "fecha": "2027-02-20",
+      "titulo": "Volumen de conos, cilindros y esferas",
+      "codigos": [
+        "M3-E03"
+      ],
+      "paginas": "42–43",
+      "competencias": [
+        "CE-MAT3",
+        "CE-MAT5",
+        "CE-MAT6"
+      ],
+      "indicadoresPropuestos": [
+        "IL-7",
+        "IL-13",
+        "IL-18"
+      ],
+      "objetivo": "Comparar capacidad y volumen",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Comparar capacidad y volumen.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Simulador de sólidos"
+      ],
+      "evidencia": "Diseño de depósito",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Diseño de un depósito de agua: capacidad, superficie y costo de material",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P3-J04",
+      "periodo": "P3",
+      "modulo": 3,
+      "jornada": 4,
+      "fecha": "2027-03-06",
+      "titulo": "Circunferencia: líneas y puntos y Círculo o región circular",
+      "codigos": [
+        "M3-E04",
+        "M3-E05"
+      ],
+      "paginas": "44–45; 46–47",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT4",
+        "CE-MAT5",
+        "CE-MAT6"
+      ],
+      "indicadoresPropuestos": [
+        "IL-1",
+        "IL-10",
+        "IL-12",
+        "IL-13",
+        "IL-17"
+      ],
+      "objetivo": "Identificar y trazar elementos; Calcular áreas, sectores y regiones",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Identificar y trazar elementos; Calcular áreas, sectores y regiones.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Compás virtual",
+        "Radio y sector dinámicos"
+      ],
+      "evidencia": "Construcción rotulada; Estimación de material circular",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Diseño de un depósito de agua: capacidad, superficie y costo de material",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P3-J05",
+      "periodo": "P3",
+      "modulo": 3,
+      "jornada": 5,
+      "fecha": "2027-03-13",
+      "titulo": "Posiciones relativas de dos circunferencias",
+      "codigos": [
+        "M3-E06"
+      ],
+      "paginas": "48–49",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT5",
+        "CE-MAT6"
+      ],
+      "indicadoresPropuestos": [
+        "IL-2",
+        "IL-13",
+        "IL-17"
+      ],
+      "objetivo": "Modelar posiciones según radios y distancia",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Modelar posiciones según radios y distancia.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Dos centros móviles"
+      ],
+      "evidencia": "Clasificación argumentada",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Diseño de un depósito de agua: capacidad, superficie y costo de material",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P3-J06",
+      "periodo": "P3",
+      "modulo": 3,
+      "jornada": 6,
+      "fecha": "2027-03-20",
+      "titulo": "Tangente a una circunferencia",
+      "codigos": [
+        "M3-E07"
+      ],
+      "paginas": "50–51",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT4",
+        "CE-MAT6"
+      ],
+      "indicadoresPropuestos": [
+        "IL-2",
+        "IL-12",
+        "IL-16",
+        "IL-17"
+      ],
+      "objetivo": "Construir tangentes y justificar propiedades",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Construir tangentes y justificar propiedades.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Tangente y radio dinámicos"
+      ],
+      "evidencia": "Construcción y justificación",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Diseño de un depósito de agua: capacidad, superficie y costo de material",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P3-J07",
+      "periodo": "P3",
+      "modulo": 3,
+      "jornada": 7,
+      "fecha": "2027-04-03",
+      "titulo": "Cierre de módulo 3",
+      "codigos": [
+        "M3-E01",
+        "M3-E02",
+        "M3-E03",
+        "M3-E04",
+        "M3-E05",
+        "M3-E06",
+        "M3-E07"
+      ],
+      "paginas": "54–55; repaso 38–51",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT3",
+        "CE-MAT4",
+        "CE-MAT5",
+        "CE-MAT6"
+      ],
+      "indicadoresPropuestos": [
+        "IL-1",
+        "IL-2",
+        "IL-7",
+        "IL-10",
+        "IL-12",
+        "IL-13",
+        "IL-16",
+        "IL-17",
+        "IL-18"
+      ],
+      "objetivo": "Resolver problemas integradores y justificar procedimientos; identificar necesidades de recuperación.",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: evaluación de cierre tras recepción de evidencia; modalidad asistida si corresponde.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: revisar retroalimentación y detectar errores.",
+          "50 min: resolver actividades de recuperación o ampliación.",
+          "40 min: documentar correcciones y autoevaluación."
+        ]
+      },
+      "recursos": [
+        "Cuaderno",
+        "Evaluación contextualizada",
+        "Rúbrica docente"
+      ],
+      "evidencia": "PDF acumulado del cuaderno, evaluación de cierre y plan de mejora.",
+      "evaluacion": "Cierre de módulo y recuperación",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Diseño de un depósito de agua: capacidad, superficie y costo de material",
+      "requierePDF": true,
+      "nota": "Habilitación inmediata solo tras recepción válida en servidor; función pendiente de implementación. Prever entrega asistida. Los indicadores se valoran únicamente según evidencias efectivas."
+    },
+    {
+      "id": "P4-J01",
+      "periodo": "P4",
+      "modulo": 4,
+      "jornada": 1,
+      "fecha": "2027-04-10",
+      "titulo": "Polígonos inscritos y circunscritos",
+      "codigos": [
+        "M4-E01"
+      ],
+      "paginas": "38–39",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT4",
+        "CE-MAT5",
+        "CE-MAT6"
+      ],
+      "indicadoresPropuestos": [
+        "IL-2",
+        "IL-12",
+        "IL-13",
+        "IL-16"
+      ],
+      "objetivo": "Construir polígonos respecto a una circunferencia",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Construir polígonos respecto a una circunferencia.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Polígono y círculo dinámicos"
+      ],
+      "evidencia": "Construcción y comparación",
+      "evaluacion": "Diagnóstica + formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Modelado de fenómenos periódicos y triangulación de distancias",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P4-J02",
+      "periodo": "P4",
+      "modulo": 4,
+      "jornada": 2,
+      "fecha": "2027-04-17",
+      "titulo": "Circunferencias concéntricas",
+      "codigos": [
+        "M4-E02"
+      ],
+      "paginas": "40–41",
+      "competencias": [
+        "CE-MAT4",
+        "CE-MAT5",
+        "CE-MAT6"
+      ],
+      "indicadoresPropuestos": [
+        "IL-10",
+        "IL-13",
+        "IL-17"
+      ],
+      "objetivo": "Construir círculos concéntricos y calcular regiones",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Construir círculos concéntricos y calcular regiones.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Corona circular dinámica"
+      ],
+      "evidencia": "Diseño de arandela",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Modelado de fenómenos periódicos y triangulación de distancias",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P4-J03",
+      "periodo": "P4",
+      "modulo": 4,
+      "jornada": 3,
+      "fecha": "2027-04-24",
+      "titulo": "Cónicas",
+      "codigos": [
+        "M4-E03"
+      ],
+      "paginas": "42–43",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT5"
+      ],
+      "indicadoresPropuestos": [
+        "IL-1",
+        "IL-13",
+        "IL-14"
+      ],
+      "objetivo": "Identificar elementos, graficar y obtener ecuaciones",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Identificar elementos, graficar y obtener ecuaciones.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Explorador de cónicas"
+      ],
+      "evidencia": "Gráficas y aplicación",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Modelado de fenómenos periódicos y triangulación de distancias",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P4-J04",
+      "periodo": "P4",
+      "modulo": 4,
+      "jornada": 4,
+      "fecha": "2027-05-08",
+      "titulo": "Funciones trigonométricas: seno y coseno",
+      "codigos": [
+        "M4-E04"
+      ],
+      "paginas": "44–45",
+      "competencias": [
+        "CE-MAT3",
+        "CE-MAT5"
+      ],
+      "indicadoresPropuestos": [
+        "IL-9",
+        "IL-13",
+        "IL-15"
+      ],
+      "objetivo": "Relacionar triángulo rectángulo, círculo unitario y gráfica",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Relacionar triángulo rectángulo, círculo unitario y gráfica.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Círculo unitario sincronizado"
+      ],
+      "evidencia": "Tabla y gráfica",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Modelado de fenómenos periódicos y triangulación de distancias",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P4-J05",
+      "periodo": "P4",
+      "modulo": 4,
+      "jornada": 5,
+      "fecha": "2027-05-15",
+      "titulo": "Función tangente",
+      "codigos": [
+        "M4-E05"
+      ],
+      "paginas": "46–47",
+      "competencias": [
+        "CE-MAT3",
+        "CE-MAT5"
+      ],
+      "indicadoresPropuestos": [
+        "IL-9",
+        "IL-13",
+        "IL-15"
+      ],
+      "objetivo": "Calcular tangente y reconocer restricciones",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Calcular tangente y reconocer restricciones.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Pendiente y ángulo"
+      ],
+      "evidencia": "Medición indirecta de altura",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Modelado de fenómenos periódicos y triangulación de distancias",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P4-J06",
+      "periodo": "P4",
+      "modulo": 4,
+      "jornada": 6,
+      "fecha": "2027-05-22",
+      "titulo": "Secante, cosecante y cotangente",
+      "codigos": [
+        "M4-E06"
+      ],
+      "paginas": "48–49",
+      "competencias": [
+        "CE-MAT3",
+        "CE-MAT5"
+      ],
+      "indicadoresPropuestos": [
+        "IL-9",
+        "IL-13",
+        "IL-15"
+      ],
+      "objetivo": "Relacionar funciones recíprocas y dominios",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Relacionar funciones recíprocas y dominios.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Explorador de razones recíprocas"
+      ],
+      "evidencia": "Tabla de valores y dominios",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Modelado de fenómenos periódicos y triangulación de distancias",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P4-J07",
+      "periodo": "P4",
+      "modulo": 4,
+      "jornada": 7,
+      "fecha": "2027-05-29",
+      "titulo": "Leyes de los senos y cosenos",
+      "codigos": [
+        "M4-E07"
+      ],
+      "paginas": "50–51",
+      "competencias": [
+        "CE-MAT3",
+        "CE-MAT4",
+        "CE-MAT5"
+      ],
+      "indicadoresPropuestos": [
+        "IL-9",
+        "IL-10",
+        "IL-13"
+      ],
+      "objetivo": "Resolver triángulos no rectángulos",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: Resolver triángulos no rectángulos.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Solucionador con casos ambiguos"
+      ],
+      "evidencia": "Triangulación de distancias",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Modelado de fenómenos periódicos y triangulación de distancias",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P4-J08",
+      "periodo": "P4",
+      "modulo": 4,
+      "jornada": 8,
+      "fecha": "2027-06-05",
+      "titulo": "Aplicación: gráficas periódicas y triangulación",
+      "codigos": [
+        "M4-E04",
+        "M4-E05",
+        "M4-E06",
+        "M4-E07"
+      ],
+      "paginas": "44–45; 46–47; 48–49; 50–51",
+      "competencias": [
+        "CE-MAT3",
+        "CE-MAT4",
+        "CE-MAT5"
+      ],
+      "indicadoresPropuestos": [
+        "IL-9",
+        "IL-10",
+        "IL-13",
+        "IL-15"
+      ],
+      "objetivo": "Integrar procedimientos del módulo y defender una solución contextualizada.",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: aplicación guiada y contraste de procedimientos.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Círculo unitario sincronizado",
+        "Pendiente y ángulo",
+        "Explorador de razones recíprocas",
+        "Solucionador con casos ambiguos"
+      ],
+      "evidencia": "Tabla y gráfica; Medición indirecta de altura; Tabla de valores y dominios; Triangulación de distancias",
+      "evaluacion": "Formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Modelado de fenómenos periódicos y triangulación de distancias",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P4-J09",
+      "periodo": "P4",
+      "modulo": 4,
+      "jornada": 9,
+      "fecha": "2027-06-12",
+      "titulo": "Integración: análisis de datos periódicos y distancias",
+      "codigos": [
+        "M4-E01",
+        "M4-E02",
+        "M4-E03",
+        "M4-E04",
+        "M4-E05",
+        "M4-E06",
+        "M4-E07"
+      ],
+      "paginas": "52–53; repaso 38–51",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT3",
+        "CE-MAT4",
+        "CE-MAT5",
+        "CE-MAT6"
+      ],
+      "indicadoresPropuestos": [
+        "IL-1",
+        "IL-2",
+        "IL-9",
+        "IL-10",
+        "IL-12",
+        "IL-13",
+        "IL-14",
+        "IL-15",
+        "IL-16",
+        "IL-17"
+      ],
+      "objetivo": "Integrar procedimientos del módulo y defender una solución contextualizada.",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: desarrollar y contrastar el proyecto en equipo.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: lectura de páginas indicadas y exploración guiada.",
+          "50 min: resolver y justificar situaciones en el cuaderno.",
+          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+        ]
+      },
+      "recursos": [
+        "Polígono y círculo dinámicos",
+        "Corona circular dinámica",
+        "Explorador de cónicas",
+        "Círculo unitario sincronizado",
+        "Pendiente y ángulo",
+        "Explorador de razones recíprocas",
+        "Solucionador con casos ambiguos"
+      ],
+      "evidencia": "Modelado de fenómenos periódicos y triangulación de distancias; informe y cálculos manuscritos.",
+      "evaluacion": "Integradora formativa",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Modelado de fenómenos periódicos y triangulación de distancias",
+      "requierePDF": false,
+      "nota": ""
+    },
+    {
+      "id": "P4-J10",
+      "periodo": "P4",
+      "modulo": 4,
+      "jornada": 10,
+      "fecha": "2027-06-19",
+      "titulo": "Cierre de módulo 4 y balance anual",
+      "codigos": [
+        "M4-E01",
+        "M4-E02",
+        "M4-E03",
+        "M4-E04",
+        "M4-E05",
+        "M4-E06",
+        "M4-E07"
+      ],
+      "paginas": "54–55; repaso 38–51",
+      "competencias": [
+        "CE-MAT1",
+        "CE-MAT3",
+        "CE-MAT4",
+        "CE-MAT5",
+        "CE-MAT6"
+      ],
+      "indicadoresPropuestos": [
+        "IL-1",
+        "IL-2",
+        "IL-9",
+        "IL-10",
+        "IL-12",
+        "IL-13",
+        "IL-14",
+        "IL-15",
+        "IL-16",
+        "IL-17"
+      ],
+      "objetivo": "Resolver problemas integradores y justificar procedimientos; identificar necesidades de recuperación.",
+      "presencial": {
+        "minutos": 120,
+        "inicio": "20 min: recuperar saberes y formular una pregunta contextualizada.",
+        "desarrollo": "75 min: evaluación de cierre tras recepción de evidencia; modalidad asistida si corresponde.",
+        "cierre": "25 min: puesta en común, retroalimentación y próximo paso."
+      },
+      "autoestudio": {
+        "minutos": 120,
+        "actividades": [
+          "30 min: revisar retroalimentación y detectar errores.",
+          "50 min: resolver actividades de recuperación o ampliación.",
+          "40 min: documentar correcciones y autoevaluación."
+        ]
+      },
+      "recursos": [
+        "Cuaderno",
+        "Evaluación contextualizada",
+        "Rúbrica docente"
+      ],
+      "evidencia": "PDF acumulado del cuaderno, evaluación de cierre y plan de mejora.",
+      "evaluacion": "Cierre de módulo y balance anual",
+      "actores": [
+        "Autoevaluación",
+        "Coevaluación",
+        "Heteroevaluación"
+      ],
+      "estado": "Programado; no acredita ejecución",
+      "proyecto": "Modelado de fenómenos periódicos y triangulación de distancias",
+      "requierePDF": true,
+      "nota": "Habilitación inmediata solo tras recepción válida en servidor; función pendiente de implementación. Prever entrega asistida. Los indicadores se valoran únicamente según evidencias efectivas."
+    }
+  ]
+}
