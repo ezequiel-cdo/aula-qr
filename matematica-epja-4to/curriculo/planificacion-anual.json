@@ -17,28 +17,36 @@
       "modulo": 1,
       "inicio": "2026-08-29",
       "cierre": "2026-10-31",
-      "proyecto": "Medición de un espacio comunitario: goniómetro, distancias y área triangular"
+      "proyecto": "Medición de un espacio comunitario: goniómetro, distancias y área triangular",
+      "evaluacionCierre": "PDF recibido y confirmado por servidor → habilitación inmediata; revisión docente posterior. Función pendiente.",
+      "proyectoEstrategia": "Desarrollo progresivo; socialización en J09."
     },
     {
       "id": "P2",
       "modulo": 2,
       "inicio": "2026-11-07",
       "cierre": "2027-01-30",
-      "proyecto": "Levantamiento de una parcela: croquis, diagonales y ángulos"
+      "proyecto": "Levantamiento de una parcela: croquis, diagonales y ángulos",
+      "evaluacionCierre": "PDF recibido y confirmado por servidor → habilitación inmediata; revisión docente posterior. Función pendiente.",
+      "proyectoEstrategia": "Desarrollo progresivo; socialización en J09."
     },
     {
       "id": "P3",
       "modulo": 3,
       "inicio": "2027-02-06",
       "cierre": "2027-04-03",
-      "proyecto": "Diseño de un depósito de agua: capacidad, superficie y costo de material"
+      "proyecto": "Diseño de un depósito de agua: capacidad, superficie y costo de material",
+      "evaluacionCierre": "PDF recibido y confirmado por servidor → habilitación inmediata; revisión docente posterior. Función pendiente.",
+      "proyectoEstrategia": "Desarrollo distribuido J01–J06; consolidación en autoestudio J06."
     },
     {
       "id": "P4",
       "modulo": 4,
       "inicio": "2027-04-10",
       "cierre": "2027-06-19",
-      "proyecto": "Modelado de fenómenos periódicos y triangulación de distancias"
+      "proyecto": "Modelado de fenómenos periódicos y triangulación de distancias",
+      "evaluacionCierre": "PDF recibido y confirmado por servidor → habilitación inmediata; revisión docente posterior. Función pendiente.",
+      "proyectoEstrategia": "Desarrollo progresivo; socialización en J09."
     }
   ],
   "encuentros": [
@@ -90,7 +98,7 @@
       "estado": "Programado; no acredita ejecución",
       "proyecto": "Medición de un espacio comunitario: goniómetro, distancias y área triangular",
       "requierePDF": false,
-      "nota": ""
+      "nota": "Diagnóstico inicial de saberes de Tercer Año, sin calificación; instrumento específico pendiente de desarrollo. No supone ejecución histórica."
     },
     {
       "id": "P1-J02",
@@ -1426,7 +1434,7 @@
       "codigos": [
         "M3-E07"
       ],
-      "paginas": "50–51",
+      "paginas": "50–51; 52–53 (autoestudio)",
       "competencias": [
         "CE-MAT1",
         "CE-MAT4",
@@ -1448,15 +1456,15 @@
       "autoestudio": {
         "minutos": 120,
         "actividades": [
-          "30 min: lectura de páginas indicadas y exploración guiada.",
-          "50 min: resolver y justificar situaciones en el cuaderno.",
-          "40 min: verificar resultados, preparar evidencia y autoevaluar."
+          "30 min: consultar investigación del módulo (pp. 52–53) y revisar tangentes.",
+          "50 min: completar proyecto del depósito, cálculos y construcciones del cuaderno.",
+          "40 min: verificar resultados, preparar PDF y autoevaluar."
         ]
       },
       "recursos": [
         "Tangente y radio dinámicos"
       ],
-      "evidencia": "Construcción y justificación",
+      "evidencia": "Construcción y justificación; informe integrador del depósito y cuaderno preparado para cierre.",
       "evaluacion": "Formativa",
       "actores": [
         "Autoevaluación",
@@ -2088,5 +2096,13 @@
       "requierePDF": true,
       "nota": "Habilitación inmediata solo tras recepción válida en servidor; función pendiente de implementación. Prever entrega asistida. Los indicadores se valoran únicamente según evidencias efectivas."
     }
-  ]
+  ],
+  "cargaHoraria": {
+    "minPresencialPorEncuentro": 120,
+    "minAutoestudioPorEncuentro": 120,
+    "horasPresenciales": 74,
+    "horasAutoestudio": 74,
+    "horasTotales": 148,
+    "nota": "Asignación del área tomada de Tercer Año, no de la carga semanal total EPJA."
+  }
 }
