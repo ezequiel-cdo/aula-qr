@@ -46,7 +46,7 @@ function A4_Confirmar(token,confirmado){
  const r=a4Resolver_('sel',token),actor=a4Actor_();CacheService.getScriptCache().remove('a4:sel:'+token);
  return {session:a4Token_('ses',r,actor,1800),perfil:a4Perfil_(r),foto:a4Foto_(r)};
 }
-function A4_Consultar(session){const r=a4Resolver_('ses',session);return {perfil:a4Perfil_(r),foto:a4Foto_(r)}}
+function A4_Consultar(session,mostrarFoto){const r=a4Resolver_('ses',session);return {perfil:a4Perfil_(r),foto:mostrarFoto===true?a4Foto_(r):null}}
 function A4_Cerrar(session){
  a4Actor_();if(typeof session==='string'&&/^[0-9a-f-]{36}$/i.test(session)){a4Resolver_('ses',session);CacheService.getScriptCache().remove('a4:ses:'+session)}return true;
 }
