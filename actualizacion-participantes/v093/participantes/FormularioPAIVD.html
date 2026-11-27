@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head><base target="_top"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PAIVD</title><style>
+*{box-sizing:border-box}body{font:16px system-ui,sans-serif;margin:0;background:#edf2f7;color:#172d45}main{max-width:650px;margin:auto;padding:16px}header,section{padding:20px;border-radius:14px;margin:12px 0;background:white}header{background:#17365d;color:white}h1{font-size:1.5rem}h2{font-size:1.2rem}label{display:block;margin:12px 0}input:not([type=checkbox]),select,textarea,button{font:inherit;width:100%;padding:12px;border:1px solid #94a3b8;border-radius:8px}button{background:#17365d;color:white;cursor:pointer;margin:6px 0}button:disabled{opacity:.5}fieldset{border:1px solid #aab8c6;border-radius:8px;margin:14px 0;padding:12px}small{display:block}#mensaje{min-height:1.5em;color:#7c2d12;overflow-wrap:anywhere}[hidden]{display:none!important}
+#resultados{display:grid;gap:8px;margin-top:12px}#resultados:empty{display:none}button.resultado{display:flex;align-items:center;gap:12px;text-align:left;background:#f7faff;color:#17365d;border:1px solid #cbd9e8;border-radius:12px;padding:13px;margin:0;min-height:68px}button.resultado:hover,button.resultado:focus-visible{background:#eaf2fc;border-color:#547caa;outline:2px solid #547caa;outline-offset:2px}button.resultado[aria-pressed="true"]{background:#e8f5ed;border:2px solid #24794a;color:#174f33}.avatar{display:grid;place-items:center;flex:0 0 38px;height:38px;border-radius:50%;background:#dce8f6;color:#17365d;font-weight:700}.ficha{flex:1;min-width:0;overflow-wrap:anywhere}.ficha strong,.ficha small{display:block}.ficha small{margin-top:4px;color:#52667c}.ficha .homonimos{color:#835018;font-weight:600}.flecha{font-size:1.2rem;color:#52667c}#seleccion:not(:empty){background:#e8f5ed;border-left:4px solid #24794a;padding:12px;border-radius:8px}#buscar{background:white;color:#17365d;border:1px solid #59789c}#buscar:hover{background:#edf4fc}#mensaje{color:#38516c}#mensaje.error{color:#a12e15}.version{font-size:.75rem;opacity:.85}@media(max-width:480px){main{padding:10px}section,header{padding:16px}button.resultado{padding:10px;gap:8px}}
+input[aria-invalid="true"],select[aria-invalid="true"],textarea[aria-invalid="true"]{border:2px solid #b42318;background:#fff8f7}.campo-error{color:#b42318;font-size:.87rem;margin:4px 0 10px}.envio-error{background:#fff1ef;color:#98251a;border-left:4px solid #b42318;padding:12px;border-radius:8px;margin:12px 0}.envio-estado{color:#38516c;margin:12px 0}#fin h2{color:#24794a}#fin{overflow-wrap:anywhere}#enviar:disabled{cursor:wait}#versionEstado{font-size:.85rem}
+</style></head><body><main><header><small>PREPARA CANASTICA · PAIVD <span class="version">V0.9.3</span></small><h1>Actualización de participantes</h1><p><span id="entornoTexto">Comprobando entorno institucional…</span></p></header>
+<section aria-label="Etapas del formulario"><strong id="etapa">Paso 1 de 3: Identificación</strong><p>1. Buscar y confirmar tu nombre → 2. Confirmar datos y registrar contactos y residencia → 3. Enviar solicitud.</p><small>No necesitas una contraseña, código ni cuenta de Google. Tu declaración será revisada por el centro.</small></section><p id="versionEstado" role="status">Comprobando versión del servidor…</p><p id="mensaje" role="status" aria-live="polite"></p>
+<section id="identificacion"><h2>1. Identificación</h2><p>Busca por nombre aunque no conozcas tu ubicación académica. Los filtros son opcionales.</p><p id="carga" role="status">Cargando opciones del registro…</p><button id="recargar" type="button" hidden>Reintentar carga de filtros</button><label>Año escolar<select id="anio"><option value="">Todos los años</option></select></label><label>Curso<select id="curso"><option value="">Todos los cursos</option></select></label><label>Sección<select id="seccion"><option value="">Todas las secciones</option></select></label><label>Busca tu nombre<input id="nombre" maxlength="80" autocomplete="off" placeholder="Escribe al menos tres letras" aria-controls="resultados" aria-describedby="mensaje"></label><button id="buscar" type="button" disabled>Buscar ahora</button><div id="resultados" aria-label="Coincidencias de participantes"></div><p id="seleccion"></p><label id="confirmarSeleccion" hidden><input type="checkbox" id="soyYo"> Confirmo que soy la persona seleccionada.</label><fieldset id="fotoPanel" hidden><legend>Evidencia fotográfica</legend><div id="fotoRegistrada" hidden><p>Fotografía registrada. No necesitas tomar otra.</p><img id="fotoExistente" alt="Fotografía institucional" hidden style="max-width:150px"></div><div id="fotoNueva"><p>La foto se guardará de forma privada en tu registro institucional para identificarte. No es una prueba biométrica de vida. Si no puedes o no deseas tomarla, solicita verificación presencial asistida.</p><label><input type="checkbox" id="fotoConsent"> Uso mi foto para validar que soy yo.</label><button type="button" id="fotoCam">Abrir cámara frontal</button><video id="fotoVideo" autoplay playsinline muted hidden style="width:100%;max-height:320px"></video><button type="button" id="fotoSnap" hidden>Tomar fotografía</button><label>Si la cámara integrada no funciona, usa la cámara del dispositivo<input id="fotoInput" type="file" accept="image/*" capture="user"></label><img id="fotoPreview" alt="Vista previa de tu fotografía" hidden style="max-width:100%;max-height:280px"><label><input type="checkbox" id="fotoAsistida"> Prefiero verificación presencial asistida sin foto.</label></div><p id="fotoEstado" role="status"></p></fieldset><button id="verificar" type="button" disabled>Continuar a actualizar mis datos →</button></section>
+<section id="captura" hidden><h2>2. Actualización</h2><p id="persona"></p><form id="form" novalidate>
+<label>¿Son correctos tu nombre y matrícula?<select id="confirmacion" required><option value="">Selecciona</option><option value="CORRECTOS">Sí</option><option value="CORREGIR">Necesito corregir</option></select></label><label id="corregir" hidden>Describe la corrección sin incluir documentos de identidad<textarea id="correccion" maxlength="600"></textarea></label>
+<h2>Teléfonos y WhatsApp</h2><p>Registra un número principal, aunque sea compartido o de otra persona. Puedes añadir un segundo teléfono y un contacto de emergencia.</p><div id="contactos"></div>
+<label>Municipio<input id="municipio" maxlength="100" required></label><label>Sector o barrio<input id="sector" maxlength="120" required></label>
+
+<p>Esta declaración no verifica tu identidad. Se guardará en una hoja privada para revisión docente. No modifica el Registro Maestro ni verifica automáticamente el teléfono. La evidencia fotográfica se conserva de forma privada y se revisa antes de vincularla a tu ficha. <span id="avisoEntorno"></span></p>
+<label><input type="checkbox" id="consentimiento" required> Confirmo que los datos que proporciono son correctos y he leído el aviso de privacidad.</label><div id="envioEstado" class="envio-estado" role="status" aria-live="polite" hidden></div><div id="envioError" class="envio-error" role="alert" tabindex="-1" hidden></div><button id="enviar" type="submit">Enviar solicitud</button></form></section>
+<section id="fin" hidden><h2 id="finTitulo" tabindex="-1">✓ Solicitud recibida</h2><p>Gracias por actualizar tus datos. El centro revisará tu declaración.</p><p id="comprobante"></p><button type="button" onclick="location.reload()">Salir</button></section>
+</main><script>
+'use strict';const $=id=>document.getElementById(id);let token='',session='',busy=false,seq=0,contextos=[],cargando=false,timer=null,consultaActiva='',versionOK=false,publico=false;let fotoJpeg='',fotoStream=null,fotoSeq=0,fotoExistente=false,fotoConsultada=false;
+function mensaje(s,isError=false){$('mensaje').textContent=s;$('mensaje').classList.toggle('error',isError)}
+function rpc(n,args){return new Promise((resolve,reject)=>google.script.run.withSuccessHandler(resolve).withFailureHandler(reject)[n](...args))}
+function error(e){mensaje(e&&e.message?e.message:'No se pudo completar la operación.',true)}
+function opciones(el,items){el.replaceChildren();const z=document.createElement('option');z.value='';z.textContent='Selecciona';el.append(z);items.forEach(([v,t])=>{const o=document.createElement('option');o.value=v;o.textContent=t;el.append(o)})}
+function campo(parent,id,label,items){const l=document.createElement('label');l.textContent=label;const s=document.createElement('select');s.id=id;s.required=true;opciones(s,items);l.append(s);parent.append(l);return s}
+const relacion=[['PROPIO','Propio'],['COMPARTIDO','Compartido'],['FAMILIAR','Familiar'],['OTRO','Otro']];
+const wa=[['SI','Sí'],['NO','No'],['NO_SABE','No sé']];
+function formatoTel(raw){
+  let d=raw.replace(/\D/g,'');if(d.length===11&&d.startsWith('1'))d=d.slice(1);
+  if(d.length<=3)return d;
+  if(d.length<=6)return '('+d.slice(0,3)+') '+d.slice(3);
+  return '('+d.slice(0,3)+') '+d.slice(3,6)+'-'+d.slice(6);
+}
+function contacto(key,title){
+  const principal=key==='principal',f=document.createElement('fieldset'),g=document.createElement('legend');
+  g.textContent=title+(principal?'':' (opcional)');f.append(g);
+  const l=document.createElement('label');l.textContent='Número de teléfono';
+  const t=document.createElement('input');t.type='tel';t.inputMode='numeric';t.id=key+'Tel';t.placeholder='(809) 555-0101';t.required=principal;t.autocomplete='off';t.maxLength=18;
+  l.append(t);f.append(l);
+  const ayuda=document.createElement('small');ayuda.textContent='10 dígitos · 809, 829 o 849';ayuda.id=key+'Ayuda';t.setAttribute('aria-describedby',ayuda.id);f.append(ayuda);
+  const b=document.createElement('div');const r=campo(b,key+'Rel','¿De quién es este teléfono?',key==='emergencia'?relacion.slice(1):relacion);
+  const ll=document.createElement('label');ll.textContent='Nombre del titular';const a=document.createElement('input');a.id=key+'Tit';a.maxLength=120;ll.append(a);b.append(ll);
+  const w=campo(b,key+'Wa','¿Tiene WhatsApp?',wa);f.append(b);
+  function sync(){
+    const on=!!t.value.trim();b.hidden=!on;r.required=w.required=on;ll.hidden=r.value==='PROPIO';a.required=on&&r.value!=='PROPIO';if(r.value==='PROPIO')a.value='';
+    const valid=/^\((809|829|849)\) [2-9]\d{2}-\d{4}$/.test(t.value);
+    t.setCustomValidity(on&&!valid?'Introduce un teléfono dominicano de 10 dígitos con formato (809) 555-0101.':'');
+    ayuda.textContent=on?(valid?'Formato correcto.':'Completa un número válido de 10 dígitos.'):'10 dígitos · 809, 829 o 849';
+    ayuda.style.color=on&&!valid?'#a12e15':'#52667c';t.setAttribute('aria-invalid',String(on&&!valid));r.disabled=w.disabled=!on;a.disabled=!on||r.value==='PROPIO';
+  }
+  t.addEventListener('input',()=>{const old=t.value,pos=t.selectionStart,antes=old.slice(0,pos).replace(/\D/g,'').length;t.value=formatoTel(old);if(pos!==null&&pos<old.length){let i=0,n=0;while(i<t.value.length&&n<antes){if(/\d/.test(t.value[i]))n++;i++;}try{t.setSelectionRange(i,i)}catch(e){}}sync()});t.addEventListener('blur',sync);r.addEventListener('change',sync);sync();$('contactos').append(f);
+}
+contacto('principal','Teléfono principal');contacto('alternativo','Teléfono alternativo');contacto('emergencia','Contacto de emergencia');
+$('confirmacion').addEventListener('change',()=>{const on=$('confirmacion').value==='CORREGIR';$('corregir').hidden=!on;$('correccion').required=on;if(!on)$('correccion').value=''});
+function reset(){fotoReset();clearTimeout(timer);timer=null;seq++;consultaActiva='';token='';$('seleccion').textContent='';$('resultados').replaceChildren();$('verificar').disabled=true;$('soyYo').checked=false;$('confirmarSeleccion').hidden=true}
+function filtros(id,values,all){const el=$(id),old=el.value;opciones(el,values.map(x=>[x,x]));el.options[0].textContent=all;el.value=values.includes(old)?old:'';}
+function unicos(rows,k){return [...new Set(rows.map(r=>r[k]))].sort((a,b)=>a.localeCompare(b,'es',{numeric:true}));}
+function actualizarFiltros(){filtros('anio',unicos(contextos,'anio'),'Todos los años');const a=$('anio').value;const porAnio=contextos.filter(r=>!a||r.anio===a);filtros('curso',unicos(porAnio,'curso'),'Todos los cursos');const curso=$('curso').value;filtros('seccion',unicos(porAnio.filter(r=>!curso||r.curso===curso),'seccion'),'Todas las secciones');}
+async function cargarContextos(){if(cargando||!versionOK)return;cargando=true;$('recargar').hidden=true;$('carga').textContent='Cargando opciones del registro…';try{contextos=await rpc('paivdContextos',[]);actualizarFiltros();$('carga').textContent=contextos.length?'Filtros disponibles. Puedes dejarlos en Todos.':'No hay matrículas inscritas disponibles.';}catch(e){$('carga').textContent='No se pudieron cargar los filtros. '+(e&&e.message?e.message:'Revisa conexión y permisos.');$('recargar').hidden=false;}finally{cargando=false;$('buscar').disabled=false;}}
+$('recargar').onclick=cargarContextos;
+function ficha(r){
+  const b=document.createElement('button');b.type='button';b.className='resultado';b.setAttribute('aria-pressed','false');
+  const avatar=document.createElement('span');avatar.className='avatar';avatar.setAttribute('aria-hidden','true');avatar.textContent=r.nombre.trim().split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase();
+  const info=document.createElement('span');info.className='ficha';
+  const nombre=document.createElement('strong');nombre.textContent=r.nombre;info.append(nombre);
+  const ubicacion=document.createElement('small');ubicacion.textContent=r.anio+' · '+r.curso+' · Sección '+r.seccion;info.append(ubicacion);
+  if(r.homonimos>1){const aviso=document.createElement('small');aviso.className='homonimos';aviso.textContent=r.homonimos+' homónimos · El centro distinguirá las matrículas durante la revisión';info.append(aviso)}
+  const flecha=document.createElement('span');flecha.className='flecha';flecha.setAttribute('aria-hidden','true');flecha.textContent='›';
+  b.append(avatar,info,flecha);
+  b.onclick=()=>{if(busy)return;clearTimeout(timer);seq++;consultaActiva='';fotoReset();token=r.token;$('fotoPanel').hidden=false;fotoConsultar(token);$('resultados').querySelectorAll('button').forEach(el=>el.setAttribute('aria-pressed',String(el===b)));$('seleccion').textContent='Seleccionado: '+r.nombre+' · '+r.curso+' '+r.seccion+(r.homonimos>1?' · El centro confirmará cuál matrícula te corresponde.':'');$('soyYo').checked=false;$('confirmarSeleccion').hidden=false;$('verificar').disabled=true;mensaje('Confirma que eres la persona seleccionada para continuar.');$('soyYo').focus();};
+  return b;
+}
+function argsBusqueda(){return [$('anio').value,$('curso').value,$('seccion').value,$('nombre').value.trim()]}
+async function buscarAhora(){
+ if(busy||!versionOK)return;clearTimeout(timer);timer=null;
+ const args=argsBusqueda(),key=JSON.stringify(args);
+ if(publico&&(args[3].trim().length<5||args[3].trim().split(/\s+/).filter(x=>x.length>=2).length<2)){mensaje('Escribe tu nombre y un apellido completos.');return}if(args[3].length<3){mensaje('Escribe al menos tres letras del nombre o apellido.');return}
+ if(consultaActiva===key)return;
+ reset();const n=seq;consultaActiva=key;mensaje('Buscando coincidencias…');
+ try{const rows=await rpc('paivdBuscar',args);if(n!==seq)return;mensaje(rows.length?rows.length+' ficha(s) encontrada(s). Selecciona tu nombre. Si no aparece, escribe otro apellido o elimina filtros.':'Sin coincidencias o demasiados resultados. Escribe tu nombre y apellido completos o utiliza los filtros.');rows.forEach(r=>$('resultados').append(ficha(r)));}
+ catch(e){if(n===seq)error(e)}finally{if(n===seq)consultaActiva=''}
+}
+function programarBusqueda(){if(busy||!versionOK)return;reset();if(publico){mensaje('Escribe tu nombre y un apellido completos y pulsa Buscar mi nombre.');return}if($('nombre').value.trim().length<3){mensaje('Escribe al menos tres letras del nombre o apellido.');return}mensaje('Preparando búsqueda…');timer=setTimeout(buscarAhora,350)}
+$('nombre').addEventListener('input',programarBusqueda);
+$('nombre').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();buscarAhora()}});
+['anio','curso','seccion'].forEach(id=>$(id).addEventListener('change',()=>{actualizarFiltros();programarBusqueda()}));
+$('buscar').addEventListener('click',buscarAhora);
+$('soyYo').addEventListener('change',fotoGate);
+$('verificar').addEventListener('click',async()=>{if(busy||!versionOK||!token||!$('soyYo').checked||!fotoReady())return;fotoStop();busy=true;$('verificar').disabled=true;$('buscar').disabled=true;$('nombre').disabled=true;$('seccion').disabled=true;$('anio').disabled=true;$('curso').disabled=true;try{const r=await rpc('paivdDeclarar',[token,$('soyYo').checked]);session=r.session;token='';$('identificacion').hidden=true;$('persona').textContent=r.datos.nombre+' · '+r.datos.curso+' '+r.datos.seccion+' · '+r.datos.anio;$('captura').hidden=false;$('etapa').textContent='Paso 2 de 3: Confirmación y contactos';mensaje('Identificación declarada. Completa tus datos para revisión.')}catch(e){error(e)}finally{busy=false;fotoGate();$('buscar').disabled=false;$('nombre').disabled=false;$('seccion').disabled=false;$('anio').disabled=false;$('curso').disabled=false}});
+const value=id=>$(id).value;function contactoValor(k){return value(k+'Tel').trim()?{telefono:value(k+'Tel'),relacion:value(k+'Rel'),titular:value(k+'Tit'),whatsapp:value(k+'Wa')}:null}
+function limpiarCampo(el){el.removeAttribute('aria-invalid');const err=$(el.id+'Error');if(err)err.remove();const desc=(el.getAttribute('aria-describedby')||'').split(' ').filter(x=>x&&x!==el.id+'Error');if(desc.length)el.setAttribute('aria-describedby',desc.join(' '));else el.removeAttribute('aria-describedby');}
+function marcarCampo(el,msg){limpiarCampo(el);el.setAttribute('aria-invalid','true');const err=document.createElement('small');err.id=el.id+'Error';err.className='campo-error';err.textContent=msg;el.insertAdjacentElement('afterend',err);el.setAttribute('aria-describedby',[(el.getAttribute('aria-describedby')||''),err.id].filter(Boolean).join(' '));}
+function enfocar(el){el.focus({preventScroll:true});el.scrollIntoView({behavior:'smooth',block:'center'});}
+function validarFormulario(){
+ const form=$('form');const controls=[...form.querySelectorAll('input,select,textarea')];controls.forEach(limpiarCampo);
+ let first=null;const fail=(el,msg)=>{marcarCampo(el,msg);if(!first)first=el;};
+ controls.forEach(el=>{
+   if(el.disabled||el.closest('[hidden]'))return;
+   if(el.id.endsWith('Tel')){
+     if(!el.value.trim()&&!el.required)return;
+     if(!/^\((809|829|849)\) [2-9]\d{2}-\d{4}$/.test(el.value))fail(el,'Introduce un número dominicano válido de 10 dígitos.');
+   }else if(el.required&&(el.type==='checkbox'?!el.checked:!el.value.trim()))fail(el,el.type==='checkbox'?'Confirma la declaración para continuar.':'Completa este campo.');
+ });
+ const p=$('principalTel'),alt=$('alternativoTel');
+ if(p.value&&alt.value&&p.value===alt.value)fail(alt,'Debe ser diferente del teléfono principal.');
+ if(first){$('envioError').textContent='Revisa los campos señalados antes de enviar.';$('envioError').hidden=false;enfocar(first);return false;}
+ return true;
+}
+$('form').addEventListener('input',e=>{if(e.target.id)limpiarCampo(e.target);$('envioError').hidden=true;});
+$('form').addEventListener('change',e=>{if(e.target.id)limpiarCampo(e.target);});
+$('form').addEventListener('submit',async e=>{
+ e.preventDefault();if(busy||!versionOK)return;
+ $('envioError').hidden=true;
+ if(!validarFormulario())return;
+ busy=true;$('enviar').disabled=true;$('enviar').textContent='Enviando…';$('envioEstado').textContent='Guardando tu solicitud. No cierres esta página.';$('envioEstado').hidden=false;
+ const controls=[...$('form').querySelectorAll('input,select,textarea')],prev=controls.map(el=>el.disabled);
+ try{
+  const p={confirmacion:value('confirmacion'),correccion:value('correccion'),principal:contactoValor('principal'),alternativo:contactoValor('alternativo'),emergencia:contactoValor('emergencia'),municipio:value('municipio'),sector:value('sector'),consentimiento:$('consentimiento').checked,foto:fotoExistente?{modo:'EXISTENTE'}:$('fotoAsistida').checked?{modo:'ASISTIDA',consentimiento:false}:{modo:'CAPTURA',consentimiento:$('fotoConsent').checked,jpeg:fotoJpeg}};
+  controls.forEach(el=>el.disabled=true);
+  const r=await rpc('paivdEnviar',[session,p]);
+  if(!r||r.ok!==true||!r.referencia||r.almacenamientoConfirmado!==true)throw Error('No se recibió confirmación del servidor. Puedes reintentar.');
+  $('form').reset();session='';fotoReset();$('captura').hidden=true;$('fin').hidden=false;$('etapa').textContent='Paso 3 de 3: Solicitud recibida';$('comprobante').textContent='Referencia: '+r.referencia+' · Almacenamiento confirmado · Pendiente de revisión';mensaje('');enfocar($('finTitulo'));
+ }catch(e){
+  const msg=(e&&e.message)||'No se pudo confirmar el envío.';
+  $('envioError').textContent=msg+' Tus datos siguen en el formulario. Corrige o reintenta sin recargar.';$('envioError').hidden=false;
+  const key=/teléfono principal/i.test(msg)?'principalTel':/teléfono alternativo|teléfonos principal y alternativo/i.test(msg)?'alternativoTel':/teléfono de emergencia/i.test(msg)?'emergenciaTel':'';
+  if(key)marcarCampo($(key),msg);
+  controls.forEach((el,i)=>el.disabled=prev[i]);
+  enfocar(key?$(key):$('envioError'));
+ }finally{controls.forEach((el,i)=>el.disabled=prev[i]);busy=false;$('enviar').disabled=false;$('enviar').textContent='Enviar solicitud';$('envioEstado').hidden=true;}
+});
+async function iniciar(){
+ try{const r=await rpc('paivdVersion',[]);if(!r||r.version!=='0.9.3')throw Error('El servidor no corresponde a V0.9.3.');if(!['FICTICIO','INSTITUCIONAL_RESTRINGIDO','PRODUCCION_CONTROLADA'].includes(r.modo))throw Error('Entorno no reconocido');versionOK=true;publico=r.modo==='PRODUCCION_CONTROLADA';if(publico){$('nombre').placeholder='Escribe tu nombre y un apellido completos';$('buscar').textContent='Buscar mi nombre';}$('versionEstado').textContent='Formulario y servidor V0.9.3 compatibles.';$('entornoTexto').textContent=r.modo==='FICTICIO'?'Ensayo ficticio · no introduzcas datos reales.':publico?'Actualización institucional · cinco cursos':'Piloto institucional restringido · cinco cursos';$('avisoEntorno').textContent=r.modo==='FICTICIO'?'Usa solo datos ficticios.':'Proporciona únicamente datos propios o contactos autorizados para comunicación institucional.';cargarContextos();}
+ catch(e){versionOK=false;$('versionEstado').textContent='Versiones incompatibles o servidor no disponible. Actualiza ambos archivos a V0.9.3 y vuelve a abrir /dev.';$('buscar').disabled=true;mensaje('No se puede continuar hasta comprobar la versión.',true);}
+}
+iniciar();
+
+function fotoStop(){if(fotoStream){fotoStream.getTracks().forEach(t=>t.stop());fotoStream=null} $('fotoVideo').srcObject=null;$('fotoVideo').hidden=true;$('fotoSnap').hidden=true}
+function fotoReset(){fotoExistente=false;fotoConsultada=false;$('fotoRegistrada').hidden=true;$('fotoNueva').hidden=true;$('fotoExistente').hidden=true;$('fotoExistente').removeAttribute('src');fotoSeq++;fotoStop();fotoJpeg='';$('fotoConsent').checked=false;$('fotoAsistida').checked=false;$('fotoInput').value='';$('fotoPreview').removeAttribute('src');$('fotoPreview').hidden=true;$('fotoPanel').hidden=true;$('fotoEstado').textContent='';fotoGate()}
+function fotoReady(){return fotoConsultada&&(fotoExistente||$('fotoAsistida').checked||($('fotoConsent').checked&&!!fotoJpeg))}
+function fotoGate(){$('verificar').disabled=busy||!token||!$('soyYo').checked||!fotoReady();$('fotoInput').disabled=busy||!$('fotoConsent').checked||$('fotoAsistida').checked;$('fotoCam').disabled=$('fotoInput').disabled}
+function fotoEncode(img,w,h){if(!w||!h)throw Error('Imagen inválida');const canvas=document.createElement('canvas'),scale=Math.min(1,640/Math.max(w,h));canvas.width=Math.round(w*scale);canvas.height=Math.round(h*scale);canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);let data=canvas.toDataURL('image/jpeg',.82);if(data.length>400000)data=canvas.toDataURL('image/jpeg',.55);if(data.length>400000)throw Error('Foto demasiado grande');fotoJpeg=data.split(',')[1];$('fotoPreview').src=data;$('fotoPreview').hidden=false;$('fotoEstado').textContent='Fotografía preparada. Puedes repetirla.';fotoGate()}
+$('fotoConsent').onchange=()=>{if($('fotoConsent').checked)$('fotoAsistida').checked=false;else{fotoSeq++;fotoStop();fotoJpeg='';$('fotoPreview').removeAttribute('src');$('fotoPreview').hidden=true;$('fotoInput').value=''}fotoGate()};
+$('fotoAsistida').onchange=()=>{if($('fotoAsistida').checked){fotoSeq++;fotoStop();fotoJpeg='';$('fotoConsent').checked=false;$('fotoPreview').removeAttribute('src');$('fotoPreview').hidden=true;$('fotoInput').value='';$('fotoEstado').textContent='El centro realizará la verificación presencial.'}fotoGate()};
+$('fotoCam').onclick=async()=>{if(!$('fotoConsent').checked||!token||busy)return;const n=++fotoSeq;fotoStop();try{const st=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});if(n!==fotoSeq){st.getTracks().forEach(t=>t.stop());return}fotoStream=st;$('fotoVideo').srcObject=st;$('fotoVideo').hidden=false;$('fotoSnap').hidden=false;$('fotoEstado').textContent='Ubica tu rostro y toma la fotografía.'}catch(e){if(n===fotoSeq)$('fotoEstado').textContent='No se pudo abrir la cámara. Usa el selector del dispositivo o la opción asistida.'}};
+$('fotoSnap').onclick=()=>{if(!fotoStream||!$('fotoConsent').checked||busy)return;try{const v=$('fotoVideo');fotoEncode(v,v.videoWidth,v.videoHeight);fotoStop()}catch(e){$('fotoEstado').textContent=e.message}};
+$('fotoInput').onchange=()=>{const file=$('fotoInput').files[0];if(!file||!$('fotoConsent').checked||busy)return;const n=++fotoSeq;fotoStop();fotoJpeg='';fotoGate();if(file.size>15000000){$('fotoEstado').textContent='Imagen demasiado grande';return}const url=URL.createObjectURL(file),img=new Image();img.onload=()=>{try{if(n===fotoSeq&&$('fotoConsent').checked)fotoEncode(img,img.naturalWidth,img.naturalHeight)}catch(e){$('fotoEstado').textContent=e.message}finally{URL.revokeObjectURL(url)}};img.onerror=()=>{URL.revokeObjectURL(url);if(n===fotoSeq)$('fotoEstado').textContent='No se pudo leer la imagen'};img.src=url};
+window.addEventListener('pagehide',fotoStop);fotoGate();
+async function fotoConsultar(t){$('fotoEstado').textContent='Comprobando fotografía institucional…';fotoGate();try{const r=await rpc('paivdFotoEstado',[t]);if(token!==t)return;fotoExistente=r.registrada===true;fotoConsultada=true;$('fotoRegistrada').hidden=!fotoExistente;$('fotoNueva').hidden=fotoExistente;if(fotoExistente&&r.imagen){$('fotoExistente').src=r.imagen;$('fotoExistente').hidden=false}$('fotoEstado').textContent='';fotoGate()}catch(e){if(token!==t)return;$('fotoEstado').textContent=e.message+' · Consulta al centro o vuelve a seleccionar tu nombre.';fotoGate()}}
+</script></body></html>
