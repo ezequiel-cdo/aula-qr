@@ -1,11 +1,70 @@
-<!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#51ade0">
-<title>Aula QR · Matemática EPJA · Cuarto Año</title>
-<style>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#51ade0"><title>Aula QR · Matemática EPJA · Cuarto Año</title><style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#192e54;background:#eff3fb}*{box-sizing:border-box}
+body{margin:0}header{background:#1e3876;color:#fff;padding:16px max(18px,calc((100vw - 1080px)/2));display:flex;justify-content:space-between;gap:12px;align-items:center}
+header strong{font-size:1.13rem}header small{display:block;color:#dce6ff}.brand{font-weight:800;font-size:.8rem;color:#fff;background:#2177a8;padding:8px 12px;border-radius:9px}
+main{max-width:1060px;margin:auto;padding:24px 18px 90px}
+h1{font-size:clamp(1.55rem,4vw,2.45rem);margin:.1rem 0 .5rem}h2{font-size:1.4rem;margin:0 0 10px}h3{margin:0 0 9px;font-size:1.1rem}
+p{line-height:1.55}.muted{color:#5a6780}.eyebrow{font-weight:800;text-transform:uppercase;color:#2177a8;letter-spacing:.07em;font-size:.78rem}
+.card{background:white;border:1px solid #d8e1ef;border-radius:16px;padding:20px;margin:15px 0;box-shadow:0 6px 20px #23396709}
+.hero{background:linear-gradient(110deg,#233e7c,#37569a);color:white;border:0}.hero .muted{color:#e0eaff}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid .card{margin:0}
+button,input{font:inherit}button{border:0;background:#1e438c;color:white;border-radius:10px;padding:11px 17px;cursor:pointer;font-weight:750}
+button:hover{background:#15316a}button:focus-visible,input:focus-visible{outline:3px solid #f4a42a;outline-offset:3px}
+button.secondary{background:#ecf2ff;color:#1e438c;border:1px solid #cbd9f3}button.secondary:hover{background:#dbe7fb}
+button:disabled{opacity:.55;cursor:not-allowed}button.block{width:100%;text-align:center}
+.pill{display:inline-block;padding:5px 9px;border-radius:20px;background:#e8efff;font-size:.8rem;font-weight:750;color:#294c8a}
+.pill.live{background:#e1f6e9;color:#166640}.pill.lock{background:#f1f2f6;color:#606c7e}
+.progress{height:11px;border-radius:15px;background:#e4e9f2;overflow:hidden}.progress>span{height:100%;display:block;background:#2e8a77}
+.route{display:grid;gap:12px}.route article{padding:17px;border:1px solid #dce3ef;border-radius:12px;background:white}
+.route article.active{border-left:6px solid #2177a8}
+.route article.class-week{border:2px solid #244b92!important;border-left:7px solid #244b92!important;background:#edf4ff!important;box-shadow:0 6px 22px #224a8517}
+.class-week-label{display:inline-block;color:#153e78;background:#d3e4ff;padding:5px 9px;border-radius:18px;font-size:.79rem;font-weight:800;margin:8px 0}
+.home-class-cta{display:block;width:100%;padding:17px 20px;font-size:1.1rem;line-height:1.25;background:#163e89;border:2px solid #b8d7ff;box-shadow:0 5px 12px #122b4e29}
+.home-class-cta:hover{background:#11336f}
+.cover-actions{display:grid;gap:11px;margin-top:17px}
+.cover-actions button{min-height:55px;text-align:left;padding:13px 16px}
+.cover-actions button:first-child{background:#1e438c;color:#fff}
+.registration-entry{display:block;background:#e9f4ff;color:#123e81;border:2px solid #abc9ea;border-radius:11px;padding:16px;text-decoration:none;font-weight:800;text-align:left}.registration-entry:hover{background:#d9ecff}.registration-note{font-size:.85rem;color:#53647d;margin:-3px 0 4px;text-align:left}
+.home-return{margin:23px 0 8px}.header-actions{display:flex;align-items:center;gap:9px}@media(max-width:540px){.header-actions .brand{display:none}}
+header .home-header-back{display:inline-block;background:#eff4ff;color:#193b80;padding:8px 11px;font-size:.82rem;white-space:nowrap;text-decoration:none;border-radius:10px;font-weight:750}
+header .home-header-back:hover{background:#dce7ff}
+body[data-area="portada"] nav,body[data-area="encuadre"] nav,body[data-area="diagnostico"] nav{display:none}
+
+.row{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:5px;background:#fff;border-top:1px solid #cbd5e6;padding:8px;z-index:5}
+nav button{background:transparent;color:#40506a;font-size:.84rem;border-radius:9px;min-width:80px;padding:9px 12px}
+nav button[aria-current="page"]{background:#e8efff;color:#1e438c}
+.cover{max-width:650px;margin:12px auto 0;padding:25px 10px 13px;text-align:center;background:#fff;border-radius:18px;overflow:hidden}
+.cover-grade{display:flex;justify-content:center;align-items:end;line-height:.82;gap:0}.cover-num{font-family:Georgia,serif;font-size:clamp(9rem,30vw,19rem);font-weight:800;font-style:italic;color:#2177a8;letter-spacing:-.13em}.cover-right{text-align:left}.cover-er{font-family:Georgia,serif;font-size:clamp(4rem,13vw,8rem);font-weight:800;font-style:italic;color:#2177a8;text-decoration:underline}.cover-year{font-size:clamp(4rem,11vw,8rem);font-weight:1000;color:#233d7d;letter-spacing:-.075em;margin-top:32px}.cover-cycle{font-size:clamp(1.8rem,6vw,3.8rem);font-weight:900;color:white;background:#2177a8;border-radius:24px;padding:10px;margin-top:5px}.cover-level{font-weight:900;color:#213b78;font-size:clamp(1.05rem,3.5vw,2.2rem);margin:16px 0}.cover-epja{color:#213b78;font-size:clamp(.87rem,2.5vw,1.5rem);letter-spacing:.07em}.cover-intro{max-width:650px;margin:14px auto}
+.criteria-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.criteria-grid>div{background:#f2f6fd;padding:14px;border:1px solid #dfe6f2;border-radius:11px}.criteria-grid p{margin:5px 0 0;font-size:.91rem}.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.levels span{background:#ecf2ff;border-radius:10px;padding:11px;font-size:.84rem}.checkline{display:flex;align-items:flex-start;gap:8px;margin-bottom:12px}.checkline input{margin-top:4px}.period-tabs{display:flex;gap:7px;margin:10px 0 18px}.period-tabs button{flex:1}
+@media(max-width:650px){.criteria-grid{grid-template-columns:1fr}.levels{grid-template-columns:1fr 1fr}.cover-num{font-size:40vw}.cover-er{font-size:13vw}.cover-year{font-size:12vw;margin-top:18px}.cover-cycle{font-size:7vw}}
+
+details{border-top:1px solid #e0e7f1;padding:15px 4px}details:first-of-type{border-top:0}summary{cursor:pointer;color:#223e7c;line-height:1.5}details p{margin:12px 0}details:focus-within{border-radius:6px}
+
+section[hidden]{display:none!important}.notice{border-left:4px solid #c38b29;background:#fff8e7;padding:12px;border-radius:7px}
+label{font-weight:700;display:block;margin-bottom:5px}input[type=text],input[type=date]{padding:10px;border:1px solid #aab9d3;border-radius:8px;max-width:100%;width:310px}
+.options{display:grid;gap:9px;margin:12px 0}.option{display:block;padding:12px;border:1px solid #cfdaeb;border-radius:9px;cursor:pointer;background:#fafcff}.option input{margin-right:9px}
+.small{font-size:.88rem}.score{font-weight:850;font-size:1.9rem;color:#1e438c}
+table{width:100%;border-collapse:collapse}td,th{padding:11px 8px;border-bottom:1px solid #e0e7f1;text-align:left}td.num,th.num{text-align:center}
+@media(max-width:650px){.grid{grid-template-columns:1fr}main{padding:14px 12px 92px}.card{padding:16px}nav button{min-width:0;flex:1;padding:9px 3px;font-size:.77rem}}
+@media print{nav,button,.testdate{display:none!important}body{background:#fff}main{padding:0}}
+
+/* Portada de Tercero alineada visualmente con Primero, Segundo, Cuarto y Quinto. */
+#portada .course-landing{display:grid;grid-template-columns:minmax(210px,1fr) minmax(270px,1.2fr);align-items:stretch;background:#fff;border:1px solid #d5e0ef;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px #193c6012;margin:4px auto 20px;max-width:1000px}
+#portada .course-landing .cover{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;max-width:none;margin:0;padding:22px;background:#fff;border-radius:0;overflow:visible}
+#portada .course-landing .cover img{max-width:440px;width:100%;height:auto;object-fit:contain}
+#portada .course-landing .cover-intro{margin:0;max-width:none;border:0;box-shadow:none;border-radius:0;padding:36px 30px;display:flex;flex-direction:column;justify-content:center}
+#portada .course-landing .cover-intro h1{font-size:clamp(1.8rem,4vw,2.45rem);line-height:1.12;margin:12px 0}
+#portada .course-landing .cover-actions{display:grid;gap:10px}
+#portada .course-landing .cover-actions button{width:100%;min-height:49px;text-align:left}
+#portada .course-landing .epja-identity-embedded{width:min(100%,440px)}
+@media(max-width:690px){#portada .course-landing{grid-template-columns:1fr}#portada .course-landing .cover{padding:22px 18px 10px}#portada .course-landing .cover-intro{padding:23px 20px}}
+
+
 :root{--grado:#51ade0;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#20365f;background:#edf3fa}*{box-sizing:border-box}body{margin:0}header{background:#183b68;color:white;padding:19px max(18px,calc((100vw - 960px)/2));display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 header strong{font-size:1.04rem}header small{display:block;color:#deecfa;margin-top:4px}header a{color:white;font-weight:700}
-main{max-width:900px;margin:27px auto 55px;padding:0 18px}
-.hero{background:white;border:1px solid #d5e0ef;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px #193c6012;display:grid;grid-template-columns:minmax(210px,1fr) minmax(270px,1.2fr)}
+body[data-area=portada] main{max-width:900px;margin:27px auto 55px;padding:0 18px}
+#portada .a4-landing{background:white;border:1px solid #d5e0ef;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px #193c6012;display:grid;grid-template-columns:minmax(210px,1fr) minmax(270px,1.2fr)}
 .graphic{display:flex;align-items:center;justify-content:center;padding:22px;background:white;min-height:260px}
 .graphic img{width:100%;height:auto;display:block;max-width:440px}
 .fallback{display:none;align-items:center;justify-content:center;flex-direction:column;gap:10px;min-height:260px;width:100%;border-radius:14px;border:3px solid var(--grado);font-size:3rem;font-weight:850;color:var(--grado)}
@@ -17,15 +76,77 @@ h1{font-size:clamp(1.8rem,4vw,2.45rem);line-height:1.12;margin:12px 0}p{line-hei
 .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
 a.button{display:inline-block;border-radius:10px;background:#21487b;color:white;text-decoration:none;font-weight:800;padding:13px 16px}a.button.alt{color:#174777;background:#e8f0fb;border:1px solid #c6d9f3}
 .note{font-size:.87rem;margin-top:17px}footer{text-align:center;color:#677a95;font-size:.83rem;margin:30px 12px}
-@media(max-width:670px){.hero{grid-template-columns:1fr}.graphic{min-height:210px}.body{padding:25px 20px}.actions a.button{width:100%;text-align:center}}
-</style><link rel="stylesheet" href="../assets/css/epja-session.css"></head>
-<body class="epja-identity-loading"><header><div><strong>Aula QR · Prepara Canástica Sabatino 2014</strong><small>Matemática · Educación de Personas Jóvenes y Adultas</small></div><a href="../prepara-canastica/">Portada institucional</a></header>
-<main><section class="hero"><div class="graphic">
+@media(max-width:670px){#portada .a4-landing{grid-template-columns:1fr}.graphic{min-height:210px}.body{padding:25px 20px}.actions a.button{width:100%;text-align:center}}
+
+#portada .a4-landing{color:#20365f;background:white;border:1px solid #d5e0ef}#portada .a4-landing .body{display:flex;flex-direction:column;justify-content:center}#portada .a4-landing .cover-actions{width:100%}#portada .a4-landing .eyebrow{color:#2177a8}nav[hidden],main[hidden],#a4Identity[hidden]{display:none!important}body.epja-identity-loading nav{display:none}#a4Identity{max-width:1060px;margin:12px auto 0;padding:0 18px}#a4Identity .epja-identity{padding:9px 14px;border:1px solid #b5d9ca;border-radius:10px;font-size:.86rem}#a4Identity .epja-identity-detail{display:none}#a4Identity .epja-identity-change{margin-top:4px}main{padding-bottom:96px}nav{padding-bottom:max(8px,env(safe-area-inset-bottom))}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #d18a1e;outline-offset:3px}#loadError[hidden]{display:none}#portada .graphic img[hidden]{display:none!important}#portada .status{align-self:flex-start}#portada .hero p{color:#4e607b}#portada .epja-identity p{color:inherit}</style><link rel="stylesheet" href="../assets/css/epja-session.css"></head><body class="epja-identity-loading" data-area="portada"><header><div><strong>Aula QR · Prepara Canástica Sabatino 2014</strong><small>Matemática · Educación de Personas Jóvenes y Adultas</small></div><a href="../prepara-canastica/">Portada institucional</a></header><div id="a4Identity" hidden></div><main><p id="loadError" class="notice" role="alert" hidden>Cargando planificación anual. Si el mensaje persiste, recarga la página.</p><section id="portada"><div class="hero a4-landing"><div class="graphic">
 <img src="../assets/grados/4toGrado.png" alt="Emblema oficial de Cuarto Año · Segundo Ciclo, EPJA" onerror="this.hidden=true;document.getElementById('fallback').style.display='flex'">
 <div id="fallback" class="fallback" aria-label="Portada de Cuarto Año">4.º <small>Cuarto Año · Segundo Ciclo</small></div></div>
 <div class="body"><span class="eyebrow">Segundo Ciclo · Año escolar 2026–2027</span>
-<h1>Bienvenidos a Matemática de Cuarto Año</h1><span class="status">Aula en preparación</span>
-<p>La portada de este curso ya tiene su dirección reservada dentro de Aula QR. Sus contenidos, actividades y orientaciones se incorporarán cuando el centro y el equipo docente los publiquen.</p>
+<h1>Bienvenidos a Matemática de Cuarto Año</h1><span class="status">Ruta académica disponible</span>
+<p>Aprendemos y avanzamos juntos. Aquí encontrarás el encuadre, el diagnóstico y los encuentros de Matemática de Cuarto Año. Las lecciones se publicarán progresivamente.</p>
 <p class="note">Tu nombre y grupo se muestran si llegaste desde la identificación institucional. Esta selección es declarada y no concede acceso a calificaciones.</p>
-<div class="actions"><a class="button" href="../prepara-canastica/">← Volver a la institución</a></div>
-</div></section><footer>Aula QR EPJA · Prepara Canástica Sabatino 2014 · Cuarto Año</footer></main><script src="../assets/js/epja-session.js" data-curso="Cuarto"></script></body></html>
+<div class="cover-actions"><button class="block" data-go="inicio">1 · Entrar al Aula →</button><button class="secondary block" data-go="encuadre">2 · Conocer el Encuadre y Evaluación →</button><button class="secondary block" data-go="diagnostico">3 · Diagnóstico del Grado Anterior →</button></div>
+</div></div></section><section id="encuadre" hidden>
+ <p class="eyebrow">Orientaciones generales · Antes del Módulo I</p><h1>Conoce cómo funciona tu aula</h1>
+ <p class="muted">Aquí conocerás la ruta anual, las formas de aprender, cómo se evaluarán tus actividades y cómo conservar tus evidencias.</p>
+ <div class="card"><h3>1 · Nuestro programa</h3><p>Matemática de Cuarto Año, Segundo Ciclo EPJA. Año escolar 2026–2027: cuatro períodos y cuatro módulos, con 37 sábados hábiles previstos según el calendario propuesto.</p><p>La ruta de los 37 encuentros está disponible. Las lecciones se publicarán progresivamente; una fecha pasada no acredita que la clase esté publicada.</p></div>
+ <div class="card"><h3>2 · Cómo aprenderemos</h3><p>En cada encuentro encontrarás cinco pestañas: ¿Qué sabemos?, Contenidos, Ejemplos, Práctica y Evaluación. Dentro de ellas estudiarás por subtemas, practicarás por destrezas y comprobarás los aprendizajes mediante bloques de competencias. La matemática se trabajará con problemas de la familia, el trabajo y la comunidad.</p></div>
+ <div class="card"><h3>3 · Cómo seremos evaluados</h3><table><thead><tr><th>Momento</th><th>Propósito</th></tr></thead><tbody><tr><td>Inicio</td><td>Diagnóstico de saberes previos, sin calificación</td></tr><tr><td>Durante el módulo</td><td>Prácticas formativas y evidencias de trabajo</td></tr><tr><td>Cierre del módulo</td><td>Entrega del cuaderno PDF y evaluación de cierre (funciones pendientes de habilitación)</td></tr><tr><td>Valoración docente</td><td>Revisión integral de evidencias para el registro oficial</td></tr><tr><td>Recuperación</td><td>Refuerzo de aprendizajes que necesitan mejora</td></tr></tbody></table></div>
+ <div class="card"><h3>4 · Competencias, criterios y niveles de desempeño</h3><p>La valoración por cuatro bloques es una estructura prevista, pendiente de cotejo documental. Cada bloque reúne aspectos específicos de las competencias y sus indicadores de logro; solo se valoran los contenidos efectivamente trabajados.</p><div class="criteria-grid"><div><b>C1 · Comunicar</b><p>Comprender, interpretar y expresar ideas matemáticas.</p></div><div><b>C2 · Razonar y resolver</b><p>Comparar procedimientos, resolver y justificar soluciones.</p></div><div><b>C3 · Aplicar al entorno</b><p>Interpretar problemas comunitarios y proponer decisiones.</p></div><div><b>C4 · Integrar y analizar</b><p>Aplicar conocimientos y herramientas a problemas diversos.</p></div></div><h3 style="margin-top:18px">Progresión pedagógica</h3><div class="levels"><span><b>1</b> Reconoce</span><span><b>2</b> Aplica</span><span><b>3</b> Analiza</span><span><b>4</b> Transfiere y justifica</span></div><p class="small muted">Estos cuatro niveles son criterios orientativos de las actividades, no una escala automática ni una declaración de logro oficial. La asociación precisa de CE-MAT4 a CE-MAT7 en los bloques C3 y C4 requiere confirmación por la discrepancia documental detectada.</p></div>
+ <div class="card"><h3>5 · Tus prácticas y evidencias</h3><p>Realiza tus actividades, consulta tus resultados y revisa las recomendaciones para seguir mejorando.</p><p>Conserva tu cuaderno y tus evidencias mientras se habilita el registro individual. En <b>Mis registros</b> se incorporará el historial individual cuando esté disponible. Cada página del cuaderno deberá contener tu nombre y apellido manuscritos. La evaluación final se habilitará inmediatamente tras la recepción válida del PDF, cuando el servicio esté operativo.</p></div>
+ <div class="card"><h3>Acuerdo de orientación</h3><label class="checkline"><input type="checkbox" id="understood"> He leído las orientaciones generales del aula y sé dónde consultarlas de nuevo.</label><button class="block" id="finishIntro">Terminar encuadre y volver a la portada →</button></div>
+</section><section id="diagnostico" hidden><p class="eyebrow">Saberes previos · Tercer Año</p><h1>Diagnóstico del Grado Anterior</h1><div class="card notice">Instrumento diagnóstico sin calificación, pendiente de publicación. Permitirá reconocer los saberes previos necesarios para geometría y trigonometría.</div><button class="secondary" data-go="portada">← Volver a la portada</button></section><section id="inicio" hidden>
+ <p class="eyebrow">Mi aula · Aprende a tu ritmo</p><h1>Aprende a tu ritmo</h1>
+ <p class="muted">Aquí encontrarás la clase que corresponde al calendario, tus encuentros y los contenidos que deseas repasar.</p>
+ <div class="card hero"><div class="row"><div><small>LA CLASE AL DÍA · SEGÚN CALENDARIO</small><h2 id="currentPeriod">Cargando…</h2><p id="periodDates"></p><p id="todayLessonCaption" style="color:#e6efff"></p></div><span class="pill" id="currentStatus">—</span></div>
+ <button type="button" id="continue" class="home-class-cta">La clase al día →</button></div>
+ <div class="grid"><div class="card"><h3>Mi ruta de aprendizaje</h3><p>Consulta los cuatro períodos, el calendario y todos los encuentros disponibles para recuperar o estudiar.</p><button class="secondary block" data-go="ruta">Ver calendario y encuentros →</button></div>
+ <div class="card"><h3>Recuperación de encuentros</h3><p>Repasa los conocimientos y vuelve a practicar encuentros anteriores a tu ritmo.</p><button class="secondary block" data-go="recuperacion">Recuperar encuentros →</button></div></div>
+ <div class="card" style="border-left:5px solid #2b8976"><p class="eyebrow">Repaso desde el principio</p><h3>Volver a comenzar el Módulo I</h3><p>Consulta la planificación del primer encuentro.</p><button class="secondary block" id="startLessonPilot">Volver a comenzar el Módulo I →</button></div>
+ <div class="home-return"><button type="button" class="secondary" data-go="portada">← Volver a la portada</button></div>
+</section><section id="ruta" hidden>
+ <p class="eyebrow">Mi recorrido anual</p><h1>Cuatro períodos, una sola ruta</h1>
+ 
+ <div id="periodCards" class="route"></div><div class="card"><h3>Catálogo de contenidos del año</h3><p class="muted small">Consulta los temas programados de los cuatro módulos, sus conceptos y procedimientos asociados.</p>
+ <button class="secondary" type="button" data-go="catalogo">Ver los 29 contenidos →</button></div>
+ <div class="card" style="margin-top:17px"><h3>Cierre anual · Después del cuarto módulo</h3><p>Al finalizar P4 se consolidarán las evidencias y resultados cuando el servicio académico esté disponible.</p><button class="secondary" data-go="cierre">Consultar el cierre anual →</button></div>
+</section><section id="catalogo" hidden>
+ <p class="eyebrow">Planificación curricular · 2026–2027</p>
+ <h1>Contenidos de Matemática</h1>
+ <p class="muted">29 contenidos agrupados en cuatro módulos. Los códigos organizan la planificación del aula.</p>
+ <div class="card"><label for="catalogPeriod">Seleccionar módulo</label>
+ <select id="catalogPeriod" style="font:inherit;padding:10px;border:1px solid #aab9d3;border-radius:9px;width:100%;max-width:360px"></select></div>
+ <div id="catalogCards" class="route"></div>
+ <p><button class="secondary" data-go="ruta">← Volver a Mi ruta</button></p>
+</section><section id="lista" hidden>
+ <p class="eyebrow" id="listPeriod">Mi período</p><h1>Todos mis encuentros</h1>
+ <p class="muted" id="listSummary"></p>
+ <div class="notice small">Consulta la planificación de todos los encuentros. Las fechas y la publicación de lecciones son estados independientes.</div>
+ <div id="encounterCards" class="route" style="margin-top:15px"></div>
+ <p><button class="secondary" data-go="ruta">← Volver a mi ruta</button></p>
+</section><section id="recuperacion" hidden>
+ <p class="eyebrow">Biblioteca de encuentros anteriores</p><h1>Recuperación de encuentros</h1>
+ <p class="muted">Consulta la planificación de encuentros cuya fecha ya pasó. Las lecciones completas se incorporarán progresivamente. No se presupone que hayas faltado ni se atribuyen pendientes personales.</p>
+ <div class="card"><label for="recPeriod">Período</label><select id="recPeriod" style="font:inherit;padding:10px;border:1px solid #aab9d3;border-radius:9px;width:100%;max-width:320px"></select></div>
+ <div id="recCards" class="route"></div>
+ 
+</section><section id="encuentro" hidden>
+ <p class="eyebrow" id="encEyebrow">Mi encuentro</p><h1 id="encTitle">Continúa tu aprendizaje</h1>
+ <div class="card"><h3 id="encHeadline"></h3><p id="encDescription"></p><p class="small muted" id="encCurricular"></p></div>
+ <div class="card">
+  <h3>Aprendamos paso a paso</h3>
+  <p class="muted small">Abre los cinco pasos en el orden que prefieras. Puedes regresar cuando necesites.</p>
+  <details open><summary><b>1 · ¿Qué sabemos?</b></summary><p id="recallText">Recuperemos los saberes previos necesarios.</p></details>
+  <details><summary><b>2 · Contenidos</b></summary><p id="conceptText">Estudia la explicación y el ejemplo.</p><div id="encResources"></div></details>
+  <details><summary><b>3 · Ejemplos</b></summary><p id="guidedText">Aplica lo aprendido a una situación del entorno.</p></details>
+  <details><summary><b>4 · Práctica</b></summary><p id="autostudyText">Realiza tu trabajo autónomo.</p><div id="encDeliverables"></div></details>
+  <details><summary><b>5 · Evaluación</b></summary><p>Consulta el momento de evaluación previsto. El instrumento se publicará posteriormente.</p><div id="encPractice"></div></details>
+ </div>
+ <p><button class="secondary" id="backToList">← Ver todos los encuentros del período</button></p>
+</section><section id="evaluaciones" hidden>
+ <p class="eyebrow">Diagnóstico · Formación · Cierre · Recuperación</p><h1>Evaluaciones de Matemática</h1>
+ <p>Consulta los momentos de evaluación y las fechas de cierre. Los instrumentos todavía no están publicados.</p>
+ <div class="card"><h3>Momentos de evaluación</h3><div class="criteria-grid"><div><b>Diagnóstica</b><p>Reconocer saberes previos; no se califica.</p></div><div><b>Formativa</b><p>Practicar, recibir retroalimentación y mejorar.</p></div><div><b>Evaluación de cierre</b><p>Valorar aprendizajes del módulo tras la recepción válida del PDF del cuaderno.</p></div><div><b>Recuperación pedagógica</b><p>Reforzar aspectos no alcanzados con acompañamiento.</p></div></div></div>
+ <div class="card"><h3>Elegir un período</h3><div id="evalPeriods" class="route"></div></div>
+ <div class="card notice small"><b>Importante:</b> Las actividades de práctica no constituyen calificaciones oficiales. Las calificaciones oficiales requieren evidencias y valoración docente, según el registro correspondiente.</div>
+</section><section id="registros" hidden><p class="eyebrow">Registros · Evidencias</p><h1>Mis registros y resultados</h1><div class="card notice">El registro individual de prácticas, evidencias y calificaciones todavía no está habilitado. No se muestran resultados de otros participantes ni se generan notas oficiales.</div></section><section id="cierre" hidden><p class="eyebrow">Balance académico · Después del Módulo IV</p><h1>Cierre anual de Matemática</h1><div class="card">Programado para el 19 de junio de 2027. La consolidación de resultados requiere evidencias y valoración docente. Servicio pendiente.</div><button class="secondary" data-go="ruta">← Volver a Mi ruta</button></section><footer>Aula QR EPJA · Prepara Canástica Sabatino 2014 · Cuarto Año</footer></main><nav hidden aria-label="Navegación principal"><button data-go="inicio">⌂ Inicio</button><button data-go="ruta">▦ Mi ruta</button><button data-go="evaluaciones">✓ Evaluaciones</button><button data-go="registros">▥ Mis registros</button></nav><script src="../assets/js/epja-session.js" data-curso="Cuarto"></script><script src="ruta-academica.js" defer></script></body></html>
