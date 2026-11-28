@@ -1,0 +1,99 @@
+/* AulaQR P4-J01. MINERD módulo IV pp.37–39. */
+(()=>{'use strict';
+const E=(tag,t)=>{const n=document.createElement(tag);if(t!==undefined)n.textContent=t;return n};
+const add=(r,tag,t)=>{const n=E(tag,t);r.append(n);return n};
+const btn=(r,t,f)=>{const b=add(r,'button',t);b.type='button';b.onclick=f;return b};
+const math=(r,t)=>add(r,'p','\\('+t+'\\)');
+const heading=(r,t)=>add(r,'h3',t);
+let quizSeq=0;function quiz(root,qs,final=false){const prefix='a4p4j01q'+(++quizSeq)+'-';let answers=new Map(),groups=[],feedback=[];const box=add(root,'div');qs.forEach((q,i)=>{const f=add(box,'fieldset');f.style.cssText='border:1px solid #d5e0ef;border-radius:10px;margin:12px 0;padding:12px;min-width:0';add(f,'legend',(i+1)+'. '+q[0]);let inputs=[];q[1].forEach((o,j)=>{const l=add(f,'label');l.style.cssText='display:flex;gap:10px;align-items:center;padding:8px 0';const x=add(l,'input');x.type='radio';x.name=prefix+i;x.value=j;l.append(document.createTextNode(o));inputs.push(x);x.onchange=()=>{answers.set(i,j);if(!final)feedback[i].textContent=(j===q[2]?'Correcto. ':'Revisa. ')+q[3];if(submit)submit.disabled=answers.size!==qs.length}});const p=add(f,'p','');p.setAttribute('aria-live','polite');feedback.push(p);groups.push(inputs)});let submit=null;if(final){const result=add(box,'p','');result.setAttribute('role','status');submit=btn(box,'Finalizar evaluación formativa',()=>{let score=0;qs.forEach((q,i)=>{const ok=answers.get(i)===q[2];if(ok)score++;feedback[i].textContent=(ok?'Correcto. ':'Respuesta: '+q[1][q[2]]+'. ')+q[3]+' · '+q[4];groups[i].forEach(x=>x.disabled=true)});result.textContent=score+'/'+qs.length+' respuestas correctas. '+(score>=Math.ceil(qs.length*.75)?'Buen avance; revisa tus errores.':'Repasa conceptos y vuelve a practicar.')+' Resultado formativo, no nota oficial.';submit.disabled=true});submit.disabled=true;btn(box,'Reintentar',()=>{box.remove();quiz(root,qs,true)})}}
+function slider(r,t,min,max,v,fn){const l=add(r,'label',t+' ');l.style.display='block';const out=add(l,'output',v);const x=add(l,'input');x.type='range';x.min=min;x.max=max;x.value=v;x.style.cssText='width:100%;display:block';x.oninput=()=>{out.textContent=x.value;fn(+x.value)};return x}
+function graphic(r){const s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('viewBox','0 0 340 230');s.setAttribute('role','img');s.style.cssText='width:100%;max-width:540px;display:block;margin:auto';r.append(s);return s}
+function shape(s,tag,attrs,t){const n=document.createElementNS(s.namespaceURI,tag);Object.entries(attrs).forEach(([k,v])=>n.setAttribute(k,v));if(t)n.textContent=t;s.append(n)}
+function point(s,x,y,t){shape(s,'circle',{cx:x,cy:y,r:4,fill:'#2177a8'});shape(s,'text',{x:x+8,y:y-8,fill:'#20365f','font-size':13},t)}
+function subtopics(root,items){
+ const nav=add(root,'div');nav.style.cssText='display:flex;flex-wrap:wrap;gap:8px;margin:12px 0';nav.setAttribute('role','group');nav.setAttribute('aria-label','Subtemas');
+ const status=add(root,'p');status.setAttribute('aria-live','polite');status.className='small muted';
+ const body=add(root,'div'),panels=items.map(([title,render])=>{const p=add(body,'section');p.style.cssText='padding:8px 0';heading(p,title);render(p);return p});
+ const buttons=items.map(([title],i)=>btn(nav,title,()=>go(i)));let active=0;
+ const controls=add(root,'div');controls.style.cssText='display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin:16px 0';
+ const prev=btn(controls,'← Subtema anterior',()=>go(active-1)),next=btn(controls,'Siguiente subtema →',()=>go(active+1));
+ function go(i){if(i<0||i>=items.length)return;active=i;panels.forEach((p,j)=>p.hidden=j!==i);buttons.forEach((b,j)=>{b.className=i===j?'':'secondary';b.setAttribute('aria-pressed',String(i===j))});status.textContent='Subtema '+(i+1)+' de '+items.length+' · '+items[i][0];prev.disabled=i===0;next.disabled=i===items.length-1;if(window.MathJax?.typesetPromise)window.MathJax.typesetPromise([panels[i]]).catch(()=>{});}
+ go(0);
+}
+function figure(r,title,draw,caption){const f=add(r,'figure');f.style.cssText='margin:16px 0;padding:12px;border:1px solid #d5e0ef;border-radius:12px;background:#f8fbff';const s=graphic(f);s.setAttribute('aria-label',title);draw(s);const c=add(f,'figcaption',caption);c.className='small muted';}
+function seg(s,a,b,color='#2177a8',dash=''){shape(s,'line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:color,'stroke-width':2,'stroke-dasharray':dash})}
+function label(s,x,y,t,color='#20365f'){shape(s,'text',{x,y,fill:color,'font-size':13},t)}
+function poly(s,ps){shape(s,'polygon',{points:ps.map(p=>p.join(',')).join(' '),fill:'#51ade022',stroke:'#2177a8','stroke-width':2})}
+function arc(s,p,u,v,rad,color='#c47717'){let a=Math.atan2(u[1]-p[1],u[0]-p[0]),b=Math.atan2(v[1]-p[1],v[0]-p[0]);let d=(b-a+2*Math.PI)%(2*Math.PI);if(d>Math.PI){[a,b]=[b,a];d=2*Math.PI-d}shape(s,'path',{d:'M'+(p[0]+rad*Math.cos(a))+' '+(p[1]+rad*Math.sin(a))+' A'+rad+' '+rad+' 0 0 1 '+(p[0]+rad*Math.cos(a+d))+' '+(p[1]+rad*Math.sin(a+d)),stroke:color,'stroke-width':2,fill:'none'});}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const pi=Math.PI,fmt=x=>Number(x.toFixed(4)).toString();
+function metrics(n,r,outer){const R=outer?r/Math.cos(pi/n):r,a=R*Math.cos(pi/n),l=2*R*Math.sin(pi/n);return {R,a,l,P:n*l,A:n*l*a/2,angle:360/n}}
+const vertex=(a,R,c=[170,110])=>[c[0]+R*Math.cos(a),c[1]-R*Math.sin(a)];
+function circle(s,c,r,color='#2177a8'){shape(s,'circle',{cx:c[0],cy:c[1],r,stroke:color,fill:'none','stroke-width':2})}
+function range(r,t,min,max,v,step,fn){const x=slider(r,t,min,max,v,fn);x.step=step;return x}
+function draw(s,n,outer,turn=0,detail=true){s.replaceChildren();const c=[170,110],R=outer?86/Math.cos(pi/n):86,k=Math.min(1,92/R),v=Array.from({length:n},(_,i)=>vertex(turn+2*pi*i/n,R*k,c));poly(s,v);circle(s,c,86*k);point(s,...c,'O');if(detail){const m=[(v[0][0]+v[1][0])/2,(v[0][1]+v[1][1])/2];seg(s,c,v[0],'#64748b','4 3');seg(s,c,v[1],'#64748b','4 3');seg(s,c,m,'#16805d');seg(s,v[0],v[1],'#c47717');point(s,...v[0],'A');point(s,...v[1],'B');point(s,...m,'M');if(outer)v.forEach((p,i)=>{const q=v[(i+1)%n];shape(s,'circle',{cx:(p[0]+q[0])/2,cy:(p[1]+q[1])/2,r:3,fill:'#16805d'})})}return v}
+function explorer(r){heading(r,'Polígono y circunferencia dinámicos');let n=7,R=5,m=0,a=0;const s=graphic(r),o=add(r,'p');o.setAttribute('role','status');btn(r,'Inscrito',()=>{m=0;paint()});btn(r,'Circunscrito',()=>{m=1;paint()});range(r,'Número de lados',3,16,n,1,v=>{n=v;paint()});range(r,'Radio de la circunferencia (cm)',1,12,R,.5,v=>{R=v;paint()});range(r,'Giro (°)',0,360,a,5,v=>{a=v;paint()});function paint(){draw(s,n,m,a*pi/180);const q=metrics(n,R,m);o.textContent=(m?'Circunscrito: cada lado es tangente y OM es radio y apotema.':'Inscrito: cada vértice está en la circunferencia y AB es cuerda.')+' Ángulo central '+fmt(q.angle)+'°; lado '+fmt(q.l)+' cm; apotema '+fmt(q.a)+' cm; perímetro '+fmt(q.P)+' cm; área '+fmt(q.A)+' cm².';s.setAttribute('aria-label',o.textContent)}paint();math(r,'\\alpha=360^\\circ/n,\\quad A=Pa/2');add(r,'p','Las relaciones lado-apotema empleadas en el simulador corresponden a polígonos regulares. No todo polígono inscrito o circunscrito es regular.')}
+function square(r){heading(r,'Construcción instrumental del cuadrado inscrito');let step=1;const s=graphic(r),o=add(r,'p'),d=['Traza una circunferencia de centro O con el compás.','Traza un diámetro AB.','Construye el diámetro CD perpendicular a AB por O; comprueba 90° con transportador.','Une consecutivamente A, C, B y D con regla.','Comprueba lados iguales y ángulos rectos.'];const prev=btn(r,'Anterior',()=>{step--;paint()}),next=btn(r,'Siguiente',()=>{step++;paint()});function paint(){s.replaceChildren();const c=[170,110],A=[250,110],B=[90,110],C=[170,30],D=[170,190];circle(s,c,80);point(s,...c,'O');if(step>=2){seg(s,A,B);point(s,...A,'A');point(s,...B,'B')}if(step>=3){seg(s,C,D,'#16805d');point(s,...C,'C');point(s,...D,'D');shape(s,'path',{d:'M182 110 L182 98 L170 98',stroke:'#64748b',fill:'none'})}if(step>=4)poly(s,[A,C,B,D]);if(step===5){[A,C,B,D].forEach((p,i)=>{const v=[A,C,B,D][(i+1)%4];label(s,(p[0]+v[0])/2+6,(p[1]+v[1])/2,'l')})}o.textContent='Paso '+step+'/5: '+d[step-1];prev.disabled=step===1;next.disabled=step===5}paint();math(r,'l^2=r^2+r^2\\Rightarrow l=r\\sqrt2');add(r,'p','Los cuatro triángulos centrales son congruentes por lado-ángulo-lado; las diagonales iguales se bisecan perpendicularmente, por tanto el cuadrilátero es un cuadrado. Procedimiento original equivalente a la consigna de p.39; describe también las etapas de las figuras impresas.')}
+function compare(r){heading(r,'Comparación de polígonos regulares de igual circunferencia');let n=6,R=5;const s=graphic(r),o=add(r,'p');range(r,'Número de lados',3,30,n,1,v=>{n=v;paint()});range(r,'Radio común (cm)',1,10,R,.5,v=>{R=v;paint()});function paint(){s.replaceChildren();const c=[170,110],a=metrics(n,R,0),b=metrics(n,R,1),k=82/b.R;const inner=Array.from({length:n},(_,i)=>vertex(2*pi*i/n,R*k,c)),outer=Array.from({length:n},(_,i)=>vertex(2*pi*i/n+pi/n,b.R*k,c));poly(s,outer);circle(s,c,R*k,'#c47717');poly(s,inner);o.textContent='Perímetros: inscrito '+fmt(a.P)+' < circunferencia '+fmt(2*pi*R)+' < circunscrito '+fmt(b.P)+' cm. Áreas: '+fmt(a.A)+' < '+fmt(pi*R*R)+' < '+fmt(b.A)+' cm².'}paint();math(r,'P_i<2\\pi r<P_c,\\quad A_i<\\pi r^2<A_c');add(r,'p','Al aumentar el número de lados los perímetros y áreas se aproximan a los del círculo. Ampliación: usa calculadora para comparar, no se exige trigonometría antes de los encuentros correspondientes.')}
+function examples(r){heading(r,'Heptágono y pentágono de la p.39');figure(r,'Heptágono inscrito',s=>draw(s,7,0),'Cada lado es cuerda.');figure(r,'Pentágono regular circunscrito',s=>draw(s,5,1),'La apotema coincide con el radio de la circunferencia inscrita.')}
+function toolsLab(r){heading(r,'Llaves de copa y perfiles poligonales');let star=false;const s=graphic(r);btn(r,'Perfil hexagonal',()=>{star=false;paint()});btn(r,'Perfil estrellado',()=>{star=true;paint()});function paint(){s.replaceChildren();const c=[170,110];circle(s,c,88,'#64748b');circle(s,c,75);const n=star?12:6,v=Array.from({length:n},(_,i)=>vertex(i*2*pi/n,star&&i%2?54:75,c));poly(s,v);v.forEach((p,i)=>{if(!star||i%2===0)shape(s,'circle',{cx:p[0],cy:p[1],r:3,fill:'#16805d'})});label(s,20,218,star?'Perfil esquemático: puntas sobre la circunferencia':'Hexágono: seis vértices sobre la circunferencia')}paint();add(r,'p','El módulo muestra dos perfiles de llaves de copa. Este modelo estrellado alterna radios: solo las puntas exteriores son concíclicas, no todos los vértices. No se afirma que sea una reproducción del perfil impreso ni que sirva para elegir una herramienta real. Observa la figura B y discute la diferencia entre puntas y vértices.')}
+function wheel(r){heading(r,'Rueda de la fortuna · División de una vuelta');let n=8,t=0;const s=graphic(r),o=add(r,'p');range(r,'Número de posiciones equidistantes',3,16,n,1,v=>{n=v;paint()});range(r,'Giro de la rueda (°)',0,360,t,5,v=>{t=v;paint()});function paint(){s.replaceChildren();const c=[170,110];circle(s,c,82);const v=Array.from({length:n},(_,i)=>vertex((t+i*360/n)*pi/180,82,c));poly(s,v);v.forEach(p=>{seg(s,c,p,'#64748b');shape(s,'rect',{x:p[0]-5,y:p[1]-5,width:10,height:10,fill:'#c47717'})});point(s,...c,'O');o.textContent='Separación angular '+fmt(360/n)+'°; giro '+t+'°. Una vuelta completa retorna a la posición inicial.'}paint();add(r,'p','Modelo geométrico ideal de posiciones equidistantes. Registra una vuelta en 8 posiciones y compara con 12. El movimiento periódico de la rueda anticipa las funciones trigonométricas; no implica que las mareas tengan una vuelta o período de 24 horas.')}
+function project(r){heading(r,'Proyecto del Módulo IV · Mareas y periodicidad');add(r,'p','Situación auténtica p.37: alturas de marea medidas cada hora durante 24 horas. ¿Cómo cambia la altura con el tiempo? ¿Se puede predecir el futuro cercano? En este encuentro prepara una tabla hora-altura sin inventar observaciones. Si consigues datos reales, registra fuente, fecha, lugar, unidades y si son observaciones o pronósticos. No presupongas un período de 24 horas.');const t=add(r,'table');const h=add(t,'tr');['Hora','Altura y unidad','Fuente / observación'].forEach(x=>add(h,'th',x));for(let i=0;i<24;i++){const row=add(t,'tr');add(row,'td',String(i).padStart(2,'0')+':00');add(row,'td','—');add(row,'td','—')}add(r,'p','Tabla de preparación para el cuaderno; no almacena ni presenta mediciones. En P4-J04 se retomará el modelado periódico. Para la segunda línea del proyecto, conserva croquis de triángulos y medidas verificables para triangulación de distancias.')}
+function numeric(r){let n=6,R=5,m=0;const q=add(r,'p'),l=add(r,'label','Respuesta '),x=add(l,'input'),o=add(r,'p');x.type='number';x.step='any';['Ángulo central','Lado del cuadrado inscrito','Lado del hexágono inscrito','Lado del cuadrado circunscrito','Apotema circunscrita'].forEach((t,i)=>btn(r,t,()=>{m=i;paint()}));function paint(){q.textContent=['Polígono regular de '+n+' lados: ángulo central en grados.','Cuadrado inscrito en circunferencia de radio '+R+' cm: lado.','Hexágono regular inscrito de radio '+R+' cm: lado.','Cuadrado circunscrito de radio interior '+R+' cm: lado.','Polígono regular circunscrito a circunferencia de radio '+R+' cm: apotema.'][m]+' Redondea a dos decimales.';x.value='';o.textContent=''}btn(r,'Comprobar',()=>{if(!x.value.trim()){o.textContent='Escribe una respuesta.';return}const e=[360/n,R*Math.SQRT2,R,2*R,R][m];o.textContent=(Math.abs(+x.value-e)<=.00500001?'Correcto. ':'Revisa. ')+['360/n','r√2','r (triángulo equilátero)','2r','r'][m]+' = '+fmt(e)});btn(r,'Otro ejercicio',()=>{n=3+Math.floor(Math.random()*14);R=1+Math.floor(Math.random()*12);paint()});paint()}
+const qs=[
+['En un polígono inscrito todos los vértices:',['Pertenecen a la circunferencia','Son centros','Están fuera'],0,'Definición.','IL-2'],
+['Los lados del heptágono inscrito son:',['Radios','Cuerdas','Tangentes'],1,'Unen puntos de la circunferencia.','IL-16'],
+['Los lados de un polígono circunscrito son:',['Diámetros','Radios','Tangentes'],2,'Tocan la circunferencia.','IL-16'],
+['Apotema de pentágono regular circunscrito:',['Radio interior','Diámetro','Perímetro'],0,'Radio perpendicular al lado.','IL-2'],
+['Ángulo central de cuadrado inscrito regular:',['45°','90°','120°'],1,'360/4.','IL-12'],
+['Para construir cuadrado inscrito:',['Dos radios cualesquiera','Dos diámetros paralelos','Dos diámetros perpendiculares'],2,'Une extremos consecutivos.','IL-12'],
+['Cuadrado inscrito de radio 5 cm, lado:',['5√2 cm','10 cm','5 cm'],0,'Pitágoras.','IL-16'],
+['Hexágono regular inscrito de radio 6 cm, lado:',['12 cm','6 cm','3 cm'],1,'Triángulos centrales equiláteros.','IL-16'],
+['Cuadrado circunscrito de radio 4 cm, lado:',['4 cm','4√2 cm','8 cm'],2,'Diámetro interior.','IL-16'],
+['¿Todo polígono inscrito es regular?',['No','Sí'],0,'Concíclico no implica lados iguales.','IL-2'],
+['Para verificar una construcción digital:',['Solo observar','Medir radios, ángulos y lados','Cambiar resultados'],1,'Contrasta propiedades con datos.','IL-13'],
+['Una rueda completa gira:',['90°','180°','360°'],2,'Una vuelta completa.','IL-13']];
+function rubric(r){heading(r,'Rúbrica interactiva');const lv=['Reconoce','Aplica','Analiza','Transfiere y justifica'],cs=[['Deducción','Distingo cuerda y tangente.','Identifico polígonos inscritos y circunscritos.','Relaciono lados, radios y apotemas.','Justifico relaciones mediante propiedades previas.','IL-2'],['Construcción','Identifico instrumentos.','Construyo un cuadrado inscrito.','Compruebo ángulos y congruencia.','Explico un procedimiento reproducible.','IL-12'],['Tecnología','Identifico recursos.','Uso simulador.','Contrasto medidas.','Verifico y argumento resultados.','IL-13'],['Resolución y colaboración','Reconozco aplicaciones.','Resuelvo problemas geométricos.','Comparo estrategias.','Justifico modelos y respeto criterios ajenos.','IL-16']];const ss=cs.map(c=>{const f=add(r,'fieldset');add(f,'legend',c[0]);const s=add(f,'select');s.append(new Option('Selecciona nivel',''));lv.forEach((v,i)=>s.append(new Option((i+1)+' · '+v,String(i))));c.slice(1,5).forEach((t,i)=>add(f,'p',(i+1)+' · '+t));add(f,'p',c[5]);return s});const o=add(r,'div'),b=btn(r,'Ver perfil',()=>{o.replaceChildren();cs.forEach((c,i)=>add(o,'p',c[0]+': '+lv[+ss[i].value]+' — '+c[1+Number(ss[i].value)]));add(o,'p','Registra una mejora; contrasta con compañero y docente. Sin nota oficial.')});b.disabled=true;ss.forEach(s=>s.onchange=()=>{b.disabled=ss.some(x=>x.value==='');o.replaceChildren()});btn(r,'Reiniciar',()=>{ss.forEach(s=>s.value='');b.disabled=true;o.replaceChildren()})}
+const screens=[r=>{heading(r,'¿Cuerda o tangente?');add(r,'p','Recupera P3-J04 y P3-J06. Observa las llaves de copa de p.39. Explica qué elementos geométricos reconoces.');explorer(r);quiz(r,qs.slice(0,3))},
+r=>subtopics(r,[['Inscrito y circunscrito',explorer],['Relaciones geométricas',examples],['Construcción de cuadrado',square],['Perímetros y áreas',compare],['Herramientas',toolsLab],['División angular y periodicidad',wheel]]),
+r=>subtopics(r,[['Heptágono y pentágono',examples],['Cuadrado inscrito',p=>{square(p);math(p,'r=5\\Rightarrow l=5\\sqrt2\\,cm')}],['Hexágono y cuadrado circunscrito',p=>{figure(p,'Hexágono inscrito',s=>draw(s,6,0),'Seis triángulos equiláteros: l=r.');figure(p,'Cuadrado circunscrito',s=>draw(s,4,1),'Lado 2r.');math(p,'r=4\\Rightarrow l=8\\,cm')}],['Llaves de copa',toolsLab],['Rueda de la fortuna y poleas',p=>{wheel(p);add(p,'p','Identifica divisiones regulares en una polea dentada o estructura de columna de p.39; no deduzcas tolerancias de fabricación de este esquema.')}]]),
+r=>subtopics(r,[['Reconocer',p=>quiz(p,qs.slice(0,4))],['Aplicar',numeric],['Construir y argumentar',p=>{square(p);add(p,'p','Reproduce la actividad auténtica p.39 con regla, compás y transportador. Mide los cuatro lados y ángulos. Explica congruencia y registra errores de medida. En GeoGebra: O=(0,0), A=(5,0), B=(-5,0), C=(0,5), D=(0,-5), Circle(O,5), Polygon(A,C,B,D).')}],['Transferir',p=>{compare(p);wheel(p);project(p)}],['Autoestudio',p=>add(p,'p','120 min: 30 lectura pp.37–39 y exploración; 50 construcción, cálculos y justificación; 40 verificación, coevaluación y autoevaluación. Sin conexión: regla, compás, transportador, cuaderno y calculadora. Conserva evidencia manuscrita identificada.')]]),
+r=>{heading(r,'Evaluación formativa');quiz(r,qs,true);rubric(r)}];
+window.A4Lessons=Object.freeze({...window.A4Lessons,'P4-J01':function(root){root.replaceChildren();const tabs=add(root,'div');tabs.style.cssText='display:flex;flex-wrap:wrap;gap:8px;margin:12px 0';tabs.setAttribute('role','group');tabs.setAttribute('aria-label','Pantallas pedagógicas');const content=add(root,'div');const labels=['¿Qué sabemos?','Contenidos','Ejemplos','Práctica','Evaluación'];let active=0;const panels=screens.map((fn,i)=>{const p=E('div');p.className='card';p.hidden=i!==0;add(p,'h2',labels[i]);fn(p);content.append(p);return p});const buttons=labels.map((t,i)=>btn(tabs,(i+1)+' · '+t,()=>go(i)));const controls=add(root,'div');controls.style.cssText='display:flex;justify-content:space-between;gap:8px';const prev=btn(controls,'← Anterior',()=>go(active-1)),next=btn(controls,'Siguiente →',()=>go(active+1));function go(i){if(i<0||i>4)return;active=i;panels.forEach((p,j)=>p.hidden=j!==i);buttons.forEach((b,j)=>{b.className=j===i?'':'secondary';b.setAttribute('aria-pressed',String(j===i))});prev.disabled=i===0;next.disabled=i===4;if(window.MathJax?.typesetPromise)window.MathJax.typesetPromise([panels[i]]).catch(()=>{}); }go(0)}});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+})();
